@@ -8,7 +8,7 @@ namespace SHSchool.CourseSelection
 {
     public static class Program
     {
-        [MainMethod("新民高中選課模組")]
+        [MainMethod("選課模組2.0")]
         static public void Main()
         {
             #region 模組啟用先同步Schema
@@ -20,9 +20,11 @@ namespace SHSchool.CourseSelection
             Manager.SyncSchema(new UDT.SIRelation());
             Manager.SyncSchema(new UDT.SSAttend());
             Manager.SyncSchema(new UDT.Subject());
+            Manager.SyncSchema(new UDT.SSWish());
+            Manager.SyncSchema(new UDT.SSLog());
 
             //ServerModule.AutoManaged("https://module.ischool.com.tw/module/4923/shinmin.tc.edu.tw/udm.xml");
-            ServerModule.AutoManaged("http://module.ischool.com.tw/module/140/Course_Selection/udm.xml");
+            //ServerModule.AutoManaged("http://module.ischool.com.tw/module/140/Course_Selection/udm.xml");
             #endregion
 
             #region 教務作業/設定與管理
