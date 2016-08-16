@@ -29,6 +29,6 @@ namespace SHSchool.CourseSelection.UDT
         /// 退選鎖定
         /// </summary>
         [FISCA.UDT.Field(Field = "lock", Indexed = false)]
-        public int Lock { get; set; }
+        public bool Lock { get; set; }
     }
 }
