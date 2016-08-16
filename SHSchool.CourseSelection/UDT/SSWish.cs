@@ -3,13 +3,13 @@ using FISCA.UDT;
 
 namespace SHSchool.CourseSelection.UDT
 {
-    [FISCA.UDT.TableName("ischool.course_selection.ss_attend")]
-    public class SSAttend : ActiveRecord
+    [FISCA.UDT.TableName("ischool.course_selection.ss_wish")]
+    public class SSWish : ActiveRecord
     {
         internal static void RaiseAfterUpdateEvent()
         {
-            if (SSAttend.AfterUpdate != null)
-                SSAttend.AfterUpdate(null, EventArgs.Empty);
+            if (SSWish.AfterUpdate != null)
+                SSWish.AfterUpdate(null, EventArgs.Empty);
         }
 
         internal static event EventHandler AfterUpdate;
@@ -26,9 +26,9 @@ namespace SHSchool.CourseSelection.UDT
         public int SubjectID { get; set; }
 
         /// <summary>
-        /// 退選鎖定
+        /// 順位
         /// </summary>
-        [FISCA.UDT.Field(Field = "lock", Indexed = false)]
-        public int Lock { get; set; }
+        [FISCA.UDT.Field(Field = "sequence", Indexed = true)]
+        public int Order { get; set; }
     }
 }

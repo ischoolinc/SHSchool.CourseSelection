@@ -193,6 +193,8 @@
     <Compile Include="UDT\Identity.cs" />
     <Compile Include="UDT\OpeningTime.cs" />
     <Compile Include="UDT\SIRelation.cs" />
+    <Compile Include="UDT\SSLog.cs" />
+    <Compile Include="UDT\SSWish.cs" />
     <Compile Include="UDT\SSAttend.cs" />
     <Compile Include="UDT\Subject.cs" />
   </ItemGroup>
