@@ -12,6 +12,8 @@ using DevComponents.DotNetBar.Controls;
 
 namespace SHSchool.CourseSelection.Forms
 {
+    //2016/8/16 穎驊改寫選課系統，為文華專案的其中一部份
+
     public partial class frmOpeningTime : BaseForm
     {
         private AccessHelper Access;
@@ -30,7 +32,9 @@ namespace SHSchool.CourseSelection.Forms
 
             this.InitSchoolYear();
             this.InitSemester();
+            this.initSelectMode();
             this.InitOpeningTime();
+            
 
             errorProvider1 = new ErrorProvider();
         }
@@ -44,8 +48,16 @@ namespace SHSchool.CourseSelection.Forms
                 if (records == null || records.Count == 0)
                     return;
 
-                this.StartTime.Text = records[0].StartTime.ToString("yyyy/M/d HH:mm:ss");
-                this.EndTime.Text = records[0].EndTime.ToString("yyyy/M/d HH:mm:ss");
+                this.StartTime1.Text = records[0].P1StartTime.ToString("yyyy/M/d HH:mm:ss");
+                
+                this.EndTime1.Text = records[0].P1EndTime.ToString("yyyy/M/d HH:mm:ss");
+
+                this.StartTime2.Text = records[0].P2StartTime.ToString("yyyy/M/d HH:mm:ss");
+
+                this.EndTime2.Text = records[0].P2EndTime.ToString("yyyy/M/d HH:mm:ss");
+
+
+             
 
                 for (int i = 0; i < this.cboSchoolYear.Items.Count; i++)
                 {
@@ -64,6 +76,28 @@ namespace SHSchool.CourseSelection.Forms
                         break;
                     }
                 }
+
+
+                for (int i = 0; i < this.P1ModecomboBoxEx.Items.Count; i++)
+                {
+                    if (this.P1ModecomboBoxEx.Items[i].ToString() == records[0].P1Mode.ToString())
+                    {
+                        this.P1ModecomboBoxEx.Text = records[0].P1Mode.ToString();
+                        break;
+                    }
+                }
+
+                for (int i = 0; i < this.P2ModecomboBoxEx.Items.Count; i++)
+                {
+                    if (this.P2ModecomboBoxEx.Items[i].ToString() == records[0].P2Mode.ToString())
+                    {
+                        this.P2ModecomboBoxEx.Text = records[0].P2Mode.ToString();
+                        break;
+                    }
+                }
+
+                this.MemotextBoxX.Text = ""+records[0].Memo;
+
             }
             catch (Exception ex)
             {
@@ -95,44 +129,100 @@ namespace SHSchool.CourseSelection.Forms
             this.cboSemester.Items.Add("2");
         }
 
+        private void initSelectMode() 
+        {
+            this.P1ModecomboBoxEx.Items.Clear();
+            this.P2ModecomboBoxEx.Items.Clear();
+
+            this.P1ModecomboBoxEx.Items.Add("");
+            this.P1ModecomboBoxEx.Items.Add("志願序");
+            this.P1ModecomboBoxEx.Items.Add("先搶先贏");
+
+            this.P2ModecomboBoxEx.Items.Add("");
+            this.P2ModecomboBoxEx.Items.Add("志願序");
+            this.P2ModecomboBoxEx.Items.Add("先搶先贏");
+        
+        }
+
+
         private bool Is_Validated()
         {
             bool result = true;
 
-            if (string.IsNullOrEmpty(this.StartTime.Text))
+
+            #region 階段一輸入驗證
+            if (string.IsNullOrEmpty(this.StartTime1.Text))
             {
-                errorProvider1.SetError(this.StartTime, "必填");
+                errorProvider1.SetError(this.StartTime1, "必填");
                 result = false;
             }
             else
             {
                 DateTime date;
-                if (!DateTime.TryParse(this.StartTime.Text.Trim(), out date))
+                if (!DateTime.TryParse(this.StartTime1.Text.Trim(), out date))
                 {
-                    errorProvider1.SetError(this.StartTime, "非日期格式");
+                    errorProvider1.SetError(this.StartTime1, "非日期格式");
                     result = false;
                 }
                 else
-                    errorProvider1.SetError(this.StartTime, "");
+                    errorProvider1.SetError(this.StartTime1, "");
             }
 
-            if (string.IsNullOrEmpty(this.EndTime.Text))
+            if (string.IsNullOrEmpty(this.EndTime1.Text))
             {
-                errorProvider1.SetError(this.EndTime, "必填");
+                errorProvider1.SetError(this.EndTime1, "必填");
                 result = false;
             }
             else
             {
                 DateTime date;
-                if (!DateTime.TryParse(this.EndTime.Text.Trim(), out date))
+                if (!DateTime.TryParse(this.EndTime1.Text.Trim(), out date))
                 {
-                    errorProvider1.SetError(this.EndTime, "非日期格式");
+                    errorProvider1.SetError(this.EndTime1, "非日期格式");
                     result = false;
                 }
                 else
-                    errorProvider1.SetError(this.EndTime, "");
+                    errorProvider1.SetError(this.EndTime1, "");
+            } 
+            #endregion
+
+            #region 階段二輸入驗證
+            if (string.IsNullOrEmpty(this.StartTime2.Text))
+            {
+                errorProvider1.SetError(this.StartTime2, "必填");
+                result = false;
+            }
+            else
+            {
+                DateTime date;
+                if (!DateTime.TryParse(this.StartTime2.Text.Trim(), out date))
+                {
+                    errorProvider1.SetError(this.StartTime2, "非日期格式");
+                    result = false;
+                }
+                else
+                    errorProvider1.SetError(this.StartTime2, "");
             }
 
+            if (string.IsNullOrEmpty(this.EndTime2.Text))
+            {
+                errorProvider1.SetError(this.EndTime2, "必填");
+                result = false;
+            }
+            else
+            {
+                DateTime date;
+                if (!DateTime.TryParse(this.EndTime2.Text.Trim(), out date))
+                {
+                    errorProvider1.SetError(this.EndTime2, "非日期格式");
+                    result = false;
+                }
+                else
+                    errorProvider1.SetError(this.EndTime2, "");
+            } 
+            #endregion
+
+            #region 學年學期驗證
             if (string.IsNullOrEmpty(this.cboSchoolYear.Text))
             {
                 errorProvider1.SetError(this.cboSchoolYear, "必填");
@@ -151,7 +241,31 @@ namespace SHSchool.CourseSelection.Forms
             else
             {
                 errorProvider1.SetError(this.cboSemester, "");
+            } 
+            #endregion
+
+
+            #region 選課模式驗證
+            if (string.IsNullOrEmpty(this.P1ModecomboBoxEx.Text))
+            {
+                errorProvider1.SetError(this.P1ModecomboBoxEx, "必填");
+                result = false;
             }
+            else
+            {
+                errorProvider1.SetError(this.P1ModecomboBoxEx, "");
+            }
+
+            if (string.IsNullOrEmpty(this.P2ModecomboBoxEx.Text))
+            {
+                errorProvider1.SetError(this.P2ModecomboBoxEx, "必填");
+                result = false;
+            }
+            else
+            {
+                errorProvider1.SetError(this.P2ModecomboBoxEx, "");
+            }
+            #endregion
 
             return result;
         }
@@ -176,17 +290,38 @@ namespace SHSchool.CourseSelection.Forms
                 else
                     record = records[0];
 
-                DateTime startTime = DateTime.Parse(this.StartTime.Text);
-                record.StartTime = startTime;                
+                //設定階段一時段
+                DateTime P1startTime = DateTime.Parse(this.StartTime1.Text);
 
-                DateTime endTime = DateTime.Parse(this.EndTime.Text);
-                if ((endTime.Hour + endTime.Minute + endTime.Second) == 0)
-                    record.EndTime = endTime.AddDays(1).AddSeconds(-1);
+                record.P1StartTime = P1startTime;                
+
+                DateTime P1endTime = DateTime.Parse(this.EndTime1.Text);
+                if ((P1endTime.Hour + P1endTime.Minute + P1endTime.Second) == 0)
+                    record.P1EndTime = P1endTime.AddDays(1).AddSeconds(-1);
                 else
-                    record.EndTime = endTime;
+                    record.P1EndTime = P1endTime;
+
+
+                //設定階段二時段
+                DateTime P2startTime = DateTime.Parse(this.StartTime2.Text);
+
+                record.P2StartTime = P2startTime;
+
+                DateTime P2endTime = DateTime.Parse(this.EndTime2.Text);
+                if ((P2endTime.Hour + P2endTime.Minute + P2endTime.Second) == 0)
+                    record.P2EndTime = P2endTime.AddDays(1).AddSeconds(-1);
+                else
+                    record.P2EndTime = P2endTime;
+
 
                 record.SchoolYear = int.Parse(this.cboSchoolYear.Text);
                 record.Semester = int.Parse(this.cboSemester.Text);
+
+                record.P1Mode = P1ModecomboBoxEx.Text;
+
+                record.P2Mode = P2ModecomboBoxEx.Text;
+
+                record.Memo = MemotextBoxX.Text;
 
                 record.Save();
 
@@ -196,6 +331,41 @@ namespace SHSchool.CourseSelection.Forms
             {
                 MsgBox.Show(ex.Message);
             }
+        }
+
+        private void StartTime_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelX1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelX2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void EndTime_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cboSemester_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelX3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBoxEx2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -24,6 +24,7 @@ namespace SHSchool.CourseSelection.UDT
         /// </summary>
         [FISCA.UDT.Field(Field = "ref_identity_id", Indexed = true)]
         public int IdentityID { get; set; }
+
         /// <summary>
         /// 群組
         /// </summary>
