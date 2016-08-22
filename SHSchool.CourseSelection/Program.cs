@@ -4,6 +4,16 @@ using FISCA.UDT;
 using FISCA.Presentation;
 using FISCA.Permission;
 
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
 namespace SHSchool.CourseSelection
 {
     public static class Program
@@ -97,6 +107,104 @@ namespace SHSchool.CourseSelection
             };
 
             #endregion
+
+            button_Subject_Management.Add(new RibbonFeature("Sequence_distribution_Management", "志願序分發作業"));
+
+            vSubject_Management["志願序分發作業"].Enable = UserAcl.Current["Sequence_distribution_Management"].Executable;
+            vSubject_Management["志願序分發作業"].Click += delegate
+            {
+                (new Forms.Sequence_distribution_Management()).ShowDialog();
+            };
+
+
+            #region 產生隨機選課志願的Code 備而不用
+            //button_Subject_Management.Add(new RibbonFeature("Test_distribution_Management", "產生隨機選課志願"));
+
+            //vSubject_Management["產生隨機選課志願"].Enable = UserAcl.Current["Test_distribution_Management"].Executable;
+            //vSubject_Management["產生隨機選課志願"].Click += delegate
+            //{
+            //    List<SHSchool.CourseSelection.UDT.SSWish> Wish_list = new List<SHSchool.CourseSelection.UDT.SSWish>();
+
+
+            //    AccessHelper AH = new AccessHelper();
+
+            //    //Wish_list = AH.Select<SHSchool.CourseSelection.UDT.SSWish>("ref_student_id in(" + string.Join(",", CourseSelectedStuID_list.ToArray()) + ")");
+
+            //    Wish_list = AH.Select<SHSchool.CourseSelection.UDT.SSWish>();
+
+            //    //每次都把舊的刪光
+            //    Wish_list.Clear();
+
+            //    List<int> StuList = new List<int>();
+
+            //    var Stu_list = K12.Data.Student.SelectAll();
+
+            //    foreach (var Item in Stu_list)
+            //    {
+            //        if (Item.Class != null)
+            //        {
+            //            if (Item.Status == K12.Data.StudentRecord.StudentStatus.一般 && Item.Class.GradeYear == 3)
+            //            {
+
+            //                StuList.Add(int.Parse(Item.ID));
+
+            //            }
+            //        }
+
+            //    }
+
+
+            //    //int[] StuList = {885,887,888,889,890,1253,892,894,895,896};
+
+            //    int[] CourseIDList = { 127489, 128645, 127491, 128642, 128646, 128634, 128633, 127490, 128644, 128643 };
+
+            //    //int[] OrderList = { 1, 2, 3, 4, 5,6,7,8,9,10};
+
+            //    List<int> OrderList = new List<int>();
+
+            //    for (int i = 1; i <= 10; i++)
+            //    {
+            //        OrderList.Add(i);
+
+            //    }
+
+            //    Random rand = new Random();
+
+
+            //    foreach (var StuID in StuList)
+            //    {
+
+            //        OrderList.Sort((x, y) => { return x.CompareTo(rand.Next(0, 10)); });
+
+
+            //        int i = 0;
+
+            //        foreach (var CouID in CourseIDList)
+            //        {
+            //            SHSchool.CourseSelection.UDT.SSWish NewWish = new UDT.SSWish();
+
+            //            NewWish.StudentID = StuID;
+
+            //            NewWish.SubjectID = CouID;
+
+
+
+            //            NewWish.Order = OrderList[i];
+
+            //            Wish_list.Add(NewWish);
+
+            //            i++;
+            //        }
+
+
+            //    }
+
+
+            //    Wish_list.SaveAll();
+
+            //}; 
+            #endregion
+           
 
             #region 匯出科目
 

@@ -386,6 +386,10 @@ order by class_name, seat_no, student_number, student.name;", subject_id);
                     record.SubjectID = subject_id;
                     record.StudentID = student_id;
 
+                    //2016//8/17 穎驊因恩正要求更新，凡是行政人員指定幫學生選課的項目一律Lock 起來，避免學生退選夜長夢多
+
+                    record.Lock = true;
+
                     records.Add(record);
                 }
             }
