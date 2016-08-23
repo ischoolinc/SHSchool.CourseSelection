@@ -181,7 +181,7 @@ namespace SHSchool.CourseSelection.Forms
                 if (This_SchoolYearSemester_SubjectIDs.Contains("" + Item.SubjectID))
                 {
                     //整理Group 清單
-                    if (!Subject_Group_List.Contains(Item.Group))
+                    if (!Subject_Group_List.Contains(Item.Group) && This_SchoolYearSemester_SubjectIDs.Contains("" + Item.SubjectID))
                     {
                         Subject_Group_List.Add(Item.Group);
                     }
@@ -227,10 +227,16 @@ namespace SHSchool.CourseSelection.Forms
         //分發
         private void buttonX1_Click(object sender, EventArgs e)
         {
+            // 因應群組有可能為""，此行註解掉
+            //if (GradeCbox.Text == "" || DepartmentCbox.Text == "" || GroupCbox.Text == "")
+            //{
+            //    MsgBox.Show("請選擇年級、科別、群組");
+            //    return;            
+            //}
             this.Enabled = false;
-            if (GradeCbox.Text == "" || DepartmentCbox.Text == "" || GroupCbox.Text == "")
+            if (GradeCbox.Text == "" || DepartmentCbox.Text == "")
             {
-                MsgBox.Show("請選擇年級、科別、群組");
+                MsgBox.Show("請選擇年級、科別");
                 this.Enabled = true;
                 return;
             }
@@ -278,7 +284,6 @@ namespace SHSchool.CourseSelection.Forms
             {
                 MsgBox.Show("目前沒有任何學生在本學年學期有選課志願，請確認選課時間是否未開放。");
                 this.Enabled = true;
-
                 return;
             }
 
@@ -339,7 +344,6 @@ namespace SHSchool.CourseSelection.Forms
             {
                 MsgBox.Show("沒有任何學生在此群組有選課志願");
                 this.Enabled = true;
-
                 return;
             }
 
@@ -516,7 +520,6 @@ namespace SHSchool.CourseSelection.Forms
             Attend_List.SaveAll();
             this.Enabled = true;
             MessageBox.Show("志願分發完成。");
-
         }
 
         private void SchoolYearCbox_SelectedIndexChanged(object sender, EventArgs e)
