@@ -181,7 +181,7 @@ namespace SHSchool.CourseSelection.Forms
                 if (This_SchoolYearSemester_SubjectIDs.Contains(""+Item.SubjectID))
                 {                
                     //整理Group 清單
-                if (!Subject_Group_List.Contains(Item.Group))
+                if (!Subject_Group_List.Contains(Item.Group)&&This_SchoolYearSemester_SubjectIDs.Contains(""+Item.SubjectID))
                 {
                     Subject_Group_List.Add(Item.Group);               
                 }
@@ -210,7 +210,7 @@ namespace SHSchool.CourseSelection.Forms
             //設定Group群組
             foreach (var Item in Subject_Group_List) 
             {
-                if (Item != "")
+                if (Item != "" )
                 {
                     this.GroupCbox.Items.Add(Item);
                 }
@@ -227,10 +227,17 @@ namespace SHSchool.CourseSelection.Forms
         //分發
         private void buttonX1_Click(object sender, EventArgs e)
         {
-            if (GradeCbox.Text == "" || DepartmentCbox.Text == "" || GroupCbox.Text == "")
+            // 因應群組有可能為""，此行註解掉
+            //if (GradeCbox.Text == "" || DepartmentCbox.Text == "" || GroupCbox.Text == "")
+            //{
+            //    MsgBox.Show("請選擇年級、科別、群組");
+            //    return;            
+            //}
+
+            if (GradeCbox.Text == "" || DepartmentCbox.Text == "")
             {
-                MsgBox.Show("請選擇年級、科別、群組");
-                return;            
+                MsgBox.Show("請選擇年級、科別");
+                return;
             }
 
             #region 整理選課學生List
