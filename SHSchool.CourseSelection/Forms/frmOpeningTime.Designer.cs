@@ -50,7 +50,7 @@
             this.Save = new DevComponents.DotNetBar.ButtonX();
             this.EndTime2 = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
-            this.MemotextBoxX = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.MemotextBoxX = new System.Windows.Forms.RichTextBox();
             this.panelEx1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -117,7 +117,7 @@
             this.P2ModecomboBoxEx.Name = "P2ModecomboBoxEx";
             this.P2ModecomboBoxEx.Size = new System.Drawing.Size(121, 25);
             this.P2ModecomboBoxEx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.P2ModecomboBoxEx.TabIndex = 41;
+            this.P2ModecomboBoxEx.TabIndex = 7;
             this.P2ModecomboBoxEx.SelectedIndexChanged += new System.EventHandler(this.comboBoxEx2_SelectedIndexChanged);
             // 
             // P1ModecomboBoxEx
@@ -130,7 +130,7 @@
             this.P1ModecomboBoxEx.Name = "P1ModecomboBoxEx";
             this.P1ModecomboBoxEx.Size = new System.Drawing.Size(121, 25);
             this.P1ModecomboBoxEx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.P1ModecomboBoxEx.TabIndex = 40;
+            this.P1ModecomboBoxEx.TabIndex = 4;
             // 
             // labelX10
             // 
@@ -195,7 +195,7 @@
             this.StartTime1.Location = new System.Drawing.Point(92, 84);
             this.StartTime1.Name = "StartTime1";
             this.StartTime1.Size = new System.Drawing.Size(190, 25);
-            this.StartTime1.TabIndex = 35;
+            this.StartTime1.TabIndex = 2;
             this.StartTime1.WatermarkText = "範例：2012/12/31 00:00:00";
             // 
             // labelX5
@@ -223,7 +223,7 @@
             this.EndTime1.Location = new System.Drawing.Point(375, 85);
             this.EndTime1.Name = "EndTime1";
             this.EndTime1.Size = new System.Drawing.Size(190, 25);
-            this.EndTime1.TabIndex = 34;
+            this.EndTime1.TabIndex = 3;
             this.EndTime1.WatermarkText = "範例：2012/12/31 00:00:00";
             // 
             // labelX6
@@ -252,7 +252,7 @@
             this.cboSchoolYear.Name = "cboSchoolYear";
             this.cboSchoolYear.Size = new System.Drawing.Size(190, 25);
             this.cboSchoolYear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.cboSchoolYear.TabIndex = 31;
+            this.cboSchoolYear.TabIndex = 0;
             // 
             // cboSemester
             // 
@@ -266,7 +266,7 @@
             this.cboSemester.Name = "cboSemester";
             this.cboSemester.Size = new System.Drawing.Size(190, 25);
             this.cboSemester.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.cboSemester.TabIndex = 30;
+            this.cboSemester.TabIndex = 1;
             this.cboSemester.SelectedIndexChanged += new System.EventHandler(this.cboSemester_SelectedIndexChanged);
             // 
             // labelX3
@@ -309,7 +309,7 @@
             this.StartTime2.Location = new System.Drawing.Point(92, 173);
             this.StartTime2.Name = "StartTime2";
             this.StartTime2.Size = new System.Drawing.Size(190, 25);
-            this.StartTime2.TabIndex = 3;
+            this.StartTime2.TabIndex = 5;
             this.StartTime2.WatermarkText = "範例：2012/12/31 00:00:00";
             this.StartTime2.TextChanged += new System.EventHandler(this.StartTime_TextChanged);
             // 
@@ -336,7 +336,7 @@
             this.Exit.Location = new System.Drawing.Point(716, 384);
             this.Exit.Name = "Exit";
             this.Exit.Size = new System.Drawing.Size(54, 23);
-            this.Exit.TabIndex = 2;
+            this.Exit.TabIndex = 10;
             this.Exit.Text = "離開";
             this.Exit.Click += new System.EventHandler(this.Exit_Click);
             // 
@@ -345,10 +345,10 @@
             this.Save.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Save.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Save.Location = new System.Drawing.Point(631, 384);
+            this.Save.Location = new System.Drawing.Point(655, 384);
             this.Save.Name = "Save";
             this.Save.Size = new System.Drawing.Size(54, 23);
-            this.Save.TabIndex = 0;
+            this.Save.TabIndex = 9;
             this.Save.Text = "儲存";
             this.Save.Click += new System.EventHandler(this.Save_Click);
             // 
@@ -363,7 +363,7 @@
             this.EndTime2.Location = new System.Drawing.Point(375, 174);
             this.EndTime2.Name = "EndTime2";
             this.EndTime2.Size = new System.Drawing.Size(190, 25);
-            this.EndTime2.TabIndex = 1;
+            this.EndTime2.TabIndex = 6;
             this.EndTime2.WatermarkText = "範例：2012/12/31 00:00:00";
             this.EndTime2.TextChanged += new System.EventHandler(this.EndTime_TextChanged);
             // 
@@ -384,18 +384,15 @@
             // 
             // MemotextBoxX
             // 
-            this.MemotextBoxX.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            // 
-            // 
-            // 
-            this.MemotextBoxX.Border.Class = "TextBoxBorder";
-            this.MemotextBoxX.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.MemotextBoxX.ImeMode = System.Windows.Forms.ImeMode.Hangul;
-            this.MemotextBoxX.Location = new System.Drawing.Point(92, 251);
-            this.MemotextBoxX.Multiline = true;
+            this.MemotextBoxX.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.MemotextBoxX.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.MemotextBoxX.Location = new System.Drawing.Point(92, 250);
             this.MemotextBoxX.Name = "MemotextBoxX";
-            this.MemotextBoxX.Size = new System.Drawing.Size(678, 127);
+            this.MemotextBoxX.Size = new System.Drawing.Size(684, 128);
             this.MemotextBoxX.TabIndex = 43;
+            this.MemotextBoxX.Text = "";
             // 
             // frmOpeningTime
             // 
@@ -438,6 +435,6 @@
         private DevComponents.DotNetBar.Controls.ComboBoxEx P1ModecomboBoxEx;
         private DevComponents.DotNetBar.LabelX labelX10;
         private DevComponents.DotNetBar.LabelX labelX9;
-        private DevComponents.DotNetBar.Controls.TextBoxX MemotextBoxX;
+        private System.Windows.Forms.RichTextBox MemotextBoxX;
     }
 }
