@@ -142,6 +142,18 @@
     <Compile Include="Export\Subject_Export.Designer.cs">
       <DependentUpon>Subject_Export.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CourseCorrespond.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CourseCorrespond.Designer.cs">
+      <DependentUpon>CourseCorrespond.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CourseCorrespondData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CourseCorrespondData.Designer.cs">
+      <DependentUpon>CourseCorrespondData.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmIdentityCreator.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -217,6 +229,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Export\Subject_Export.resx">
       <DependentUpon>Subject_Export.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CourseCorrespond.resx">
+      <DependentUpon>CourseCorrespond.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CourseCorrespondData.resx">
+      <DependentUpon>CourseCorrespondData.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmIdentityCreator.resx">
       <DependentUpon>frmIdentityCreator.cs</DependentUpon>

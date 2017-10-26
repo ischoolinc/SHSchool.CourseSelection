@@ -113,9 +113,20 @@ namespace SHSchool.CourseSelection
             vSubject_Management["志願序分發作業"].Enable = UserAcl.Current["Sequence_distribution_Management"].Executable;
             vSubject_Management["志願序分發作業"].Click += delegate
             {
-                (new Forms.Sequence_distribution_Management()).ShowDialog();
+                (new  Forms.Sequence_distribution_Management()).ShowDialog();
             };
 
+            // 2017/10/11。羿均新增項目
+            #region 選課課程設定
+            button_Subject_Management.Add(new RibbonFeature("7140A14A-F26B-4DEA-8C87-D71A1FDCF6BE", "轉入修課學生"));
+
+            vSubject_Management["轉入修課學生"].Enable = UserAcl.Current["7140A14A-F26B-4DEA-8C87-D71A1FDCF6BE"].Executable;
+            vSubject_Management["轉入修課學生"].Click += delegate
+            {
+                (new Forms.CourseCorrespond()).ShowDialog();
+            };
+
+            #endregion
 
             #region 產生隨機選課志願的Code 備而不用
             //button_Subject_Management.Add(new RibbonFeature("Test_distribution_Management", "產生隨機選課志願"));
@@ -204,7 +215,7 @@ namespace SHSchool.CourseSelection
 
             //}; 
             #endregion
-           
+
 
             #region 匯出科目
 

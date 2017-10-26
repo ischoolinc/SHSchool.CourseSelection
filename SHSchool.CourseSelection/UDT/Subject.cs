@@ -78,5 +78,11 @@ namespace SHSchool.CourseSelection.UDT
         /// </summary>
         [FISCA.UDT.Field(Field = "memo", Indexed = false)]
         public string Memo { get; set; }
+
+        /// <summary>
+        /// 匯入課程編號
+        /// </summary>
+        [FISCA.UDT.Field(Field = "ref_course_id", Indexed = false)]
+        public int? RefCourseID { get; set; }
     }
 }
