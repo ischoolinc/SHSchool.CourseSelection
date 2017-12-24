@@ -79,6 +79,11 @@
       <HintPath>Library\FISCA.Data.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="FISCA.DSAClient, Version=1.0.1.12, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\FISCA.DSAClient.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="FISCA.DSAUtil, Version=3.9.0.10, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Library\FISCA.DSAUtil.dll</HintPath>
@@ -141,6 +146,30 @@
     </Compile>
     <Compile Include="Export\Subject_Export.Designer.cs">
       <DependentUpon>Subject_Export.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AdjustDistributionClass.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AdjustDistributionClass.Designer.cs">
+      <DependentUpon>AdjustDistributionClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AdjustSubjectStudent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AdjustSubjectStudent.Designer.cs">
+      <DependentUpon>AdjustSubjectStudent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\BuildCourse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BuildCourse.Designer.cs">
+      <DependentUpon>BuildCourse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\BuildCourseClass.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BuildCourseClass.Designer.cs">
+      <DependentUpon>BuildCourseClass.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\CourseCorrespond.cs">
       <SubType>Form</SubType>
@@ -219,6 +248,7 @@
     <Compile Include="UDT\SSWish.cs" />
     <Compile Include="UDT\SSAttend.cs" />
     <Compile Include="UDT\Subject.cs" />
+    <Compile Include="UDT\SubjectCourse.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Export\SSAttend_NoneSelectStudent_Export.resx">
@@ -229,6 +259,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Export\Subject_Export.resx">
       <DependentUpon>Subject_Export.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AdjustDistributionClass.resx">
+      <DependentUpon>AdjustDistributionClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AdjustSubjectStudent.resx">
+      <DependentUpon>AdjustSubjectStudent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BuildCourse.resx">
+      <DependentUpon>BuildCourse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BuildCourseClass.resx">
+      <DependentUpon>BuildCourseClass.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CourseCorrespond.resx">
       <DependentUpon>CourseCorrespond.cs</DependentUpon>

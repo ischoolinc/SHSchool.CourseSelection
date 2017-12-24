@@ -3,8 +3,6 @@ using FISCA;
 using FISCA.UDT;
 using FISCA.Presentation;
 using FISCA.Permission;
-
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +10,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 
 namespace SHSchool.CourseSelection
 {
@@ -116,7 +113,7 @@ namespace SHSchool.CourseSelection
                 (new  Forms.Sequence_distribution_Management()).ShowDialog();
             };
 
-            // 2017/10/11。羿均新增項目
+            // 2017/10/11-羿均
             #region 選課課程設定
             button_Subject_Management.Add(new RibbonFeature("7140A14A-F26B-4DEA-8C87-D71A1FDCF6BE", "轉入修課學生"));
 
@@ -337,6 +334,14 @@ namespace SHSchool.CourseSelection
             #endregion
 
             #endregion
+
+            // 2017/12/20，羿均，開班功能
+            var mb2 = MotherForm.RibbonBarItems["教務作業", "選課作業"]["管理"]["選修科目開班"];
+            mb2.Click += delegate
+            {
+                (new Forms.BuildCourseClass()).ShowDialog();
+            };
+
         }
     }
 }
