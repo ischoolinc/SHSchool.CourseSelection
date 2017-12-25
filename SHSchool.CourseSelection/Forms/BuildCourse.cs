@@ -18,6 +18,7 @@ namespace SHSchool.CourseSelection.Forms
         public BuildCourse(int sy,int s)
         {
             InitializeComponent();
+
             #region Init DGV
             {
                 string sql = string.Format(@"
@@ -54,8 +55,10 @@ namespace SHSchool.CourseSelection.Forms
         // 開課
         private void buildCourseBtn_Click(object sender, EventArgs e)
         {
-            //SHSchool.Data.SHCourse sHCourse = new SHCourse();
             string showText = "";
+            QueryHelper queryHelper = new QueryHelper();
+            
+
             foreach (DataGridViewRow datarow in dataGridViewX1.Rows)
             {
                 string _courseName = "" + datarow.Cells["courseName"].Value;
@@ -66,7 +69,8 @@ namespace SHSchool.CourseSelection.Forms
                 int _credit = int.Parse("" + datarow.Cells["credit"].Value);
                 string _type = "" + datarow.Cells["type"].Value;
 
-                // 判斷是否開過課
+                #region 判斷是否開過課--dtCourse
+
                 string sqlSelect = string.Format(@"
                     SELECT * FROM course 
                     WHERE course_name = '{0}' 
@@ -75,71 +79,79 @@ namespace SHSchool.CourseSelection.Forms
                     AND semester = {3}
                 ", _courseName, _subjectName, _schoolYear, _semester);
 
-                QueryHelper query = new QueryHelper();
-                DataTable dtCourse = query.Select(sqlSelect);
+                DataTable dtCourse = queryHelper.Select(sqlSelect);
 
-                // 沒開過課，新增課程資訊
-                try
+                #endregion
+
+                #region 第一次開課
+                if (dtCourse.Rows.Count == 0)
                 {
-                    if (dtCourse.Rows.Count == 0)
+                    // Course table 新增選修科目課程資訊
+                    string sqlInsert = string.Format(@"
+                    INSERT INTO 
+                        course
+                        (course_name,subject,school_year,semester,subj_level,credit,score_type) 
+                    VALUES('{0}','{1}',{2},{3},{4},{5},'{6}')",
+                    _courseName, _subjectName, _schoolYear, _semester, _level, _credit, _type
+                    );
+                    UpdateHelper updateHelper = new UpdateHelper();
+                    updateHelper.Execute(sqlInsert);
+
+                    // 開課成功 同步課程ID -> Subject_Course.course_id
+                    string sqlSelectCourseID = string.Format(@"
+                        SELECT id
+                        FROM course
+                        WHERE course_name = '{0}'
+                        AND subject = '{1}' 
+                        AND school_year = {2} 
+                        AND semester = {3}
+                    ", _courseName, _subjectName, _schoolYear, _semester);
+                    DataTable dtCourseID = queryHelper.Select(sqlSelectCourseID);
+
+                    foreach (DataRow dr in dtCourseID.Rows)
                     {
-                        // Insert Course_table 選修課程
-                        string sqlInsert = string.Format(@"
+                        string sqlUpdate = string.Format(@"
+                        UPDATE $ischool.course_selection.subjectcourse
+                        SET course_id = {0}
+                        WHERE $ischool.course_selection.subjectcourse.course_name = '{1}'
+                        AND subject_name = '{2}' 
+                        AND school_year = {3} 
+                        AND semester = {4}
+                        ", "" + dr["id"], _courseName, _subjectName, _schoolYear, _semester);
+                        updateHelper.Execute(sqlUpdate);
+                    }
+
+                    // 紀錄開課成功的 課程名稱
+                    showText += _courseName + ",";
+                }
+                #endregion
+
+                #region 重複開課
+                if (dtCourse.Rows.Count > 0)
+                {
+                    UpdateHelper updateHelper = new UpdateHelper();
+                    // 刪除舊的開課資訊
+                    string sqlDelete = string.Format(@"
+                        DELETE FROM
+                            course
+                        WHERE
+                            subject = '{0}'
+                            AND school_year = {1}
+                            AND semester = {2}
+                        ", _subjectName, _schoolYear, _semester);
+                    updateHelper.Execute(sqlDelete);
+
+                    // 新增新的開課資訊
+                    string sqlInsert = string.Format(@"
                         INSERT INTO 
                             course
                             (course_name,subject,school_year,semester,subj_level,credit,score_type) 
-                        VALUES('{0}','{1}',{2},{3},{4},{5},'{6}')",
-                        _courseName, _subjectName, _schoolYear, _semester, _level, _credit, _type
+                         VALUES('{0}','{1}',{2},{3},{4},{5},'{6}')",
+                     _courseName, _subjectName, _schoolYear, _semester, _level, _credit, _type
                         );
-                        UpdateHelper updateHelper = new UpdateHelper();
-                        updateHelper.Execute(sqlInsert);
+                    updateHelper.Execute(sqlInsert);
 
-
-                        // Update Subject_Course_udt 課程ID
-                        string sqlSelect2 = string.Format(@"
-                            SELECT id
-                            FROM course
-                            WHERE course_name = '{0}'
-                            AND subject = '{1}' 
-                            AND school_year = {2} 
-                            AND semester = {3}
-                        ", _courseName, _subjectName, _schoolYear, _semester);
-                        
-                        DataTable dt2 = query.Select(sqlSelect2);
-                        foreach (DataRow dr in dt2.Rows)
-                        {
-                            string sqlUpdate = string.Format(@"
-                            UPDATE $ischool.course_selection.subjectcourse
-                            SET course_id = {0}
-                            WHERE $ischool.course_selection.subjectcourse.course_name = '{1}'
-                            AND subject = '{2}' 
-                            AND school_year = {3} 
-                            AND semester = {4}
-                            ", "" + dr["id"], _courseName, _subjectName, _schoolYear, _semester);
-                            updateHelper.Execute(sqlUpdate);
-                        }
-
-                        // 紀錄開課成功的 課程名稱
-                        showText += _courseName + ",";
-                    }
-                }
-                catch
-                {
-                    // 開課失敗
-                    showText = _courseName + "課程建立失敗!";
-                    MessageBox.Show(showText);
-                }
-                
-                // 開過課，修改課程資訊
-                if (dtCourse.Rows.Count >0)
-                {
-                    //string sqlSelect2 = string.Format(@"
-                    //        SELECT id
-                    //        FROM course
-                    //        WHERE course_name = '{0}'
-                    //    ", _courseName);
-
-                    //DataTable dt2 = query.Select(sqlSelect2);
+                    // 同步選修科目課程ID 與 課程ID，透過課程名稱為條件
                     foreach (DataRow dr in dtCourse.Rows)
                     {
                         string sqlUpdate = string.Format(@"
@@ -147,15 +159,17 @@ namespace SHSchool.CourseSelection.Forms
                             SET course_id = {0}
                             WHERE $ischool.course_selection.subjectcourse.course_name = '{1}'
                             ", "" + dr["id"], _courseName);
-                        UpdateHelper updateHelper = new UpdateHelper();
                         updateHelper.Execute(sqlUpdate);
                     }
+
                 }
+                showText += _courseName + ",";
+                #endregion
+
             }
+
             MessageBox.Show(showText + "課程建立成功!");
             this.Close();
-
-            
         }
     }
 }

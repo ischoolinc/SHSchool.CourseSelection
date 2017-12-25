@@ -225,6 +225,12 @@
     <Compile Include="Forms\frmSubject_Management.Designer.cs">
       <DependentUpon>frmSubject_Management.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ManualDisClass.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ManualDisClass.Designer.cs">
+      <DependentUpon>ManualDisClass.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Sequence_distribution_Management.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -298,6 +304,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmSubject_Management.resx">
       <DependentUpon>frmSubject_Management.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ManualDisClass.resx">
+      <DependentUpon>ManualDisClass.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Sequence_distribution_Management.resx">
       <DependentUpon>Sequence_distribution_Management.cs</DependentUpon>

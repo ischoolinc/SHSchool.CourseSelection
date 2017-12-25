@@ -26,6 +26,12 @@ namespace SHSchool.CourseSelection.UDT
         public int SubjectID { get; set; }
 
         /// <summary>
+        /// 課程系統編號
+        /// </summary>
+        [FISCA.UDT.Field(Field = "ref_course_id", Indexed = true)]
+        public int CourseID { get; set; }
+
+        /// <summary>
         /// 退選鎖定
         /// </summary>
         [FISCA.UDT.Field(Field = "lock", Indexed = false)]

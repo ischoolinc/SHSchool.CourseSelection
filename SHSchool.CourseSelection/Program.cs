@@ -335,11 +335,18 @@ namespace SHSchool.CourseSelection
 
             #endregion
 
-            // 2017/12/20，羿均，開班功能
+            // 2017/12/20，羿均，選修科目開班
             var mb2 = MotherForm.RibbonBarItems["教務作業", "選課作業"]["管理"]["選修科目開班"];
             mb2.Click += delegate
             {
                 (new Forms.BuildCourseClass()).ShowDialog();
+            };
+
+            // 2017/12/25，羿均，手動分班
+            var mb3 = MotherForm.RibbonBarItems["教務作業", "選課作業"]["設定"]["手動分班"];
+            mb3.Click += delegate
+            {
+                (new Forms.ManualDisClass()).ShowDialog();
             };
 
         }
