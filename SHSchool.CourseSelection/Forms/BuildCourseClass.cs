@@ -166,48 +166,62 @@ namespace SHSchool.CourseSelection.Forms
 
                     for (int i = 0; i < count; i++)
                     {
-                        #region 課程命名I 
+                        #region 課程命名
                         string[] mark = new string[10];
+                        string level = "";
+
                         switch (i)
                         {
                             case 0:
-                                mark[i] = "I";
+                                mark[i] = "A";
                                 break;
                             case 1:
-                                mark[i] = "II";
+                                mark[i] = "B";
                                 break;
                             case 2:
-                                mark[i] = "III";
+                                mark[i] = "C";
                                 break;
                             case 3:
-                                mark[i] = "IV";
+                                mark[i] = "D";
                                 break;
                             case 4:
-                                mark[i] = "V";
+                                mark[i] = "E";
                                 break;
                             case 5:
-                                mark[i] = "VI";
+                                mark[i] = "F";
                                 break;
                             case 6:
-                                mark[i] = "VII";
+                                mark[i] = "G";
                                 break;
                             case 7:
-                                mark[i] = "VII";
+                                mark[i] = "H";
                                 break;
                             case 8:
-                                mark[i] = "IX";
+                                mark[i] = "I";
                                 break;
                             case 9:
-                                mark[i] = "X";
+                                mark[i] = "J";
                                 break;
                             default:
                                 MessageBox.Show("已超出開班數上限");
                                 break;
                         }
 
+                        switch (int.Parse("" + datarow.Cells["level"].Value))
+                        {
+                            case 1:
+                                level = "I";
+                                break;
+                            case 2:
+                                level = "II";
+                                break;
+                            case 3:
+                                level = "II";
+                                break;
+                        }
                         UDT.SubjectCourse subjectCourse = new UDT.SubjectCourse();
                         #endregion
-                        subjectCourse.CourseName = "" + courseTypeCbx.Text + datarow.Cells["subjectName"].Value + mark[i];
+                        subjectCourse.CourseName = "" + courseTypeCbx.Text + datarow.Cells["subjectName"].Value + " " + level + " " + mark[i];
                         subjectCourse.SubjectID = int.Parse("" + datarow.Tag.ToString());
                         subjectCourse.SubjectName = "" + datarow.Cells["subjectName"].Value;
                         subjectCourse.SchoolYear = int.Parse(schoolYearCbx.Text);

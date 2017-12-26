@@ -10,6 +10,7 @@ using FISCA.Presentation.Controls;
 using K12.Data;
 using FISCA.Data;
 using SHSchool.Data;
+using FISCA.UDT;
 
 namespace SHSchool.CourseSelection.Forms
 {
@@ -44,7 +45,7 @@ namespace SHSchool.CourseSelection.Forms
                     datarow.Cells[index++].Value = "" + dr["level"];
                     datarow.Cells[index++].Value = "" + dr["credit"];
                     datarow.Cells[index++].Value = "" + dr["score_type"];
-
+                    datarow.Tag = dr["course_id"];
                     dataGridViewX1.Rows.Add(datarow);
                 }
             }
@@ -57,8 +58,20 @@ namespace SHSchool.CourseSelection.Forms
         {
             string showText = "";
             QueryHelper queryHelper = new QueryHelper();
-            
-
+            /*
+             int courseID = int.Parse("" + dataGridViewX1.Rows[e.RowIndex].Tag);
+            // 課程名稱修改時，更新SubjectCourse 課程欄位名稱
+            AccessHelper access = new AccessHelper();
+            List<UDT.SubjectCourse> sc_list = new List<UDT.SubjectCourse>();
+            foreach (UDT.SubjectCourse sc in sc_list)
+            {
+                if (sc.CourseID == courseID)
+                {
+                    sc.CourseName = "" + dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                }
+            }
+            access.UpdateValues(sc_list);
+             */
             foreach (DataGridViewRow datarow in dataGridViewX1.Rows)
             {
                 string _courseName = "" + datarow.Cells["courseName"].Value;

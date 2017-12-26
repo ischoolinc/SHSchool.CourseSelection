@@ -31,7 +31,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
-            this.buildCourseBtn = new DevComponents.DotNetBar.ButtonX();
             this.courseName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.subjectName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.schoolYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -39,6 +38,7 @@
             this.level = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.credit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.buildCourseBtn = new DevComponents.DotNetBar.ButtonX();
             this.groupPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.SuspendLayout();
@@ -120,20 +120,6 @@
             this.dataGridViewX1.Size = new System.Drawing.Size(564, 320);
             this.dataGridViewX1.TabIndex = 0;
             // 
-            // buildCourseBtn
-            // 
-            this.buildCourseBtn.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.buildCourseBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buildCourseBtn.BackColor = System.Drawing.Color.Transparent;
-            this.buildCourseBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buildCourseBtn.Location = new System.Drawing.Point(513, 376);
-            this.buildCourseBtn.Name = "buildCourseBtn";
-            this.buildCourseBtn.Size = new System.Drawing.Size(75, 23);
-            this.buildCourseBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.buildCourseBtn.TabIndex = 1;
-            this.buildCourseBtn.Text = "開課";
-            this.buildCourseBtn.Click += new System.EventHandler(this.buildCourseBtn_Click);
-            // 
             // courseName
             // 
             this.courseName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -188,6 +174,20 @@
             this.type.Name = "type";
             this.type.ReadOnly = true;
             this.type.Width = 85;
+            // 
+            // buildCourseBtn
+            // 
+            this.buildCourseBtn.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buildCourseBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buildCourseBtn.BackColor = System.Drawing.Color.Transparent;
+            this.buildCourseBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buildCourseBtn.Location = new System.Drawing.Point(513, 376);
+            this.buildCourseBtn.Name = "buildCourseBtn";
+            this.buildCourseBtn.Size = new System.Drawing.Size(75, 23);
+            this.buildCourseBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.buildCourseBtn.TabIndex = 1;
+            this.buildCourseBtn.Text = "開課";
+            this.buildCourseBtn.Click += new System.EventHandler(this.buildCourseBtn_Click);
             // 
             // BuildCourse
             // 

@@ -85,10 +85,5 @@ namespace SHSchool.CourseSelection.UDT
         [FISCA.UDT.Field(Field = "ref_course_id", Indexed = false)]
         public int? RefCourseID { get; set; }
 
-        /// <summary>
-        /// 科目課程ID
-        /// </summary>
-        [FISCA.UDT.Field(Field = "subject_course_id", Indexed = false)]
-        public int? SubjectCourseID { get; set; }
     }
 }

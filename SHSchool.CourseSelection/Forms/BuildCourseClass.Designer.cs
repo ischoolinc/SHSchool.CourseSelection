@@ -131,7 +131,7 @@
             this.dataGridViewX1.MinimumSize = new System.Drawing.Size(564, 230);
             this.dataGridViewX1.Name = "dataGridViewX1";
             this.dataGridViewX1.RowTemplate.Height = 24;
-            this.dataGridViewX1.Size = new System.Drawing.Size(647, 230);
+            this.dataGridViewX1.Size = new System.Drawing.Size(647, 261);
             this.dataGridViewX1.TabIndex = 0;
             this.dataGridViewX1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewX1_CellEndEdit);
             // 
