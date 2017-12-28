@@ -60,7 +60,7 @@ namespace SHSchool.CourseSelection.Forms
                             drX1.Cells[index++].Value = scr["course_type"];
                             drX1.Cells[index++].Value = scr["subject_name"];
                             drX1.Cells[index++].Value = scr["level"];
-                            drX1.Cells[index++].Value = "班別";
+                            drX1.Cells[index++].Value = scr["class_type"];
                             drX1.Cells[index++].Value = scr["credit"];
                             drX1.Tag = scr["uid"];
 
@@ -101,7 +101,7 @@ namespace SHSchool.CourseSelection.Forms
                             drX1.Cells[index++].Value = scr["course_type"];
                             drX1.Cells[index++].Value = scr["subject_name"];
                             drX1.Cells[index++].Value = scr["level"];
-                            drX1.Cells[index++].Value = "班別";
+                            drX1.Cells[index++].Value = scr["class_type"];
                             drX1.Cells[index++].Value = scr["credit"];
                             drX1.Tag = scr["uid"];
 
@@ -134,7 +134,7 @@ namespace SHSchool.CourseSelection.Forms
                             drX1.Cells[index++].Value = scr["course_type"];
                             drX1.Cells[index++].Value = scr["subject_name"];
                             drX1.Cells[index++].Value = scr["level"];
-                            drX1.Cells[index++].Value = "班別";
+                            drX1.Cells[index++].Value = scr["class_type"];
                             drX1.Cells[index++].Value = scr["credit"];
                             drX1.Tag = scr["uid"];
 
@@ -225,7 +225,31 @@ namespace SHSchool.CourseSelection.Forms
             drX1.Tag = dr.Tag;
             dataGridViewX1.Rows.Add(drX1);
         }
-        
+
+        private void dataGridViewX1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 5 && e.RowIndex >= 0)
+            {
+                string level = "";
+                switch (int.Parse("" + dataGridViewX1.Rows[e.RowIndex].Cells[4].Value))
+                {
+                    case 1:
+                        level = "I";
+                        break;
+                    case 2:
+                        level = "II";
+                        break;
+                    case 3:
+                        level = "III";
+                        break;
+                }
+                dataGridViewX1.Rows[e.RowIndex].Cells[1].Value = dataGridViewX1.Rows[e.RowIndex].Cells[2].Value + " " +
+                                                                 dataGridViewX1.Rows[e.RowIndex].Cells[3].Value + " " +
+                                                                 level + " " +
+                                                                 dataGridViewX1.Rows[e.RowIndex].Cells[5].Value;
+            }
+        }
+
         // 開課
         private void buildCourseBtn_Click(object sender, EventArgs e)
         {
@@ -246,7 +270,7 @@ namespace SHSchool.CourseSelection.Forms
                     scr.Credit = int.Parse("" + dr.Cells["credit"].Value);
                     scr.SchoolYear = int.Parse(schoolYearLb.Text);
                     scr.Semester = int.Parse(semesterLb.Text);
-
+                    
                     string courseID = SHCourse.Insert(scr);
                     
                     // -- SubjectCourse UDT 新增 科目課程資訊
@@ -260,7 +284,7 @@ namespace SHSchool.CourseSelection.Forms
                     sb.Credit = int.Parse("" + dr.Cells["credit"].Value);
                     sb.SchoolYear = int.Parse(schoolYearLb.Text);
                     sb.Semester = int.Parse(semesterLb.Text);
-
+                    sb.Class_type = "" + dr.Cells["classType"].Value;
                     sb.Save();
 
                 }
@@ -269,9 +293,10 @@ namespace SHSchool.CourseSelection.Forms
                     UpdateHelper uph = new UpdateHelper();
                     string updateSql = string.Format(@"
                         UPDATE $ischool.course_selection.subjectcourse 
-                        SET course_name = '{0}'
-                        WHERE uid = {1}
-                    ","" + dr.Cells["courseName"].Value, int.Parse("" + dr.Tag));
+                        SET course_name = '{0}',
+                            class_type = '{1}'
+                        WHERE uid = {2}
+                    ","" + dr.Cells["courseName"].Value, dr.Cells["classType"].Value,int.Parse("" + dr.Tag));
                     uph.Execute(updateSql);
                 }
                 if ("" + dr.Cells["dataType"].Value == "刪除")

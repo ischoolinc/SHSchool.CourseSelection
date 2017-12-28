@@ -32,17 +32,17 @@
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.semesterLb = new DevComponents.DotNetBar.LabelX();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
+            this.schoolYearLb = new DevComponents.DotNetBar.LabelX();
+            this.labelX2 = new DevComponents.DotNetBar.LabelX();
+            this.labelX1 = new DevComponents.DotNetBar.LabelX();
+            this.buildCourseBtn = new DevComponents.DotNetBar.ButtonX();
             this.dataType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.courseName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.courseType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.subjectName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.level = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.classLevel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.classType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.credit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.schoolYearLb = new DevComponents.DotNetBar.LabelX();
-            this.labelX2 = new DevComponents.DotNetBar.LabelX();
-            this.labelX1 = new DevComponents.DotNetBar.LabelX();
-            this.buildCourseBtn = new DevComponents.DotNetBar.ButtonX();
             this.groupPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.SuspendLayout();
@@ -127,7 +127,7 @@
             this.courseType,
             this.subjectName,
             this.level,
-            this.classLevel,
+            this.classType,
             this.credit});
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
@@ -146,61 +146,7 @@
             this.dataGridViewX1.RowTemplate.Height = 24;
             this.dataGridViewX1.Size = new System.Drawing.Size(608, 339);
             this.dataGridViewX1.TabIndex = 0;
-            // 
-            // dataType
-            // 
-            this.dataType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dataType.HeaderText = "狀態";
-            this.dataType.Name = "dataType";
-            this.dataType.ReadOnly = true;
-            this.dataType.Width = 59;
-            // 
-            // courseName
-            // 
-            this.courseName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.courseName.HeaderText = "課程名稱";
-            this.courseName.Name = "courseName";
-            this.courseName.ReadOnly = true;
-            this.courseName.Width = 85;
-            // 
-            // courseType
-            // 
-            this.courseType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.courseType.HeaderText = "課程類別";
-            this.courseType.Name = "courseType";
-            this.courseType.ReadOnly = true;
-            this.courseType.Width = 85;
-            // 
-            // subjectName
-            // 
-            this.subjectName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.subjectName.HeaderText = "科目名稱";
-            this.subjectName.Name = "subjectName";
-            this.subjectName.ReadOnly = true;
-            this.subjectName.Width = 85;
-            // 
-            // level
-            // 
-            this.level.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.level.HeaderText = "級別";
-            this.level.Name = "level";
-            this.level.ReadOnly = true;
-            this.level.Width = 59;
-            // 
-            // classLevel
-            // 
-            this.classLevel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.classLevel.HeaderText = "班別";
-            this.classLevel.Name = "classLevel";
-            this.classLevel.Width = 59;
-            // 
-            // credit
-            // 
-            this.credit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.credit.HeaderText = "學分";
-            this.credit.Name = "credit";
-            this.credit.ReadOnly = true;
-            this.credit.Width = 59;
+            this.dataGridViewX1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewX1_CellValueChanged);
             // 
             // schoolYearLb
             // 
@@ -259,6 +205,61 @@
             this.buildCourseBtn.Text = "開課";
             this.buildCourseBtn.Click += new System.EventHandler(this.buildCourseBtn_Click);
             // 
+            // dataType
+            // 
+            this.dataType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dataType.HeaderText = "狀態";
+            this.dataType.Name = "dataType";
+            this.dataType.ReadOnly = true;
+            this.dataType.Width = 59;
+            // 
+            // courseName
+            // 
+            this.courseName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.courseName.HeaderText = "課程名稱";
+            this.courseName.Name = "courseName";
+            this.courseName.ReadOnly = true;
+            this.courseName.Width = 85;
+            // 
+            // courseType
+            // 
+            this.courseType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.courseType.HeaderText = "課程類別";
+            this.courseType.Name = "courseType";
+            this.courseType.ReadOnly = true;
+            this.courseType.Width = 85;
+            // 
+            // subjectName
+            // 
+            this.subjectName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.subjectName.HeaderText = "科目名稱";
+            this.subjectName.Name = "subjectName";
+            this.subjectName.ReadOnly = true;
+            this.subjectName.Width = 85;
+            // 
+            // level
+            // 
+            this.level.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.level.HeaderText = "級別";
+            this.level.Name = "level";
+            this.level.ReadOnly = true;
+            this.level.Width = 59;
+            // 
+            // classType
+            // 
+            this.classType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.classType.HeaderText = "班別";
+            this.classType.Name = "classType";
+            this.classType.Width = 59;
+            // 
+            // credit
+            // 
+            this.credit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.credit.HeaderText = "學分";
+            this.credit.Name = "credit";
+            this.credit.ReadOnly = true;
+            this.credit.Width = 59;
+            // 
             // BuildCourse
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -290,7 +291,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn courseType;
         private System.Windows.Forms.DataGridViewTextBoxColumn subjectName;
         private System.Windows.Forms.DataGridViewTextBoxColumn level;
-        private System.Windows.Forms.DataGridViewTextBoxColumn classLevel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn classType;
         private System.Windows.Forms.DataGridViewTextBoxColumn credit;
     }
 }

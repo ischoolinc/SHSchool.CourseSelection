@@ -68,9 +68,13 @@ namespace SHSchool.CourseSelection.UDT
         ///<summary>
         /// 課程類別
         ///</summary>
-        [FISCA.UDT.Field(Field = "course_type", Indexed = false)]
+        [FISCA.UDT.Field(Field = "course_type", Indexed =  false)]
         public string Course_type { get; set; }
 
-
+        ///<summary>
+        /// 班別
+        ///</summary>
+        [FISCA.UDT.Field(Field = "class_type", Indexed = false)]
+        public string Class_type { get; set; }
     }
 }
