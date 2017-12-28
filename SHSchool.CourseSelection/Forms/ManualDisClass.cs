@@ -12,6 +12,7 @@ using FISCA.Data;
 using FISCA.UDT;
 using DevComponents.DotNetBar;
 using System.Drawing.Drawing2D;
+using DevComponents.DotNetBar.Rendering;
 
 
 namespace SHSchool.CourseSelection.Forms
@@ -21,6 +22,11 @@ namespace SHSchool.CourseSelection.Forms
         // DIC
         Dictionary<string, string> subjectIDdic = new Dictionary<string, string>();
         Dictionary<string, string> studentIDdic = new Dictionary<string, string>();
+        // List
+        private SortedList<string, string> _CourseName = new SortedList<string, string>();
+        private SortedList<string, Color> _CourseColor = new SortedList<string, Color>();
+        // 紀錄選修課程分配到的學生
+        Dictionary<string, List<string>> _CourseStudentIDdic = new Dictionary<string, List<string> >();
 
         public ManualDisClass()
         {
@@ -79,7 +85,9 @@ namespace SHSchool.CourseSelection.Forms
                     button.Image = GetColorBallImage(colors[i++]);
                     button.Tag = "" + sc.CourseID;
                     button.Margin = new System.Windows.Forms.Padding(3);
-                    //button.Click
+                    button.Click += new EventHandler(Swap);
+                    _CourseName.Add("" + sc.CourseID,sc.CourseName);
+                    _CourseColor.Add("" + sc.CourseID,colors[i++]);
                     this.flowLayoutPanel1.Controls.Add(button);
                 }
             }
@@ -110,15 +118,81 @@ namespace SHSchool.CourseSelection.Forms
                 datarow.Cells[index++].Value = shs.Class.Name;
                 datarow.Cells[index++].Value = shs.SeatNo;
 
-                SHCourseRecord sr = SHCourse.SelectByID(studentIDdic[shs.ID]);
-                datarow.Cells[index++].Value = "" + sr.Name;
-                datarow.Cells[index++].Value = "" + sr.Name;
+                string sql = string.Format(@"
+                    SELECT ref_course_id
+                    FROM $ischool.course_selection.ss_attend
+                    WHERE 
+                        ref_student_id = {0}
+                        AND ref_course_id is not null
+                ", shs.ID);
+                QueryHelper qh = new QueryHelper();
+                DataTable courseNameDt =  qh.Select(sql);
+                foreach (DataRow dr in courseNameDt.Rows)
+                {
+                    SHCourseRecord sr = SHCourse.SelectByID("" + dr["ref_course_id"]);
+                    if (sr != null)
+                    {
+                        datarow.Cells[index++].Value = "" + sr.Name;
+                        datarow.Cells[index++].Value = "" + sr.Name;
+                    }
+                }
 
+                datarow.Tag = shs.ID;
                 dataGridViewX1.Rows.Add(datarow);
             }
 
             #endregion
 
+        }
+
+
+        private void Swap(object sender,EventArgs e)
+        {
+            ButtonX button = (ButtonX)sender;
+            foreach (DataGridViewRow row in dataGridViewX1.SelectedRows)
+            {
+                // 紀錄學生手動分配到的課程ID
+                //studentCourseIDdic.Add("" + row.Tag,"" + button.Tag);
+                if (_CourseStudentIDdic.ContainsKey("" + button.Tag))
+                {
+                    _CourseStudentIDdic["" + button.Tag].Add("" + row.Tag);
+                }
+                else
+                {
+                    _CourseStudentIDdic.Add("" + button.Tag, new List<string>());
+                    _CourseStudentIDdic["" + button.Tag].Add("" + row.Tag);
+                }
+
+                // 修改 DataGridView
+                dataGridViewX1.Rows[row.Index].Cells[6].Value = _CourseName["" + button.Tag];
+
+            }
+            CountStudents();
+        }
+
+        private void CountStudents()
+        { 
+            foreach (Control btn in flowLayoutPanel1.Controls)
+            {
+                string courseID = "" + btn.Tag;
+                if (!_CourseStudentIDdic.ContainsKey(courseID))
+                {
+                    btn.Text = _CourseName[courseID] + "(0人)";
+                }
+                else
+                {
+                    int totle = _CourseStudentIDdic[courseID].Count();
+                    int b = 0, g = 0;
+
+                    foreach (SHStudentRecord sr in SHStudent.SelectByIDs(_CourseStudentIDdic[courseID].ToArray()))
+                    {
+                        
+                        if (sr.Gender == "男") b++;
+                        if (sr.Gender == "女") g++;
+                    }
+                    btn.Text = _CourseName[courseID] + "(" + (b > 0 ? " " + b + "男" : "") + (g > 0 ? " " + g + "女" : "") + (totle - b - g > 0 ? " " + (totle - b - g) + "未知性別" : "") + " 共" + totle + "人" + " )";
+                }
+            }
         }
 
         public Image GetColorBallImage(Color color)
@@ -144,6 +218,39 @@ namespace SHSchool.CourseSelection.Forms
             return bmp;
         }
 
+        private void saveBtn_Click(object sender, EventArgs e)
+        {
+            //_CourseStudentIDdic
+            Dictionary<string, string> studentCourseIDdic = new Dictionary<string, string>();
+            foreach (var csi in _CourseStudentIDdic)
+            {
+                foreach (string si in csi.Value)
+                {
+                    studentCourseIDdic.Add(si,csi.Key);
+                }
+            }
+            // 學生分班資訊Update SSAttend_UDT
+            AccessHelper access = new AccessHelper();
+            List<UDT.SSAttend> sa_list = access.Select<UDT.SSAttend>();
 
+            foreach (UDT.SSAttend sa in sa_list)
+            {
+                foreach (var sc in studentCourseIDdic)
+                {
+                    if (sa.StudentID == int.Parse("" + sc.Key))
+                    {
+                        sa.CourseID = int.Parse("" + sc.Value);
+                    }
+                }
+            }
+            sa_list.SaveAll();
+
+        }
+
+        private void closeBtn_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
+
 }

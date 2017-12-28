@@ -19,10 +19,11 @@ namespace SHSchool.CourseSelection.Forms
         {
             InitializeComponent();
 
+            #region 學年、學期
             schoolYearCbx.Text = School.DefaultSchoolYear;
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 3; i++)
             {
-                schoolYearCbx.Items.Add(int.Parse(School.DefaultSchoolYear) - i);
+                schoolYearCbx.Items.Add(int.Parse(School.DefaultSchoolYear) + i);
             }
 
             semesterCbx.Text = School.DefaultSemester;
@@ -30,7 +31,9 @@ namespace SHSchool.CourseSelection.Forms
             {
                 semesterCbx.Items.Add(i);
             }
+            #endregion
 
+            #region 課程類別
             QueryHelper helper = new QueryHelper();
             string SQL = @"
                 SELECT DISTINCT 
@@ -40,10 +43,12 @@ namespace SHSchool.CourseSelection.Forms
             {
                 courseTypeCbx.Items.Add("" + row["type"]);
             }
+            #endregion
 
         }
         public void ReloadDataGridView()
         {
+            #region SQL
             string SQL = string.Format(@"
             SELECT 
                 subject.subject_name,
@@ -72,18 +77,20 @@ namespace SHSchool.CourseSelection.Forms
 			LEFT OUTER JOIN
 			(
 				SELECT
-					subject_id,
+					subject,
 					count(*)
 				FROM
-					$ischool.course_selection.subjectcourse AS subject_course
-				GROUP BY subject_course.subject_id
-			) course_count ON course_count.subject_id = subject.uid
+					course
+				GROUP BY course.subject
+			) course_count ON course_count.subject = subject.subject_name
             WHERE 
 	            subject.school_year = {0}
 	            AND subject.semester = {1}
                 AND type = '{2}'",
-                schoolYearCbx.Text,semesterCbx.Text, courseTypeCbx.Text);
+                schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
+            #endregion
 
+            #region DataGridView
             if (courseTypeCbx.Text != "")
             {
                 QueryHelper qh = new QueryHelper();
@@ -99,15 +106,25 @@ namespace SHSchool.CourseSelection.Forms
                     datarow.Cells[index++].Value = "" + dr["subject_name"];
                     datarow.Cells[index++].Value = "" + dr["level"];
                     datarow.Cells[index++].Value = "" + dr["credit"];
-                    datarow.Cells[index++].Value = "學業";
-                    datarow.Cells[index++].Value = "" + dr["student_count"] + "/" + dr["limit"];
-                    index++;
-                    datarow.Cells[index].Value = "" + dr["_course_count"];
-
+                    //datarow.Cells[index++].Value = "學業";
+                    datarow.Cells[index++].Value = "" + dr["student_count"]/* + "/" + dr["limit"]*/;
+                    // 如果未開班，開班數為0
+                    if ("" + dr["_course_count"] == "")
+                    {
+                        datarow.Cells[index++].Value = "" + 0;
+                        datarow.Cells[index++].Value = "" + 0;
+                    }
+                    else
+                    {
+                        datarow.Cells[index++].Value = "" + dr["_course_count"];
+                        datarow.Cells[index].Value = "" + dr["_course_count"];
+                    }
+                    
                     dataGridViewX1.Rows[dataGridViewX1.Rows.Add(datarow)].Tag = "" + dr["uid"];
                     //dataGridViewX1.Rows.Add(datarow);
                 }
             }
+            #endregion
         }
         
         private void schoolYearCbx_TextChanged(object sender, EventArgs e)
@@ -128,6 +145,7 @@ namespace SHSchool.CourseSelection.Forms
         private void buildCourseBtn_Click(object sender, EventArgs e)
         {
             #region "建立課程班級" 將datagridview資訊寫入 SubjectCourse_UDT
+            /*
             {
                 int count = 0;
 
@@ -224,28 +242,31 @@ namespace SHSchool.CourseSelection.Forms
                         subjectCourse.CourseName = "" + courseTypeCbx.Text + datarow.Cells["subjectName"].Value + " " + level + " " + mark[i];
                         subjectCourse.SubjectID = int.Parse("" + datarow.Tag.ToString());
                         subjectCourse.SubjectName = "" + datarow.Cells["subjectName"].Value;
+                        subjectCourse.Course_type = "" + courseTypeCbx.Text;
                         subjectCourse.SchoolYear = int.Parse(schoolYearCbx.Text);
                         subjectCourse.Semester = int.Parse(semesterCbx.Text);
                         subjectCourse.Level = int.Parse("" + datarow.Cells["level"].Value);
                         subjectCourse.Credit = int.Parse("" + datarow.Cells["credit"].Value);
-                        subjectCourse.Sore_type = "" + datarow.Cells["type"].Value;
+                        //subjectCourse.Sore_type = "" + datarow.Cells["type"].Value;
                         udt_list.Add(subjectCourse);
                     }
                     udt_list.SaveAll();
                 }
             }
+            */
             #endregion
-
+            
             int sy = int.Parse("" + schoolYearCbx.Text);
             int s = int.Parse("" + semesterCbx.Text);
+            string courseType = "" + courseTypeCbx.Text;
 
-            BuildCourse buildCourse = new BuildCourse(sy,s);
+            BuildCourse buildCourse = new BuildCourse(dataGridViewX1,sy,s,courseType);
             buildCourse.ShowDialog();
 
             ReloadDataGridView();
         }
 
-        // datagridview 欄位驗證
+        // DataGridView 欄位驗證
         private void dataGridViewX1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             int number = 0;

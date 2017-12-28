@@ -30,14 +30,18 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.semesterLb = new DevComponents.DotNetBar.LabelX();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
+            this.dataType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.courseName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.courseType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.subjectName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.schoolYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.semester = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.level = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.classLevel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.credit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.schoolYearLb = new DevComponents.DotNetBar.LabelX();
+            this.labelX2 = new DevComponents.DotNetBar.LabelX();
+            this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.buildCourseBtn = new DevComponents.DotNetBar.ButtonX();
             this.groupPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
@@ -51,10 +55,14 @@
             this.groupPanel1.BackColor = System.Drawing.Color.Transparent;
             this.groupPanel1.CanvasColor = System.Drawing.SystemColors.Control;
             this.groupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.groupPanel1.Controls.Add(this.semesterLb);
             this.groupPanel1.Controls.Add(this.dataGridViewX1);
+            this.groupPanel1.Controls.Add(this.schoolYearLb);
+            this.groupPanel1.Controls.Add(this.labelX2);
+            this.groupPanel1.Controls.Add(this.labelX1);
             this.groupPanel1.Location = new System.Drawing.Point(12, 12);
             this.groupPanel1.Name = "groupPanel1";
-            this.groupPanel1.Size = new System.Drawing.Size(576, 353);
+            this.groupPanel1.Size = new System.Drawing.Size(620, 401);
             // 
             // 
             // 
@@ -88,22 +96,39 @@
             this.groupPanel1.TabIndex = 0;
             this.groupPanel1.Text = "預覽開課結果";
             // 
+            // semesterLb
+            // 
+            this.semesterLb.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.semesterLb.BackgroundStyle.Class = "";
+            this.semesterLb.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.semesterLb.ForeColor = System.Drawing.Color.Blue;
+            this.semesterLb.Location = new System.Drawing.Point(174, 3);
+            this.semesterLb.Name = "semesterLb";
+            this.semesterLb.Size = new System.Drawing.Size(75, 23);
+            this.semesterLb.TabIndex = 5;
+            // 
             // dataGridViewX1
             // 
             this.dataGridViewX1.AllowUserToAddRows = false;
+            this.dataGridViewX1.AllowUserToDeleteRows = false;
+            this.dataGridViewX1.AllowUserToResizeColumns = false;
+            this.dataGridViewX1.AllowUserToResizeRows = false;
             this.dataGridViewX1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewX1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewX1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewX1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataType,
             this.courseName,
+            this.courseType,
             this.subjectName,
-            this.schoolYear,
-            this.semester,
             this.level,
-            this.credit,
-            this.type});
+            this.classLevel,
+            this.credit});
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
@@ -112,20 +137,39 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridViewX1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridViewX1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
-            this.dataGridViewX1.Location = new System.Drawing.Point(3, 3);
+            this.dataGridViewX1.Location = new System.Drawing.Point(3, 32);
             this.dataGridViewX1.MinimumSize = new System.Drawing.Size(564, 320);
             this.dataGridViewX1.Name = "dataGridViewX1";
+            this.dataGridViewX1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridViewX1.RowTemplate.Height = 24;
-            this.dataGridViewX1.Size = new System.Drawing.Size(564, 320);
+            this.dataGridViewX1.Size = new System.Drawing.Size(608, 339);
             this.dataGridViewX1.TabIndex = 0;
+            // 
+            // dataType
+            // 
+            this.dataType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dataType.HeaderText = "狀態";
+            this.dataType.Name = "dataType";
+            this.dataType.ReadOnly = true;
+            this.dataType.Width = 59;
             // 
             // courseName
             // 
             this.courseName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.courseName.HeaderText = "課程名稱";
             this.courseName.Name = "courseName";
+            this.courseName.ReadOnly = true;
             this.courseName.Width = 85;
+            // 
+            // courseType
+            // 
+            this.courseType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.courseType.HeaderText = "課程類別";
+            this.courseType.Name = "courseType";
+            this.courseType.ReadOnly = true;
+            this.courseType.Width = 85;
             // 
             // subjectName
             // 
@@ -135,22 +179,6 @@
             this.subjectName.ReadOnly = true;
             this.subjectName.Width = 85;
             // 
-            // schoolYear
-            // 
-            this.schoolYear.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.schoolYear.HeaderText = "學年";
-            this.schoolYear.Name = "schoolYear";
-            this.schoolYear.ReadOnly = true;
-            this.schoolYear.Width = 59;
-            // 
-            // semester
-            // 
-            this.semester.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.semester.HeaderText = "學期";
-            this.semester.Name = "semester";
-            this.semester.ReadOnly = true;
-            this.semester.Width = 59;
-            // 
             // level
             // 
             this.level.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -158,6 +186,13 @@
             this.level.Name = "level";
             this.level.ReadOnly = true;
             this.level.Width = 59;
+            // 
+            // classLevel
+            // 
+            this.classLevel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.classLevel.HeaderText = "班別";
+            this.classLevel.Name = "classLevel";
+            this.classLevel.Width = 59;
             // 
             // credit
             // 
@@ -167,13 +202,48 @@
             this.credit.ReadOnly = true;
             this.credit.Width = 59;
             // 
-            // type
+            // schoolYearLb
             // 
-            this.type.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.type.HeaderText = "分項類別";
-            this.type.Name = "type";
-            this.type.ReadOnly = true;
-            this.type.Width = 85;
+            this.schoolYearLb.BackColor = System.Drawing.Color.Transparent;
+            this.schoolYearLb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            // 
+            // 
+            // 
+            this.schoolYearLb.BackgroundStyle.Class = "";
+            this.schoolYearLb.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.schoolYearLb.ForeColor = System.Drawing.Color.Blue;
+            this.schoolYearLb.Location = new System.Drawing.Point(48, 3);
+            this.schoolYearLb.Name = "schoolYearLb";
+            this.schoolYearLb.Size = new System.Drawing.Size(75, 23);
+            this.schoolYearLb.TabIndex = 4;
+            // 
+            // labelX2
+            // 
+            this.labelX2.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX2.BackgroundStyle.Class = "";
+            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX2.Location = new System.Drawing.Point(129, 3);
+            this.labelX2.Name = "labelX2";
+            this.labelX2.Size = new System.Drawing.Size(39, 23);
+            this.labelX2.TabIndex = 3;
+            this.labelX2.Text = "學期:";
+            // 
+            // labelX1
+            // 
+            this.labelX1.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX1.BackgroundStyle.Class = "";
+            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX1.Location = new System.Drawing.Point(3, 3);
+            this.labelX1.Name = "labelX1";
+            this.labelX1.Size = new System.Drawing.Size(39, 23);
+            this.labelX1.TabIndex = 2;
+            this.labelX1.Text = "學年:";
             // 
             // buildCourseBtn
             // 
@@ -181,7 +251,7 @@
             this.buildCourseBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buildCourseBtn.BackColor = System.Drawing.Color.Transparent;
             this.buildCourseBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buildCourseBtn.Location = new System.Drawing.Point(513, 376);
+            this.buildCourseBtn.Location = new System.Drawing.Point(557, 424);
             this.buildCourseBtn.Name = "buildCourseBtn";
             this.buildCourseBtn.Size = new System.Drawing.Size(75, 23);
             this.buildCourseBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -193,10 +263,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(600, 403);
+            this.ClientSize = new System.Drawing.Size(644, 451);
             this.Controls.Add(this.buildCourseBtn);
             this.Controls.Add(this.groupPanel1);
             this.DoubleBuffered = true;
+            this.MinimumSize = new System.Drawing.Size(660, 490);
             this.Name = "BuildCourse";
             this.Text = "建立課程班級";
             this.groupPanel1.ResumeLayout(false);
@@ -210,12 +281,16 @@
         private DevComponents.DotNetBar.Controls.GroupPanel groupPanel1;
         private DevComponents.DotNetBar.Controls.DataGridViewX dataGridViewX1;
         private DevComponents.DotNetBar.ButtonX buildCourseBtn;
+        private DevComponents.DotNetBar.LabelX labelX1;
+        private DevComponents.DotNetBar.LabelX labelX2;
+        private DevComponents.DotNetBar.LabelX schoolYearLb;
+        private DevComponents.DotNetBar.LabelX semesterLb;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataType;
         private System.Windows.Forms.DataGridViewTextBoxColumn courseName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn courseType;
         private System.Windows.Forms.DataGridViewTextBoxColumn subjectName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn schoolYear;
-        private System.Windows.Forms.DataGridViewTextBoxColumn semester;
         private System.Windows.Forms.DataGridViewTextBoxColumn level;
+        private System.Windows.Forms.DataGridViewTextBoxColumn classLevel;
         private System.Windows.Forms.DataGridViewTextBoxColumn credit;
-        private System.Windows.Forms.DataGridViewTextBoxColumn type;
     }
 }

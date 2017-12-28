@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
             this.stuNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -46,7 +47,6 @@
             this.subjectCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.saveBtn = new DevComponents.DotNetBar.ButtonX();
             this.closeBtn = new DevComponents.DotNetBar.ButtonX();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.groupPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.SuspendLayout();
@@ -63,7 +63,7 @@
             this.groupPanel1.Controls.Add(this.dataGridViewX1);
             this.groupPanel1.Location = new System.Drawing.Point(12, 41);
             this.groupPanel1.Name = "groupPanel1";
-            this.groupPanel1.Size = new System.Drawing.Size(580, 413);
+            this.groupPanel1.Size = new System.Drawing.Size(637, 480);
             // 
             // 
             // 
@@ -97,8 +97,18 @@
             this.groupPanel1.TabIndex = 0;
             this.groupPanel1.Text = "學生分班";
             // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(625, 26);
+            this.flowLayoutPanel1.TabIndex = 4;
+            // 
             // dataGridViewX1
             // 
+            this.dataGridViewX1.AllowUserToAddRows = false;
+            this.dataGridViewX1.AllowUserToResizeColumns = false;
+            this.dataGridViewX1.AllowUserToResizeRows = false;
             this.dataGridViewX1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -112,19 +122,22 @@
             this.saetNo,
             this.attendNow,
             this.attendAfter});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridViewX1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridViewX1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
             this.dataGridViewX1.Location = new System.Drawing.Point(3, 35);
             this.dataGridViewX1.Name = "dataGridViewX1";
+            this.dataGridViewX1.ReadOnly = true;
+            this.dataGridViewX1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridViewX1.RowTemplate.Height = 24;
-            this.dataGridViewX1.Size = new System.Drawing.Size(568, 348);
+            this.dataGridViewX1.Size = new System.Drawing.Size(625, 415);
             this.dataGridViewX1.TabIndex = 0;
             // 
             // stuNumber
@@ -132,6 +145,7 @@
             this.stuNumber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.stuNumber.HeaderText = "學號";
             this.stuNumber.Name = "stuNumber";
+            this.stuNumber.ReadOnly = true;
             this.stuNumber.Width = 59;
             // 
             // name
@@ -139,6 +153,7 @@
             this.name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.name.HeaderText = "姓名";
             this.name.Name = "name";
+            this.name.ReadOnly = true;
             this.name.Width = 59;
             // 
             // gender
@@ -146,6 +161,7 @@
             this.gender.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.gender.HeaderText = "性別";
             this.gender.Name = "gender";
+            this.gender.ReadOnly = true;
             this.gender.Width = 59;
             // 
             // className
@@ -153,6 +169,7 @@
             this.className.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.className.HeaderText = "班級";
             this.className.Name = "className";
+            this.className.ReadOnly = true;
             this.className.Width = 59;
             // 
             // saetNo
@@ -160,6 +177,7 @@
             this.saetNo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.saetNo.HeaderText = "座號";
             this.saetNo.Name = "saetNo";
+            this.saetNo.ReadOnly = true;
             this.saetNo.Width = 59;
             // 
             // attendNow
@@ -167,6 +185,7 @@
             this.attendNow.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.attendNow.HeaderText = "原修課";
             this.attendNow.Name = "attendNow";
+            this.attendNow.ReadOnly = true;
             this.attendNow.Width = 72;
             // 
             // attendAfter
@@ -174,6 +193,7 @@
             this.attendAfter.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.attendAfter.HeaderText = "調整後修課";
             this.attendAfter.Name = "attendAfter";
+            this.attendAfter.ReadOnly = true;
             this.attendAfter.Width = 98;
             // 
             // labelX1
@@ -261,12 +281,13 @@
             this.saveBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.saveBtn.BackColor = System.Drawing.Color.Transparent;
             this.saveBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.saveBtn.Location = new System.Drawing.Point(397, 460);
+            this.saveBtn.Location = new System.Drawing.Point(454, 527);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(75, 23);
             this.saveBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.saveBtn.TabIndex = 7;
             this.saveBtn.Text = "儲存";
+            this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
             // 
             // closeBtn
             // 
@@ -274,25 +295,19 @@
             this.closeBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.closeBtn.BackColor = System.Drawing.Color.Transparent;
             this.closeBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.closeBtn.Location = new System.Drawing.Point(517, 460);
+            this.closeBtn.Location = new System.Drawing.Point(574, 527);
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(75, 23);
             this.closeBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.closeBtn.TabIndex = 8;
             this.closeBtn.Text = "關閉";
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(568, 26);
-            this.flowLayoutPanel1.TabIndex = 4;
+            this.closeBtn.Click += new System.EventHandler(this.closeBtn_Click);
             // 
             // ManualDisClass
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(604, 495);
+            this.ClientSize = new System.Drawing.Size(661, 562);
             this.Controls.Add(this.closeBtn);
             this.Controls.Add(this.saveBtn);
             this.Controls.Add(this.subjectCbx);

@@ -64,5 +64,13 @@ namespace SHSchool.CourseSelection.UDT
         /// </summary>
         [FISCA.UDT.Field(Field = "score_type", Indexed = false)]
         public string Sore_type { get; set; }
+
+        ///<summary>
+        /// 課程類別
+        ///</summary>
+        [FISCA.UDT.Field(Field = "course_type", Indexed = false)]
+        public string Course_type { get; set; }
+
+
     }
 }

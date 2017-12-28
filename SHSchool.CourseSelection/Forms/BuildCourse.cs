@@ -16,172 +16,299 @@ namespace SHSchool.CourseSelection.Forms
 {
     public partial class BuildCourse : BaseForm
     {
-        public BuildCourse(int sy,int s)
+        int schoolYear, semester;
+        public BuildCourse(DataGridView dgv,int sy,int s,string type)
         {
             InitializeComponent();
 
+            schoolYear = sy;
+            semester = s;
+
+            // Init Lb
+            schoolYearLb.Text = "" + sy;
+            semesterLb.Text = "" + s;
+
             #region Init DGV
             {
-                string sql = string.Format(@"
-                SELECT * FROM 
-                    $ischool.course_selection.subjectcourse 
-                WHERE
-                    school_year = {0}
-                    AND semester = {1}"
-                , sy, s);
-                QueryHelper query = new QueryHelper();
-                DataTable dt = query.Select(sql);
-
-                foreach (DataRow dr in dt.Rows)
+                foreach (DataGridViewRow dr in dgv.Rows)
                 {
-                    DataGridViewRow datarow = new DataGridViewRow();
-                    datarow.CreateCells(dataGridViewX1);
+                    // 設定開班數
+                    int count = int.Parse("" + dr.Cells["buildCourseCount"].Value);
+                    // 已開班數
+                    int _count = int.Parse("" + dr.Cells["courseCount"].Value);
+                    
+                    // 已開班數 = 設定開班數 : 修改
+                    if (_count == count)
+                    {
+                        int sbID = int.Parse("" + dr.Tag);
+                        QueryHelper qh = new QueryHelper();
+                        string sql = string.Format(@"
+                            SELECT *
+                            FROM
+                                $ischool.course_selection.subjectcourse
+                            WHERE 
+                                subject_id = {0}
+                        ",sbID);
+                        DataTable subjectCourseUDT = qh.Select(sql);
+                        foreach (DataRow scr in subjectCourseUDT.Rows)
+                        {
+                            DataGridViewRow drX1 = new DataGridViewRow();
+                            drX1.CreateCells(dataGridViewX1);
+                            int index = 0;
+                            drX1.Cells[index++].Value = "修改";
+                            drX1.Cells[index++].Value = scr["course_name"];
+                            drX1.Cells[index++].Value = scr["course_type"];
+                            drX1.Cells[index++].Value = scr["subject_name"];
+                            drX1.Cells[index++].Value = scr["level"];
+                            drX1.Cells[index++].Value = "班別";
+                            drX1.Cells[index++].Value = scr["credit"];
+                            drX1.Tag = scr["uid"];
 
-                    int index = 0;
-                    datarow.Cells[index++].Value = "" + dr["course_name"];
-                    datarow.Cells[index++].Value = "" + dr["subject_name"];
-                    datarow.Cells[index++].Value = "" + dr["school_year"];
-                    datarow.Cells[index++].Value = "" + dr["semester"];
-                    datarow.Cells[index++].Value = "" + dr["level"];
-                    datarow.Cells[index++].Value = "" + dr["credit"];
-                    datarow.Cells[index++].Value = "" + dr["score_type"];
-                    datarow.Tag = dr["course_id"];
-                    dataGridViewX1.Rows.Add(datarow);
+                            dataGridViewX1.Rows.Add(drX1);
+                        }
+                    }
+
+                    // 已開班數 > 設定開班數 : 刪除
+                    if (_count > count)
+                    {
+                        int sbID = int.Parse("" + dr.Tag);
+                        QueryHelper qh = new QueryHelper();
+                        string sql = string.Format(@"
+                            SELECT *
+                            FROM
+                                $ischool.course_selection.subjectcourse
+                            WHERE 
+                                subject_id = {0}
+                        ", sbID);
+                        DataTable subjectCourseUDT = qh.Select(sql);
+                        int n = 0;
+                        foreach (DataRow scr in subjectCourseUDT.Rows)
+                        {
+                            DataGridViewRow drX1 = new DataGridViewRow();
+                            drX1.CreateCells(dataGridViewX1);
+                            n++;
+                            if (n > count)
+                            {
+                                drX1.Cells[0].Value = "刪除";
+                                drX1.DefaultCellStyle.BackColor = Color.Red;
+                            }
+                            else
+                            {
+                                drX1.Cells[0].Value = "修改";
+                            }
+                            int index = 1;
+                            drX1.Cells[index++].Value = scr["course_name"];
+                            drX1.Cells[index++].Value = scr["course_type"];
+                            drX1.Cells[index++].Value = scr["subject_name"];
+                            drX1.Cells[index++].Value = scr["level"];
+                            drX1.Cells[index++].Value = "班別";
+                            drX1.Cells[index++].Value = scr["credit"];
+                            drX1.Tag = scr["uid"];
+
+                            dataGridViewX1.Rows.Add(drX1);
+                        }
+                    }
+
+                    // 已開班數 < 設定開班數 : 新增
+                    if (_count < count)
+                    {
+                        int sbID = int.Parse("" + dr.Tag);
+                        QueryHelper qh = new QueryHelper();
+                        string sql = string.Format(@"
+                            SELECT *
+                            FROM
+                                $ischool.course_selection.subjectcourse
+                            WHERE 
+                                subject_id = {0}
+                        ", sbID);
+                        DataTable subjectCourseUDT = qh.Select(sql);
+                        int n = 0;
+                        foreach (DataRow scr in subjectCourseUDT.Rows)
+                        {
+                            DataGridViewRow drX1 = new DataGridViewRow();
+                            drX1.CreateCells(dataGridViewX1);
+                            n++;
+                            int index = 0;
+                            drX1.Cells[index++].Value = "修改";
+                            drX1.Cells[index++].Value = scr["course_name"];
+                            drX1.Cells[index++].Value = scr["course_type"];
+                            drX1.Cells[index++].Value = scr["subject_name"];
+                            drX1.Cells[index++].Value = scr["level"];
+                            drX1.Cells[index++].Value = "班別";
+                            drX1.Cells[index++].Value = scr["credit"];
+                            drX1.Tag = scr["uid"];
+
+                            dataGridViewX1.Rows.Add(drX1);
+                        }
+                        for (int i = 1;i <= count - n; i++)
+                        {
+                            InitDataGridView("新增", i + n , type, dr);
+                        }
+                    }
+
                 }
             }
             #endregion
-            
+        }
+
+        public void InitDataGridView(string _dataType,int i,string type,DataGridViewRow dr)
+        {
+            #region Switch 級別、班別
+            string[] mark = new string[10];
+            string level = "";
+            switch (i)
+            {
+                case 1:
+                    mark[i] = "A";
+                    break;
+                case 2:
+                    mark[i] = "B";
+                    break;
+                case 3:
+                    mark[i] = "C";
+                    break;
+                case 4:
+                    mark[i] = "D";
+                    break;
+                case 5:
+                    mark[i] = "E";
+                    break;
+                case 6:
+                    mark[i] = "F";
+                    break;
+                case 7:
+                    mark[i] = "G";
+                    break;
+                case 8:
+                    mark[i] = "H";
+                    break;
+                case 9:
+                    mark[i] = "I";
+                    break;
+                case 10:
+                    mark[i] = "J";
+                    break;
+                default:
+                    MessageBox.Show("已超出開班數上限");
+                    break;
+            }
+
+            switch (int.Parse("" + dr.Cells["level"].Value))
+            {
+                case 1:
+                    level = "I";
+                    break;
+                case 2:
+                    level = "II";
+                    break;
+                case 3:
+                    level = "III";
+                    break;
+            }
+            #endregion
+
+            DataGridViewRow drX1 = new DataGridViewRow();
+            drX1.CreateCells(dataGridViewX1);
+            int index = 0;
+            drX1.Cells[index++].Value = _dataType;
+            drX1.Cells[index++].Value = type +" "+ dr.Cells["subjectName"].Value + " "+level +" "+ mark[i];
+            drX1.Cells[index++].Value = type;
+            drX1.Cells[index++].Value = dr.Cells["subjectName"].Value;
+            drX1.Cells[index++].Value = dr.Cells["level"].Value;
+            drX1.Cells[index++].Value = mark[i];
+            drX1.Cells[index++].Value = dr.Cells["credit"].Value;
+            if (_dataType == "刪除")
+            {
+                drX1.DefaultCellStyle.BackColor = Color.Red;
+            }
+            // 這邊的TAG 是 subjectID
+            drX1.Tag = dr.Tag;
+            dataGridViewX1.Rows.Add(drX1);
         }
         
         // 開課
         private void buildCourseBtn_Click(object sender, EventArgs e)
         {
-            string showText = "";
-            QueryHelper queryHelper = new QueryHelper();
-            /*
-             int courseID = int.Parse("" + dataGridViewX1.Rows[e.RowIndex].Tag);
-            // 課程名稱修改時，更新SubjectCourse 課程欄位名稱
             AccessHelper access = new AccessHelper();
-            List<UDT.SubjectCourse> sc_list = new List<UDT.SubjectCourse>();
-            foreach (UDT.SubjectCourse sc in sc_list)
+            List<UDT.SubjectCourse> subCourseList = access.Select<UDT.SubjectCourse>();
+
+            foreach (DataGridViewRow dr in dataGridViewX1.Rows)
             {
-                if (sc.CourseID == courseID)
+                
+                if ("" + dr.Cells["dataType"].Value == "新增")
                 {
-                    sc.CourseName = "" + dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                    //-- Course Table 新增課程資訊
+                    //-- SubjectCourse UDT 同步 courseID
+                    SHCourseRecord scr = new SHCourseRecord();
+                    scr.Subject = "" + dr.Cells["subjectName"].Value;
+                    scr.Level = int.Parse("" + dr.Cells["level"].Value);
+                    scr.Name = "" + dr.Cells["courseName"].Value;
+                    scr.Credit = int.Parse("" + dr.Cells["credit"].Value);
+                    scr.SchoolYear = int.Parse(schoolYearLb.Text);
+                    scr.Semester = int.Parse(semesterLb.Text);
+
+                    string courseID = SHCourse.Insert(scr);
+                    
+                    // -- SubjectCourse UDT 新增 科目課程資訊
+                    UDT.SubjectCourse sb = new UDT.SubjectCourse();
+                    sb.SubjectID = int.Parse("" + dr.Tag);
+                    sb.CourseID = int.Parse("" + courseID);
+                    sb.SubjectName = "" + dr.Cells["subjectName"].Value;
+                    sb.CourseName = "" + dr.Cells["courseName"].Value;
+                    sb.Course_type = "" + dr.Cells["courseType"].Value;
+                    sb.Level = int.Parse("" + dr.Cells["level"].Value);
+                    sb.Credit = int.Parse("" + dr.Cells["credit"].Value);
+                    sb.SchoolYear = int.Parse(schoolYearLb.Text);
+                    sb.Semester = int.Parse(semesterLb.Text);
+
+                    sb.Save();
+
                 }
-            }
-            access.UpdateValues(sc_list);
-             */
-            foreach (DataGridViewRow datarow in dataGridViewX1.Rows)
-            {
-                string _courseName = "" + datarow.Cells["courseName"].Value;
-                string _subjectName = "" + datarow.Cells["subjectName"].Value;
-                int _schoolYear = int.Parse("" + datarow.Cells["schoolYear"].Value);
-                int _semester = int.Parse("" + datarow.Cells["semester"].Value);
-                int _level = int.Parse("" + datarow.Cells["level"].Value);
-                int _credit = int.Parse("" + datarow.Cells["credit"].Value);
-                string _type = "" + datarow.Cells["type"].Value;
-
-                #region 判斷是否開過課--dtCourse
-
-                string sqlSelect = string.Format(@"
-                    SELECT * FROM course 
-                    WHERE course_name = '{0}' 
-                    AND subject = '{1}' 
-                    AND school_year = {2} 
-                    AND semester = {3}
-                ", _courseName, _subjectName, _schoolYear, _semester);
-
-                DataTable dtCourse = queryHelper.Select(sqlSelect);
-
-                #endregion
-
-                #region 第一次開課
-                if (dtCourse.Rows.Count == 0)
+                if ("" + dr.Cells["dataType"].Value == "修改")
                 {
-                    // Course table 新增選修科目課程資訊
-                    string sqlInsert = string.Format(@"
-                    INSERT INTO 
-                        course
-                        (course_name,subject,school_year,semester,subj_level,credit,score_type) 
-                    VALUES('{0}','{1}',{2},{3},{4},{5},'{6}')",
-                    _courseName, _subjectName, _schoolYear, _semester, _level, _credit, _type
-                    );
-                    UpdateHelper updateHelper = new UpdateHelper();
-                    updateHelper.Execute(sqlInsert);
+                    UpdateHelper uph = new UpdateHelper();
+                    string updateSql = string.Format(@"
+                        UPDATE $ischool.course_selection.subjectcourse 
+                        SET course_name = '{0}'
+                        WHERE uid = {1}
+                    ","" + dr.Cells["courseName"].Value, int.Parse("" + dr.Tag));
+                    uph.Execute(updateSql);
+                }
+                if ("" + dr.Cells["dataType"].Value == "刪除")
+                {
+                    UpdateHelper uph = new UpdateHelper();
 
-                    // 開課成功 同步課程ID -> Subject_Course.course_id
-                    string sqlSelectCourseID = string.Format(@"
-                        SELECT id
-                        FROM course
-                        WHERE course_name = '{0}'
-                        AND subject = '{1}' 
-                        AND school_year = {2} 
-                        AND semester = {3}
-                    ", _courseName, _subjectName, _schoolYear, _semester);
-                    DataTable dtCourseID = queryHelper.Select(sqlSelectCourseID);
+                    // 取得要刪除的課程ID
+                    QueryHelper qh = new QueryHelper();
+                    string selDeleteCourseID = string.Format(@"
+                        SELECT course_id
+                        From $ischool.course_selection.subjectcourse 
+                        WHERE uid = {0}
+                    ", int.Parse("" + dr.Tag));
+                    DataTable dt = qh.Select(selDeleteCourseID);
 
-                    foreach (DataRow dr in dtCourseID.Rows)
+                    // Course Table 刪除課程資訊
+                    // 刪除課程資訊
+                    foreach (DataRow datarow in dt.Rows)
                     {
-                        string sqlUpdate = string.Format(@"
-                        UPDATE $ischool.course_selection.subjectcourse
-                        SET course_id = {0}
-                        WHERE $ischool.course_selection.subjectcourse.course_name = '{1}'
-                        AND subject_name = '{2}' 
-                        AND school_year = {3} 
-                        AND semester = {4}
-                        ", "" + dr["id"], _courseName, _subjectName, _schoolYear, _semester);
-                        updateHelper.Execute(sqlUpdate);
+                        int course_id = int.Parse("" + datarow["course_id"]);
+                        string deleteSql = string.Format(@"
+                            DELETE FROM course
+                            WHERE id = {0}
+                        ",course_id);
+                        uph.Execute(deleteSql);
                     }
 
-                    // 紀錄開課成功的 課程名稱
-                    showText += _courseName + ",";
+                    // SubjectCourse UDT 刪除科目課程資訊
+                    string updateSql = string.Format(@"
+                        DELETE FROM $ischool.course_selection.subjectcourse 
+                        WHERE uid = {0}
+                    ", int.Parse("" + dr.Tag));
+                    uph.Execute(updateSql);
                 }
-                #endregion
-
-                #region 重複開課
-                if (dtCourse.Rows.Count > 0)
-                {
-                    UpdateHelper updateHelper = new UpdateHelper();
-                    // 刪除舊的開課資訊
-                    string sqlDelete = string.Format(@"
-                        DELETE FROM
-                            course
-                        WHERE
-                            subject = '{0}'
-                            AND school_year = {1}
-                            AND semester = {2}
-                        ", _subjectName, _schoolYear, _semester);
-                    updateHelper.Execute(sqlDelete);
-
-                    // 新增新的開課資訊
-                    string sqlInsert = string.Format(@"
-                        INSERT INTO 
-                            course
-                            (course_name,subject,school_year,semester,subj_level,credit,score_type) 
-                         VALUES('{0}','{1}',{2},{3},{4},{5},'{6}')",
-                     _courseName, _subjectName, _schoolYear, _semester, _level, _credit, _type
-                        );
-                    updateHelper.Execute(sqlInsert);
-
-                    // 同步選修科目課程ID 與 課程ID，透過課程名稱為條件
-                    foreach (DataRow dr in dtCourse.Rows)
-                    {
-                        string sqlUpdate = string.Format(@"
-                            UPDATE $ischool.course_selection.subjectcourse
-                            SET course_id = {0}
-                            WHERE $ischool.course_selection.subjectcourse.course_name = '{1}'
-                            ", "" + dr["id"], _courseName);
-                        updateHelper.Execute(sqlUpdate);
-                    }
-
-                }
-                showText += _courseName + ",";
-                #endregion
-
             }
-
-            MessageBox.Show(showText + "課程建立成功!");
+            
+            MessageBox.Show( "課程建立成功!");
             this.Close();
         }
     }
