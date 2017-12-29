@@ -90,7 +90,8 @@ namespace SHSchool.CourseSelection.Forms
                             if (n > count)
                             {
                                 drX1.Cells[0].Value = "刪除";
-                                drX1.DefaultCellStyle.BackColor = Color.Red;
+                                //drX1.DefaultCellStyle.BackColor = Color.Red;
+                                drX1.DefaultCellStyle.ForeColor = Color.Red;
                             }
                             else
                             {
@@ -145,7 +146,6 @@ namespace SHSchool.CourseSelection.Forms
                             InitDataGridView("新增", i + n , type, dr);
                         }
                     }
-
                 }
             }
             #endregion
@@ -189,7 +189,7 @@ namespace SHSchool.CourseSelection.Forms
                     mark[i] = "J";
                     break;
                 default:
-                    MessageBox.Show("已超出開班數上限");
+                    mark[i] = "";
                     break;
             }
 
@@ -206,6 +206,13 @@ namespace SHSchool.CourseSelection.Forms
                     break;
             }
             #endregion
+            
+            //如果 設定開班數 count = 1，不加班別
+            if (int.Parse("" + dr.Cells["buildCourseCount"].Value) == 1)
+            {
+                mark[i] = "";
+            }
+            
 
             DataGridViewRow drX1 = new DataGridViewRow();
             drX1.CreateCells(dataGridViewX1);
@@ -219,7 +226,8 @@ namespace SHSchool.CourseSelection.Forms
             drX1.Cells[index++].Value = dr.Cells["credit"].Value;
             if (_dataType == "刪除")
             {
-                drX1.DefaultCellStyle.BackColor = Color.Red;
+                //drX1.DefaultCellStyle.BackColor = Color.Red;
+                drX1.DefaultCellStyle.ForeColor = Color.Red;
             }
             // 這邊的TAG 是 subjectID
             drX1.Tag = dr.Tag;

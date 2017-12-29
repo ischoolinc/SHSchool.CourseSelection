@@ -32,10 +32,6 @@
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.semesterLb = new DevComponents.DotNetBar.LabelX();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
-            this.schoolYearLb = new DevComponents.DotNetBar.LabelX();
-            this.labelX2 = new DevComponents.DotNetBar.LabelX();
-            this.labelX1 = new DevComponents.DotNetBar.LabelX();
-            this.buildCourseBtn = new DevComponents.DotNetBar.ButtonX();
             this.dataType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.courseName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.courseType = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -43,6 +39,10 @@
             this.level = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.classType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.credit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.schoolYearLb = new DevComponents.DotNetBar.LabelX();
+            this.labelX2 = new DevComponents.DotNetBar.LabelX();
+            this.labelX1 = new DevComponents.DotNetBar.LabelX();
+            this.buildCourseBtn = new DevComponents.DotNetBar.ButtonX();
             this.groupPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.SuspendLayout();
@@ -60,7 +60,7 @@
             this.groupPanel1.Controls.Add(this.schoolYearLb);
             this.groupPanel1.Controls.Add(this.labelX2);
             this.groupPanel1.Controls.Add(this.labelX1);
-            this.groupPanel1.Location = new System.Drawing.Point(12, 12);
+            this.groupPanel1.Location = new System.Drawing.Point(11, 12);
             this.groupPanel1.Name = "groupPanel1";
             this.groupPanel1.Size = new System.Drawing.Size(620, 401);
             // 
@@ -107,7 +107,7 @@
             this.semesterLb.ForeColor = System.Drawing.Color.Blue;
             this.semesterLb.Location = new System.Drawing.Point(174, 3);
             this.semesterLb.Name = "semesterLb";
-            this.semesterLb.Size = new System.Drawing.Size(75, 23);
+            this.semesterLb.Size = new System.Drawing.Size(75, 24);
             this.semesterLb.TabIndex = 5;
             // 
             // dataGridViewX1
@@ -139,71 +139,15 @@
             this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewX1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridViewX1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
-            this.dataGridViewX1.Location = new System.Drawing.Point(3, 32);
-            this.dataGridViewX1.MinimumSize = new System.Drawing.Size(564, 320);
+            this.dataGridViewX1.ImeMode = System.Windows.Forms.ImeMode.Alpha;
+            this.dataGridViewX1.Location = new System.Drawing.Point(3, 31);
+            this.dataGridViewX1.MinimumSize = new System.Drawing.Size(565, 320);
             this.dataGridViewX1.Name = "dataGridViewX1";
             this.dataGridViewX1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridViewX1.RowTemplate.Height = 24;
             this.dataGridViewX1.Size = new System.Drawing.Size(608, 339);
             this.dataGridViewX1.TabIndex = 0;
             this.dataGridViewX1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewX1_CellValueChanged);
-            // 
-            // schoolYearLb
-            // 
-            this.schoolYearLb.BackColor = System.Drawing.Color.Transparent;
-            this.schoolYearLb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            // 
-            // 
-            // 
-            this.schoolYearLb.BackgroundStyle.Class = "";
-            this.schoolYearLb.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.schoolYearLb.ForeColor = System.Drawing.Color.Blue;
-            this.schoolYearLb.Location = new System.Drawing.Point(48, 3);
-            this.schoolYearLb.Name = "schoolYearLb";
-            this.schoolYearLb.Size = new System.Drawing.Size(75, 23);
-            this.schoolYearLb.TabIndex = 4;
-            // 
-            // labelX2
-            // 
-            this.labelX2.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX2.BackgroundStyle.Class = "";
-            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX2.Location = new System.Drawing.Point(129, 3);
-            this.labelX2.Name = "labelX2";
-            this.labelX2.Size = new System.Drawing.Size(39, 23);
-            this.labelX2.TabIndex = 3;
-            this.labelX2.Text = "學期:";
-            // 
-            // labelX1
-            // 
-            this.labelX1.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX1.BackgroundStyle.Class = "";
-            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX1.Location = new System.Drawing.Point(3, 3);
-            this.labelX1.Name = "labelX1";
-            this.labelX1.Size = new System.Drawing.Size(39, 23);
-            this.labelX1.TabIndex = 2;
-            this.labelX1.Text = "學年:";
-            // 
-            // buildCourseBtn
-            // 
-            this.buildCourseBtn.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.buildCourseBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buildCourseBtn.BackColor = System.Drawing.Color.Transparent;
-            this.buildCourseBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buildCourseBtn.Location = new System.Drawing.Point(557, 424);
-            this.buildCourseBtn.Name = "buildCourseBtn";
-            this.buildCourseBtn.Size = new System.Drawing.Size(75, 23);
-            this.buildCourseBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.buildCourseBtn.TabIndex = 1;
-            this.buildCourseBtn.Text = "開課";
-            this.buildCourseBtn.Click += new System.EventHandler(this.buildCourseBtn_Click);
             // 
             // dataType
             // 
@@ -259,6 +203,63 @@
             this.credit.Name = "credit";
             this.credit.ReadOnly = true;
             this.credit.Width = 59;
+            // 
+            // schoolYearLb
+            // 
+            this.schoolYearLb.BackColor = System.Drawing.Color.Transparent;
+            this.schoolYearLb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            // 
+            // 
+            // 
+            this.schoolYearLb.BackgroundStyle.Class = "";
+            this.schoolYearLb.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.schoolYearLb.ForeColor = System.Drawing.Color.Blue;
+            this.schoolYearLb.Location = new System.Drawing.Point(48, 3);
+            this.schoolYearLb.Name = "schoolYearLb";
+            this.schoolYearLb.Size = new System.Drawing.Size(75, 24);
+            this.schoolYearLb.TabIndex = 4;
+            // 
+            // labelX2
+            // 
+            this.labelX2.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX2.BackgroundStyle.Class = "";
+            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX2.Location = new System.Drawing.Point(129, 3);
+            this.labelX2.Name = "labelX2";
+            this.labelX2.Size = new System.Drawing.Size(39, 24);
+            this.labelX2.TabIndex = 3;
+            this.labelX2.Text = "學期:";
+            // 
+            // labelX1
+            // 
+            this.labelX1.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX1.BackgroundStyle.Class = "";
+            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX1.Location = new System.Drawing.Point(3, 3);
+            this.labelX1.Name = "labelX1";
+            this.labelX1.Size = new System.Drawing.Size(39, 24);
+            this.labelX1.TabIndex = 2;
+            this.labelX1.Text = "學年:";
+            // 
+            // buildCourseBtn
+            // 
+            this.buildCourseBtn.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buildCourseBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buildCourseBtn.BackColor = System.Drawing.Color.Transparent;
+            this.buildCourseBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buildCourseBtn.Location = new System.Drawing.Point(557, 424);
+            this.buildCourseBtn.Name = "buildCourseBtn";
+            this.buildCourseBtn.Size = new System.Drawing.Size(75, 24);
+            this.buildCourseBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.buildCourseBtn.TabIndex = 1;
+            this.buildCourseBtn.Text = "開課";
+            this.buildCourseBtn.Click += new System.EventHandler(this.buildCourseBtn_Click);
             // 
             // BuildCourse
             // 

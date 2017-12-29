@@ -28,14 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
+            this.subjectName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.level = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.credit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.studselect_limit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.buildCourseCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.courseCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buildCourseBtn = new DevComponents.DotNetBar.ButtonX();
             this.schoolYearCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.semesterCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
@@ -43,12 +49,6 @@
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.courseTypeCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.labelX3 = new DevComponents.DotNetBar.LabelX();
-            this.subjectName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.level = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.credit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.studselect_limit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.buildCourseCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.courseCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.SuspendLayout();
@@ -65,7 +65,7 @@
             this.groupPanel1.Location = new System.Drawing.Point(12, 45);
             this.groupPanel1.MinimumSize = new System.Drawing.Size(576, 294);
             this.groupPanel1.Name = "groupPanel1";
-            this.groupPanel1.Size = new System.Drawing.Size(576, 342);
+            this.groupPanel1.Size = new System.Drawing.Size(642, 412);
             // 
             // 
             // 
@@ -114,23 +114,82 @@
             this.studselect_limit,
             this.buildCourseCount,
             this.courseCount});
-            dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle30.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle30.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle30.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle30.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle30.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle30.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle30;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridViewX1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridViewX1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
+            this.dataGridViewX1.ImeMode = System.Windows.Forms.ImeMode.Alpha;
             this.dataGridViewX1.Location = new System.Drawing.Point(3, 3);
             this.dataGridViewX1.MinimumSize = new System.Drawing.Size(564, 230);
             this.dataGridViewX1.Name = "dataGridViewX1";
             this.dataGridViewX1.RowTemplate.Height = 24;
-            this.dataGridViewX1.Size = new System.Drawing.Size(564, 309);
+            this.dataGridViewX1.Size = new System.Drawing.Size(630, 379);
             this.dataGridViewX1.TabIndex = 0;
             this.dataGridViewX1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewX1_CellEndEdit);
+            // 
+            // subjectName
+            // 
+            this.subjectName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.subjectName.HeaderText = "科目名稱";
+            this.subjectName.Name = "subjectName";
+            this.subjectName.ReadOnly = true;
+            this.subjectName.Width = 85;
+            // 
+            // level
+            // 
+            this.level.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.level.DefaultCellStyle = dataGridViewCellStyle1;
+            this.level.HeaderText = "級別";
+            this.level.Name = "level";
+            this.level.ReadOnly = true;
+            this.level.Width = 59;
+            // 
+            // credit
+            // 
+            this.credit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.credit.DefaultCellStyle = dataGridViewCellStyle2;
+            this.credit.HeaderText = "學分";
+            this.credit.Name = "credit";
+            this.credit.ReadOnly = true;
+            this.credit.Width = 59;
+            // 
+            // studselect_limit
+            // 
+            this.studselect_limit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.studselect_limit.DefaultCellStyle = dataGridViewCellStyle3;
+            this.studselect_limit.HeaderText = "選課人數";
+            this.studselect_limit.Name = "studselect_limit";
+            this.studselect_limit.ReadOnly = true;
+            this.studselect_limit.Width = 85;
+            // 
+            // buildCourseCount
+            // 
+            this.buildCourseCount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.buildCourseCount.DefaultCellStyle = dataGridViewCellStyle4;
+            this.buildCourseCount.HeaderText = "設定開班數";
+            this.buildCourseCount.Name = "buildCourseCount";
+            this.buildCourseCount.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.buildCourseCount.Width = 98;
+            // 
+            // courseCount
+            // 
+            this.courseCount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.courseCount.DefaultCellStyle = dataGridViewCellStyle5;
+            this.courseCount.HeaderText = "已開班數";
+            this.courseCount.Name = "courseCount";
+            this.courseCount.ReadOnly = true;
+            this.courseCount.Width = 85;
             // 
             // buildCourseBtn
             // 
@@ -138,7 +197,7 @@
             this.buildCourseBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buildCourseBtn.BackColor = System.Drawing.Color.Transparent;
             this.buildCourseBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buildCourseBtn.Location = new System.Drawing.Point(496, 393);
+            this.buildCourseBtn.Location = new System.Drawing.Point(562, 463);
             this.buildCourseBtn.Name = "buildCourseBtn";
             this.buildCourseBtn.Size = new System.Drawing.Size(91, 23);
             this.buildCourseBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -228,69 +287,11 @@
             this.labelX3.TabIndex = 8;
             this.labelX3.Text = "課程類別";
             // 
-            // subjectName
-            // 
-            this.subjectName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.subjectName.HeaderText = "科目名稱";
-            this.subjectName.Name = "subjectName";
-            this.subjectName.ReadOnly = true;
-            this.subjectName.Width = 85;
-            // 
-            // level
-            // 
-            this.level.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.level.DefaultCellStyle = dataGridViewCellStyle25;
-            this.level.HeaderText = "級別";
-            this.level.Name = "level";
-            this.level.ReadOnly = true;
-            this.level.Width = 59;
-            // 
-            // credit
-            // 
-            this.credit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.credit.DefaultCellStyle = dataGridViewCellStyle26;
-            this.credit.HeaderText = "學分";
-            this.credit.Name = "credit";
-            this.credit.ReadOnly = true;
-            this.credit.Width = 59;
-            // 
-            // studselect_limit
-            // 
-            this.studselect_limit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.studselect_limit.DefaultCellStyle = dataGridViewCellStyle27;
-            this.studselect_limit.HeaderText = "選課人數";
-            this.studselect_limit.Name = "studselect_limit";
-            this.studselect_limit.ReadOnly = true;
-            this.studselect_limit.Width = 85;
-            // 
-            // buildCourseCount
-            // 
-            this.buildCourseCount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.buildCourseCount.DefaultCellStyle = dataGridViewCellStyle28;
-            this.buildCourseCount.HeaderText = "設定開班數";
-            this.buildCourseCount.Name = "buildCourseCount";
-            this.buildCourseCount.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.buildCourseCount.Width = 98;
-            // 
-            // courseCount
-            // 
-            this.courseCount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.courseCount.DefaultCellStyle = dataGridViewCellStyle29;
-            this.courseCount.HeaderText = "已開班數";
-            this.courseCount.Name = "courseCount";
-            this.courseCount.ReadOnly = true;
-            this.courseCount.Width = 85;
-            // 
             // BuildCourseClass
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(599, 421);
+            this.ClientSize = new System.Drawing.Size(665, 491);
             this.Controls.Add(this.buildCourseBtn);
             this.Controls.Add(this.labelX3);
             this.Controls.Add(this.courseTypeCbx);
@@ -300,6 +301,7 @@
             this.Controls.Add(this.schoolYearCbx);
             this.Controls.Add(this.groupPanel1);
             this.DoubleBuffered = true;
+            this.ImeMode = System.Windows.Forms.ImeMode.On;
             this.MinimumSize = new System.Drawing.Size(615, 460);
             this.Name = "BuildCourseClass";
             this.Text = "選修科目開班";
