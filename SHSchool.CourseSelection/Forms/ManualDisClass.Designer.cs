@@ -38,6 +38,7 @@
             this.saetNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.attendNow = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.attendAfter = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
@@ -47,7 +48,6 @@
             this.subjectCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.saveBtn = new DevComponents.DotNetBar.ButtonX();
             this.closeBtn = new DevComponents.DotNetBar.ButtonX();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -193,6 +193,15 @@
             this.attendAfter.ReadOnly = true;
             this.attendAfter.Width = 98;
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitContainer1.Location = new System.Drawing.Point(2, 5);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Size = new System.Drawing.Size(630, 10);
+            this.splitContainer1.SplitterDistance = 210;
+            this.splitContainer1.TabIndex = 5;
+            // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AutoSize = true;
@@ -310,15 +319,6 @@
             this.closeBtn.TabIndex = 8;
             this.closeBtn.Text = "關閉";
             this.closeBtn.Click += new System.EventHandler(this.closeBtn_Click);
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitContainer1.Location = new System.Drawing.Point(2, 5);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Size = new System.Drawing.Size(630, 10);
-            this.splitContainer1.SplitterDistance = 210;
-            this.splitContainer1.TabIndex = 5;
             // 
             // ManualDisClass
             // 

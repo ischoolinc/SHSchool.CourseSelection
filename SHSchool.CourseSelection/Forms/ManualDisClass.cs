@@ -70,7 +70,7 @@ namespace SHSchool.CourseSelection.Forms
             List<UDT.SubjectCourse> sc_list = accessCourse.Select<UDT.SubjectCourse>();
             Color[] colors = new Color[] { Color.Red, Color.Yellow, Color.Blue, Color.PowderBlue, Color.Orange, Color.Green, Color.Purple };
 
-            #region FlowLayoutPanel 新增 課班Button
+            #region FlowLayoutPanel 課班Button
             int i = 0;
             foreach (UDT.SubjectCourse sc in sc_list)
             {
@@ -119,6 +119,11 @@ namespace SHSchool.CourseSelection.Forms
 
             #endregion
 
+            ReloadDataGridView();
+        }
+
+        public void ReloadDataGridView()
+        {
             #region DataGridView 
             dataGridViewX1.Rows.Clear();
             AccessHelper access = new AccessHelper();
@@ -129,7 +134,7 @@ namespace SHSchool.CourseSelection.Forms
             {
                 if (ssa.SubjectID == int.Parse("" + subjectIDdic[subjectCbx.Text]))
                 {
-                    studentIDdic.Add("" + ssa.StudentID,"" + ssa.SubjectID);
+                    studentIDdic.Add("" + ssa.StudentID, "" + ssa.SubjectID);
                 }
             }
             // 取得修課學生資料
@@ -154,11 +159,11 @@ namespace SHSchool.CourseSelection.Forms
                     WHERE 
                         ref_student_id = {0}
                         AND ref_subject_id = {1}
-                ", shs.ID,studentIDdic[shs.ID]);
+                ", shs.ID, studentIDdic[shs.ID]);
                 QueryHelper qh = new QueryHelper();
                 DataTable courseNameDt = qh.Select(sql);
 
-                        
+
                 foreach (DataRow dr in courseNameDt.Rows)
                 {
                     SHCourseRecord sr = SHCourse.SelectByID("" + dr["ref_course_id"]);
@@ -166,8 +171,10 @@ namespace SHSchool.CourseSelection.Forms
                     {
                         datarow.Cells[index++].Value = "" + sr.Name;
                         datarow.Cells[index++].Value = "" + sr.Name;
+                        //((DataGridViewColorBallTextCell)datarow.Cells[5]).Color = _CourseColor[sr.ID];
+                        //((DataGridViewColorBallTextCell)datarow.Cells[6]).Color = _CourseColor[sr.ID];
                         datarow.Cells[6].Tag = sr.ID;
-
+                        
                         // 紀錄課程、學生資訊。
                         if (_CourseStudentIDdic.ContainsKey(sr.ID))
                         {
@@ -183,6 +190,8 @@ namespace SHSchool.CourseSelection.Forms
                     {
                         datarow.Cells[index++].Value = _CourseName[""];
                         datarow.Cells[index++].Value = _CourseName[""];
+                        //((DataGridViewColorBallTextCell)datarow.Cells[5]).Color = Color.Gray;
+                        //((DataGridViewColorBallTextCell)datarow.Cells[6]).Color = Color.Gray;
                         datarow.Cells[6].Tag = ""; //courseID = ""
                         // 紀錄課程、學生資訊。
                         if (_CourseStudentIDdic.ContainsKey(""))
@@ -198,15 +207,13 @@ namespace SHSchool.CourseSelection.Forms
                 }
 
                 datarow.Tag = shs.ID;
-                
+
                 dataGridViewX1.Rows.Add(datarow);
             }
             // 計算課班男、女人數
             CountStudents();
             #endregion
-
         }
-
 
         private void Swap(object sender,EventArgs e)
         {
@@ -313,6 +320,8 @@ namespace SHSchool.CourseSelection.Forms
                 }
             }
             MessageBox.Show("儲存成功");
+            ReloadDataGridView();
+
         }
 
         private void closeBtn_Click(object sender, EventArgs e)
@@ -320,6 +329,7 @@ namespace SHSchool.CourseSelection.Forms
             this.Close();
         }
     }
+
     class AttInfo
     {
         private string _AttendID, _StudentID, _CourseID, _OldCourseID;

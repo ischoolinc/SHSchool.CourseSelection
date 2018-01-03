@@ -36,7 +36,6 @@ namespace SHSchool.CourseSelection.Forms
                     int count = int.Parse("" + dr.Cells["buildCourseCount"].Value);
                     // 已開班數
                     int _count = int.Parse("" + dr.Cells["courseCount"].Value);
-                    
                     // 已開班數 = 設定開班數 : 修改
                     if (_count == count)
                     {
@@ -52,6 +51,10 @@ namespace SHSchool.CourseSelection.Forms
                         DataTable subjectCourseUDT = qh.Select(sql);
                         foreach (DataRow scr in subjectCourseUDT.Rows)
                         {
+                            if (count == 1)
+                            {
+                                scr["class_type"] = "";
+                            }
                             DataGridViewRow drX1 = new DataGridViewRow();
                             drX1.CreateCells(dataGridViewX1);
                             int index = 0;
@@ -87,6 +90,10 @@ namespace SHSchool.CourseSelection.Forms
                             DataGridViewRow drX1 = new DataGridViewRow();
                             drX1.CreateCells(dataGridViewX1);
                             n++;
+                            if (count == 1)
+                            {
+                                scr["class_type"] = "";
+                            }
                             if (n > count)
                             {
                                 drX1.Cells[0].Value = "刪除";
@@ -126,6 +133,10 @@ namespace SHSchool.CourseSelection.Forms
                         int n = 0;
                         foreach (DataRow scr in subjectCourseUDT.Rows)
                         {
+                            if (count == 1)
+                            {
+                                scr["class_type"] = "";
+                            }
                             DataGridViewRow drX1 = new DataGridViewRow();
                             drX1.CreateCells(dataGridViewX1);
                             n++;
@@ -298,13 +309,27 @@ namespace SHSchool.CourseSelection.Forms
                 }
                 if ("" + dr.Cells["dataType"].Value == "修改")
                 {
+                    string level = "";
+                    switch (int.Parse("" + dr.Cells["level"].Value))
+                    {
+                        case 1:
+                            level = "I";
+                            break;
+                        case 2:
+                            level = "II";
+                            break;
+                        case 3:
+                            level = "III";
+                            break;
+                    }
+                    dr.Cells["courseName"].Value = "" + dr.Cells["courseType"].Value + " " +dr.Cells["subjectName"].Value + " " +level + " " +dr.Cells["classType"].Value;
                     UpdateHelper uph = new UpdateHelper();
                     string updateSql = string.Format(@"
                         UPDATE $ischool.course_selection.subjectcourse 
                         SET course_name = '{0}',
                             class_type = '{1}'
                         WHERE uid = {2}
-                    ","" + dr.Cells["courseName"].Value, dr.Cells["classType"].Value,int.Parse("" + dr.Tag));
+                    ", dr.Cells["courseName"].Value, dr.Cells["classType"].Value, int.Parse("" + dr.Tag));
                     uph.Execute(updateSql);
                 }
                 if ("" + dr.Cells["dataType"].Value == "刪除")
