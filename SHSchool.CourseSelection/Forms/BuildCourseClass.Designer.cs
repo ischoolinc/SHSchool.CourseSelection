@@ -65,7 +65,7 @@
             this.groupPanel1.Location = new System.Drawing.Point(12, 45);
             this.groupPanel1.MinimumSize = new System.Drawing.Size(576, 294);
             this.groupPanel1.Name = "groupPanel1";
-            this.groupPanel1.Size = new System.Drawing.Size(642, 412);
+            this.groupPanel1.Size = new System.Drawing.Size(761, 432);
             // 
             // 
             // 
@@ -129,7 +129,7 @@
             this.dataGridViewX1.MinimumSize = new System.Drawing.Size(564, 230);
             this.dataGridViewX1.Name = "dataGridViewX1";
             this.dataGridViewX1.RowTemplate.Height = 24;
-            this.dataGridViewX1.Size = new System.Drawing.Size(630, 379);
+            this.dataGridViewX1.Size = new System.Drawing.Size(749, 399);
             this.dataGridViewX1.TabIndex = 0;
             this.dataGridViewX1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewX1_CellEndEdit);
             // 
@@ -197,7 +197,7 @@
             this.buildCourseBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buildCourseBtn.BackColor = System.Drawing.Color.Transparent;
             this.buildCourseBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buildCourseBtn.Location = new System.Drawing.Point(562, 463);
+            this.buildCourseBtn.Location = new System.Drawing.Point(681, 483);
             this.buildCourseBtn.Name = "buildCourseBtn";
             this.buildCourseBtn.Size = new System.Drawing.Size(91, 23);
             this.buildCourseBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -291,7 +291,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(665, 491);
+            this.ClientSize = new System.Drawing.Size(784, 511);
             this.Controls.Add(this.buildCourseBtn);
             this.Controls.Add(this.labelX3);
             this.Controls.Add(this.courseTypeCbx);

@@ -62,7 +62,7 @@
             this.groupPanel1.Controls.Add(this.labelX1);
             this.groupPanel1.Location = new System.Drawing.Point(11, 12);
             this.groupPanel1.Name = "groupPanel1";
-            this.groupPanel1.Size = new System.Drawing.Size(620, 401);
+            this.groupPanel1.Size = new System.Drawing.Size(760, 461);
             // 
             // 
             // 
@@ -145,7 +145,7 @@
             this.dataGridViewX1.Name = "dataGridViewX1";
             this.dataGridViewX1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridViewX1.RowTemplate.Height = 24;
-            this.dataGridViewX1.Size = new System.Drawing.Size(608, 339);
+            this.dataGridViewX1.Size = new System.Drawing.Size(748, 399);
             this.dataGridViewX1.TabIndex = 0;
             this.dataGridViewX1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewX1_CellValueChanged);
             // 
@@ -253,7 +253,7 @@
             this.buildCourseBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buildCourseBtn.BackColor = System.Drawing.Color.Transparent;
             this.buildCourseBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buildCourseBtn.Location = new System.Drawing.Point(557, 424);
+            this.buildCourseBtn.Location = new System.Drawing.Point(697, 484);
             this.buildCourseBtn.Name = "buildCourseBtn";
             this.buildCourseBtn.Size = new System.Drawing.Size(75, 24);
             this.buildCourseBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -265,7 +265,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(644, 451);
+            this.ClientSize = new System.Drawing.Size(784, 511);
             this.Controls.Add(this.buildCourseBtn);
             this.Controls.Add(this.groupPanel1);
             this.DoubleBuffered = true;

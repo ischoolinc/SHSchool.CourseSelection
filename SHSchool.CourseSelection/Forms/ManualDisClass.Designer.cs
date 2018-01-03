@@ -30,7 +30,6 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
             this.stuNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -39,6 +38,7 @@
             this.saetNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.attendNow = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.attendAfter = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.labelX3 = new DevComponents.DotNetBar.LabelX();
@@ -58,12 +58,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupPanel1.BackColor = System.Drawing.Color.Transparent;
             this.groupPanel1.CanvasColor = System.Drawing.SystemColors.Control;
-            this.groupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.groupPanel1.Controls.Add(this.flowLayoutPanel1);
+            this.groupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
             this.groupPanel1.Controls.Add(this.dataGridViewX1);
+            this.groupPanel1.Controls.Add(this.flowLayoutPanel1);
             this.groupPanel1.Location = new System.Drawing.Point(12, 41);
             this.groupPanel1.Name = "groupPanel1";
-            this.groupPanel1.Size = new System.Drawing.Size(637, 480);
+            this.groupPanel1.Padding = new System.Windows.Forms.Padding(2, 5, 2, 5);
+            this.groupPanel1.Size = new System.Drawing.Size(640, 479);
             // 
             // 
             // 
@@ -97,22 +98,13 @@
             this.groupPanel1.TabIndex = 0;
             this.groupPanel1.Text = "學生分班";
             // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(625, 26);
-            this.flowLayoutPanel1.TabIndex = 4;
-            // 
             // dataGridViewX1
             // 
             this.dataGridViewX1.AllowUserToAddRows = false;
             this.dataGridViewX1.AllowUserToResizeColumns = false;
             this.dataGridViewX1.AllowUserToResizeRows = false;
-            this.dataGridViewX1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewX1.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridViewX1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
             this.dataGridViewX1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewX1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.stuNumber,
@@ -132,12 +124,13 @@
             this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewX1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridViewX1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
-            this.dataGridViewX1.Location = new System.Drawing.Point(3, 35);
+            this.dataGridViewX1.Location = new System.Drawing.Point(5, 62);
+            this.dataGridViewX1.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
             this.dataGridViewX1.Name = "dataGridViewX1";
             this.dataGridViewX1.ReadOnly = true;
             this.dataGridViewX1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridViewX1.RowTemplate.Height = 24;
-            this.dataGridViewX1.Size = new System.Drawing.Size(625, 415);
+            this.dataGridViewX1.Size = new System.Drawing.Size(622, 381);
             this.dataGridViewX1.TabIndex = 0;
             // 
             // stuNumber
@@ -195,6 +188,16 @@
             this.attendAfter.Name = "attendAfter";
             this.attendAfter.ReadOnly = true;
             this.attendAfter.Width = 98;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.AutoSize = true;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(5, 5);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.flowLayoutPanel1.MaximumSize = new System.Drawing.Size(624, 80);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(622, 48);
+            this.flowLayoutPanel1.TabIndex = 4;
             // 
             // labelX1
             // 
@@ -270,7 +273,7 @@
             this.subjectCbx.ItemHeight = 19;
             this.subjectCbx.Location = new System.Drawing.Point(327, 9);
             this.subjectCbx.Name = "subjectCbx";
-            this.subjectCbx.Size = new System.Drawing.Size(121, 25);
+            this.subjectCbx.Size = new System.Drawing.Size(129, 25);
             this.subjectCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.subjectCbx.TabIndex = 6;
             this.subjectCbx.TextChanged += new System.EventHandler(this.subjectCbx_TextChanged);
@@ -281,7 +284,7 @@
             this.saveBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.saveBtn.BackColor = System.Drawing.Color.Transparent;
             this.saveBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.saveBtn.Location = new System.Drawing.Point(454, 527);
+            this.saveBtn.Location = new System.Drawing.Point(457, 526);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(75, 23);
             this.saveBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -295,7 +298,7 @@
             this.closeBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.closeBtn.BackColor = System.Drawing.Color.Transparent;
             this.closeBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.closeBtn.Location = new System.Drawing.Point(574, 527);
+            this.closeBtn.Location = new System.Drawing.Point(577, 526);
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(75, 23);
             this.closeBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -307,7 +310,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(661, 562);
+            this.ClientSize = new System.Drawing.Size(664, 561);
             this.Controls.Add(this.closeBtn);
             this.Controls.Add(this.saveBtn);
             this.Controls.Add(this.subjectCbx);
@@ -318,9 +321,11 @@
             this.Controls.Add(this.labelX1);
             this.Controls.Add(this.groupPanel1);
             this.DoubleBuffered = true;
+            this.MinimumSize = new System.Drawing.Size(680, 600);
             this.Name = "ManualDisClass";
             this.Text = "手動分班";
             this.groupPanel1.ResumeLayout(false);
+            this.groupPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).EndInit();
             this.ResumeLayout(false);
 
