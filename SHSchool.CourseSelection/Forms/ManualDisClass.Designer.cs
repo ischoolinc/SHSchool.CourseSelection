@@ -31,13 +31,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
-            this.stuNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gender = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.className = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.saetNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.attendNow = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.attendAfter = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
@@ -48,6 +41,13 @@
             this.subjectCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.saveBtn = new DevComponents.DotNetBar.ButtonX();
             this.closeBtn = new DevComponents.DotNetBar.ButtonX();
+            this.stuNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gender = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.className = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.saetNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.attendNow = new SHSchool.CourseSelection.Forms.DataGridViewColorBallTextColumn();
+            this.attendAfter = new SHSchool.CourseSelection.Forms.DataGridViewColorBallTextColumn();
             this.groupPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -136,62 +136,6 @@
             this.dataGridViewX1.RowTemplate.Height = 24;
             this.dataGridViewX1.Size = new System.Drawing.Size(630, 432);
             this.dataGridViewX1.TabIndex = 0;
-            // 
-            // stuNumber
-            // 
-            this.stuNumber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.stuNumber.HeaderText = "學號";
-            this.stuNumber.Name = "stuNumber";
-            this.stuNumber.ReadOnly = true;
-            this.stuNumber.Width = 59;
-            // 
-            // name
-            // 
-            this.name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.name.HeaderText = "姓名";
-            this.name.Name = "name";
-            this.name.ReadOnly = true;
-            this.name.Width = 59;
-            // 
-            // gender
-            // 
-            this.gender.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.gender.HeaderText = "性別";
-            this.gender.Name = "gender";
-            this.gender.ReadOnly = true;
-            this.gender.Width = 59;
-            // 
-            // className
-            // 
-            this.className.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.className.HeaderText = "班級";
-            this.className.Name = "className";
-            this.className.ReadOnly = true;
-            this.className.Width = 59;
-            // 
-            // saetNo
-            // 
-            this.saetNo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.saetNo.HeaderText = "座號";
-            this.saetNo.Name = "saetNo";
-            this.saetNo.ReadOnly = true;
-            this.saetNo.Width = 59;
-            // 
-            // attendNow
-            // 
-            this.attendNow.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.attendNow.HeaderText = "原修課";
-            this.attendNow.Name = "attendNow";
-            this.attendNow.ReadOnly = true;
-            this.attendNow.Width = 72;
-            // 
-            // attendAfter
-            // 
-            this.attendAfter.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.attendAfter.HeaderText = "調整後修課";
-            this.attendAfter.Name = "attendAfter";
-            this.attendAfter.ReadOnly = true;
-            this.attendAfter.Width = 98;
             // 
             // splitContainer1
             // 
@@ -320,6 +264,55 @@
             this.closeBtn.Text = "關閉";
             this.closeBtn.Click += new System.EventHandler(this.closeBtn_Click);
             // 
+            // stuNumber
+            // 
+            this.stuNumber.HeaderText = "學號";
+            this.stuNumber.Name = "stuNumber";
+            this.stuNumber.ReadOnly = true;
+            this.stuNumber.Width = 59;
+            // 
+            // name
+            // 
+            this.name.HeaderText = "姓名";
+            this.name.Name = "name";
+            this.name.ReadOnly = true;
+            this.name.Width = 59;
+            // 
+            // gender
+            // 
+            this.gender.HeaderText = "性別";
+            this.gender.Name = "gender";
+            this.gender.ReadOnly = true;
+            this.gender.Width = 59;
+            // 
+            // className
+            // 
+            this.className.HeaderText = "班級";
+            this.className.Name = "className";
+            this.className.ReadOnly = true;
+            this.className.Width = 59;
+            // 
+            // saetNo
+            // 
+            this.saetNo.HeaderText = "座號";
+            this.saetNo.Name = "saetNo";
+            this.saetNo.ReadOnly = true;
+            this.saetNo.Width = 59;
+            // 
+            // attendNow
+            // 
+            this.attendNow.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.attendNow.HeaderText = "原修課";
+            this.attendNow.Name = "attendNow";
+            this.attendNow.ReadOnly = true;
+            // 
+            // attendAfter
+            // 
+            this.attendAfter.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.attendAfter.HeaderText = "調整後修課";
+            this.attendAfter.Name = "attendAfter";
+            this.attendAfter.ReadOnly = true;
+            // 
             // ManualDisClass
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -351,13 +344,6 @@
 
         private DevComponents.DotNetBar.Controls.GroupPanel groupPanel1;
         private DevComponents.DotNetBar.Controls.DataGridViewX dataGridViewX1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stuNumber;
-        private System.Windows.Forms.DataGridViewTextBoxColumn name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gender;
-        private System.Windows.Forms.DataGridViewTextBoxColumn className;
-        private System.Windows.Forms.DataGridViewTextBoxColumn saetNo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn attendNow;
-        private System.Windows.Forms.DataGridViewTextBoxColumn attendAfter;
         private DevComponents.DotNetBar.LabelX labelX1;
         private DevComponents.DotNetBar.LabelX labelX2;
         private DevComponents.DotNetBar.LabelX labelX3;
@@ -368,5 +354,12 @@
         private DevComponents.DotNetBar.ButtonX closeBtn;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stuNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gender;
+        private System.Windows.Forms.DataGridViewTextBoxColumn className;
+        private System.Windows.Forms.DataGridViewTextBoxColumn saetNo;
+        private DataGridViewColorBallTextColumn attendNow;
+        private DataGridViewColorBallTextColumn attendAfter;
     }
 }

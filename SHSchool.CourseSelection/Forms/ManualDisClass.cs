@@ -169,10 +169,12 @@ namespace SHSchool.CourseSelection.Forms
                     SHCourseRecord sr = SHCourse.SelectByID("" + dr["ref_course_id"]);
                     if (sr != null)
                     {
-                        datarow.Cells[index++].Value = "" + sr.Name;
-                        datarow.Cells[index++].Value = "" + sr.Name;
-                        //((DataGridViewColorBallTextCell)datarow.Cells[5]).Color = _CourseColor[sr.ID];
-                        //((DataGridViewColorBallTextCell)datarow.Cells[6]).Color = _CourseColor[sr.ID];
+                        //datarow.Cells[index++].Value = "" + sr.Name;
+                        //datarow.Cells[index++].Value = "" + sr.Name;
+                        ((DataGridViewColorBallTextCell)datarow.Cells[5]).Value = _CourseName[sr.ID];
+                        ((DataGridViewColorBallTextCell)datarow.Cells[6]).Value = _CourseName[sr.ID];
+                        ((DataGridViewColorBallTextCell)datarow.Cells[5]).Color = _CourseColor[sr.ID];
+                        ((DataGridViewColorBallTextCell)datarow.Cells[6]).Color = _CourseColor[sr.ID];
                         datarow.Cells[6].Tag = sr.ID;
                         
                         // 紀錄課程、學生資訊。
@@ -188,10 +190,12 @@ namespace SHSchool.CourseSelection.Forms
                     }
                     if (sr == null)
                     {
-                        datarow.Cells[index++].Value = _CourseName[""];
-                        datarow.Cells[index++].Value = _CourseName[""];
-                        //((DataGridViewColorBallTextCell)datarow.Cells[5]).Color = Color.Gray;
-                        //((DataGridViewColorBallTextCell)datarow.Cells[6]).Color = Color.Gray;
+                        //datarow.Cells[index++].Value = _CourseName[""];
+                        //datarow.Cells[index++].Value = _CourseName[""];
+                        ((DataGridViewColorBallTextCell)datarow.Cells[5]).Value = _CourseName[""];
+                        ((DataGridViewColorBallTextCell)datarow.Cells[6]).Value = _CourseName[""];
+                        ((DataGridViewColorBallTextCell)datarow.Cells[5]).Color = _CourseColor[""];
+                        ((DataGridViewColorBallTextCell)datarow.Cells[6]).Color = _CourseColor[""];
                         datarow.Cells[6].Tag = ""; //courseID = ""
                         // 紀錄課程、學生資訊。
                         if (_CourseStudentIDdic.ContainsKey(""))
@@ -220,8 +224,10 @@ namespace SHSchool.CourseSelection.Forms
             ButtonX button = (ButtonX)sender;
             foreach (DataGridViewRow row in dataGridViewX1.SelectedRows)
             {
+                ((DataGridViewColorBallTextCell)row.Cells[6]).Color = _CourseColor["" + button.Tag];
+                ((DataGridViewColorBallTextCell)row.Cells[6]).Value = _CourseName["" + button.Tag];
                 // 修改 DataGridView
-                dataGridViewX1.Rows[row.Index].Cells[6].Value = _CourseName["" + button.Tag];
+                //dataGridViewX1.Rows[row.Index].Cells[6].Value = _CourseName["" + button.Tag];
                 dataGridViewX1.Rows[row.Index].Cells[6].Tag = button.Tag;
             }
             _CourseStudentIDdic.Clear();
