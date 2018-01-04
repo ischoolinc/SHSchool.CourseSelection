@@ -85,12 +85,14 @@ namespace SHSchool.CourseSelection.Forms
                     button.TextAlignment = eButtonTextAlignment.Left;
                     button.Size = new Size(110, 23);
                     button.Text = sc.CourseName;
-                    button.Image = GetColorBallImage(colors[i++]);
-                    button.Tag = "" + sc.CourseID;
+                    button.Image = GetColorBallImage(colors[i]);
+                    // 課班UID
+                    button.Tag = "" + sc.UID;
                     button.Margin = new System.Windows.Forms.Padding(3);
                     button.Click += new EventHandler(Swap);
-                    _CourseName.Add("" + sc.CourseID, sc.CourseName);
-                    _CourseColor.Add("" + sc.CourseID, colors[i++]);
+                    // 課班UID
+                    _CourseName.Add("" + sc.UID, sc.CourseName);
+                    _CourseColor.Add("" + sc.UID, colors[i++]);
                     this.flowLayoutPanel1.Controls.Add(button);
                 }
             }
@@ -119,6 +121,8 @@ namespace SHSchool.CourseSelection.Forms
 
             #endregion
 
+            Application.DoEvents();
+
             ReloadDataGridView();
         }
 
@@ -126,94 +130,126 @@ namespace SHSchool.CourseSelection.Forms
         {
             #region DataGridView 
             dataGridViewX1.Rows.Clear();
-            AccessHelper access = new AccessHelper();
             studentIDdic.Clear();
-            // 取得選課學生資料
-            List<UDT.SSAttend> ssa_list = access.Select<UDT.SSAttend>();
-            foreach (UDT.SSAttend ssa in ssa_list)
-            {
-                if (ssa.SubjectID == int.Parse("" + subjectIDdic[subjectCbx.Text]))
-                {
-                    studentIDdic.Add("" + ssa.StudentID, "" + ssa.SubjectID);
-                }
-            }
-            // 取得修課學生資料
+
+            //透過科目ID取得學生選課資料
+            QueryHelper queryhelper = new QueryHelper();
+            #region SQL 
+            string selectSQL = string.Format(@"
+                SELECT 
+	                ref_student_id,
+	                ref_subject_course_id, 
+	                subject_course.ref_course_id,
+                    course.course_name,
+	                student.student_number,
+	                student.name,
+	                student.gender,
+	                student.ref_class_id,
+	                class.class_name,
+	                student.seat_no
+                FROM 
+	                $ischool.course_selection.ss_attend AS ss_attend
+                LEFT OUTER JOIN
+                (
+	                SELECT 
+		                ref_course_id,uid
+	                FROM 
+		                $ischool.course_selection.subject_course 
+                )subject_course on subject_course.uid =  ss_attend.ref_subject_course_id
+                LEFT OUTER JOIN
+                (
+	                SELECT
+		                student_number,
+		                name,
+		                gender,
+		                ref_class_id,
+		                seat_no,
+		                id
+	                FROM
+		                student
+                )student on student.id = ref_student_id
+                LEFT OUTER JOIN
+                (
+	                SELECT
+		                id,
+		                class_name
+	                FROM 
+		                class
+                )class on class.id = student.ref_class_id
+                LEFT OUTER JOIN
+                (
+	                SELECT
+		                id,
+		                course_name
+	                FROM
+		                course
+                )course on course.id = subject_course.ref_course_id                
+                WHERE ref_subject_id = {0}
+                ", subjectIDdic[subjectCbx.Text]);
+
+            #endregion
+            DataTable studentData = queryhelper.Select(selectSQL);
             _CourseStudentIDdic.Clear();
-            List<SHStudentRecord> shs_list = SHStudent.SelectByIDs(studentIDdic.Keys.ToList());
-            foreach (SHStudentRecord shs in shs_list)
+            foreach (DataRow student in studentData.Rows)
             {
                 DataGridViewRow datarow = new DataGridViewRow();
                 datarow.CreateCells(dataGridViewX1);
-
-                int index = 0;
-                datarow.Cells[index++].Value = shs.StudentNumber;
-                datarow.Cells[index++].Value = shs.Name;
-                datarow.Cells[index++].Value = shs.Gender;
-                datarow.Cells[index++].Value = shs.Class.Name;
-                datarow.Cells[index++].Value = shs.SeatNo;
-
-                // 透過學生ID、科目ID取得選修課程ID
-                string sql = string.Format(@"
-                    SELECT ref_course_id
-                    FROM $ischool.course_selection.ss_attend
-                    WHERE 
-                        ref_student_id = {0}
-                        AND ref_subject_id = {1}
-                ", shs.ID, studentIDdic[shs.ID]);
-                QueryHelper qh = new QueryHelper();
-                DataTable courseNameDt = qh.Select(sql);
-
-
-                foreach (DataRow dr in courseNameDt.Rows)
+                switch (int.Parse("" + student["gender"]))
                 {
-                    SHCourseRecord sr = SHCourse.SelectByID("" + dr["ref_course_id"]);
-                    if (sr != null)
-                    {
-                        //datarow.Cells[index++].Value = "" + sr.Name;
-                        //datarow.Cells[index++].Value = "" + sr.Name;
-                        ((DataGridViewColorBallTextCell)datarow.Cells[5]).Value = _CourseName[sr.ID];
-                        ((DataGridViewColorBallTextCell)datarow.Cells[6]).Value = _CourseName[sr.ID];
-                        ((DataGridViewColorBallTextCell)datarow.Cells[5]).Color = _CourseColor[sr.ID];
-                        ((DataGridViewColorBallTextCell)datarow.Cells[6]).Color = _CourseColor[sr.ID];
-                        datarow.Cells[6].Tag = sr.ID;
-                        
-                        // 紀錄課程、學生資訊。
-                        if (_CourseStudentIDdic.ContainsKey(sr.ID))
-                        {
-                            _CourseStudentIDdic[sr.ID].Add(shs.ID);
-                        }
-                        else
-                        {
-                            _CourseStudentIDdic.Add(sr.ID, new List<string>());
-                            _CourseStudentIDdic[sr.ID].Add(shs.ID);
-                        }
-                    }
-                    if (sr == null)
-                    {
-                        //datarow.Cells[index++].Value = _CourseName[""];
-                        //datarow.Cells[index++].Value = _CourseName[""];
-                        ((DataGridViewColorBallTextCell)datarow.Cells[5]).Value = _CourseName[""];
-                        ((DataGridViewColorBallTextCell)datarow.Cells[6]).Value = _CourseName[""];
-                        ((DataGridViewColorBallTextCell)datarow.Cells[5]).Color = _CourseColor[""];
-                        ((DataGridViewColorBallTextCell)datarow.Cells[6]).Color = _CourseColor[""];
-                        datarow.Cells[6].Tag = ""; //courseID = ""
-                        // 紀錄課程、學生資訊。
-                        if (_CourseStudentIDdic.ContainsKey(""))
-                        {
-                            _CourseStudentIDdic[""].Add(shs.ID);
-                        }
-                        else
-                        {
-                            _CourseStudentIDdic.Add("", new List<string>());
-                            _CourseStudentIDdic[""].Add(shs.ID);
-                        }
-                    }
+                    case 1:
+                        student["gender"] = "男";
+                        break;
+                    case 0:
+                        student["gender"] = "女";
+                        break;
                 }
 
-                datarow.Tag = shs.ID;
+                int index = 0;
+                datarow.Cells[index++].Value = student["student_number"];
+                datarow.Cells[index++].Value = student["name"];
+                datarow.Cells[index++].Value = student["gender"];
+                datarow.Cells[index++].Value = student["class_name"];
+                datarow.Cells[index++].Value = student["seat_no"];
+                datarow.Cells[index++].Value = student["name"];
+                if ("" + student["ref_subject_course_id"] != "")
+                {
+                    ((DataGridViewColorBallTextCell)datarow.Cells[5]).Value = "" + student["course_name"];
+                    ((DataGridViewColorBallTextCell)datarow.Cells[6]).Value = "" + student["course_name"];
+                    ((DataGridViewColorBallTextCell)datarow.Cells[5]).Color = _CourseColor["" + student["ref_subject_course_id"]];
+                    ((DataGridViewColorBallTextCell)datarow.Cells[6]).Color = _CourseColor["" + student["ref_subject_course_id"]];
+                    // 紀錄課程、學生資訊。
+                    if (_CourseStudentIDdic.ContainsKey("" + student["ref_subject_course_id"]))
+                    {
+                        _CourseStudentIDdic["" + student["ref_subject_course_id"]].Add("" + student["ref_student_id"]);
+                    }
+                    else
+                    {
+                        _CourseStudentIDdic.Add("" + student["ref_subject_course_id"], new List<string>());
+                        _CourseStudentIDdic["" + student["ref_subject_course_id"]].Add("" + student["ref_student_id"]);
+                    }
+                }
+                if ("" + student["ref_subject_course_id"] == "")
+                {
+                    ((DataGridViewColorBallTextCell)datarow.Cells[5]).Value = _CourseName[""];
+                    ((DataGridViewColorBallTextCell)datarow.Cells[6]).Value = _CourseName[""];
+                    ((DataGridViewColorBallTextCell)datarow.Cells[5]).Color = _CourseColor[""];
+                    ((DataGridViewColorBallTextCell)datarow.Cells[6]).Color = _CourseColor[""];
+                    // 紀錄課程、學生資訊。
+                    if (_CourseStudentIDdic.ContainsKey("" + student["ref_subject_course_id"]))
+                    {
+                        _CourseStudentIDdic["" + student["ref_subject_course_id"]].Add("" + student["ref_student_id"]);
+                    }
+                    else
+                    {
+                        _CourseStudentIDdic.Add("" + student["ref_subject_course_id"], new List<string>());
+                        _CourseStudentIDdic["" + student["ref_subject_course_id"]].Add("" + student["ref_student_id"]);
+                    }
+                }
+                datarow.Tag = "" + student["ref_student_id"];
 
                 dataGridViewX1.Rows.Add(datarow);
             }
+
             // 計算課班男、女人數
             CountStudents();
             #endregion
@@ -306,7 +342,7 @@ namespace SHSchool.CourseSelection.Forms
                 {
                     string updateSQL = string.Format(@"
                     UPDATE $ischool.course_selection.ss_attend
-                    SET ref_course_id = {0}
+                    SET ref_subject_course_id = {0}
                     WHERE ref_student_id = {1} AND ref_subject_id = {2}
                 ", "" + dr.Cells[6].Tag, "" + dr.Tag, subjectIDdic[subjectCbx.Text]);
 
@@ -317,7 +353,7 @@ namespace SHSchool.CourseSelection.Forms
                 {
                     string updateSQL = string.Format(@"
                     UPDATE $ischool.course_selection.ss_attend
-                    SET ref_course_id = {0}
+                    SET ref_subject_course_id = {0}
                     WHERE ref_student_id = {1} AND ref_subject_id = {2}
                 ", "null", "" + dr.Tag, subjectIDdic[subjectCbx.Text]);
 

@@ -31,7 +31,13 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.stuNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gender = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.className = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.saetNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.attendNow = new SHSchool.CourseSelection.Forms.DataGridViewColorBallTextColumn();
+            this.attendAfter = new SHSchool.CourseSelection.Forms.DataGridViewColorBallTextColumn();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
@@ -41,17 +47,8 @@
             this.subjectCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.saveBtn = new DevComponents.DotNetBar.ButtonX();
             this.closeBtn = new DevComponents.DotNetBar.ButtonX();
-            this.stuNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gender = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.className = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.saetNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.attendNow = new SHSchool.CourseSelection.Forms.DataGridViewColorBallTextColumn();
-            this.attendAfter = new SHSchool.CourseSelection.Forms.DataGridViewColorBallTextColumn();
             this.groupPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupPanel1
@@ -63,7 +60,6 @@
             this.groupPanel1.CanvasColor = System.Drawing.SystemColors.Control;
             this.groupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
             this.groupPanel1.Controls.Add(this.dataGridViewX1);
-            this.groupPanel1.Controls.Add(this.splitContainer1);
             this.groupPanel1.Controls.Add(this.flowLayoutPanel1);
             this.groupPanel1.Location = new System.Drawing.Point(12, 41);
             this.groupPanel1.Name = "groupPanel1";
@@ -128,23 +124,63 @@
             this.dataGridViewX1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewX1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridViewX1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
-            this.dataGridViewX1.Location = new System.Drawing.Point(2, 15);
+            this.dataGridViewX1.Location = new System.Drawing.Point(2, 35);
             this.dataGridViewX1.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
             this.dataGridViewX1.Name = "dataGridViewX1";
             this.dataGridViewX1.ReadOnly = true;
             this.dataGridViewX1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridViewX1.RowTemplate.Height = 24;
-            this.dataGridViewX1.Size = new System.Drawing.Size(630, 432);
+            this.dataGridViewX1.Size = new System.Drawing.Size(630, 412);
             this.dataGridViewX1.TabIndex = 0;
             // 
-            // splitContainer1
+            // stuNumber
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitContainer1.Location = new System.Drawing.Point(2, 5);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Size = new System.Drawing.Size(630, 10);
-            this.splitContainer1.SplitterDistance = 210;
-            this.splitContainer1.TabIndex = 5;
+            this.stuNumber.HeaderText = "學號";
+            this.stuNumber.Name = "stuNumber";
+            this.stuNumber.ReadOnly = true;
+            this.stuNumber.Width = 59;
+            // 
+            // name
+            // 
+            this.name.HeaderText = "姓名";
+            this.name.Name = "name";
+            this.name.ReadOnly = true;
+            this.name.Width = 59;
+            // 
+            // gender
+            // 
+            this.gender.HeaderText = "性別";
+            this.gender.Name = "gender";
+            this.gender.ReadOnly = true;
+            this.gender.Width = 59;
+            // 
+            // className
+            // 
+            this.className.HeaderText = "班級";
+            this.className.Name = "className";
+            this.className.ReadOnly = true;
+            this.className.Width = 59;
+            // 
+            // saetNo
+            // 
+            this.saetNo.HeaderText = "座號";
+            this.saetNo.Name = "saetNo";
+            this.saetNo.ReadOnly = true;
+            this.saetNo.Width = 59;
+            // 
+            // attendNow
+            // 
+            this.attendNow.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.attendNow.HeaderText = "原修課";
+            this.attendNow.Name = "attendNow";
+            this.attendNow.ReadOnly = true;
+            // 
+            // attendAfter
+            // 
+            this.attendAfter.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.attendAfter.HeaderText = "調整後修課";
+            this.attendAfter.Name = "attendAfter";
+            this.attendAfter.ReadOnly = true;
             // 
             // flowLayoutPanel1
             // 
@@ -152,9 +188,9 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(2, 5);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.flowLayoutPanel1.MaximumSize = new System.Drawing.Size(624, 80);
+            this.flowLayoutPanel1.MinimumSize = new System.Drawing.Size(0, 30);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(624, 0);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(630, 30);
             this.flowLayoutPanel1.TabIndex = 4;
             // 
             // labelX1
@@ -242,7 +278,7 @@
             this.saveBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.saveBtn.BackColor = System.Drawing.Color.Transparent;
             this.saveBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.saveBtn.Location = new System.Drawing.Point(457, 526);
+            this.saveBtn.Location = new System.Drawing.Point(496, 526);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(75, 23);
             this.saveBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -263,55 +299,6 @@
             this.closeBtn.TabIndex = 8;
             this.closeBtn.Text = "關閉";
             this.closeBtn.Click += new System.EventHandler(this.closeBtn_Click);
-            // 
-            // stuNumber
-            // 
-            this.stuNumber.HeaderText = "學號";
-            this.stuNumber.Name = "stuNumber";
-            this.stuNumber.ReadOnly = true;
-            this.stuNumber.Width = 59;
-            // 
-            // name
-            // 
-            this.name.HeaderText = "姓名";
-            this.name.Name = "name";
-            this.name.ReadOnly = true;
-            this.name.Width = 59;
-            // 
-            // gender
-            // 
-            this.gender.HeaderText = "性別";
-            this.gender.Name = "gender";
-            this.gender.ReadOnly = true;
-            this.gender.Width = 59;
-            // 
-            // className
-            // 
-            this.className.HeaderText = "班級";
-            this.className.Name = "className";
-            this.className.ReadOnly = true;
-            this.className.Width = 59;
-            // 
-            // saetNo
-            // 
-            this.saetNo.HeaderText = "座號";
-            this.saetNo.Name = "saetNo";
-            this.saetNo.ReadOnly = true;
-            this.saetNo.Width = 59;
-            // 
-            // attendNow
-            // 
-            this.attendNow.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.attendNow.HeaderText = "原修課";
-            this.attendNow.Name = "attendNow";
-            this.attendNow.ReadOnly = true;
-            // 
-            // attendAfter
-            // 
-            this.attendAfter.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.attendAfter.HeaderText = "調整後修課";
-            this.attendAfter.Name = "attendAfter";
-            this.attendAfter.ReadOnly = true;
             // 
             // ManualDisClass
             // 
@@ -334,8 +321,6 @@
             this.groupPanel1.ResumeLayout(false);
             this.groupPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -353,7 +338,6 @@
         private DevComponents.DotNetBar.ButtonX saveBtn;
         private DevComponents.DotNetBar.ButtonX closeBtn;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.DataGridViewTextBoxColumn stuNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn name;
         private System.Windows.Forms.DataGridViewTextBoxColumn gender;

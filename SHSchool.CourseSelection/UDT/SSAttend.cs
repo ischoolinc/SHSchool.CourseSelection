@@ -26,9 +26,9 @@ namespace SHSchool.CourseSelection.UDT
         public int SubjectID { get; set; }
 
         /// <summary>
-        /// 課程系統編號
+        /// 科目課程系統編號
         /// </summary>
-        [FISCA.UDT.Field(Field = "ref_course_id", Indexed = true)]
+        [FISCA.UDT.Field(Field = "ref_subject_course_id", Indexed = true)]
         public int CourseID { get; set; }
 
         /// <summary>

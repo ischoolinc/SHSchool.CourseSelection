@@ -44,9 +44,9 @@ namespace SHSchool.CourseSelection.Forms
                         string sql = string.Format(@"
                             SELECT *
                             FROM
-                                $ischool.course_selection.subjectcourse
+                                $ischool.course_selection.subject_course
                             WHERE 
-                                subject_id = {0}
+                                ref_subject_id = {0}
                         ",sbID);
                         DataTable subjectCourseUDT = qh.Select(sql);
                         foreach (DataRow scr in subjectCourseUDT.Rows)
@@ -79,9 +79,9 @@ namespace SHSchool.CourseSelection.Forms
                         string sql = string.Format(@"
                             SELECT *
                             FROM
-                                $ischool.course_selection.subjectcourse
+                                $ischool.course_selection.subject_course
                             WHERE 
-                                subject_id = {0}
+                                ref_subject_id = {0}
                         ", sbID);
                         DataTable subjectCourseUDT = qh.Select(sql);
                         int n = 0;
@@ -125,9 +125,9 @@ namespace SHSchool.CourseSelection.Forms
                         string sql = string.Format(@"
                             SELECT *
                             FROM
-                                $ischool.course_selection.subjectcourse
+                                $ischool.course_selection.subject_course
                             WHERE 
-                                subject_id = {0}
+                                ref_subject_id = {0}
                         ", sbID);
                         DataTable subjectCourseUDT = qh.Select(sql);
                         int n = 0;
@@ -224,7 +224,6 @@ namespace SHSchool.CourseSelection.Forms
                 mark[i] = "";
             }
             
-
             DataGridViewRow drX1 = new DataGridViewRow();
             drX1.CreateCells(dataGridViewX1);
             int index = 0;
@@ -323,14 +322,35 @@ namespace SHSchool.CourseSelection.Forms
                             break;
                     }
                     dr.Cells["courseName"].Value = "" + dr.Cells["courseType"].Value + " " +dr.Cells["subjectName"].Value + " " +level + " " +dr.Cells["classType"].Value;
+                    // SubjectCourse UDT 修改選修科目課程名稱、選修科目班別
                     UpdateHelper uph = new UpdateHelper();
                     string updateSql = string.Format(@"
-                        UPDATE $ischool.course_selection.subjectcourse 
+                        UPDATE $ischool.course_selection.subject_course 
                         SET course_name = '{0}',
                             class_type = '{1}'
                         WHERE uid = {2}
                     ", dr.Cells["courseName"].Value, dr.Cells["classType"].Value, int.Parse("" + dr.Tag));
                     uph.Execute(updateSql);
+                    // 取得要修改的課程ID
+                    string selUpDateCourseID = string.Format(@"
+                        SELECT ref_course_id
+                        From $ischool.course_selection.subject_course 
+                        WHERE uid = {0}
+                    ",int.Parse("" + dr.Tag));
+                    QueryHelper qh = new QueryHelper();
+                    DataTable dt = qh.Select(selUpDateCourseID);
+                    // Course Table 修改課程資訊
+                    //修改課程資訊
+                    foreach (DataRow datarow in dt.Rows)
+                    {
+                        int course_id = int.Parse("" + datarow["ref_course_id"]);
+                        string updateSql2 = string.Format(@"
+                            UPDATE course
+                            SET course_name = '{0}'
+                            WHERE id = {1}
+                        ", dr.Cells["courseName"].Value, course_id);
+                        uph.Execute(updateSql2);
+                    }
                 }
                 if ("" + dr.Cells["dataType"].Value == "刪除")
                 {
@@ -339,8 +359,8 @@ namespace SHSchool.CourseSelection.Forms
                     // 取得要刪除的課程ID
                     QueryHelper qh = new QueryHelper();
                     string selDeleteCourseID = string.Format(@"
-                        SELECT course_id
-                        From $ischool.course_selection.subjectcourse 
+                        SELECT ref_course_id
+                        From $ischool.course_selection.subject_course 
                         WHERE uid = {0}
                     ", int.Parse("" + dr.Tag));
                     DataTable dt = qh.Select(selDeleteCourseID);
@@ -349,7 +369,7 @@ namespace SHSchool.CourseSelection.Forms
                     // 刪除課程資訊
                     foreach (DataRow datarow in dt.Rows)
                     {
-                        int course_id = int.Parse("" + datarow["course_id"]);
+                        int course_id = int.Parse("" + datarow["ref_course_id"]);
                         string deleteSql = string.Format(@"
                             DELETE FROM course
                             WHERE id = {0}
@@ -359,7 +379,7 @@ namespace SHSchool.CourseSelection.Forms
 
                     // SubjectCourse UDT 刪除科目課程資訊
                     string updateSql = string.Format(@"
-                        DELETE FROM $ischool.course_selection.subjectcourse 
+                        DELETE FROM $ischool.course_selection.subject_course 
                         WHERE uid = {0}
                     ", int.Parse("" + dr.Tag));
                     uph.Execute(updateSql);

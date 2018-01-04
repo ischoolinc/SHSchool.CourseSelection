@@ -77,12 +77,12 @@ namespace SHSchool.CourseSelection.Forms
 			LEFT OUTER JOIN
 			(
 				SELECT
-					subject,
+					ref_subject_id,
 					count(*)
 				FROM
-					course
-				GROUP BY course.subject
-			) course_count ON course_count.subject = subject.subject_name
+					$ischool.course_selection.subject_course AS subject_course
+				GROUP BY subject_course.ref_subject_id
+			) course_count ON course_count.ref_subject_id = subject.uid
             WHERE 
 	            subject.school_year = {0}
 	            AND subject.semester = {1}

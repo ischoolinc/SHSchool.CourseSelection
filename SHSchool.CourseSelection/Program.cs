@@ -41,6 +41,7 @@ namespace SHSchool.CourseSelection
 
         public static void InitRibbonBar()
         {
+            new AccessHelper().Select<UDT.SubjectCourse>("uid<0");
             #region 教務作業
 
             #region 選修科目設定
