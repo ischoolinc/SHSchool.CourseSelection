@@ -302,6 +302,8 @@
             this.Controls.Add(this.groupPanel1);
             this.DoubleBuffered = true;
             this.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.MaximizeBox = true;
+            this.MinimizeBox = true;
             this.MinimumSize = new System.Drawing.Size(615, 460);
             this.Name = "BuildCourseClass";
             this.Text = "選修科目開班";

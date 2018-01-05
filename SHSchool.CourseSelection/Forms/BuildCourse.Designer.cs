@@ -269,6 +269,8 @@
             this.Controls.Add(this.buildCourseBtn);
             this.Controls.Add(this.groupPanel1);
             this.DoubleBuffered = true;
+            this.MaximizeBox = true;
+            this.MinimizeBox = true;
             this.MinimumSize = new System.Drawing.Size(660, 490);
             this.Name = "BuildCourse";
             this.Text = "建立課程班級";

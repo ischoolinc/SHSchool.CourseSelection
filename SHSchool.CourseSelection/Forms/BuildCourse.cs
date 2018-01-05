@@ -378,10 +378,18 @@ namespace SHSchool.CourseSelection.Forms
                     }
 
                     // SubjectCourse UDT 刪除科目課程資訊
-                    string updateSql = string.Format(@"
+                    string deleteSql2 = string.Format(@"
                         DELETE FROM $ischool.course_selection.subject_course 
                         WHERE uid = {0}
                     ", int.Parse("" + dr.Tag));
+                    uph.Execute(deleteSql2);
+
+                    // SSAttend UDT 刪除SubjectCourseID
+                    string updateSql = string.Format(@"
+                        UPDATE $ischool.course_selection.ss_attend 
+                        SET ref_subject_course_id = null 
+                        WHERE ref_subject_course_id = {0}
+                        ", "" + dr.Tag);
                     uph.Execute(updateSql);
                 }
             }

@@ -46,15 +46,31 @@ namespace SHSchool.CourseSelection.Forms
             semesterCbx.Items.Add(1);
             semesterCbx.Items.Add(2);
 
-            // Subject ComboBox
+            //  CourseType ComboBox
             AccessHelper accessSubject = new AccessHelper();
-            List<UDT.Subject> s_list = accessSubject.Select<UDT.Subject>();
+            List<UDT.Subject> s_list = accessSubject.Select<UDT.Subject>("school_year =" + schoolYearCbx.Text + " AND semester = " + semesterCbx.Text);
             foreach (UDT.Subject sc in s_list)
             {
-                if (int.Parse(schoolYearCbx.Text) == sc.SchoolYear && int.Parse(semesterCbx.Text) == sc.Semester)
+                if (!courseTypeCbx.Items.Contains(sc.Type))
+                {
+                    courseTypeCbx.Items.Add(sc.Type);
+                }
+            }
+        }
+        
+        private void courseTypeCbx_TextChanged(object sender, EventArgs e)
+        {
+            // Subject ComboBox
+            if (courseTypeCbx.Text != "")
+            {
+                subjectCbx.Items.Clear();
+                subjectIDdic.Clear();
+                AccessHelper accessSubject = new AccessHelper();
+                List<UDT.Subject> s_list = accessSubject.Select<UDT.Subject>("school_year =" + schoolYearCbx.Text + " AND semester = " + semesterCbx.Text + " AND type = " + "'" + courseTypeCbx.Text + "'");
+                foreach (UDT.Subject sc in s_list)
                 {
                     subjectCbx.Items.Add(sc.SubjectName);
-                    subjectIDdic.Add(sc.SubjectName,sc.UID);
+                    subjectIDdic.Add(sc.SubjectName, sc.UID);
                 }
             }
         }
@@ -246,6 +262,7 @@ namespace SHSchool.CourseSelection.Forms
                     }
                 }
                 datarow.Tag = "" + student["ref_student_id"];
+                datarow.Cells[6].Tag = "" + student["ref_subject_course_id"];
 
                 dataGridViewX1.Rows.Add(datarow);
             }
@@ -370,6 +387,8 @@ namespace SHSchool.CourseSelection.Forms
         {
             this.Close();
         }
+
+        
     }
 
     class AttInfo
