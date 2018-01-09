@@ -32,6 +32,13 @@
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
+            this.stuNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gender = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.className = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.saetNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.attendNow = new SHSchool.CourseSelection.Forms.DataGridViewColorBallTextColumn();
+            this.attendAfter = new SHSchool.CourseSelection.Forms.DataGridViewColorBallTextColumn();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
@@ -43,13 +50,6 @@
             this.closeBtn = new DevComponents.DotNetBar.ButtonX();
             this.labelX4 = new DevComponents.DotNetBar.LabelX();
             this.courseTypeCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.stuNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gender = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.className = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.saetNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.attendNow = new SHSchool.CourseSelection.Forms.DataGridViewColorBallTextColumn();
-            this.attendAfter = new SHSchool.CourseSelection.Forms.DataGridViewColorBallTextColumn();
             this.groupPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.SuspendLayout();
@@ -150,153 +150,6 @@
             this.dataGridViewX1.Size = new System.Drawing.Size(630, 412);
             this.dataGridViewX1.TabIndex = 0;
             // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.AutoSize = true;
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(2, 5);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.flowLayoutPanel1.MinimumSize = new System.Drawing.Size(0, 30);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(630, 30);
-            this.flowLayoutPanel1.TabIndex = 4;
-            // 
-            // labelX1
-            // 
-            this.labelX1.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX1.BackgroundStyle.Class = "";
-            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX1.Location = new System.Drawing.Point(18, 11);
-            this.labelX1.Name = "labelX1";
-            this.labelX1.Size = new System.Drawing.Size(35, 23);
-            this.labelX1.TabIndex = 1;
-            this.labelX1.Text = "學年";
-            // 
-            // labelX2
-            // 
-            this.labelX2.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX2.BackgroundStyle.Class = "";
-            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX2.Location = new System.Drawing.Point(130, 11);
-            this.labelX2.Name = "labelX2";
-            this.labelX2.Size = new System.Drawing.Size(35, 23);
-            this.labelX2.TabIndex = 2;
-            this.labelX2.Text = "學期";
-            // 
-            // labelX3
-            // 
-            this.labelX3.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX3.BackgroundStyle.Class = "";
-            this.labelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX3.Location = new System.Drawing.Point(481, 11);
-            this.labelX3.Name = "labelX3";
-            this.labelX3.Size = new System.Drawing.Size(35, 23);
-            this.labelX3.TabIndex = 3;
-            this.labelX3.Text = "科目";
-            // 
-            // schoolYearCbx
-            // 
-            this.schoolYearCbx.DisplayMember = "Text";
-            this.schoolYearCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.schoolYearCbx.FormattingEnabled = true;
-            this.schoolYearCbx.ItemHeight = 19;
-            this.schoolYearCbx.Location = new System.Drawing.Point(59, 9);
-            this.schoolYearCbx.Name = "schoolYearCbx";
-            this.schoolYearCbx.Size = new System.Drawing.Size(65, 25);
-            this.schoolYearCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.schoolYearCbx.TabIndex = 4;
-            // 
-            // semesterCbx
-            // 
-            this.semesterCbx.DisplayMember = "Text";
-            this.semesterCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.semesterCbx.FormattingEnabled = true;
-            this.semesterCbx.ItemHeight = 19;
-            this.semesterCbx.Location = new System.Drawing.Point(171, 9);
-            this.semesterCbx.Name = "semesterCbx";
-            this.semesterCbx.Size = new System.Drawing.Size(49, 25);
-            this.semesterCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.semesterCbx.TabIndex = 5;
-            // 
-            // subjectCbx
-            // 
-            this.subjectCbx.DisplayMember = "Text";
-            this.subjectCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.subjectCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.subjectCbx.FormattingEnabled = true;
-            this.subjectCbx.ItemHeight = 19;
-            this.subjectCbx.Location = new System.Drawing.Point(522, 9);
-            this.subjectCbx.Name = "subjectCbx";
-            this.subjectCbx.Size = new System.Drawing.Size(130, 25);
-            this.subjectCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.subjectCbx.TabIndex = 6;
-            this.subjectCbx.TextChanged += new System.EventHandler(this.subjectCbx_TextChanged);
-            // 
-            // saveBtn
-            // 
-            this.saveBtn.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.saveBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveBtn.BackColor = System.Drawing.Color.Transparent;
-            this.saveBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.saveBtn.Location = new System.Drawing.Point(496, 526);
-            this.saveBtn.Name = "saveBtn";
-            this.saveBtn.Size = new System.Drawing.Size(75, 23);
-            this.saveBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.saveBtn.TabIndex = 7;
-            this.saveBtn.Text = "儲存";
-            this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
-            // 
-            // closeBtn
-            // 
-            this.closeBtn.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.closeBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.closeBtn.BackColor = System.Drawing.Color.Transparent;
-            this.closeBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.closeBtn.Location = new System.Drawing.Point(577, 526);
-            this.closeBtn.Name = "closeBtn";
-            this.closeBtn.Size = new System.Drawing.Size(75, 23);
-            this.closeBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.closeBtn.TabIndex = 8;
-            this.closeBtn.Text = "關閉";
-            this.closeBtn.Click += new System.EventHandler(this.closeBtn_Click);
-            // 
-            // labelX4
-            // 
-            this.labelX4.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX4.BackgroundStyle.Class = "";
-            this.labelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX4.Location = new System.Drawing.Point(265, 11);
-            this.labelX4.Name = "labelX4";
-            this.labelX4.Size = new System.Drawing.Size(61, 23);
-            this.labelX4.TabIndex = 9;
-            this.labelX4.Text = "課程類別";
-            // 
-            // courseTypeCbx
-            // 
-            this.courseTypeCbx.DisplayMember = "Text";
-            this.courseTypeCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.courseTypeCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.courseTypeCbx.FormattingEnabled = true;
-            this.courseTypeCbx.ItemHeight = 19;
-            this.courseTypeCbx.Location = new System.Drawing.Point(332, 9);
-            this.courseTypeCbx.Name = "courseTypeCbx";
-            this.courseTypeCbx.Size = new System.Drawing.Size(110, 25);
-            this.courseTypeCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.courseTypeCbx.TabIndex = 10;
-            this.courseTypeCbx.TextChanged += new System.EventHandler(this.courseTypeCbx_TextChanged);
-            // 
             // stuNumber
             // 
             this.stuNumber.HeaderText = "學號";
@@ -346,6 +199,153 @@
             this.attendAfter.HeaderText = "分班";
             this.attendAfter.Name = "attendAfter";
             this.attendAfter.ReadOnly = true;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.AutoSize = true;
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(2, 5);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
+            this.flowLayoutPanel1.MinimumSize = new System.Drawing.Size(0, 30);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(630, 30);
+            this.flowLayoutPanel1.TabIndex = 4;
+            // 
+            // labelX1
+            // 
+            this.labelX1.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX1.BackgroundStyle.Class = "";
+            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX1.Location = new System.Drawing.Point(18, 11);
+            this.labelX1.Name = "labelX1";
+            this.labelX1.Size = new System.Drawing.Size(35, 23);
+            this.labelX1.TabIndex = 1;
+            this.labelX1.Text = "學年";
+            // 
+            // labelX2
+            // 
+            this.labelX2.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX2.BackgroundStyle.Class = "";
+            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX2.Location = new System.Drawing.Point(130, 11);
+            this.labelX2.Name = "labelX2";
+            this.labelX2.Size = new System.Drawing.Size(35, 23);
+            this.labelX2.TabIndex = 2;
+            this.labelX2.Text = "學期";
+            // 
+            // labelX3
+            // 
+            this.labelX3.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX3.BackgroundStyle.Class = "";
+            this.labelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX3.Location = new System.Drawing.Point(456, 11);
+            this.labelX3.Name = "labelX3";
+            this.labelX3.Size = new System.Drawing.Size(35, 23);
+            this.labelX3.TabIndex = 3;
+            this.labelX3.Text = "科目";
+            // 
+            // schoolYearCbx
+            // 
+            this.schoolYearCbx.DisplayMember = "Text";
+            this.schoolYearCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.schoolYearCbx.FormattingEnabled = true;
+            this.schoolYearCbx.ItemHeight = 19;
+            this.schoolYearCbx.Location = new System.Drawing.Point(59, 9);
+            this.schoolYearCbx.Name = "schoolYearCbx";
+            this.schoolYearCbx.Size = new System.Drawing.Size(65, 25);
+            this.schoolYearCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.schoolYearCbx.TabIndex = 4;
+            // 
+            // semesterCbx
+            // 
+            this.semesterCbx.DisplayMember = "Text";
+            this.semesterCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.semesterCbx.FormattingEnabled = true;
+            this.semesterCbx.ItemHeight = 19;
+            this.semesterCbx.Location = new System.Drawing.Point(171, 9);
+            this.semesterCbx.Name = "semesterCbx";
+            this.semesterCbx.Size = new System.Drawing.Size(49, 25);
+            this.semesterCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.semesterCbx.TabIndex = 5;
+            // 
+            // subjectCbx
+            // 
+            this.subjectCbx.DisplayMember = "Text";
+            this.subjectCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.subjectCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.subjectCbx.FormattingEnabled = true;
+            this.subjectCbx.ItemHeight = 19;
+            this.subjectCbx.Location = new System.Drawing.Point(496, 9);
+            this.subjectCbx.Name = "subjectCbx";
+            this.subjectCbx.Size = new System.Drawing.Size(156, 25);
+            this.subjectCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.subjectCbx.TabIndex = 6;
+            this.subjectCbx.TextChanged += new System.EventHandler(this.subjectCbx_TextChanged);
+            // 
+            // saveBtn
+            // 
+            this.saveBtn.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.saveBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveBtn.BackColor = System.Drawing.Color.Transparent;
+            this.saveBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.saveBtn.Location = new System.Drawing.Point(496, 526);
+            this.saveBtn.Name = "saveBtn";
+            this.saveBtn.Size = new System.Drawing.Size(75, 23);
+            this.saveBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.saveBtn.TabIndex = 7;
+            this.saveBtn.Text = "儲存";
+            this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
+            // 
+            // closeBtn
+            // 
+            this.closeBtn.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.closeBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.closeBtn.BackColor = System.Drawing.Color.Transparent;
+            this.closeBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.closeBtn.Location = new System.Drawing.Point(577, 526);
+            this.closeBtn.Name = "closeBtn";
+            this.closeBtn.Size = new System.Drawing.Size(75, 23);
+            this.closeBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.closeBtn.TabIndex = 8;
+            this.closeBtn.Text = "關閉";
+            this.closeBtn.Click += new System.EventHandler(this.closeBtn_Click);
+            // 
+            // labelX4
+            // 
+            this.labelX4.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX4.BackgroundStyle.Class = "";
+            this.labelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX4.Location = new System.Drawing.Point(250, 11);
+            this.labelX4.Name = "labelX4";
+            this.labelX4.Size = new System.Drawing.Size(61, 23);
+            this.labelX4.TabIndex = 9;
+            this.labelX4.Text = "課程類別";
+            // 
+            // courseTypeCbx
+            // 
+            this.courseTypeCbx.DisplayMember = "Text";
+            this.courseTypeCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.courseTypeCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.courseTypeCbx.FormattingEnabled = true;
+            this.courseTypeCbx.ItemHeight = 19;
+            this.courseTypeCbx.Location = new System.Drawing.Point(317, 9);
+            this.courseTypeCbx.Name = "courseTypeCbx";
+            this.courseTypeCbx.Size = new System.Drawing.Size(110, 25);
+            this.courseTypeCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.courseTypeCbx.TabIndex = 10;
+            this.courseTypeCbx.TextChanged += new System.EventHandler(this.courseTypeCbx_TextChanged);
             // 
             // ManualDisClass
             // 

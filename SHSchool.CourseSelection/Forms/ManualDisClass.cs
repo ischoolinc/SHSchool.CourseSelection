@@ -21,7 +21,7 @@ namespace SHSchool.CourseSelection.Forms
     public partial class ManualDisClass : BaseForm
     {
         // DIC(subjectName,subjectID)
-        Dictionary<string, string> subjectIDdic = new Dictionary<string, string>();
+        Dictionary<string, string> subjectNamedic = new Dictionary<string, string>();
         // DIC(studentID,subjectID)
         Dictionary<string, string> studentIDdic = new Dictionary<string, string>();
         // List
@@ -60,23 +60,62 @@ namespace SHSchool.CourseSelection.Forms
         
         private void courseTypeCbx_TextChanged(object sender, EventArgs e)
         {
+            ReloadSubjectCbx();
+        }
+
+        public void ReloadSubjectCbx()
+        {
             // Subject ComboBox
-            if (courseTypeCbx.Text != "")
+            // 選課人數(以分班/選修科目總人數) + 科目名稱 
+            #region SQL
+            string selectSQL = string.Format(@"
+                SELECT 
+	                uid,
+	                subject_name ,
+	                ss_attend.count AS s_count,
+	                attend.count AS c_count
+                FROM $ischool.course_selection.subject  AS subject
+                LEFT OUTER JOIN
+                (
+	                SELECT
+		                ref_subject_id,
+		                count(*)
+	                FROM
+		                $ischool.course_selection.ss_attend AS ss_attend
+	                GROUP BY ss_attend.ref_subject_id
+                )ss_attend ON ss_attend.ref_subject_id = subject.uid 
+                LEFT OUTER JOIN
+                (
+	                SELECT
+		                ref_subject_id,
+		                count(ref_subject_course_id)
+	                FROM
+		                $ischool.course_selection.ss_attend AS ss_attend
+	                WHERE ref_subject_course_id IS NOT NULL
+	                GROUP BY ss_attend.ref_subject_id
+                )attend ON attend.ref_subject_id = subject.uid
+                WHERE school_year = {0} AND semester = {1} AND type = '{2}'
+                ", schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
+            #endregion
+            QueryHelper queryHelper = new QueryHelper();
+            DataTable subjectRecord = queryHelper.Select(selectSQL);
+            subjectCbx.Items.Clear();
+            subjectNamedic.Clear();
+            foreach (DataRow subject in subjectRecord.Rows)
             {
-                subjectCbx.Items.Clear();
-                subjectIDdic.Clear();
-                AccessHelper accessSubject = new AccessHelper();
-                List<UDT.Subject> s_list = accessSubject.Select<UDT.Subject>("school_year =" + schoolYearCbx.Text + " AND semester = " + semesterCbx.Text + " AND type = " + "'" + courseTypeCbx.Text + "'");
-                foreach (UDT.Subject sc in s_list)
-                {
-                    subjectCbx.Items.Add(sc.SubjectName);
-                    subjectIDdic.Add(sc.SubjectName, sc.UID);
-                }
+                subjectCbx.Items.Add("(" + subject["c_count"] + "/" + subject["s_count"] + ")" + subject["subject_name"]);
+                subjectNamedic.Add("(" + subject["c_count"] + "/" + subject["s_count"] + ")" + subject["subject_name"], "" + subject["uid"]);
             }
         }
 
         private void subjectCbx_TextChanged(object sender, EventArgs e)
         {
+            // 透過Tag紀錄選取的科目ID
+            if (subjectCbx.Text != "")
+            {
+                subjectCbx.Tag = subjectNamedic[subjectCbx.Text];
+            }
+            
             _CourseColor.Clear();
             _CourseName.Clear();
 
@@ -90,7 +129,7 @@ namespace SHSchool.CourseSelection.Forms
             int i = 0;
             foreach (UDT.SubjectCourse sc in sc_list)
             {
-                if (subjectCbx.Text == sc.SubjectName && int.Parse(schoolYearCbx.Text) == sc.SchoolYear && int.Parse(semesterCbx.Text) == sc.Semester)
+                if ("" + subjectCbx.Tag == "" + sc.SubjectID && int.Parse(schoolYearCbx.Text) == sc.SchoolYear && int.Parse(semesterCbx.Text) == sc.Semester)
                 {
                     ButtonX button = new ButtonX();
                     button.FocusCuesEnabled = false;
@@ -201,7 +240,7 @@ namespace SHSchool.CourseSelection.Forms
 		                course
                 )course on course.id = subject_course.ref_course_id                
                 WHERE ref_subject_id = {0}
-                ", subjectIDdic[subjectCbx.Text]);
+                ", "" + subjectCbx.Tag);
 
             #endregion
             DataTable studentData = queryhelper.Select(selectSQL);
@@ -297,9 +336,7 @@ namespace SHSchool.CourseSelection.Forms
                     _CourseStudentIDdic.Add("" + row.Cells[6].Tag, new List<string>());
                     _CourseStudentIDdic["" + row.Cells[6].Tag].Add("" + row.Tag);
                 }
-
             }
-
             CountStudents();
         }
 
@@ -361,7 +398,7 @@ namespace SHSchool.CourseSelection.Forms
                     UPDATE $ischool.course_selection.ss_attend
                     SET ref_subject_course_id = {0}
                     WHERE ref_student_id = {1} AND ref_subject_id = {2}
-                ", "" + dr.Cells[6].Tag, "" + dr.Tag, subjectIDdic[subjectCbx.Text]);
+                ", "" + dr.Cells[6].Tag, "" + dr.Tag, "" + subjectCbx.Tag);
 
                     UpdateHelper updateHelper = new UpdateHelper();
                     updateHelper.Execute(updateSQL);
@@ -372,7 +409,7 @@ namespace SHSchool.CourseSelection.Forms
                     UPDATE $ischool.course_selection.ss_attend
                     SET ref_subject_course_id = {0}
                     WHERE ref_student_id = {1} AND ref_subject_id = {2}
-                ", "null", "" + dr.Tag, subjectIDdic[subjectCbx.Text]);
+                ", "null", "" + dr.Tag, "" + subjectCbx.Tag);
 
                     UpdateHelper updateHelper = new UpdateHelper();
                     updateHelper.Execute(updateSQL);
@@ -380,15 +417,20 @@ namespace SHSchool.CourseSelection.Forms
             }
             MessageBox.Show("儲存成功");
             ReloadDataGridView();
-
+            ReloadSubjectCbx();
+            foreach (var subject in subjectNamedic)
+            {
+                if (subject.Value == "" + subjectCbx.Tag)
+                {
+                    subjectCbx.Text = subject.Key;
+                }
+            }
         }
 
         private void closeBtn_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
-        
     }
 
     class AttInfo
