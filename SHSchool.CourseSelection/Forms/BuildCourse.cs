@@ -16,7 +16,8 @@ namespace SHSchool.CourseSelection.Forms
 {
     public partial class BuildCourse : BaseForm
     {
-        int schoolYear, semester;
+        int schoolYear, semester;        
+
         public BuildCourse(DataGridView dgv,int sy,int s,string type)
         {
             InitializeComponent();
@@ -160,6 +161,8 @@ namespace SHSchool.CourseSelection.Forms
                 }
             }
             #endregion
+
+            
         }
 
         public void InitDataGridView(string _dataType,int i,string type,DataGridViewRow dr)
@@ -268,15 +271,50 @@ namespace SHSchool.CourseSelection.Forms
             }
         }
 
+        // 欄位驗證 : 判斷課程名稱是否重複
+        private void dataGridViewX1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            Dictionary<string, string> courseNameDic = new Dictionary<string, string>();
+            foreach (DataGridViewRow dr in dataGridViewX1.Rows)
+            {
+                if (courseNameDic.ContainsKey("" + dr.Cells[1].Value))
+                {
+                    dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].ErrorText = "error";
+                    return;
+                }
+                if (!courseNameDic.ContainsKey("" + dr.Cells[1].Value))
+                {
+                    courseNameDic.Add("" + dr.Cells["courseName"].Value, "" + dr.Cells["subjectName"].Value);
+                    dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].ErrorText = string.Empty;
+                }
+
+            }
+        }
+
         // 開課
         private void buildCourseBtn_Click(object sender, EventArgs e)
         {
+            List<string> courseNameList = new List<string>();
+            bool repeat = false;
+            foreach (DataGridViewRow datarow in dataGridViewX1.Rows)
+            {
+                if (courseNameList.Contains("" + datarow.Cells["courseName"].Value))
+                {
+                    repeat = true;
+                    MessageBox.Show("課程名稱重複!!");
+                    return;
+                }
+                if(!courseNameList.Contains("" + datarow.Cells["courseName"].Value))
+                {
+                    courseNameList.Add("" + datarow.Cells["courseName"].Value);
+                }
+            }
+
             AccessHelper access = new AccessHelper();
             List<UDT.SubjectCourse> subCourseList = access.Select<UDT.SubjectCourse>();
 
             foreach (DataGridViewRow dr in dataGridViewX1.Rows)
             {
-                
                 if ("" + dr.Cells["dataType"].Value == "新增")
                 {
                     //-- Course Table 新增課程資訊
@@ -393,9 +431,17 @@ namespace SHSchool.CourseSelection.Forms
                     uph.Execute(updateSql);
                 }
             }
+
+            if (repeat == false)
+            {
+                MessageBox.Show("課程建立成功!");
+                this.Close();
+            }
+            if (repeat == true)
+            {
+                MessageBox.Show("課程建立失敗!");
+            }
             
-            MessageBox.Show( "課程建立成功!");
-            this.Close();
         }
     }
 }

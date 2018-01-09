@@ -48,12 +48,12 @@ namespace SHSchool.CourseSelection
             #region 教務作業
 
             var vSelectableSubject_Management = MotherForm.RibbonBarItems["教務作業", "選課作業"]["設定"];
-
-            #region 科目 設定
-            Catalog button_Subject_Management = RoleAclSource.Instance["教務作業"]["功能按鈕"];
-            button_Subject_Management.Add(new RibbonFeature("Button_Subject_Management", "科目管理"));
             vSelectableSubject_Management.Size = RibbonBarButton.MenuButtonSize.Large;
             vSelectableSubject_Management.Image = Properties.Resources.sandglass_unlock_64;
+            
+            #region 科目 
+            Catalog button_Subject_Management = RoleAclSource.Instance["教務作業"]["功能按鈕"];
+            button_Subject_Management.Add(new RibbonFeature("Button_Subject_Management", "科目管理"));
             vSelectableSubject_Management["科目"].Enable = UserAcl.Current["Button_Subject_Management"].Executable;
             vSelectableSubject_Management["科目"].Click += delegate
             {
@@ -62,7 +62,7 @@ namespace SHSchool.CourseSelection
 
             #endregion
 
-            #region 選修科目 設定
+            #region 選修科目 
 
             Catalog button_SelectableSubject_Management = RoleAclSource.Instance["教務作業"]["功能按鈕"];
             button_SelectableSubject_Management.Add(new RibbonFeature("Button_SelectableSubject_Management", "選修科目設定"));
@@ -74,13 +74,12 @@ namespace SHSchool.CourseSelection
 
             #endregion
 
-            #region 選課時間 設定
+            #region 選課時間 
 
             Catalog button_OpeningTime_Management = RoleAclSource.Instance["教務作業"]["功能按鈕"];
             button_OpeningTime_Management.Add(new RibbonFeature("Button_OpeningTime_Management", "選課時間設定"));
 
             var vOpeningTime_Management = MotherForm.RibbonBarItems["教務作業", "選課作業"]["設定"];
-            vOpeningTime_Management.Size = RibbonBarButton.MenuButtonSize.Large;
             vOpeningTime_Management["選課時間"].Enable = UserAcl.Current["Button_OpeningTime_Management"].Executable;
             vOpeningTime_Management["選課時間"].Click += delegate
             {
@@ -89,13 +88,9 @@ namespace SHSchool.CourseSelection
 
             #endregion
 
-            var vSubject_Management = MotherForm.RibbonBarItems["教務作業", "選課作業"]["管理"];
-
-            #region  志願序分發作業 管理
-
+            #region  志願序分發作業 
+            var vSubject_Management = MotherForm.RibbonBarItems["教務作業", "選課作業"]["設定"];
             button_Subject_Management.Add(new RibbonFeature("Sequence_distribution_Management", "志願序分發作業"));
-            vSubject_Management.Size = RibbonBarButton.MenuButtonSize.Large;
-            vSubject_Management.Image = Properties.Resources.network_lock_64;
             vSubject_Management["志願序分發作業"].Enable = UserAcl.Current["Sequence_distribution_Management"].Executable;
             vSubject_Management["志願序分發作業"].Click += delegate
             {
@@ -104,13 +99,12 @@ namespace SHSchool.CourseSelection
 
             #endregion
 
-            #region 學生選修科目 管理
+            #region 學生選修科目 
 
             Catalog button_SSAttend_Management = RoleAclSource.Instance["教務作業"]["功能按鈕"];
             button_SSAttend_Management.Add(new RibbonFeature("Button_SSAttend_Management", "學生選修科目設定"));
 
-            var vSSAttend_Management = MotherForm.RibbonBarItems["教務作業", "選課作業"]["管理"];
-            //vSSAttend_Management.Size = RibbonBarButton.MenuButtonSize.Large;
+            var vSSAttend_Management = MotherForm.RibbonBarItems["教務作業", "選課作業"]["設定"];
             vSSAttend_Management["學生選修科目"].Enable = UserAcl.Current["Button_SSAttend_Management"].Executable;
             vSSAttend_Management["學生選修科目"].Click += delegate
             {
@@ -119,18 +113,18 @@ namespace SHSchool.CourseSelection
 
             #endregion
 
-            #region 選修科目開班 管理
+            #region 選修科目開班 
             // 2017/12/20，羿均，[新民選課]選修科目開班
-            var mb2 = MotherForm.RibbonBarItems["教務作業", "選課作業"]["管理"]["選修科目開班"];
+            var mb2 = MotherForm.RibbonBarItems["教務作業", "選課作業"]["設定"]["選修科目開班"];
             mb2.Click += delegate
             {
                 (new Forms.BuildCourseClass()).ShowDialog();
             };
             #endregion
 
-            #region 分班 管理
+            #region 分班 
             // 2017/12/25，羿均，[新民選課]手動分班
-            var mb3 = MotherForm.RibbonBarItems["教務作業", "選課作業"]["管理"]["選課分班"];
+            var mb3 = MotherForm.RibbonBarItems["教務作業", "選課作業"]["設定"]["選課分班"];
             mb3.Click += delegate
             {
                 (new Forms.ManualDisClass()).ShowDialog();
@@ -138,7 +132,7 @@ namespace SHSchool.CourseSelection
             #endregion
 
             // 2017/10/11-羿均
-            #region 選課課程 管理
+            #region 選課課程 
             button_Subject_Management.Add(new RibbonFeature("7140A14A-F26B-4DEA-8C87-D71A1FDCF6BE", "轉入修課學生"));
 
             vSubject_Management["轉入修課學生"].Enable = UserAcl.Current["7140A14A-F26B-4DEA-8C87-D71A1FDCF6BE"].Executable;
