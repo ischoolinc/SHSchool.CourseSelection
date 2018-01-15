@@ -33,18 +33,6 @@ namespace SHSchool.CourseSelection.Forms
             }
             #endregion
 
-            #region 課程類別
-            QueryHelper helper = new QueryHelper();
-            string SQL = @"
-                SELECT DISTINCT 
-                    type 
-                FROM $ischool.course_selection.subject ";
-            foreach (DataRow row in helper.Select(SQL).Rows)
-            {
-                courseTypeCbx.Items.Add("" + row["type"]);
-            }
-            #endregion
-
         }
         public void ReloadDataGridView()
         {
@@ -91,12 +79,12 @@ namespace SHSchool.CourseSelection.Forms
             #endregion
 
             #region DataGridView
+            dataGridViewX1.Rows.Clear();
             if (courseTypeCbx.Text != "")
             {
                 QueryHelper qh = new QueryHelper();
                 DataTable dataTable = qh.Select(SQL);
 
-                dataGridViewX1.Rows.Clear();
                 foreach (DataRow dr in dataTable.Rows)
                 {
                     DataGridViewRow datarow = new DataGridViewRow();
@@ -126,14 +114,36 @@ namespace SHSchool.CourseSelection.Forms
             }
             #endregion
         }
-        
+
+        public void ReloadCourseTypeCbx()
+        {
+            #region 課程類別
+            if (schoolYearCbx.Text != "" && semesterCbx.Text != "")
+            {
+                courseTypeCbx.Items.Clear();
+                QueryHelper helper = new QueryHelper();
+                string selectSQL = string.Format(@"
+                SELECT DISTINCT 
+                    type 
+                FROM $ischool.course_selection.subject 
+                WHERE school_year = {0} AND semester = {1}", schoolYearCbx.Text, semesterCbx.Text);
+                foreach (DataRow row in helper.Select(selectSQL).Rows)
+                {
+                    courseTypeCbx.Items.Add("" + row["type"]);
+                }
+            }
+            #endregion
+        }
+
         private void schoolYearCbx_TextChanged(object sender, EventArgs e)
         {
+            ReloadCourseTypeCbx();
             ReloadDataGridView();
         }
 
         private void semesterCbx_TextChanged(object sender, EventArgs e)
         {
+            ReloadCourseTypeCbx();
             ReloadDataGridView();
         }
 
