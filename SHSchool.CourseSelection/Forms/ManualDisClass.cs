@@ -45,8 +45,6 @@ namespace SHSchool.CourseSelection.Forms
             semesterCbx.Text = SHSchoolInfo.DefaultSemester;
             semesterCbx.Items.Add(1);
             semesterCbx.Items.Add(2);
-
-            
         }
 
         private void schoolYearCbx_TextChanged(object sender, EventArgs e)
@@ -95,14 +93,14 @@ namespace SHSchool.CourseSelection.Forms
                     button.Shape = new DevComponents.DotNetBar.RoundRectangleShapeDescriptor(15);
                     button.TextAlignment = eButtonTextAlignment.Left;
                     button.Size = new Size(110, 23);
-                    button.Text = sc.CourseName;
+                    button.Text = "test" + sc.Class_type;
                     button.Image = GetColorBallImage(colors[i]);
                     // 課班UID
                     button.Tag = "" + sc.UID;
                     button.Margin = new System.Windows.Forms.Padding(3);
                     button.Click += new EventHandler(Swap);
                     // 課班UID
-                    _CourseName.Add("" + sc.UID, sc.CourseName);
+                    _CourseName.Add("" + sc.UID, sc.Class_type);
                     _CourseColor.Add("" + sc.UID, colors[i++]);
                     this.flowLayoutPanel1.Controls.Add(button);
                 }
@@ -192,17 +190,19 @@ namespace SHSchool.CourseSelection.Forms
 	                GROUP BY ss_attend.ref_subject_id
                 )attend ON attend.ref_subject_id = subject.uid
                 WHERE school_year = {0} AND semester = {1} AND type = '{2}'
+                ORDER BY s_count
                 ", schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
                 #endregion
                 QueryHelper queryHelper = new QueryHelper();
                 DataTable subjectRecord = queryHelper.Select(selectSQL);
                 subjectCbx.Items.Clear();
                 subjectNamedic.Clear();
+                subjectRecord.DefaultView.Sort = "s_count DESC ";
                 foreach (DataRow subject in subjectRecord.Rows)
                 {
                     subjectCbx.Items.Add("(" + subject["c_count"] + "/" + subject["s_count"] + ")" + subject["subject_name"]);
                     subjectNamedic.Add("(" + subject["c_count"] + "/" + subject["s_count"] + ")" + subject["subject_name"], "" + subject["uid"]);
-                }
+                }                
             }
             ReloadDataGridView();
         }
@@ -299,9 +299,9 @@ namespace SHSchool.CourseSelection.Forms
                     datarow.Cells[index++].Value = student["name"];
                     if ("" + student["ref_subject_course_id"] != "")
                     {
-                        ((DataGridViewColorBallTextCell)datarow.Cells[5]).Value = "" + student["course_name"];
+                        //((DataGridViewColorBallTextCell)datarow.Cells[5]).Value = "" + student["course_name"];
                         ((DataGridViewColorBallTextCell)datarow.Cells[6]).Value = "" + student["course_name"];
-                        ((DataGridViewColorBallTextCell)datarow.Cells[5]).Color = _CourseColor["" + student["ref_subject_course_id"]];
+                        //((DataGridViewColorBallTextCell)datarow.Cells[5]).Color = _CourseColor["" + student["ref_subject_course_id"]];
                         ((DataGridViewColorBallTextCell)datarow.Cells[6]).Color = _CourseColor["" + student["ref_subject_course_id"]];
                         // 紀錄課程、學生資訊。
                         if (_CourseStudentIDdic.ContainsKey("" + student["ref_subject_course_id"]))
@@ -316,9 +316,9 @@ namespace SHSchool.CourseSelection.Forms
                     }
                     if ("" + student["ref_subject_course_id"] == "")
                     {
-                        ((DataGridViewColorBallTextCell)datarow.Cells[5]).Value = _CourseName[""];
+                        //((DataGridViewColorBallTextCell)datarow.Cells[5]).Value = _CourseName[""];
                         ((DataGridViewColorBallTextCell)datarow.Cells[6]).Value = _CourseName[""];
-                        ((DataGridViewColorBallTextCell)datarow.Cells[5]).Color = _CourseColor[""];
+                        //((DataGridViewColorBallTextCell)datarow.Cells[5]).Color = _CourseColor[""];
                         ((DataGridViewColorBallTextCell)datarow.Cells[6]).Color = _CourseColor[""];
                         // 紀錄課程、學生資訊。
                         if (_CourseStudentIDdic.ContainsKey("" + student["ref_subject_course_id"]))
