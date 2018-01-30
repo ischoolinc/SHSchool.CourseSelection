@@ -69,7 +69,11 @@ namespace SHSchool.CourseSelection
             vSelectableSubject_Management["班級選課管理"].Enable = UserAcl.Current["Button_SelectableSubject_Management"].Executable;
             vSelectableSubject_Management["班級選課管理"].Click += delegate
             {
-                (new Forms.frmSelectableSubject_Management()).ShowDialog();
+                // 舊的--選修科目設定功能
+                //(new Forms.frmSelectableSubject_Management()).ShowDialog();
+
+                // 2018/01/26 羿均 新民選課--班級選課管理
+                (new Forms.ClassSelectCourse_Management()).ShowDialog();
             };
 
             #endregion
@@ -131,14 +135,14 @@ namespace SHSchool.CourseSelection
             };
             #endregion
 
-            // 2017/10/11-羿均
-            #region 選課課程 
+            // 新民轉入修課學生 2018/01/26 羿均
+            #region 轉入修課學生
             button_Subject_Management.Add(new RibbonFeature("7140A14A-F26B-4DEA-8C87-D71A1FDCF6BE", "轉入修課學生"));
 
             vSubject_Management["轉入修課學生"].Enable = UserAcl.Current["7140A14A-F26B-4DEA-8C87-D71A1FDCF6BE"].Executable;
             vSubject_Management["轉入修課學生"].Click += delegate
             {
-                // 惠文轉入修課學生
+                // 惠文轉入修課學生 2017/10/11-羿均
                 //(new Forms.CourseCorrespond()).ShowDialog();
                 // 新民轉入修課學生
                 (new Forms.TurnIntoCourseStudent()).ShowDialog();

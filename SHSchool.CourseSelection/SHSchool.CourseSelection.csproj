@@ -44,6 +44,7 @@
       <HintPath>..\..\..\..\ischool source\ischool@debug\components\DevComponents.DotNetBar2.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="DevComponents.TreeGX, Version=9.5.0.1, Culture=neutral, PublicKeyToken=055db68f670cfeab, processorArchitecture=MSIL" />
     <Reference Include="EMBA.DocumentValidator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Library\EMBA.DocumentValidator.dll</HintPath>
@@ -118,7 +119,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -170,6 +173,18 @@
     </Compile>
     <Compile Include="Forms\BuildCourseClass.Designer.cs">
       <DependentUpon>BuildCourseClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ClassSelectCourse_Management.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ClassSelectCourse_Management.Designer.cs">
+      <DependentUpon>ClassSelectCourse_Management.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ClassSelectCourse_Setting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ClassSelectCourse_Setting.Designer.cs">
+      <DependentUpon>ClassSelectCourse_Setting.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\CourseCorrespond.cs">
       <SubType>Form</SubType>
@@ -260,6 +275,7 @@
     <Compile Include="UDT\SSWish.cs" />
     <Compile Include="UDT\SSAttend.cs" />
     <Compile Include="UDT\Subject.cs" />
+    <Compile Include="UDT\SubjectClassSelection.cs" />
     <Compile Include="UDT\SubjectCourse.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -284,6 +300,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\BuildCourseClass.resx">
       <DependentUpon>BuildCourseClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ClassSelectCourse_Management.resx">
+      <DependentUpon>ClassSelectCourse_Management.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ClassSelectCourse_Setting.resx">
+      <DependentUpon>ClassSelectCourse_Setting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CourseCorrespond.resx">
       <DependentUpon>CourseCorrespond.cs</DependentUpon>
