@@ -2,7 +2,7 @@
 using FISCA.UDT;
 
 namespace SHSchool.CourseSelection.UDT
-{
+{   // 羿均備註選課2.0不再使用此UDT
     [FISCA.UDT.TableName("ischool.course_selection.identity")]
     public class Identity : ActiveRecord
     {

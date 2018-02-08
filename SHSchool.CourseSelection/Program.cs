@@ -127,7 +127,7 @@ namespace SHSchool.CourseSelection
             #endregion
 
             #region 選修科目分班 
-            // 2017/12/25，羿均，[新民選課]手動分班
+            // 2017/12/25 [新民選課]
             var mb3 = MotherForm.RibbonBarItems["教務作業", "選課作業"]["設定"]["選修科目分班"];
             mb3.Click += delegate
             {
@@ -146,6 +146,19 @@ namespace SHSchool.CourseSelection
                 //(new Forms.CourseCorrespond()).ShowDialog();
                 // 新民轉入修課學生
                 (new Forms.TurnIntoCourseStudent()).ShowDialog();
+            };
+
+            #endregion
+
+            #region 開發工具-自動填入學生選課志願
+            RibbonBarButton mb = MotherForm.RibbonBarItems["教務作業", "開發工具"]["產生學生選課志願"];
+            mb.Size = RibbonBarButton.MenuButtonSize.Medium;
+            mb.Image = Properties.Resources.Import_Image;
+
+            mb.Click += delegate 
+            {
+                Test.AutoSelectStuWish at = new Test.AutoSelectStuWish();
+                at.ShowDialog();
             };
 
             #endregion
@@ -237,7 +250,6 @@ namespace SHSchool.CourseSelection
 
             //}; 
             #endregion
-
 
             #region 匯出科目
 

@@ -16,6 +16,8 @@ namespace SHSchool.CourseSelection.Forms
 {
     public partial class ClassSelectCourse_Setting : BaseForm
     {
+        DataGridViewCheckBoxColumn dgvCkbx = new DataGridViewCheckBoxColumn();
+
         Dictionary<string, string> classDic = new Dictionary<string, string>();
         List<string> selectClassDic = new List<string>();
 
@@ -91,6 +93,13 @@ namespace SHSchool.CourseSelection.Forms
             }
             // 避免DataGridView新增相同科目
             Dictionary<string, string> subjectIDDic = new Dictionary<string, string>();
+
+            // DGV新增checkbox
+            dgvCkbx.HeaderText = "加選";
+            dgvCkbx.AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+            dgvCkbx.Width = 45;
+            dgvCkbx.ThreeState = true;
+            dataGridViewX1.Columns.Insert(0,dgvCkbx);
 
             foreach (DataRow dr in dt.Rows)
             {                
@@ -222,6 +231,29 @@ namespace SHSchool.CourseSelection.Forms
             {
                 MessageBox.Show("" + e.Result);
             }
+        }
+
+        private void dataGridViewX1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //if (e.ColumnIndex == 0)
+            //{
+            //    if ("" + dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value == "" + CheckState.Indeterminate)
+            //    {
+            //        dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = CheckState.Unchecked;
+            //        return;
+            //    }
+            //    if ("" + dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value == "" + CheckState.Unchecked)
+            //    {
+            //        dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = CheckState.Checked;
+            //        return;
+            //    }
+            //    if ("" + dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value == "" + CheckState.Checked)
+            //    {
+            //        dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = CheckState.Unchecked;
+            //        return;
+            //    }
+            //}
+            //dgvCkbx.ThreeState = false;
         }
     }
 }
