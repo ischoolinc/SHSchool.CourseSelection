@@ -31,6 +31,13 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Exit = new DevComponents.DotNetBar.ButtonX();
             this.dgvData = new DevComponents.DotNetBar.Controls.DataGridViewX();
+            this.Delete = new DevComponents.DotNetBar.ButtonX();
+            this.cboSchoolYear = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.labelX3 = new DevComponents.DotNetBar.LabelX();
+            this.labelX1 = new DevComponents.DotNetBar.LabelX();
+            this.cboSemester = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.Addd = new DevComponents.DotNetBar.ButtonX();
+            this.Update = new DevComponents.DotNetBar.ButtonX();
             this.Add = new System.Windows.Forms.DataGridViewLinkColumn();
             this.Institute = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
             this.SubjectName = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
@@ -41,13 +48,6 @@
             this.Goal = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
             this.Content = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
             this.Memo = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
-            this.Delete = new DevComponents.DotNetBar.ButtonX();
-            this.cboSchoolYear = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.labelX3 = new DevComponents.DotNetBar.LabelX();
-            this.labelX1 = new DevComponents.DotNetBar.LabelX();
-            this.cboSemester = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.Addd = new DevComponents.DotNetBar.ButtonX();
-            this.Update = new DevComponents.DotNetBar.ButtonX();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.SuspendLayout();
             // 
@@ -103,106 +103,6 @@
             this.dgvData.TabIndex = 6;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
             this.dgvData.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvData_DataBindingComplete);
-            // 
-            // Add
-            // 
-            this.Add.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Add.HeaderText = "加入";
-            this.Add.Name = "Add";
-            this.Add.ReadOnly = true;
-            this.Add.Text = "";
-            this.Add.Width = 40;
-            // 
-            // Institute
-            // 
-            this.Institute.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Institute.HeaderText = "教學單位";
-            this.Institute.Name = "Institute";
-            this.Institute.ReadOnly = true;
-            this.Institute.Width = 66;
-            // 
-            // SubjectName
-            // 
-            this.SubjectName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.SubjectName.HeaderText = "科目名稱";
-            this.SubjectName.Name = "SubjectName";
-            this.SubjectName.ReadOnly = true;
-            this.SubjectName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.SubjectName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.SubjectName.Width = 85;
-            // 
-            // Level
-            // 
-            this.Level.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Level.HeaderText = "級別";
-            this.Level.Name = "Level";
-            this.Level.ReadOnly = true;
-            this.Level.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Level.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Level.Width = 59;
-            // 
-            // Credit
-            // 
-            this.Credit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Credit.HeaderText = "學分數";
-            this.Credit.Name = "Credit";
-            this.Credit.ReadOnly = true;
-            this.Credit.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Credit.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Credit.Width = 72;
-            // 
-            // Type
-            // 
-            this.Type.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Type.HeaderText = "課程類別";
-            this.Type.Name = "Type";
-            this.Type.ReadOnly = true;
-            this.Type.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Type.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Type.Width = 85;
-            // 
-            // Limit
-            // 
-            this.Limit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Limit.HeaderText = "修課人數上限";
-            this.Limit.Name = "Limit";
-            this.Limit.ReadOnly = true;
-            this.Limit.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Limit.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Limit.Width = 111;
-            // 
-            // Goal
-            // 
-            this.Goal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Goal.HeaderText = "教學目標";
-            this.Goal.Name = "Goal";
-            this.Goal.ReadOnly = true;
-            this.Goal.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Goal.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Goal.TextLineAlignment = System.Drawing.StringAlignment.Near;
-            this.Goal.Width = 85;
-            // 
-            // Content
-            // 
-            this.Content.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Content.HeaderText = "教學內容";
-            this.Content.Name = "Content";
-            this.Content.ReadOnly = true;
-            this.Content.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Content.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Content.TextLineAlignment = System.Drawing.StringAlignment.Near;
-            this.Content.Width = 85;
-            // 
-            // Memo
-            // 
-            this.Memo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Memo.HeaderText = "備註";
-            this.Memo.Name = "Memo";
-            this.Memo.ReadOnly = true;
-            this.Memo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Memo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Memo.TextLineAlignment = System.Drawing.StringAlignment.Near;
-            this.Memo.Width = 59;
             // 
             // Delete
             // 
@@ -301,6 +201,106 @@
             this.Update.TabIndex = 35;
             this.Update.Text = "修  改";
             this.Update.Click += new System.EventHandler(this.Update_Click);
+            // 
+            // Add
+            // 
+            this.Add.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Add.HeaderText = "加入";
+            this.Add.Name = "Add";
+            this.Add.ReadOnly = true;
+            this.Add.Text = "";
+            this.Add.Width = 40;
+            // 
+            // Institute
+            // 
+            this.Institute.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Institute.HeaderText = "教學單位";
+            this.Institute.Name = "Institute";
+            this.Institute.ReadOnly = true;
+            this.Institute.Width = 66;
+            // 
+            // SubjectName
+            // 
+            this.SubjectName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.SubjectName.HeaderText = "科目名稱";
+            this.SubjectName.Name = "SubjectName";
+            this.SubjectName.ReadOnly = true;
+            this.SubjectName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.SubjectName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.SubjectName.Width = 85;
+            // 
+            // Level
+            // 
+            this.Level.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Level.HeaderText = "級別";
+            this.Level.Name = "Level";
+            this.Level.ReadOnly = true;
+            this.Level.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Level.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Level.Width = 59;
+            // 
+            // Credit
+            // 
+            this.Credit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Credit.HeaderText = "學分數";
+            this.Credit.Name = "Credit";
+            this.Credit.ReadOnly = true;
+            this.Credit.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Credit.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Credit.Width = 72;
+            // 
+            // Type
+            // 
+            this.Type.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Type.HeaderText = "選課類別";
+            this.Type.Name = "Type";
+            this.Type.ReadOnly = true;
+            this.Type.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Type.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Type.Width = 85;
+            // 
+            // Limit
+            // 
+            this.Limit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Limit.HeaderText = "修課人數上限";
+            this.Limit.Name = "Limit";
+            this.Limit.ReadOnly = true;
+            this.Limit.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Limit.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Limit.Width = 111;
+            // 
+            // Goal
+            // 
+            this.Goal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Goal.HeaderText = "教學目標";
+            this.Goal.Name = "Goal";
+            this.Goal.ReadOnly = true;
+            this.Goal.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Goal.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Goal.TextLineAlignment = System.Drawing.StringAlignment.Near;
+            this.Goal.Width = 85;
+            // 
+            // Content
+            // 
+            this.Content.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Content.HeaderText = "教學內容";
+            this.Content.Name = "Content";
+            this.Content.ReadOnly = true;
+            this.Content.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Content.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Content.TextLineAlignment = System.Drawing.StringAlignment.Near;
+            this.Content.Width = 85;
+            // 
+            // Memo
+            // 
+            this.Memo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Memo.HeaderText = "備註";
+            this.Memo.Name = "Memo";
+            this.Memo.ReadOnly = true;
+            this.Memo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Memo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Memo.TextLineAlignment = System.Drawing.StringAlignment.Near;
+            this.Memo.Width = 59;
             // 
             // frmSubject_Management
             // 

@@ -51,11 +51,11 @@ namespace SHSchool.CourseSelection
             vSelectableSubject_Management.Size = RibbonBarButton.MenuButtonSize.Large;
             vSelectableSubject_Management.Image = Properties.Resources.sandglass_unlock_64;
             
-            #region 科目管理 
+            #region 選修科目管理 
             Catalog button_Subject_Management = RoleAclSource.Instance["教務作業"]["功能按鈕"];
             button_Subject_Management.Add(new RibbonFeature("Button_Subject_Management", "科目管理"));
-            vSelectableSubject_Management["科目管理"].Enable = UserAcl.Current["Button_Subject_Management"].Executable;
-            vSelectableSubject_Management["科目管理"].Click += delegate
+            vSelectableSubject_Management["選修科目管理"].Enable = UserAcl.Current["Button_Subject_Management"].Executable;
+            vSelectableSubject_Management["選修科目管理"].Click += delegate
             {
                 (new Forms.frmSubject_Management()).ShowDialog();
             };
@@ -95,8 +95,8 @@ namespace SHSchool.CourseSelection
             #region  志願序分發作業 
             var vSubject_Management = MotherForm.RibbonBarItems["教務作業", "選課作業"]["設定"];
             button_Subject_Management.Add(new RibbonFeature("Sequence_distribution_Management", "志願序分發作業"));
-            vSubject_Management["志願序分發作業"].Enable = UserAcl.Current["Sequence_distribution_Management"].Executable;
-            vSubject_Management["志願序分發作業"].Click += delegate
+            vSubject_Management["志願分發作業"].Enable = UserAcl.Current["Sequence_distribution_Management"].Executable;
+            vSubject_Management["志願分發作業"].Click += delegate
             {
                 (new Forms.Sequence_distribution_Management()).ShowDialog();
             };
@@ -112,7 +112,10 @@ namespace SHSchool.CourseSelection
             vSSAttend_Management["調整選課結果"].Enable = UserAcl.Current["Button_SSAttend_Management"].Executable;
             vSSAttend_Management["調整選課結果"].Click += delegate
             {
-                (new Forms.frmSSAttend_Management()).ShowDialog();
+                // 舊版選課2.0功能
+                //(new Forms.frmSSAttend_Management()).ShowDialog();
+                // 選課2.0新版功能
+                (new Forms.AdjustSSAttendForm()).ShowDialog();
             };
 
             #endregion

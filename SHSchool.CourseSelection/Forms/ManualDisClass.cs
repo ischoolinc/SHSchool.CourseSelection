@@ -470,8 +470,8 @@ namespace SHSchool.CourseSelection.Forms
             AccessHelper access = new AccessHelper();
             // 取得選修科目班級
             List<UDT.SubjectCourse> sbList = access.Select<UDT.SubjectCourse>("ref_subject_id = " + "'" + subjectCbx.Tag + "'");  
-            List<_Class> classList = new List<_Class>();
-            Dictionary<string, _Class> classDic = new Dictionary<string, _Class>();
+            List<Subject_Class> classList = new List<Subject_Class>();
+            Dictionary<string, Subject_Class> classDic = new Dictionary<string, Subject_Class>();
             // 取得選課學生
             List<UDT.SSAttend> ssAttendList = access.Select<UDT.SSAttend>("ref_subject_id = " + "'" + subjectCbx.Tag + "'");
 
@@ -488,7 +488,7 @@ namespace SHSchool.CourseSelection.Forms
                 subjectCourse[index] = "" + sb.UID;
                 index++;
                 //---建立課班物件
-                _Class sbcClass = new _Class();
+                Subject_Class sbcClass = new Subject_Class();
                 sbcClass.RefSubjectID = "" + subjectCbx.Tag;
                 sbcClass.RefSubjectCourseID = "" + sb.UID;
                 sbcClass.Limit = limit;
@@ -505,7 +505,7 @@ namespace SHSchool.CourseSelection.Forms
                 }
             }
 
-            foreach (_Class c in classList)
+            foreach (Subject_Class c in classList)
             {
                 classDic.Add(c.RefSubjectCourseID, c);
             }
@@ -531,7 +531,7 @@ namespace SHSchool.CourseSelection.Forms
                     do
                     {
                         n = random.Next(0, subjectCourse.Count());
-                    } while (classDic[subjectCourse[n]].StudentCount < classDic[subjectCourse[n]].Limit);
+                    } while (classDic[subjectCourse[n]].StudentCount >= classDic[subjectCourse[n]].Limit);
 
                     ssa.SubjectCourseID = int.Parse("" + subjectCourse[n]);
                     classDic[subjectCourse[n]].StudentCount += 1;
@@ -601,7 +601,7 @@ namespace SHSchool.CourseSelection.Forms
         }
     }
 
-    class _Class
+    class Subject_Class
     {
         public string RefSubjectID { get; set; }
         public string RefSubjectCourseID { get; set; }

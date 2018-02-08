@@ -156,6 +156,18 @@
     <Compile Include="Forms\AdjustDistributionClass.Designer.cs">
       <DependentUpon>AdjustDistributionClass.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\AdjustSSAttendDataForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AdjustSSAttendDataForm.Designer.cs">
+      <DependentUpon>AdjustSSAttendDataForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AdjustSSAttendForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AdjustSSAttendForm.Designer.cs">
+      <DependentUpon>AdjustSSAttendForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\AdjustSubjectStudent.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -297,6 +309,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AdjustDistributionClass.resx">
       <DependentUpon>AdjustDistributionClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AdjustSSAttendDataForm.resx">
+      <DependentUpon>AdjustSSAttendDataForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AdjustSSAttendForm.resx">
+      <DependentUpon>AdjustSSAttendForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AdjustSubjectStudent.resx">
       <DependentUpon>AdjustSubjectStudent.cs</DependentUpon>
