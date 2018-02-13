@@ -154,7 +154,7 @@ namespace SHSchool.CourseSelection.Test
 
         private void deleteBtn_Click(object sender, EventArgs e)
         {
-            string SQL = "SELECT id AS ref_student_id FROM student WHERE status = 1";
+            //string SQL = "SELECT id AS ref_student_id FROM student WHERE status = 1";
             //QueryHelper qh = 
             List<string> studentIDList = new List<string>();
             string deleteSQL = "DELETE FROM $ischool.course_selection.ss_wish WHERE ";

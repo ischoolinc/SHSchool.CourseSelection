@@ -193,7 +193,7 @@ WHERE
 
         private void dataGridViewX1_Click(object sender, EventArgs e)
         {
-            (new AdjustSSAttendDataForm()).ShowDialog();
+
         }
 
         private void courseTypeCbx_TextChanged(object sender, EventArgs e)

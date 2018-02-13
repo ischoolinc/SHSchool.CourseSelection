@@ -83,7 +83,7 @@ namespace SHSchool.CourseSelection.Forms
             int i = 0;
             foreach (UDT.SubjectCourse sc in sc_list)
             {
-                if ("" + subjectCbx.Tag == "" + sc.SubjectID && int.Parse(schoolYearCbx.Text) == sc.SchoolYear && int.Parse(semesterCbx.Text) == sc.Semester)
+                if ("" + subjectCbx.Tag == "" + sc.RefSubjectID && int.Parse(schoolYearCbx.Text) == sc.SchoolYear && int.Parse(semesterCbx.Text) == sc.Semester)
                 {
                     ButtonX button = new ButtonX();
                     button.FocusCuesEnabled = false;
@@ -334,6 +334,7 @@ namespace SHSchool.CourseSelection.Forms
                     }
                     datarow.Tag = "" + student["ref_student_id"];
                     datarow.Cells[6].Tag = "" + student["ref_subject_course_id"];
+                    datarow.Cells[5].Tag = "" + student["ref_subject_course_id"];
 
                     dataGridViewX1.Rows.Add(datarow);
                 }
@@ -464,85 +465,214 @@ namespace SHSchool.CourseSelection.Forms
         {
             this.Close();
         }
+        
         // 自動分班
         private void autoDisClassBtn_Click(object sender, EventArgs e)
         {
+            #region
+            //AccessHelper access = new AccessHelper();
+            //// 取得選修科目班級
+            //List<UDT.SubjectCourse> sbList = access.Select<UDT.SubjectCourse>("ref_subject_id = " + "'" + subjectCbx.Tag + "'");
+            //List<Subject_Class> classList = new List<Subject_Class>();
+            //Dictionary<string, Subject_Class> classDic = new Dictionary<string, Subject_Class>();
+            //// 取得選課學生
+            //List<UDT.SSAttend> ssAttendList = access.Select<UDT.SSAttend>("ref_subject_id = " + "'" + subjectCbx.Tag + "'");
+
+            //int studentCount = ssAttendList.Count(); // 選課學生人數
+            //int classCount = sbList.Count(); // 選修科目開班數
+            //int limit = studentCount / classCount; // 每班人數限制
+
+            //string[] subjectCourse = new string[sbList.Count];
+
+            //#region 建立課班物件
+            //int index = 0;
+            //foreach (UDT.SubjectCourse sb in sbList)
+            //{
+            //    subjectCourse[index] = "" + sb.UID;
+            //    index++;
+            //    //---建立課班物件
+            //    Subject_Class sbcClass = new Subject_Class();
+            //    sbcClass.RefSubjectID = "" + subjectCbx.Tag;
+            //    sbcClass.RefSubjectCourseID = "" + sb.UID;
+            //    sbcClass.Limit = limit;
+            //    sbcClass.StudentCount = 0; // 初始化
+
+            //    classList.Add(sbcClass);
+            //}
+            //// 如果學生數無法均分
+            //if (studentCount % classCount != 0)
+            //{
+            //    for (int i = 0; i < studentCount % classCount; i++)
+            //    {
+            //        classList[i].Limit += 1;
+            //    }
+            //}
+
+            //foreach (Subject_Class c in classList)
+            //{
+            //    classDic.Add(c.RefSubjectCourseID, c);
+            //}
+            //#endregion
+
+            //// 已選課學生人數
+            //foreach (UDT.SSAttend ssa in ssAttendList)
+            //{
+            //    if (ssa.SubjectCourseID != null)
+            //    {
+            //        classDic["" + ssa.SubjectCourseID].StudentCount += 1;
+            //    }
+            //}
+
+            //// 亂數分班
+            //Random random = new Random();
+
+            //foreach (UDT.SSAttend ssa in ssAttendList)
+            //{
+            //    if (ssa.SubjectCourseID == null)
+            //    {
+            //        int n;
+            //        do
+            //        {
+            //            n = random.Next(0, subjectCourse.Count());
+            //        } while (classDic[subjectCourse[n]].StudentCount >= classDic[subjectCourse[n]].Limit);
+
+            //        ssa.SubjectCourseID = int.Parse("" + subjectCourse[n]);
+            //        classDic[subjectCourse[n]].StudentCount += 1;
+            //        ssAttendList.SaveAll();
+            //    }
+            //}
+            //access.SaveAll(ssAttendList);
+
+            //ReloadDataGridView();
+            //// 分班完成
+            //MessageBox.Show("自動分班完成。");
+            #endregion
+
             AccessHelper access = new AccessHelper();
-            // 取得選修科目班級
-            List<UDT.SubjectCourse> sbList = access.Select<UDT.SubjectCourse>("ref_subject_id = " + "'" + subjectCbx.Tag + "'");  
-            List<Subject_Class> classList = new List<Subject_Class>();
-            Dictionary<string, Subject_Class> classDic = new Dictionary<string, Subject_Class>();
-            // 取得選課學生
+            //取得選修科目班級
+            List<UDT.SubjectCourse> subjectList = access.Select<UDT.SubjectCourse>("ref_subject_id = " + "'" + subjectCbx.Tag + "'");
+            //// 取得選課學生
             List<UDT.SSAttend> ssAttendList = access.Select<UDT.SSAttend>("ref_subject_id = " + "'" + subjectCbx.Tag + "'");
 
+            List<Subject_Class> sbcList = new List<Subject_Class>();
+            Dictionary<string, Subject_Class> classDic = new Dictionary<string, Subject_Class>();
+            string[] subjectCourse = new string[subjectList.Count];
+
             int studentCount = ssAttendList.Count(); // 選課學生人數
-            int classCount = sbList.Count(); // 選修科目開班數
+            int classCount = subjectList.Count(); // 選修科目開班數
             int limit = studentCount / classCount; // 每班人數限制
 
-            string[] subjectCourse = new string[sbList.Count];
-            
-            #region 建立課班物件
             int index = 0;
-            foreach (UDT.SubjectCourse sb in sbList)
+            foreach (UDT.SubjectCourse sb in subjectList)
             {
-                subjectCourse[index] = "" + sb.UID;
+                subjectCourse[index] = sb.UID;
                 index++;
-                //---建立課班物件
-                Subject_Class sbcClass = new Subject_Class();
-                sbcClass.RefSubjectID = "" + subjectCbx.Tag;
-                sbcClass.RefSubjectCourseID = "" + sb.UID;
-                sbcClass.Limit = limit;
-                sbcClass.StudentCount = 0; // 初始化
 
-                classList.Add(sbcClass);
+                Subject_Class sbc = new Subject_Class();
+                sbc.RefSubjectCourseID = sb.UID;
+                sbc.RefSubjectID = "" + sb.RefSubjectID;
+                sbc.ClassType = sb.Class_type;
+                sbc.StudentCount = 0;
+                sbc.Limit = limit;
+
+                sbcList.Add(sbc);
             }
-            // 如果學生數無法均分
+            // 如果學生數無法均分-修改人數限制
             if (studentCount % classCount != 0)
             {
                 for (int i = 0; i < studentCount % classCount; i++)
                 {
-                    classList[i].Limit += 1;
-                }
-            }
-
-            foreach (Subject_Class c in classList)
-            {
-                classDic.Add(c.RefSubjectCourseID, c);
-            }
-            #endregion
-
-            // 已選課學生人數
-            foreach (UDT.SSAttend ssa in ssAttendList)
-            {
-                if (ssa.SubjectCourseID != null)
-                {
-                    classDic["" + ssa.SubjectCourseID].StudentCount += 1;
+                    sbcList[i].Limit += 1;
                 }
             }
             
+            foreach (Subject_Class sbc in sbcList)
+            {
+                classDic.Add(sbc.RefSubjectCourseID,sbc);
+            }
+            // 新增未分班
+            classDic.Add("", new Subject_Class());
+            classDic[""].ClassType = "未分班";
+
+            foreach (DataGridViewRow datarow in dataGridViewX1.Rows)
+            {
+                if (classDic.ContainsKey("" + datarow.Cells[6].Tag))
+                {
+                    classDic["" + datarow.Cells[6].Tag].StudentCount += 1;
+                }
+            }
+
             // 亂數分班
             Random random = new Random();
 
-            foreach (UDT.SSAttend ssa in ssAttendList)
+            foreach (DataGridViewRow datarow in dataGridViewX1.Rows)
             {
-                if (ssa.SubjectCourseID == null)
+                if ("" + datarow.Cells[6].Tag == "")
                 {
-                    int n ;
+                    int n;
                     do
                     {
                         n = random.Next(0, subjectCourse.Count());
                     } while (classDic[subjectCourse[n]].StudentCount >= classDic[subjectCourse[n]].Limit);
 
-                    ssa.SubjectCourseID = int.Parse("" + subjectCourse[n]);
+                    datarow.Cells[6].Tag = subjectCourse[n];
                     classDic[subjectCourse[n]].StudentCount += 1;
-                    ssAttendList.SaveAll();
+
+                    ((DataGridViewColorBallTextCell)datarow.Cells[6]).Value = classDic[subjectCourse[n]].ClassType;
+                    ((DataGridViewColorBallTextCell)datarow.Cells[6]).Color = _CourseColor[subjectCourse[n]];
                 }
             }
-            access.SaveAll(ssAttendList);
 
-            ReloadDataGridView();
-            // 分班完成
-            MessageBox.Show("自動分班完成。");
+            // 計算科目班級人數
+            Dictionary<string, Count> CountDic = new Dictionary<string, Count>();
+            foreach (DataGridViewRow datarow in dataGridViewX1.Rows)
+            {
+                if (CountDic.ContainsKey("" + datarow.Cells[6].Tag))
+                {
+                    if ("" + datarow.Cells[2].Value == "女")
+                    {
+                        CountDic["" + datarow.Cells[6].Tag].girl += 1;
+                    }
+                    if ("" + datarow.Cells[2].Value == "男")
+                    {
+                        CountDic["" + datarow.Cells[6].Tag].boy += 1;
+                    }
+                    if ("" + datarow.Cells[2].Value != "男" && "" + datarow.Cells[2].Value != "女")
+                    {
+                        CountDic["" + datarow.Cells[6].Tag].understand += 1;
+                    }
+                    CountDic["" + datarow.Cells[6].Tag].total += 1;
+                }
+                if (!CountDic.ContainsKey("" + datarow.Cells[6].Tag))
+                {
+                    CountDic.Add("" + datarow.Cells[6].Tag,new Count());
+
+                    if ("" + datarow.Cells[2].Value == "女")
+                    {
+                        CountDic["" + datarow.Cells[6].Tag].girl = 1;
+                    }
+                    if ("" + datarow.Cells[2].Value == "男")
+                    {
+                        CountDic["" + datarow.Cells[6].Tag].boy = 1;
+                    }
+                    if("" + datarow.Cells[2].Value != "男" && "" + datarow.Cells[2].Value != "女")
+                    {
+                        CountDic["" + datarow.Cells[6].Tag].understand = 1;
+                    }
+                    CountDic["" + datarow.Cells[6].Tag].total = 1;
+                }
+            }
+            {
+                CountDic.Add("",new Count());
+                CountDic[""].boy = 0;
+                CountDic[""].girl = 0;
+                CountDic[""].total = 0;
+            }
+
+            foreach (Control c in flowLayoutPanel1.Controls)
+            {
+                c.Text = classDic["" + c.Tag].ClassType + "(" + (CountDic["" + c.Tag].boy > 0 ? " " + CountDic["" + c.Tag].boy + "男" : "") + (CountDic["" + c.Tag].girl > 0 ? " " + CountDic["" + c.Tag].girl + "女" : "") + (CountDic["" + c.Tag].understand > 0 ? " " + CountDic["" + c.Tag].understand + "未知性別" : "") + " 共" + CountDic["" + c.Tag].total + "人" + " )";
+            }
         }
     }
 
@@ -605,7 +735,16 @@ namespace SHSchool.CourseSelection.Forms
     {
         public string RefSubjectID { get; set; }
         public string RefSubjectCourseID { get; set; }
+        public string ClassType { get; set; }
         public int? StudentCount { get; set; }
         public int Limit { get; set; }
+    }
+
+    class Count
+    {
+        public int boy { get; set; }
+        public int girl { get; set; }
+        public int understand { get; set; }
+        public int total { get; set; }
     }
 }

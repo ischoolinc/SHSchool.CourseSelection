@@ -331,8 +331,8 @@ namespace SHSchool.CourseSelection.Forms
                     
                     // -- SubjectCourse UDT 新增 科目課程資訊
                     UDT.SubjectCourse sb = new UDT.SubjectCourse();
-                    sb.SubjectID = int.Parse("" + dr.Tag);
-                    sb.CourseID = int.Parse("" + courseID);
+                    sb.RefSubjectID = int.Parse("" + dr.Tag);
+                    sb.RefCourseID = int.Parse("" + courseID);
                     sb.SubjectName = "" + dr.Cells["subjectName"].Value;
                     sb.CourseName = "" + dr.Cells["courseName"].Value;
                     sb.Course_type = "" + dr.Cells["courseType"].Value;

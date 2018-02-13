@@ -15,13 +15,13 @@ namespace SHSchool.CourseSelection.UDT
         /// 課程ID
         /// </summary>
         [FISCA.UDT.Field(Field = "ref_course_id", Indexed = false)]
-        public int? CourseID { get; set; }
+        public int? RefCourseID { get; set; }
 
         /// <summary>
         /// 科目ID
         /// </summary>
         [FISCA.UDT.Field(Field = "ref_subject_id", Indexed = false)]
-        public int? SubjectID { get; set; }
+        public int? RefSubjectID { get; set; }
 
         /// <summary>
         /// 課程名稱
