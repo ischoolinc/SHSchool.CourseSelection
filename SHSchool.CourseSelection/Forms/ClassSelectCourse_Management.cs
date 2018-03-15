@@ -23,15 +23,14 @@ namespace SHSchool.CourseSelection.Forms
             AccessHelper access = new AccessHelper();
             List<UDT.OpeningTime> openTimeList = access.Select<UDT.OpeningTime>();
             // SchoolYear
-            schoolYearCbx.Text = "" + openTimeList[0].SchoolYear;
-            for (int i = 0; i < 3; i++)
-            {
-                schoolYearCbx.Items.Add(openTimeList[0].SchoolYear - i);
-            }
+            schoolYearCbx.Items.Add(openTimeList[0].SchoolYear - 1);
+            schoolYearCbx.Items.Add(openTimeList[0].SchoolYear );
+            schoolYearCbx.Items.Add(openTimeList[0].SchoolYear +1);
+            schoolYearCbx.SelectedIndex = 1;
             // Semester
-            semesterCbx.Text = "" + openTimeList[0].Semester;
             semesterCbx.Items.Add(1);
             semesterCbx.Items.Add(2);
+            semesterCbx.SelectedIndex = int.Parse("" + openTimeList[0].Semester) - 1;
             #endregion
 
         }
@@ -159,6 +158,7 @@ namespace SHSchool.CourseSelection.Forms
                 {
                     courseTypeCbx.Items.Add(type["type"]);
                 }
+                courseTypeCbx.SelectedIndex = 0;
             }
         }
 
@@ -192,7 +192,6 @@ namespace SHSchool.CourseSelection.Forms
             }
             ClassSelectCourse_Setting cscs = new ClassSelectCourse_Setting(schoolYearCbx.Text,semesterCbx.Text,courseTypeCbx.Text,selectedClassDic);
             cscs.ShowDialog();
-
         }  
     }
 }

@@ -20,17 +20,17 @@ namespace SHSchool.CourseSelection.Forms
             InitializeComponent();
 
             #region 學年、學期
-            schoolYearCbx.Text = School.DefaultSchoolYear;
-            for (int i = 0; i < 3; i++)
-            {
-                schoolYearCbx.Items.Add(int.Parse(School.DefaultSchoolYear) + i);
-            }
+            AccessHelper access = new AccessHelper();
+            List<UDT.OpeningTime> opTimeList = access.Select<UDT.OpeningTime>();
 
-            semesterCbx.Text = School.DefaultSemester;
-            for (int i = 1; i < 3; i++)
-            {
-                semesterCbx.Items.Add(i);
-            }
+            schoolYearCbx.Items.Add(opTimeList[0].SchoolYear + 1);
+            schoolYearCbx.Items.Add(opTimeList[0].SchoolYear);
+            schoolYearCbx.Items.Add(opTimeList[0].SchoolYear - 1);
+            schoolYearCbx.SelectedIndex = 1;
+
+            semesterCbx.Items.Add(1);
+            semesterCbx.Items.Add(2);
+            semesterCbx.SelectedIndex = opTimeList[0].Semester - 1;
             #endregion
 
         }
@@ -131,6 +131,7 @@ namespace SHSchool.CourseSelection.Forms
                 {
                     courseTypeCbx.Items.Add("" + row["type"]);
                 }
+                courseTypeCbx.SelectedIndex = 0;
             }
             #endregion
         }
@@ -182,6 +183,5 @@ namespace SHSchool.CourseSelection.Forms
                 dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].ErrorText = string.Empty;
             }
         }
-
     }
 }

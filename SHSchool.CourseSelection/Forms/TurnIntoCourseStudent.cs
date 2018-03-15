@@ -60,6 +60,7 @@ namespace SHSchool.CourseSelection.Forms
                 {
                     courseTypeCbx.Items.Add(type["type"]);
                 }
+                courseTypeCbx.SelectedIndex = 0;
             }
         }
 

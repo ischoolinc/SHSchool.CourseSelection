@@ -34,17 +34,18 @@ namespace SHSchool.CourseSelection.Forms
         {
             InitializeComponent();
 
-            // SchoolYear ComboBox
-            schoolYearCbx.Text = SHSchoolInfo.DefaultSchoolYear;
-            for (int i = 0; i < 3; i++)
-            {
-                schoolYearCbx.Items.Add(int.Parse(SHSchoolInfo.DefaultSchoolYear) + i);
-            }
-
-            // Semester ComboBox
-            semesterCbx.Text = SHSchoolInfo.DefaultSemester;
+            #region Init SchoolYear Semester
+            AccessHelper access = new AccessHelper();
+            List<UDT.OpeningTime> opTimeList = access.Select<UDT.OpeningTime>();
+            schoolYearCbx.Items.Add(opTimeList[0].SchoolYear + 1);
+            schoolYearCbx.Items.Add(opTimeList[0].SchoolYear);
+            schoolYearCbx.Items.Add(opTimeList[0].SchoolYear - 1);
+            schoolYearCbx.SelectedIndex = 1;
+            
             semesterCbx.Items.Add(1);
             semesterCbx.Items.Add(2);
+            semesterCbx.SelectedIndex = opTimeList[0].Semester - 1;
+            #endregion
         }
 
         private void schoolYearCbx_TextChanged(object sender, EventArgs e)
@@ -150,6 +151,7 @@ namespace SHSchool.CourseSelection.Forms
                         courseTypeCbx.Items.Add(sc.Type);
                     }
                 }
+                courseTypeCbx.SelectedIndex = 0;
             }
             ReloadSubjectCbx();
         }
@@ -203,6 +205,7 @@ namespace SHSchool.CourseSelection.Forms
                     subjectCbx.Items.Add("(" + subject["c_count"] + "/" + subject["s_count"] + ")" + subject["subject_name"]);
                     subjectNamedic.Add("(" + subject["c_count"] + "/" + subject["s_count"] + ")" + subject["subject_name"], "" + subject["uid"]);
                 }
+                subjectCbx.SelectedIndex = 0;
             }
             ReloadDataGridView();
         }

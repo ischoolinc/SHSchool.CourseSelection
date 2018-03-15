@@ -154,6 +154,7 @@ namespace SHSchool.CourseSelection.Forms
             BGW.RunWorkerAsync();
 
             this.Close();
+
         }
 
         public void BGW_DoWork(object sender,DoWorkEventArgs e)

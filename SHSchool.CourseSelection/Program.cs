@@ -42,9 +42,6 @@ namespace SHSchool.CourseSelection
         public static void InitRibbonBar()
         { 
             new AccessHelper().Select<UDT.SubjectCourse>("uid<0");
-
-            // 2018/0105，羿均，依選課作業流程調整功能按鈕位置
-
             #region 教務作業
 
             var vSelectableSubject_Management = MotherForm.RibbonBarItems["教務作業", "選課作業"]["設定"];
@@ -93,13 +90,14 @@ namespace SHSchool.CourseSelection
             #endregion
 
             #region  志願序分發作業 
-            var vSubject_Management = MotherForm.RibbonBarItems["教務作業", "選課作業"]["設定"];
-            button_Subject_Management.Add(new RibbonFeature("Sequence_distribution_Management", "志願序分發作業"));
-            vSubject_Management["志願分發作業"].Enable = UserAcl.Current["Sequence_distribution_Management"].Executable;
-            vSubject_Management["志願分發作業"].Click += delegate
-            {
-                (new Forms.Sequence_distribution_Management()).ShowDialog();
-            };
+            // 2018/03/15 選課2.5 hide舊式分發作業
+            
+            //button_Subject_Management.Add(new RibbonFeature("Sequence_distribution_Management", "志願序分發作業"));
+            //vSubject_Management["志願分發作業"].Enable = UserAcl.Current["Sequence_distribution_Management"].Executable;
+            //vSubject_Management["志願分發作業"].Click += delegate
+            //{
+            //    (new Forms.Sequence_distribution_Management()).ShowDialog();
+            //};
 
             #endregion
 
@@ -109,12 +107,12 @@ namespace SHSchool.CourseSelection
             button_SSAttend_Management.Add(new RibbonFeature("Button_SSAttend_Management", "學生選修科目設定"));
 
             var vSSAttend_Management = MotherForm.RibbonBarItems["教務作業", "選課作業"]["設定"];
-            vSSAttend_Management["調整選課結果"].Enable = UserAcl.Current["Button_SSAttend_Management"].Executable;
-            vSSAttend_Management["調整選課結果"].Click += delegate
+            vSSAttend_Management["選課互動分發"].Enable = UserAcl.Current["Button_SSAttend_Management"].Executable;
+            vSSAttend_Management["選課互動分發"].Click += delegate
             {
                 // 舊版選課2.0功能
                 //(new Forms.frmSSAttend_Management()).ShowDialog();
-                // 選課2.0新版功能
+                // 選課2.5新版功能
                 (new Forms.AdjustSSAttendForm()).ShowDialog();
             };
 
@@ -140,8 +138,8 @@ namespace SHSchool.CourseSelection
 
             // 新民轉入修課學生 2018/01/26 羿均
             #region 轉入修課學生
+            var vSubject_Management = MotherForm.RibbonBarItems["教務作業", "選課作業"]["設定"];
             button_Subject_Management.Add(new RibbonFeature("7140A14A-F26B-4DEA-8C87-D71A1FDCF6BE", "轉入修課學生"));
-
             vSubject_Management["轉入修課學生"].Enable = UserAcl.Current["7140A14A-F26B-4DEA-8C87-D71A1FDCF6BE"].Executable;
             vSubject_Management["轉入修課學生"].Click += delegate
             {
@@ -154,15 +152,15 @@ namespace SHSchool.CourseSelection
             #endregion
 
             #region 開發工具-自動填入學生選課志願
-            RibbonBarButton mb = MotherForm.RibbonBarItems["教務作業", "開發工具"]["產生學生選課志願"];
-            mb.Size = RibbonBarButton.MenuButtonSize.Medium;
-            mb.Image = Properties.Resources.Import_Image;
+            //RibbonBarButton mb = MotherForm.RibbonBarItems["教務作業", "開發工具"]["產生學生選課志願"];
+            //mb.Size = RibbonBarButton.MenuButtonSize.Medium;
+            //mb.Image = Properties.Resources.Import_Image;
 
-            mb.Click += delegate 
-            {
-                Test.AutoSelectStuWish at = new Test.AutoSelectStuWish();
-                at.ShowDialog();
-            };
+            //mb.Click += delegate 
+            //{
+            //    Test.AutoSelectStuWish at = new Test.AutoSelectStuWish();
+            //    at.ShowDialog();
+            //};
 
             #endregion
 

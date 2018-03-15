@@ -38,6 +38,8 @@
             this.stuCountLb = new DevComponents.DotNetBar.LabelX();
             this.AutoSelStuWishBtn = new DevComponents.DotNetBar.ButtonX();
             this.deleteBtn = new DevComponents.DotNetBar.ButtonX();
+            this.labelX5 = new DevComponents.DotNetBar.LabelX();
+            this.courseTypeCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.SuspendLayout();
             // 
             // schoolYearCbx
@@ -154,7 +156,7 @@
             this.AutoSelStuWishBtn.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.AutoSelStuWishBtn.BackColor = System.Drawing.Color.Transparent;
             this.AutoSelStuWishBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.AutoSelStuWishBtn.Location = new System.Drawing.Point(38, 153);
+            this.AutoSelStuWishBtn.Location = new System.Drawing.Point(235, 136);
             this.AutoSelStuWishBtn.Name = "AutoSelStuWishBtn";
             this.AutoSelStuWishBtn.Size = new System.Drawing.Size(118, 23);
             this.AutoSelStuWishBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -167,7 +169,7 @@
             this.deleteBtn.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.deleteBtn.BackColor = System.Drawing.Color.Transparent;
             this.deleteBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.deleteBtn.Location = new System.Drawing.Point(162, 153);
+            this.deleteBtn.Location = new System.Drawing.Point(359, 136);
             this.deleteBtn.Name = "deleteBtn";
             this.deleteBtn.Size = new System.Drawing.Size(104, 23);
             this.deleteBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -175,11 +177,39 @@
             this.deleteBtn.Text = "清空學生志願";
             this.deleteBtn.Click += new System.EventHandler(this.deleteBtn_Click);
             // 
+            // labelX5
+            // 
+            this.labelX5.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX5.BackgroundStyle.Class = "";
+            this.labelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX5.Location = new System.Drawing.Point(280, 12);
+            this.labelX5.Name = "labelX5";
+            this.labelX5.Size = new System.Drawing.Size(62, 23);
+            this.labelX5.TabIndex = 11;
+            this.labelX5.Text = "課程類別:";
+            // 
+            // courseTypeCbx
+            // 
+            this.courseTypeCbx.DisplayMember = "Text";
+            this.courseTypeCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.courseTypeCbx.FormattingEnabled = true;
+            this.courseTypeCbx.ItemHeight = 19;
+            this.courseTypeCbx.Location = new System.Drawing.Point(348, 10);
+            this.courseTypeCbx.Name = "courseTypeCbx";
+            this.courseTypeCbx.Size = new System.Drawing.Size(115, 25);
+            this.courseTypeCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.courseTypeCbx.TabIndex = 12;
+            // 
             // AutoSelectStuWish
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(278, 184);
+            this.ClientSize = new System.Drawing.Size(476, 171);
+            this.Controls.Add(this.courseTypeCbx);
+            this.Controls.Add(this.labelX5);
             this.Controls.Add(this.deleteBtn);
             this.Controls.Add(this.AutoSelStuWishBtn);
             this.Controls.Add(this.stuCountLb);
@@ -209,5 +239,7 @@
         private DevComponents.DotNetBar.LabelX stuCountLb;
         private DevComponents.DotNetBar.ButtonX AutoSelStuWishBtn;
         private DevComponents.DotNetBar.ButtonX deleteBtn;
+        private DevComponents.DotNetBar.LabelX labelX5;
+        private DevComponents.DotNetBar.Controls.ComboBoxEx courseTypeCbx;
     }
 }

@@ -67,7 +67,7 @@
             this.groupPanel1.Location = new System.Drawing.Point(12, 41);
             this.groupPanel1.Name = "groupPanel1";
             this.groupPanel1.Padding = new System.Windows.Forms.Padding(2, 5, 2, 5);
-            this.groupPanel1.Size = new System.Drawing.Size(640, 479);
+            this.groupPanel1.Size = new System.Drawing.Size(750, 479);
             // 
             // 
             // 
@@ -134,7 +134,7 @@
             this.dataGridViewX1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridViewX1.RowTemplate.Height = 24;
             this.dataGridViewX1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewX1.Size = new System.Drawing.Size(630, 412);
+            this.dataGridViewX1.Size = new System.Drawing.Size(740, 412);
             this.dataGridViewX1.TabIndex = 0;
             // 
             // stuNumber
@@ -195,13 +195,13 @@
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.MinimumSize = new System.Drawing.Size(0, 30);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(630, 30);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(740, 30);
             this.flowLayoutPanel1.TabIndex = 4;
             // 
             // autoDisClassBtn
             // 
             this.autoDisClassBtn.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.autoDisClassBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.autoDisClassBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.autoDisClassBtn.BackColor = System.Drawing.Color.Transparent;
             this.autoDisClassBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.autoDisClassBtn.Location = new System.Drawing.Point(18, 526);
@@ -221,11 +221,11 @@
             // 
             this.labelX1.BackgroundStyle.Class = "";
             this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX1.Location = new System.Drawing.Point(18, 11);
+            this.labelX1.Location = new System.Drawing.Point(18, 10);
             this.labelX1.Name = "labelX1";
-            this.labelX1.Size = new System.Drawing.Size(35, 23);
+            this.labelX1.Size = new System.Drawing.Size(47, 23);
             this.labelX1.TabIndex = 1;
-            this.labelX1.Text = "學年";
+            this.labelX1.Text = "學年度";
             // 
             // labelX2
             // 
@@ -235,21 +235,22 @@
             // 
             this.labelX2.BackgroundStyle.Class = "";
             this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX2.Location = new System.Drawing.Point(130, 11);
+            this.labelX2.Location = new System.Drawing.Point(151, 10);
             this.labelX2.Name = "labelX2";
-            this.labelX2.Size = new System.Drawing.Size(35, 23);
+            this.labelX2.Size = new System.Drawing.Size(34, 23);
             this.labelX2.TabIndex = 2;
             this.labelX2.Text = "學期";
             // 
             // labelX3
             // 
+            this.labelX3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelX3.BackColor = System.Drawing.Color.Transparent;
             // 
             // 
             // 
             this.labelX3.BackgroundStyle.Class = "";
             this.labelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX3.Location = new System.Drawing.Point(456, 11);
+            this.labelX3.Location = new System.Drawing.Point(566, 10);
             this.labelX3.Name = "labelX3";
             this.labelX3.Size = new System.Drawing.Size(35, 23);
             this.labelX3.TabIndex = 3;
@@ -259,11 +260,12 @@
             // 
             this.schoolYearCbx.DisplayMember = "Text";
             this.schoolYearCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.schoolYearCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.schoolYearCbx.FormattingEnabled = true;
             this.schoolYearCbx.ItemHeight = 19;
-            this.schoolYearCbx.Location = new System.Drawing.Point(59, 9);
+            this.schoolYearCbx.Location = new System.Drawing.Point(71, 9);
             this.schoolYearCbx.Name = "schoolYearCbx";
-            this.schoolYearCbx.Size = new System.Drawing.Size(65, 25);
+            this.schoolYearCbx.Size = new System.Drawing.Size(60, 25);
             this.schoolYearCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.schoolYearCbx.TabIndex = 4;
             this.schoolYearCbx.TextChanged += new System.EventHandler(this.schoolYearCbx_TextChanged);
@@ -272,23 +274,25 @@
             // 
             this.semesterCbx.DisplayMember = "Text";
             this.semesterCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.semesterCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.semesterCbx.FormattingEnabled = true;
             this.semesterCbx.ItemHeight = 19;
-            this.semesterCbx.Location = new System.Drawing.Point(171, 9);
+            this.semesterCbx.Location = new System.Drawing.Point(192, 9);
             this.semesterCbx.Name = "semesterCbx";
-            this.semesterCbx.Size = new System.Drawing.Size(49, 25);
+            this.semesterCbx.Size = new System.Drawing.Size(50, 25);
             this.semesterCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.semesterCbx.TabIndex = 5;
             this.semesterCbx.TextChanged += new System.EventHandler(this.semesterCbx_TextChanged);
             // 
             // subjectCbx
             // 
+            this.subjectCbx.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.subjectCbx.DisplayMember = "Text";
             this.subjectCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.subjectCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.subjectCbx.FormattingEnabled = true;
             this.subjectCbx.ItemHeight = 19;
-            this.subjectCbx.Location = new System.Drawing.Point(496, 9);
+            this.subjectCbx.Location = new System.Drawing.Point(606, 9);
             this.subjectCbx.Name = "subjectCbx";
             this.subjectCbx.Size = new System.Drawing.Size(156, 25);
             this.subjectCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -301,7 +305,7 @@
             this.saveBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.saveBtn.BackColor = System.Drawing.Color.Transparent;
             this.saveBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.saveBtn.Location = new System.Drawing.Point(496, 526);
+            this.saveBtn.Location = new System.Drawing.Point(606, 526);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(75, 23);
             this.saveBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -315,7 +319,7 @@
             this.closeBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.closeBtn.BackColor = System.Drawing.Color.Transparent;
             this.closeBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.closeBtn.Location = new System.Drawing.Point(577, 526);
+            this.closeBtn.Location = new System.Drawing.Point(687, 526);
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(75, 23);
             this.closeBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -325,13 +329,14 @@
             // 
             // labelX4
             // 
+            this.labelX4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelX4.BackColor = System.Drawing.Color.Transparent;
             // 
             // 
             // 
             this.labelX4.BackgroundStyle.Class = "";
             this.labelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX4.Location = new System.Drawing.Point(250, 11);
+            this.labelX4.Location = new System.Drawing.Point(360, 10);
             this.labelX4.Name = "labelX4";
             this.labelX4.Size = new System.Drawing.Size(61, 23);
             this.labelX4.TabIndex = 9;
@@ -339,12 +344,13 @@
             // 
             // courseTypeCbx
             // 
+            this.courseTypeCbx.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.courseTypeCbx.DisplayMember = "Text";
             this.courseTypeCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.courseTypeCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.courseTypeCbx.FormattingEnabled = true;
             this.courseTypeCbx.ItemHeight = 19;
-            this.courseTypeCbx.Location = new System.Drawing.Point(317, 9);
+            this.courseTypeCbx.Location = new System.Drawing.Point(427, 9);
             this.courseTypeCbx.Name = "courseTypeCbx";
             this.courseTypeCbx.Size = new System.Drawing.Size(110, 25);
             this.courseTypeCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -355,7 +361,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(664, 561);
+            this.ClientSize = new System.Drawing.Size(774, 561);
             this.Controls.Add(this.autoDisClassBtn);
             this.Controls.Add(this.courseTypeCbx);
             this.Controls.Add(this.labelX4);
