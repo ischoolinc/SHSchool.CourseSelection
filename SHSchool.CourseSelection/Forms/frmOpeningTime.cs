@@ -134,11 +134,11 @@ namespace SHSchool.CourseSelection.Forms
             this.P1ModecomboBoxEx.Items.Clear();
             this.P2ModecomboBoxEx.Items.Clear();
 
-            this.P1ModecomboBoxEx.Items.Add("");
+            this.P1ModecomboBoxEx.Items.Add("不開放");
             this.P1ModecomboBoxEx.Items.Add("志願序");
             this.P1ModecomboBoxEx.Items.Add("先搶先贏");
 
-            this.P2ModecomboBoxEx.Items.Add("");
+            this.P2ModecomboBoxEx.Items.Add("不開放");
             this.P2ModecomboBoxEx.Items.Add("志願序");
             this.P2ModecomboBoxEx.Items.Add("先搶先贏");
         

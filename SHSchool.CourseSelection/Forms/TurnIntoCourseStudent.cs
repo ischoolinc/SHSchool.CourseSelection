@@ -85,7 +85,9 @@ FROM
 		    count(ref_subject_id) 
 	    FROM 
 		    $ischool.course_selection.subject_course AS subject_course
-	    WHERE course_type = '{0}'
+            LEFT OUTER JOIN $ischool.course_selection.subject AS subject
+                ON subject.uid = subject_course.ref_subject_id
+	    WHERE subject.type = '{0}'
 	    GROUP BY subject_course.ref_subject_id
 	)subject_course ON subject_course.ref_subject_id = subject.uid
     LEFT OUTER JOIN

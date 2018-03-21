@@ -45,6 +45,7 @@
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Lock = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.labelX5 = new DevComponents.DotNetBar.LabelX();
             this.conditionCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.schoolYearCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
@@ -63,9 +64,11 @@
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
-            this.buttonItem1 = new DevComponents.DotNetBar.ButtonItem();
-            this.buttonItem2 = new DevComponents.DotNetBar.ButtonItem();
-            this.buttonItem3 = new DevComponents.DotNetBar.ButtonItem();
+            this.btnEasy = new DevComponents.DotNetBar.ButtonItem();
+            this.btnPro = new DevComponents.DotNetBar.ButtonItem();
+            this.btnClear = new DevComponents.DotNetBar.ButtonItem();
+            this.btnOrder = new DevComponents.DotNetBar.ButtonItem();
+            this.btnDistribute = new DevComponents.DotNetBar.ButtonItem();
             this.buttonItem9 = new DevComponents.DotNetBar.ButtonItem();
             this.buttonItem4 = new DevComponents.DotNetBar.ButtonItem();
             this.buttonItem5 = new DevComponents.DotNetBar.ButtonItem();
@@ -74,6 +77,7 @@
             this.buttonItem8 = new DevComponents.DotNetBar.ButtonItem();
             this.labelX4 = new DevComponents.DotNetBar.LabelX();
             this.seedCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.exportBtn = new DevComponents.DotNetBar.ButtonX();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -115,11 +119,11 @@
             // 
             this.labelX2.BackgroundStyle.Class = "";
             this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX2.Location = new System.Drawing.Point(580, 10);
+            this.labelX2.Location = new System.Drawing.Point(542, 10);
             this.labelX2.Name = "labelX2";
-            this.labelX2.Size = new System.Drawing.Size(65, 23);
+            this.labelX2.Size = new System.Drawing.Size(58, 23);
             this.labelX2.TabIndex = 4;
-            this.labelX2.Text = "選課類別:";
+            this.labelX2.Text = "選課類別";
             // 
             // courseTypeCbx
             // 
@@ -129,7 +133,7 @@
             this.courseTypeCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.courseTypeCbx.FormattingEnabled = true;
             this.courseTypeCbx.ItemHeight = 19;
-            this.courseTypeCbx.Location = new System.Drawing.Point(651, 9);
+            this.courseTypeCbx.Location = new System.Drawing.Point(604, 9);
             this.courseTypeCbx.Name = "courseTypeCbx";
             this.courseTypeCbx.Size = new System.Drawing.Size(110, 25);
             this.courseTypeCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -155,7 +159,8 @@
             this.Column3,
             this.Column8,
             this.Column9,
-            this.Column11});
+            this.Column11,
+            this.Lock});
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
@@ -172,9 +177,10 @@
             this.dataGridViewX1.RowHeadersVisible = false;
             this.dataGridViewX1.RowTemplate.Height = 24;
             this.dataGridViewX1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewX1.Size = new System.Drawing.Size(957, 496);
+            this.dataGridViewX1.Size = new System.Drawing.Size(960, 496);
             this.dataGridViewX1.TabIndex = 1;
             this.dataGridViewX1.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.dataGridViewX1_SortCompare);
+            this.dataGridViewX1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridViewX1_MouseDown);
             // 
             // Column4
             // 
@@ -261,6 +267,13 @@
             this.Column11.ReadOnly = true;
             this.Column11.Width = 85;
             // 
+            // Lock
+            // 
+            this.Lock.HeaderText = "鎖定";
+            this.Lock.Name = "Lock";
+            this.Lock.ReadOnly = true;
+            this.Lock.Width = 59;
+            // 
             // labelX5
             // 
             this.labelX5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -270,11 +283,11 @@
             // 
             this.labelX5.BackgroundStyle.Class = "";
             this.labelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX5.Location = new System.Drawing.Point(767, 10);
+            this.labelX5.Location = new System.Drawing.Point(729, 10);
             this.labelX5.Name = "labelX5";
-            this.labelX5.Size = new System.Drawing.Size(41, 23);
+            this.labelX5.Size = new System.Drawing.Size(85, 23);
             this.labelX5.TabIndex = 9;
-            this.labelX5.Text = "篩選:";
+            this.labelX5.Text = "選修課程篩選";
             // 
             // conditionCbx
             // 
@@ -284,7 +297,7 @@
             this.conditionCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.conditionCbx.FormattingEnabled = true;
             this.conditionCbx.ItemHeight = 19;
-            this.conditionCbx.Location = new System.Drawing.Point(814, 9);
+            this.conditionCbx.Location = new System.Drawing.Point(817, 9);
             this.conditionCbx.Name = "conditionCbx";
             this.conditionCbx.Size = new System.Drawing.Size(155, 25);
             this.conditionCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -325,7 +338,7 @@
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.MinimumSize = new System.Drawing.Size(0, 23);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(957, 23);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(960, 23);
             this.flowLayoutPanel1.TabIndex = 1;
             this.flowLayoutPanel1.TabStop = true;
             // 
@@ -339,7 +352,7 @@
             this.panel1.Controls.Add(this.flowLayoutPanel1);
             this.panel1.Location = new System.Drawing.Point(12, 40);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(957, 519);
+            this.panel1.Size = new System.Drawing.Size(960, 519);
             this.panel1.TabIndex = 14;
             // 
             // leaveBtn
@@ -348,7 +361,7 @@
             this.leaveBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.leaveBtn.BackColor = System.Drawing.Color.Transparent;
             this.leaveBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.leaveBtn.Location = new System.Drawing.Point(894, 565);
+            this.leaveBtn.Location = new System.Drawing.Point(897, 567);
             this.leaveBtn.Name = "leaveBtn";
             this.leaveBtn.Size = new System.Drawing.Size(75, 23);
             this.leaveBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -362,7 +375,7 @@
             this.saveBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.saveBtn.BackColor = System.Drawing.Color.Transparent;
             this.saveBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.saveBtn.Location = new System.Drawing.Point(813, 565);
+            this.saveBtn.Location = new System.Drawing.Point(816, 567);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(75, 23);
             this.saveBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -443,44 +456,63 @@
             this.buttonX1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonX1.BackColor = System.Drawing.Color.Transparent;
             this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buttonX1.Location = new System.Drawing.Point(12, 565);
+            this.buttonX1.Location = new System.Drawing.Point(95, 567);
             this.buttonX1.Name = "buttonX1";
             this.buttonX1.Size = new System.Drawing.Size(75, 23);
             this.buttonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.buttonX1.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
-            this.buttonItem1,
-            this.buttonItem2,
-            this.buttonItem3});
+            this.btnEasy,
+            this.btnPro,
+            this.btnClear,
+            this.btnOrder,
+            this.btnDistribute});
             this.buttonX1.TabIndex = 18;
             this.buttonX1.Text = "志願分發";
+            this.buttonX1.Click += new System.EventHandler(this.buttonX1_Click);
             // 
-            // buttonItem1
+            // btnEasy
             // 
-            this.buttonItem1.GlobalItem = false;
-            this.buttonItem1.Name = "buttonItem1";
-            this.buttonItem1.Text = "清除分發";
-            this.buttonItem1.Click += new System.EventHandler(this.buttonItem1_Click);
+            this.btnEasy.Checked = true;
+            this.btnEasy.Name = "btnEasy";
+            this.btnEasy.Text = "簡單模式";
+            this.btnEasy.Click += new System.EventHandler(this.btnEasy_Click);
             // 
-            // buttonItem2
+            // btnPro
             // 
-            this.buttonItem2.GlobalItem = false;
-            this.buttonItem2.Name = "buttonItem2";
-            this.buttonItem2.Text = "產生分發順位";
-            this.buttonItem2.Click += new System.EventHandler(this.buttonItem2_Click);
+            this.btnPro.Name = "btnPro";
+            this.btnPro.Text = "進階模式";
+            this.btnPro.Click += new System.EventHandler(this.btnPro_Click);
             // 
-            // buttonItem3
+            // btnClear
             // 
-            this.buttonItem3.GlobalItem = false;
-            this.buttonItem3.Name = "buttonItem3";
-            this.buttonItem3.SplitButton = true;
-            this.buttonItem3.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.btnClear.Enabled = false;
+            this.btnClear.GlobalItem = false;
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Text = "清除分發";
+            this.btnClear.Click += new System.EventHandler(this.buttonItem1_Click);
+            // 
+            // btnOrder
+            // 
+            this.btnOrder.Enabled = false;
+            this.btnOrder.GlobalItem = false;
+            this.btnOrder.Name = "btnOrder";
+            this.btnOrder.Text = "產生分發順位";
+            this.btnOrder.Click += new System.EventHandler(this.buttonItem2_Click);
+            // 
+            // btnDistribute
+            // 
+            this.btnDistribute.Enabled = false;
+            this.btnDistribute.GlobalItem = false;
+            this.btnDistribute.Name = "btnDistribute";
+            this.btnDistribute.SplitButton = true;
+            this.btnDistribute.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.buttonItem9,
             this.buttonItem4,
             this.buttonItem5,
             this.buttonItem6,
             this.buttonItem7,
             this.buttonItem8});
-            this.buttonItem3.Text = "志願分發";
+            this.btnDistribute.Text = "志願分發";
             // 
             // buttonItem9
             // 
@@ -530,7 +562,7 @@
             // 
             this.labelX4.BackgroundStyle.Class = "";
             this.labelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX4.Location = new System.Drawing.Point(87, 566);
+            this.labelX4.Location = new System.Drawing.Point(174, 568);
             this.labelX4.Name = "labelX4";
             this.labelX4.Size = new System.Drawing.Size(87, 21);
             this.labelX4.TabIndex = 19;
@@ -541,19 +573,35 @@
             this.seedCbx.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.seedCbx.DisplayMember = "Text";
             this.seedCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.seedCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.seedCbx.FormattingEnabled = true;
             this.seedCbx.ItemHeight = 19;
-            this.seedCbx.Location = new System.Drawing.Point(174, 565);
+            this.seedCbx.Location = new System.Drawing.Point(261, 566);
             this.seedCbx.Name = "seedCbx";
-            this.seedCbx.Size = new System.Drawing.Size(158, 25);
+            this.seedCbx.Size = new System.Drawing.Size(143, 25);
             this.seedCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.seedCbx.TabIndex = 20;
+            // 
+            // exportBtn
+            // 
+            this.exportBtn.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.exportBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.exportBtn.BackColor = System.Drawing.Color.Transparent;
+            this.exportBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.exportBtn.Location = new System.Drawing.Point(12, 567);
+            this.exportBtn.Name = "exportBtn";
+            this.exportBtn.Size = new System.Drawing.Size(75, 23);
+            this.exportBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.exportBtn.TabIndex = 21;
+            this.exportBtn.Text = "匯出";
+            this.exportBtn.Click += new System.EventHandler(this.exportBtn_Click);
             // 
             // AdjustSSAttendForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(981, 598);
+            this.ClientSize = new System.Drawing.Size(984, 598);
+            this.Controls.Add(this.exportBtn);
             this.Controls.Add(this.semesterCbx);
             this.Controls.Add(this.schoolYearCbx);
             this.Controls.Add(this.conditionCbx);
@@ -572,7 +620,7 @@
             this.DoubleBuffered = true;
             this.MaximizeBox = true;
             this.Name = "AdjustSSAttendForm";
-            this.Text = "選課互動分發";
+            this.Text = "選課結果及分發";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -608,15 +656,18 @@
         private DevComponents.DotNetBar.ButtonX buttonX1;
         private DevComponents.DotNetBar.LabelX labelX4;
         private DevComponents.DotNetBar.Controls.ComboBoxEx seedCbx;
-        private DevComponents.DotNetBar.ButtonItem buttonItem1;
-        private DevComponents.DotNetBar.ButtonItem buttonItem2;
-        private DevComponents.DotNetBar.ButtonItem buttonItem3;
+        private DevComponents.DotNetBar.ButtonItem btnClear;
+        private DevComponents.DotNetBar.ButtonItem btnOrder;
+        private DevComponents.DotNetBar.ButtonItem btnDistribute;
         private DevComponents.DotNetBar.ButtonItem buttonItem9;
         private DevComponents.DotNetBar.ButtonItem buttonItem4;
         private DevComponents.DotNetBar.ButtonItem buttonItem5;
         private DevComponents.DotNetBar.ButtonItem buttonItem6;
         private DevComponents.DotNetBar.ButtonItem buttonItem7;
         private DevComponents.DotNetBar.ButtonItem buttonItem8;
+        private DevComponents.DotNetBar.ButtonX exportBtn;
+        private DevComponents.DotNetBar.ButtonItem btnEasy;
+        private DevComponents.DotNetBar.ButtonItem btnPro;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
@@ -628,5 +679,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Lock;
     }
 }

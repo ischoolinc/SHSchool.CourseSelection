@@ -76,15 +76,31 @@ namespace SHSchool.CourseSelection.Forms
 
             #region Course ButtonX
             this.flowLayoutPanel1.Controls.Clear();
-            AccessHelper accessCourse = new AccessHelper();
-            List<UDT.SubjectCourse> sc_list = accessCourse.Select<UDT.SubjectCourse>();
+            //AccessHelper accessCourse = new AccessHelper();
+            //List<UDT.SubjectCourse> sc_list = accessCourse.Select<UDT.SubjectCourse>();
+            string sql = string.Format(@"
+                SELECT
+                    subject_course.*
+                    , subject.school_year
+                    , subject.semester
+                    , course.course_name
+                FROM
+                   $ischool.course_selection.subject_course AS subject_course
+                    LEFT OUTER JOIN $ischool.course_selection.subject AS subject
+                        ON subject.uid = subject_course.ref_subject_id
+                    LEFT OUTER JOIN course
+                        ON course.id = subject_course.ref_course_id
+            ");
+            QueryHelper qh = new QueryHelper();
+            DataTable dt = qh.Select(sql);
+
             Color[] colors = new Color[] { Color.Red, Color.Yellow, Color.Blue, Color.PowderBlue, Color.Orange, Color.Green, Color.Purple };
 
             #region FlowLayoutPanel 課班Button
             int i = 0;
-            foreach (UDT.SubjectCourse sc in sc_list)
+            foreach (DataRow row in dt.Rows)
             {
-                if ("" + subjectCbx.Tag == "" + sc.RefSubjectID && int.Parse(schoolYearCbx.Text) == sc.SchoolYear && int.Parse(semesterCbx.Text) == sc.Semester)
+                if ("" + subjectCbx.Tag == "" + row["ref_subject_id"] && schoolYearCbx.Text == "" + row["school_year"] && semesterCbx.Text == "" + row["semester"])
                 {
                     ButtonX button = new ButtonX();
                     button.FocusCuesEnabled = false;
@@ -94,15 +110,15 @@ namespace SHSchool.CourseSelection.Forms
                     button.Shape = new DevComponents.DotNetBar.RoundRectangleShapeDescriptor(15);
                     button.TextAlignment = eButtonTextAlignment.Left;
                     button.Size = new Size(110, 23);
-                    button.Text = "test" + sc.Class_type;
+                    button.Text = "" + row["course_name"]; //"test" + sc.Class_type;
                     button.Image = GetColorBallImage(colors[i]);
                     // 課班UID
-                    button.Tag = "" + sc.UID;
+                    button.Tag = "" + row["uid"];
                     button.Margin = new System.Windows.Forms.Padding(3);
                     button.Click += new EventHandler(Swap);
                     // 課班UID
-                    _CourseName.Add("" + sc.UID, sc.Class_type);
-                    _CourseColor.Add("" + sc.UID, colors[i++]);
+                    _CourseName.Add("" + row["uid"],"" + row["course_name"]/*sc.Class_type*/);
+                    _CourseColor.Add("" + row["uid"], colors[i++]);
                     this.flowLayoutPanel1.Controls.Add(button);
                 }
             }
@@ -574,7 +590,7 @@ namespace SHSchool.CourseSelection.Forms
                 Subject_Class sbc = new Subject_Class();
                 sbc.RefSubjectCourseID = sb.UID;
                 sbc.RefSubjectID = "" + sb.RefSubjectID;
-                sbc.ClassType = sb.Class_type;
+                sbc.ClassType = sb.ClassType;
                 sbc.StudentCount = 0;
                 sbc.Limit = limit;
 

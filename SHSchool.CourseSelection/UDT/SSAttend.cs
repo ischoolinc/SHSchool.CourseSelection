@@ -36,5 +36,11 @@ namespace SHSchool.CourseSelection.UDT
         /// </summary>
         [FISCA.UDT.Field(Field = "lock", Indexed = false)]
         public bool Lock { get; set; }
+
+        /// <summary>
+        /// 修課類別[志願分發、先搶先贏、指定]
+        /// </summary>
+        [FISCA.UDT.Field(Field = "attend_type", Indexed = false)]
+        public string AttendType { get; set; }
     }
 }

@@ -35,8 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aspose.Cells">
-      <HintPath>Library\Aspose.Cells.dll</HintPath>
+    <Reference Include="Aspose.Cells_201402, Version=7.7.1.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\Aspose.Cells_201402.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DevComponents.DotNetBar2, Version=9.5.0.1, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL">
@@ -377,6 +378,7 @@
     <None Include="Library\FISCA.dll.config" />
     <None Include="Library\ReportHelper.dll.config" />
     <None Include="Resources\network_lock_64.png" />
+    <None Include="Resources\匯出選課結果樣板.xlsx" />
     <None Include="Resources\學生選修科目清單樣版 .xls" />
     <None Include="Resources\科目選修學生名單樣版.xls" />
   </ItemGroup>

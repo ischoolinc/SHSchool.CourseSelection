@@ -15,6 +15,7 @@ namespace SHSchool.CourseSelection.Forms
 {
     public partial class ClassSelectCourse_Management : BaseForm
     {
+        ClassSelectCourse_Setting cscs;
         public ClassSelectCourse_Management()
         {
             InitializeComponent();
@@ -182,6 +183,8 @@ namespace SHSchool.CourseSelection.Forms
             this.Close();
         }
 
+        
+
         private void setSelectSubjecttBtn_Click(object sender, EventArgs e)
         {
             Dictionary<string, string> selectedClassDic = new Dictionary<string, string>();
@@ -190,8 +193,13 @@ namespace SHSchool.CourseSelection.Forms
             {
                 selectedClassDic.Add("" + datarow.Tag,"" + datarow.Cells[1].Value);
             }
-            ClassSelectCourse_Setting cscs = new ClassSelectCourse_Setting(schoolYearCbx.Text,semesterCbx.Text,courseTypeCbx.Text,selectedClassDic);
+            cscs = new ClassSelectCourse_Setting(schoolYearCbx.Text,semesterCbx.Text,courseTypeCbx.Text,selectedClassDic);
+            cscs.FormClosed += delegate
+            {
+                ReloadDataGridView();
+            };
+
             cscs.ShowDialog();
-        }  
+        }
     }
 }

@@ -12,7 +12,6 @@ using FISCA.Data;
 using FISCA.UDT;
 using FISCA.Presentation;
 using System.IO;
-using System.Text;
 
 namespace SHSchool.CourseSelection.Test
 {

@@ -16,10 +16,10 @@ namespace SHSchool.CourseSelection.Forms
 {
     public partial class ClassSelectCourse_Setting : BaseForm
     {
-        DataGridViewCheckBoxColumn dgvCkbx = new DataGridViewCheckBoxColumn();
-
         Dictionary<string, string> classDic = new Dictionary<string, string>();
         List<string> selectClassDic = new List<string>();
+
+        private ContextMenu _menu = new ContextMenu(); 
 
         public ClassSelectCourse_Setting(string sy,string s,string courseType,Dictionary<string,string>selectedClassDic)
         {
@@ -37,7 +37,27 @@ namespace SHSchool.CourseSelection.Forms
                 classNameLb.Text = string.Join("、", selectClassDic);
                 
             }
-            #endregion  
+            #endregion
+
+            // Init datagridview 右鍵選單
+            MenuItem add = new MenuItem("可選");
+            add.Click += delegate 
+            {
+                foreach (DataGridViewRow datarow in dataGridViewX1.SelectedRows)
+                {
+                    datarow.Cells[0].Value = "Checked";
+                }
+            };
+            _menu.MenuItems.Add(add);
+            MenuItem remove = new MenuItem("不可選");
+            remove.Click += delegate 
+            {
+                foreach (DataGridViewRow datarow in dataGridViewX1.SelectedRows)
+                {
+                    datarow.Cells[0].Value = "Unchecked";
+                }
+            };
+            _menu.MenuItems.Add(remove);
 
             ReloadDataGridView(sy,s,courseType);
         }
@@ -78,7 +98,7 @@ namespace SHSchool.CourseSelection.Forms
             Dictionary<string, int> subjectCountDic = new Dictionary<string, int>();
             foreach (DataRow dr in dt.Rows)
             {
-                if (subjectCountDic.ContainsKey("" + dr["uid"]))
+                if (subjectCountDic.ContainsKey("" + dr["uid"]) && "" + dr["ref_subject_id"] != "")
                 {
                     subjectCountDic["" + dr["uid"]] += 1;
                 }
@@ -94,15 +114,8 @@ namespace SHSchool.CourseSelection.Forms
             // 避免DataGridView新增相同科目
             Dictionary<string, string> subjectIDDic = new Dictionary<string, string>();
 
-            // DGV新增checkbox
-            dgvCkbx.HeaderText = "加選";
-            dgvCkbx.AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
-            dgvCkbx.Width = 45;
-            dgvCkbx.ThreeState = true;
-            dataGridViewX1.Columns.Insert(0,dgvCkbx);
-
             foreach (DataRow dr in dt.Rows)
-            {                
+            {
                 int index = 0;
 
                 DataGridViewRow datarow = new DataGridViewRow();
@@ -110,25 +123,25 @@ namespace SHSchool.CourseSelection.Forms
 
                 if (!subjectIDDic.ContainsKey("" + dr["uid"]))
                 {
-                    subjectIDDic.Add("" + dr["uid"],"" + dr["subject_name"]);
+                    subjectIDDic.Add("" + dr["uid"], "" + dr["subject_name"]);
                     // 科目勾選狀態
                     if (subjectCountDic["" + dr["uid"]] == classDic.Count)
                     {
-                        datarow.Cells[index].Value = CheckState.Checked;
+                        datarow.Cells[index].Value = "Checked";
                     }
                     if (subjectCountDic["" + dr["uid"]] == 0)
                     {
-                        datarow.Cells[index].Value = CheckState.Unchecked;
+                        datarow.Cells[index].Value = "Unchecked";
                     }
-                    if (subjectCountDic["" + dr["uid"]] != 0 && subjectCountDic["" + dr["uid"]] != classDic.Count)
+                    if (subjectCountDic["" + dr["uid"]] != 0 && subjectCountDic["" + dr["uid"]] < classDic.Count)
                     {
-                        datarow.Cells[index].Value = CheckState.Indeterminate;
+                        datarow.Cells[index].Value = "Indeterminate";
                     }
                     index++;
 
-                    datarow.Cells[index++].Value = dr["subject_name"];
-                    datarow.Cells[index++].Value = dr["level"];
-                    datarow.Cells[index++].Value = dr["credit"];
+                    datarow.Cells[index++].Value = "" + dr["subject_name"];
+                    datarow.Cells[index++].Value = "" + dr["level"];
+                    datarow.Cells[index++].Value = "" + dr["credit"];
                     datarow.Tag = dr["uid"];
 
                     dataGridViewX1.Rows.Add(datarow);
@@ -145,6 +158,10 @@ namespace SHSchool.CourseSelection.Forms
 
         private void saveBtn_Click(object sender, EventArgs e)
         {
+            dataGridViewX1.Enabled = false;
+            saveBtn.Enabled = false;
+            leaveBtn.Enabled = false;
+
             BGW.DoWork += BGW_DoWork;
 
             BGW.ProgressChanged += BGW_ProgressChanged;
@@ -153,12 +170,11 @@ namespace SHSchool.CourseSelection.Forms
 
             BGW.RunWorkerAsync();
 
-            this.Close();
-
         }
 
         public void BGW_DoWork(object sender,DoWorkEventArgs e)
         {
+
             try
             {
                 int progress = 10;
@@ -232,29 +248,18 @@ namespace SHSchool.CourseSelection.Forms
             {
                 MessageBox.Show("" + e.Result);
             }
+
+            this.Close();
         }
 
-        private void dataGridViewX1_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridViewX1_MouseDown(object sender, MouseEventArgs e)
         {
-            //if (e.ColumnIndex == 0)
-            //{
-            //    if ("" + dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value == "" + CheckState.Indeterminate)
-            //    {
-            //        dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = CheckState.Unchecked;
-            //        return;
-            //    }
-            //    if ("" + dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value == "" + CheckState.Unchecked)
-            //    {
-            //        dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = CheckState.Checked;
-            //        return;
-            //    }
-            //    if ("" + dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value == "" + CheckState.Checked)
-            //    {
-            //        dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = CheckState.Unchecked;
-            //        return;
-            //    }
-            //}
-            //dgvCkbx.ThreeState = false;
+            if (e.Button == MouseButtons.Right)
+            {
+                _menu.Show(dataGridViewX1,new Point(e.X,e.Y));
+            }
         }
+
+
     }
 }

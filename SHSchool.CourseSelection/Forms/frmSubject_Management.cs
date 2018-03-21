@@ -14,8 +14,8 @@ namespace SHSchool.CourseSelection.Forms
     public partial class frmSubject_Management : BaseForm
     {
         private AccessHelper Access;
-        private string school_year;
-        private string semester;
+        //private string school_year;
+        //private string semester;
         private bool forSendingSubject;
         private ErrorProvider errorProvider1;
         private List<UDT.Subject> oRecords;
