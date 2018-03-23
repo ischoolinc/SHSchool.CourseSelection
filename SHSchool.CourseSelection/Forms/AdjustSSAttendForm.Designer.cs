@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.labelX3 = new DevComponents.DotNetBar.LabelX();
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
@@ -37,6 +37,7 @@
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Lock = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column7 = new SHSchool.CourseSelection.Forms.DataGridViewColorBallTextColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -45,7 +46,6 @@
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Lock = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.labelX5 = new DevComponents.DotNetBar.LabelX();
             this.conditionCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.schoolYearCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
@@ -152,6 +152,7 @@
             this.Column4,
             this.Column5,
             this.Column6,
+            this.Lock,
             this.Column10,
             this.Column7,
             this.Column1,
@@ -159,16 +160,15 @@
             this.Column3,
             this.Column8,
             this.Column9,
-            this.Column11,
-            this.Lock});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Column11});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewX1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewX1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
             this.dataGridViewX1.Location = new System.Drawing.Point(0, 23);
@@ -203,15 +203,20 @@
             // Column6
             // 
             this.Column6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Column6.Frozen = true;
             this.Column6.HeaderText = "姓名";
             this.Column6.Name = "Column6";
             this.Column6.ReadOnly = true;
             this.Column6.Width = 59;
             // 
+            // Lock
+            // 
+            this.Lock.HeaderText = "鎖定";
+            this.Lock.Name = "Lock";
+            this.Lock.ReadOnly = true;
+            this.Lock.Width = 59;
+            // 
             // Column10
             // 
-            this.Column10.Frozen = true;
             this.Column10.HeaderText = "分發順位";
             this.Column10.Name = "Column10";
             this.Column10.ReadOnly = true;
@@ -219,7 +224,6 @@
             // 
             // Column7
             // 
-            this.Column7.Frozen = true;
             this.Column7.HeaderText = "選修課程";
             this.Column7.Name = "Column7";
             this.Column7.ReadOnly = true;
@@ -266,13 +270,6 @@
             this.Column11.Name = "Column11";
             this.Column11.ReadOnly = true;
             this.Column11.Width = 85;
-            // 
-            // Lock
-            // 
-            this.Lock.HeaderText = "鎖定";
-            this.Lock.Name = "Lock";
-            this.Lock.ReadOnly = true;
-            this.Lock.Width = 59;
             // 
             // labelX5
             // 
@@ -488,6 +485,7 @@
             this.btnClear.Enabled = false;
             this.btnClear.GlobalItem = false;
             this.btnClear.Name = "btnClear";
+            this.btnClear.PopupSide = DevComponents.DotNetBar.ePopupSide.Left;
             this.btnClear.Text = "清除分發";
             this.btnClear.Click += new System.EventHandler(this.buttonItem1_Click);
             // 
@@ -671,6 +669,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Lock;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
         private DataGridViewColorBallTextColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
@@ -679,6 +678,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Lock;
     }
 }

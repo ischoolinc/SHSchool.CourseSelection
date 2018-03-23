@@ -579,6 +579,11 @@ namespace SHSchool.CourseSelection.Forms
 
             int studentCount = ssAttendList.Count(); // 選課學生人數
             int classCount = subjectList.Count(); // 選修科目開班數
+            if (classCount == 0)
+            {
+                MessageBox.Show("選修科目尚未開班 !");
+                return;
+            }
             int limit = studentCount / classCount; // 每班人數限制
 
             int index = 0;
