@@ -300,14 +300,18 @@ namespace SHSchool.CourseSelection.Forms
                 {
                     DataGridViewRow datarow = new DataGridViewRow();
                     datarow.CreateCells(dataGridViewX1);
-                    switch (int.Parse("" + student["gender"]))
+                    int g;
+                    if (int.TryParse("" + student["gender"],out g))
                     {
-                        case 1:
+                        if ("" + student["gender"] == "1")
+                        {
                             student["gender"] = "男";
-                            break;
-                        case 0:
+                        }
+                        if ("" + student["gender"] == "2")
+                        {
                             student["gender"] = "女";
-                            break;
+                            
+                        }
                     }
 
                     int index = 0;
@@ -443,31 +447,63 @@ namespace SHSchool.CourseSelection.Forms
 
         private void saveBtn_Click(object sender, EventArgs e)
         {
+            List<string> dataList = new List<string>();
             foreach (DataGridViewRow dr in dataGridViewX1.Rows)
             {
-                if ("" + dr.Cells[6].Tag != "" && dr.Cells[6].Tag != null) // 有分班學生
-                {
-                    string updateSQL = string.Format(@"
-                    UPDATE $ischool.course_selection.ss_attend
-                    SET ref_subject_course_id = {0}
-                    WHERE ref_student_id = {1} AND ref_subject_id = {2}
-                ", "" + dr.Cells[6].Tag, "" + dr.Tag, "" + subjectCbx.Tag);
+                #region 舊寫法
+                //if ("" + dr.Cells[6].Tag != "" && dr.Cells[6].Tag != null) // 有分班學生
+                //{
+                //    string updateSQL = string.Format(@"
+                //    UPDATE $ischool.course_selection.ss_attend
+                //    SET ref_subject_course_id = {0}
+                //    WHERE ref_student_id = {1} AND ref_subject_id = {2}
+                //", "" + dr.Cells[6].Tag, "" + dr.Tag, "" + subjectCbx.Tag);
 
-                    UpdateHelper updateHelper = new UpdateHelper();
-                    updateHelper.Execute(updateSQL);
-                }
-                if ("" + dr.Cells[6].Tag == "") // 未分班學生
-                {
-                    string updateSQL = string.Format(@"
-                    UPDATE $ischool.course_selection.ss_attend
-                    SET ref_subject_course_id = {0}
-                    WHERE ref_student_id = {1} AND ref_subject_id = {2}
-                ", "null", "" + dr.Tag, "" + subjectCbx.Tag);
+                //    UpdateHelper updateHelper = new UpdateHelper();
+                //    updateHelper.Execute(updateSQL);
+                //}
+                //if ("" + dr.Cells[6].Tag == "") // 未分班學生
+                //{
+                //    string updateSQL = string.Format(@"
+                //    UPDATE $ischool.course_selection.ss_attend
+                //    SET ref_subject_course_id = {0}
+                //    WHERE ref_student_id = {1} AND ref_subject_id = {2}
+                //", "null", "" + dr.Tag, "" + subjectCbx.Tag);
 
-                    UpdateHelper updateHelper = new UpdateHelper();
-                    updateHelper.Execute(updateSQL);
-                }
+                //    UpdateHelper updateHelper = new UpdateHelper();
+                //    updateHelper.Execute(updateSQL);
+                //}
+                #endregion
+                string data = string.Format(@"
+                SELECT
+	               {0}::BIGINT AS ref_subject_course_id
+	               , {1}::BIGINT AS ref_student_id
+	               , {2}::BIGINT AS ref_subject_id
+
+                    ", ("" + dr.Cells[6].Tag) == "" ? null  : ("" + dr.Cells[6].Tag), "" + dr.Tag, "" + subjectCbx.Tag);
+                dataList.Add(data);
             }
+            string dataRow = string.Join(" UNION ALL", dataList);
+
+            string sql = string.Format(@"
+WITH data_row AS(
+	{0}
+)
+UPDATE 
+	$ischool.course_selection.ss_attend 
+SET
+	ref_subject_course_id = data_row.ref_subject_course_id
+FROM
+	data_row
+WHERE
+	$ischool.course_selection.ss_attend.ref_student_id = data_row.ref_student_id
+	AND $ischool.course_selection.ss_attend.ref_subject_id = data_row.ref_subject_id
+            ", dataRow);
+
+            UpdateHelper up = new UpdateHelper();
+            up.Execute(sql);
+
+
             MessageBox.Show("儲存成功");
             ReloadDataGridView();
             ReloadSubjectCbx();

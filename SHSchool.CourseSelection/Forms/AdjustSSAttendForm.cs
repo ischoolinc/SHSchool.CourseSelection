@@ -424,6 +424,7 @@ WITH target_subject AS(
 		, ref_subject_id
 		, ref_subject_course_id
         , lock
+        , attend_type
 		, subject.subject_name
 	FROM
 		$ischool.course_selection.ss_attend AS attend
@@ -464,6 +465,7 @@ SELECT
     , null AS 分發順位
     , null AS 分發志願
     , student_attend.lock
+    , student_attend.attend_type
     , student_attend.ref_subject_id
 	, student_attend.subject_name AS 選課課程
 	, wish1.subject_name AS 志願1
@@ -541,8 +543,7 @@ ORDER BY
                         datarow.DefaultCellStyle.BackColor = Color.YellowGreen;
                     }
                     datarow.Cells[index++].Value = ""+ row["分發順位"];
-                    //((DataGridViewColorBallTextCell)datarow.Cells[index]).Value = "" + row["選課課程"];
-                    //((DataGridViewColorBallTextCell)datarow.Cells[index]).Color = subjectColorDic["" + row["ref_subject_id"]];
+
                     if ("" + row["ref_subject_id"] != string.Empty)
                     {
                         ((DataGridViewColorBallTextCell)datarow.Cells[index]).Value = "" + row["選課課程"];
@@ -554,6 +555,8 @@ ORDER BY
                     datarow.Cells[index++].Value = "" + row["志願3"];
                     datarow.Cells[index++].Value = "" + row["志願4"];
                     datarow.Cells[index++].Value = "" + row["志願5"];
+                    datarow.Cells[index++].Value = ""; // 分發志願
+                    datarow.Cells[index++].Value = "" + row["attend_type"];
 
                     datarow.Tag = row;
                     dataGridViewX1.Rows.Add(datarow);
@@ -563,17 +566,19 @@ ORDER BY
 
         private void Swap(object sender, EventArgs e)
         {
-            bool swapAble = true;
+            bool swapEnabled = true;
             foreach (DataGridViewRow row in dataGridViewX1.SelectedRows)
             {
                 if ("" + row.Cells["Lock"].Value == "是")
                 {
-                    swapAble = false;
+                    swapEnabled = false;
                 }
             }
-            if (swapAble)
+            if (swapEnabled)
             {
                 ButtonX button = (ButtonX)sender;
+                //bool emptyBtn = ("" + button.Tag) == "" ? true : false;
+
                 // 剩餘名額與調整學生人數比較
                 int limit = _DicSubjectData["" + button.Tag].SubjectLimit;
                 int 剩餘名額 = _DicSubjectData["" + button.Tag].SubjectLimit - _DicSubjectData["" + button.Tag].StuCount;
@@ -599,27 +604,41 @@ ORDER BY
                         }
                     }
                 }
-
+                #region 更新DataGridView
                 foreach (DataGridViewRow row in dataGridViewX1.SelectedRows)
                 {
+                    //if (emptyBtn && "" + row.Cells["attendType"].Value == "指定")
+                    //{
+                    //    MessageBox.Show("");
+                    //    continue;
+                    //}
                     if ("" + button.Tag == "")
                     {
                         ((DataGridViewColorBallTextCell)row.Cells[5]).Color = Color.Transparent;
                         ((DataGridViewColorBallTextCell)row.Cells[5]).Value = "";
+
+                        row.Cells["attendType"].Value = "";
                     }
                     if ("" + button.Tag != "")
                     {
                         ((DataGridViewColorBallTextCell)row.Cells[5]).Color = subjectColorDic["" + button.Tag];
                         ((DataGridViewColorBallTextCell)row.Cells[5]).Value = allSubjectDic["" + button.Tag];
+
+                        row.Cells["attendType"].Value = "指定";
                     }
                     dataGridViewX1.Rows[row.Index].Cells[5].Tag = button.Tag;
+
                 }
 
-                // 更新datarow
+                #endregion
+
                 foreach (SubjectCountLimit sc in _DicSubjectData.Values)
                 {
                     sc.StuCount = 0; // 清空人數紀錄
                 }
+
+                #region 更新DataRow
+                // 更新datarow
                 foreach (DataRow row in _DataRowList)
                 {
                     foreach (DataGridViewRow dgvrow in dataGridViewX1.SelectedRows)
@@ -627,11 +646,22 @@ ORDER BY
                         if ("" + dgvrow.Cells[2].Tag == "" + row["id"]) // 比對學生ID
                         {
                             row["ref_subject_id"] = button.Tag;
+
+                            row["選課課程"] = allSubjectDic["" + button.Tag];
+                            if ("" + button.Tag == "")
+                            {
+                                row["attend_type"] = "";
+                            }
+                            if ("" + button.Tag != "")
+                            {
+                                row["attend_type"] = "指定";
+                            }
                         }
                     }
                     // 重新計算選修科目人數
                     _DicSubjectData["" + row["ref_subject_id"]].StuCount++;
                 }
+                #endregion
 
                 ReloadButtonXText();
             }
@@ -682,10 +712,12 @@ ORDER BY
                     , {1}::BIGINT AS ref_subject_id
                     , '{2}'::TEXT AS subject_name
                     , {3}::BOOLEAN AS lock
+                    , '{4}'::TEXT AS attend_type
                 ", row["id"]
-                ,"" + datarow.Cells[5].Tag == "" ? "NULL" : datarow.Cells[5].Tag
-                ,"" + datarow.Cells[5].Value == "" ? "NULL" : datarow.Cells[5].Value
-                ,"" + datarow.Cells["lock"].Value == "是" ? "true" : "false");
+                ,"" + datarow.Cells[5].Tag == "" ? "NULL" : "" + datarow.Cells[5].Tag
+                ,"" + datarow.Cells[5].Value == "" ? "NULL" : "" + datarow.Cells[5].Value
+                ,"" + datarow.Cells["lock"].Value == "是" ? "true" : "false"
+                ,"" + datarow.Cells["attendType"].Value == "" ? "NULL" : "" + datarow.Cells["attendType"].Value);
 
                 dataList.Add(data);
             }
@@ -701,6 +733,7 @@ WITH data_row AS(
 		ss_attend.ref_subject_id
 		, ss_attend.ref_student_id
         , ss_attend.lock
+        , ss_attend.attend_type
 		, subject.subject_name
 	FROM
 		$ischool.course_selection.ss_attend AS ss_attend
@@ -715,6 +748,7 @@ WITH data_row AS(
 		data_row.ref_subject_id
 		, data_row.ref_student_id
         , data_row.lock
+        , data_row.attend_type
 		, attend.uid
 	FROM 
 		data_row
@@ -741,6 +775,7 @@ WITH data_row AS(
 	SET
 		ref_subject_id = upsert_data.ref_subject_id
         , lock = upsert_data.lock
+        , attend_type = upsert_data.attend_type
 	FROM
 		upsert_data
 	WHERE
@@ -750,11 +785,12 @@ WITH data_row AS(
 	RETURNING $ischool.course_selection.ss_attend.*
 ) ,insert_data AS(
 	INSERT INTO 
-		$ischool.course_selection.ss_attend(ref_student_id,ref_subject_id,lock)
+		$ischool.course_selection.ss_attend(ref_student_id,ref_subject_id,lock,attend_type)
 	SELECT
 		upsert_data.ref_student_id
 		, upsert_data.ref_subject_id
         , upsert_data.lock
+        , upsert_data.attend_type
 	FROM
 		upsert_data
 	WHERE upsert_data.uid IS NULL
@@ -776,13 +812,13 @@ INSERT INTO log(
 SELECT 
 	'{3}'::TEXT AS actor
 	, 'Record' AS action_type
-	, '調整學生選修科目結果以及志願分發' AS action
+	, data_row.attend_type AS action
 	, 'student'::TEXT AS target_category
 	, data_row.ref_student_id AS target_id
 	, now() AS server_time
 	, '{4}' AS client_info
 	, '選課結果及分發'AS action_by   
-	, '學生「'|| student.name || '」選修科目結果「' || olddata_row.subject_name || '」變更為「' || data_row.subject_name || '  選課鎖定狀態「' || olddata_row.lock || '」變更為「' || data_row.lock || ' 」  使用者「{3}」' AS description 
+	, '學生「'|| student.name || '」選修科目結果「' || olddata_row.subject_name || '」變更為「' || data_row.subject_name || ' 」選課鎖定狀態「' || olddata_row.lock || '」變更為「' || data_row.lock || ' 」  使用者「{3}」' AS description 
 FROM
 	data_row
 	LEFT OUTER JOIN student ON student.id = data_row.ref_student_id 
@@ -857,8 +893,9 @@ FROM
                         }
                         datarow.Cells[index++].Value = "" + row["志願"+i];
                     }
-                    datarow.Cells[index].Value = "" + row["分發志願"];
-                    
+                    datarow.Cells[index++].Value = "" + row["分發志願"];
+                    datarow.Cells[index++].Value = "" + row["attend_type"];
+
                     datarow.Tag = row;
                     dataGridViewX1.Rows.Add(datarow);
                 }
@@ -896,6 +933,167 @@ FROM
         }
 
         /// <summary>
+        /// 匯出
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void exportBtn_Click(object sender, EventArgs e)
+        {
+            Workbook template = new Workbook(new MemoryStream(Properties.Resources.匯出選課結果樣板));
+
+            Workbook book = new Workbook();
+            book.Copy(template);
+            Worksheet sheet = book.Worksheets[0];
+
+            int row = 1;
+            Style style = sheet.Cells.GetCellStyle(0, 0);
+            foreach (DataGridViewRow datarow in dataGridViewX1.Rows)
+            {
+                for (int col = 0; col < dataGridViewX1.Columns.Count; col++)
+                {
+                    sheet.Cells[row, col].PutValue(datarow.Cells[col].Value);
+                    sheet.Cells[row, col].SetStyle(style);
+                }
+                row++;
+            }
+
+            SaveFileDialog saveFile = new SaveFileDialog();
+            saveFile.Filter = "Excel (*.xlsx)|*.xlsx|所有檔案 (*.*)|*.*";
+            string fileName = string.Format("{0}_{1}_選課結果", courseTypeCbx.Text, conditionCbx.Text);
+            saveFile.FileName = fileName;
+            try
+            {
+                if (saveFile.ShowDialog() == DialogResult.OK)
+                {
+                    book.Save(saveFile.FileName);
+                    Process.Start(saveFile.FileName);
+                    MotherForm.SetStatusBarMessage("課堂點名明細,列印完成!!");
+                }
+                else
+                {
+                    FISCA.Presentation.Controls.MsgBox.Show("檔案未儲存");
+                    return;
+                }
+            }
+            catch
+            {
+                FISCA.Presentation.Controls.MsgBox.Show("檔案儲存錯誤,請檢查檔案是否開啟中!!");
+                MotherForm.SetStatusBarMessage("檔案儲存錯誤,請檢查檔案是否開啟中!!");
+            }
+        }
+
+        /// <summary>
+        /// 志願分發
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonX1_Click(object sender, EventArgs e)
+        {
+            if (btnEasy.Checked == true) // 簡單模式
+            {
+                foreach (SubjectCountLimit sc in _DicSubjectData.Values)
+                {
+                    sc.StuCount = 0; // 清空科目人數紀錄
+                }
+                int lockStudentCount = 0;
+                // 更新DataRow: 清除選修科目結果
+                foreach (DataRow row in _DataRowList)
+                {
+                    if ("" + row["lock"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
+                    {
+                        row["ref_subject_id"] = "";
+                        row["選課課程"] = "";
+                        _DicSubjectData[""].StuCount++; // 紀錄沒有選修科目學生人數
+                    }
+                    if ("" + row["lock"] == "true" || "" + row["attend_type"] == "指定" || "" + row["attend_type"] == "先搶先贏")
+                    {
+                        lockStudentCount++;
+                    }
+                }
+
+                int seed = 0;
+                if (seedCbx.Text != "隨機")
+                {
+                    string _seed = seedCbx.Text;
+                    string[] _seedArray = _seed.Split(':');
+                    foreach (string s in _seedArray)
+                    {
+                        if (int.TryParse(s, out seed))
+                        {
+                            seed = int.Parse(s);
+                        }
+                    }
+                }
+                if (seedCbx.Text == "隨機")
+                {
+                    seed = new Random().Next(3000);
+                }
+                int index = seedCbx.Items.Count;
+                string text = string.Format("代碼{0}: ", index);
+                seedCbx.Items.Insert(1, text + seed);
+                Random random = new Random(seed);
+                List<int> list = new List<int>(_DataRowList.Count - lockStudentCount);
+                Dictionary<int, DataRow> dicOrderRows = new Dictionary<int, DataRow>();
+                for (int i = 0; i < _DataRowList.Count - lockStudentCount; i++)
+                {
+                    list.Add(i + 1);
+                    dicOrderRows.Add(i + 1, null);
+                }
+                // 更新DataRow
+                foreach (var item in _DataRowList)
+                {
+                    if ("" + item["lock"] != "true" && "" + item["attend_type"] != "指定" && "" + item["attend_type"] != "先搶先贏")
+                    {
+                        int orderIndex = random.Next(list.Count);
+                        int order = list[orderIndex];
+                        list.RemoveAt(orderIndex);
+
+                        item["分發順位"] = order;
+                        item["attend_type"] = "志願分發";
+                    }
+                }
+                for (int i = 1; i <= 5; i++)
+                {
+                    distribute(i);
+                }
+
+                // ShowDataRow
+                ShowDataRow();
+                dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
+            }
+        }
+
+        /// <summary>
+        /// 簡單模式
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnEasy_Click(object sender, EventArgs e)
+        {
+            btnEasy.Checked = true;
+            btnPro.Checked = false;
+            btnClear.Enabled = false;
+            btnDistribute.Enabled = false;
+            btnOrder.Enabled = false;
+            seedCbx.Enabled = false;
+        }
+
+        /// <summary>
+        /// 進階模式
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPro_Click(object sender, EventArgs e)
+        {
+            btnEasy.Checked = false;
+            btnPro.Checked = true;
+            btnClear.Enabled = true;
+            btnDistribute.Enabled = true;
+            btnOrder.Enabled = true;
+            seedCbx.Enabled = true;
+        }
+
+        /// <summary>
         /// 清除分發
         /// </summary>
         /// <param name="sender"></param>
@@ -906,14 +1104,16 @@ FROM
             {
                 sc.StuCount = 0;
             }
-            // 更新DataRow: 清除選修科目結果(鎖課學生除外)
+            // 更新DataRow: 清除選修科目結果(只有非鎖定學生並且非志願分發學生才能清除)
             foreach (DataRow row in _DataRowList)
             {
-                if ("" + row["lock"] != "true") 
+                if ("" + row["lock"] == "false" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏") 
                 {
                     row["ref_subject_id"] = "";
-                    _DicSubjectData[""].StuCount++; // 紀錄沒有選修科目學生人數
+                    row["選課課程"] = "";
+                    row["attend_type"] = "";
                 }
+                _DicSubjectData["" + row["ref_subject_id"]].StuCount++; // 紀錄選修科目學生人數
             }
             ShowDataRow();
         }
@@ -974,6 +1174,23 @@ FROM
                     item["分發順位"] = order;
                 }
             }
+            ShowDataRow();
+            dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
+        }
+
+        /// <summary>
+        /// 依序分發
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonItem9_Click(object sender, EventArgs e)
+        {
+            for (int i = 1; i <= 5; i++)
+            {
+                distribute(i);
+            }
+
+            // ShowDataRow
             ShowDataRow();
             dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
         }
@@ -1047,23 +1264,6 @@ FROM
         }
 
         /// <summary>
-        /// 依序分發
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonItem9_Click(object sender, EventArgs e)
-        {
-            for (int i = 1; i <= 5; i++)
-            {
-                distribute(i);
-            }
-
-            // ShowDataRow
-            ShowDataRow();
-            dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
-        }
-
-        /// <summary>
         /// 分發
         /// </summary>
         /// <param name="wishOrder"></param>
@@ -1083,7 +1283,7 @@ FROM
                     MessageBox.Show("請先產生分發順位!");
                     return;
                 }
-                if ("" + row["lock"] != "true")
+                if ("" + row["lock"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
                 {
                     dicSortDataRow.Add(int.Parse("" + row["分發順位"]), row);
                 }
@@ -1110,8 +1310,7 @@ FROM
                     {
                         row["ref_subject_id"] = "";
                         _DicSubjectData[""].StuCount++;
-                        row["選課課程"] = "";
-                        
+                        row["選課課程"] = "";                        
                     }
                     if (wishSubjectID != "") // 有志願
                     {
@@ -1133,156 +1332,6 @@ FROM
             }
         }
 
-        private void exportBtn_Click(object sender, EventArgs e)
-        {
-            Workbook template = new Workbook(new MemoryStream(Properties.Resources.匯出選課結果樣板));
-
-            Workbook book = new Workbook();
-            book.Copy(template);
-            Worksheet sheet = book.Worksheets[0];
-
-            int row = 1;
-            Style style = sheet.Cells.GetCellStyle(0, 0);
-            foreach (DataGridViewRow datarow in dataGridViewX1.Rows)
-            {
-                for (int col = 0; col < dataGridViewX1.Columns.Count; col++)
-                {
-                    sheet.Cells[row, col].PutValue(datarow.Cells[col].Value);
-                    sheet.Cells[row, col].SetStyle(style);
-                }
-                row++;
-            }
-
-            SaveFileDialog saveFile = new SaveFileDialog();
-            saveFile.Filter = "Excel (*.xlsx)|*.xlsx|所有檔案 (*.*)|*.*";
-            string fileName = string.Format("{0}_{1}_選課結果", courseTypeCbx.Text, conditionCbx.Text);
-            saveFile.FileName = fileName;
-            try
-            {
-                if (saveFile.ShowDialog() == DialogResult.OK)
-                {
-                    book.Save(saveFile.FileName);
-                    Process.Start(saveFile.FileName);
-                    MotherForm.SetStatusBarMessage("課堂點名明細,列印完成!!");
-                }
-                else
-                {
-                    FISCA.Presentation.Controls.MsgBox.Show("檔案未儲存");
-                    return;
-                }
-            }
-            catch
-            {
-                FISCA.Presentation.Controls.MsgBox.Show("檔案儲存錯誤,請檢查檔案是否開啟中!!");
-                MotherForm.SetStatusBarMessage("檔案儲存錯誤,請檢查檔案是否開啟中!!");
-            }
-        }
-        /// <summary>
-        /// 簡單模式
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnEasy_Click(object sender, EventArgs e)
-        {
-            btnEasy.Checked = true;
-            btnPro.Checked = false;
-            btnClear.Enabled = false;
-            btnDistribute.Enabled = false;
-            btnOrder.Enabled = false;
-            seedCbx.Enabled = false;
-        }
-        /// <summary>
-        /// 進階模式
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnPro_Click(object sender, EventArgs e)
-        {
-            btnEasy.Checked = false;
-            btnPro.Checked = true;
-            btnClear.Enabled = true;
-            btnDistribute.Enabled = true;
-            btnOrder.Enabled = true;
-            seedCbx.Enabled = true;
-        }
-        /// <summary>
-        /// 志願分發
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonX1_Click(object sender, EventArgs e)
-        {
-            if (btnEasy.Checked == true)
-            {
-                foreach (SubjectCountLimit sc in _DicSubjectData.Values)
-                {
-                    sc.StuCount = 0;
-                }
-                int lockStudentCount = 0;
-                // 更新DataRow: 清除選修科目結果
-                foreach (DataRow row in _DataRowList)
-                {
-                    if ("" + row["lock"] != "true")
-                    {
-                        row["ref_subject_id"] = "";
-                        _DicSubjectData[""].StuCount++; // 紀錄沒有選修科目學生人數
-                    }
-                    if ("" + row["lock"] == "true")
-                    {
-                        lockStudentCount++;
-                    }
-                }
-
-                int seed = 0;
-                if (seedCbx.Text != "隨機")
-                {
-                    string _seed = seedCbx.Text;
-                    string[] _seedArray = _seed.Split(':');
-                    foreach (string s in _seedArray)
-                    {
-                        if (int.TryParse(s, out seed))
-                        {
-                            seed = int.Parse(s);
-                        }
-                    }
-                }
-                if (seedCbx.Text == "隨機")
-                {
-                    seed = new Random().Next(3000);
-                }
-                int index = seedCbx.Items.Count;
-                string text = string.Format("代碼{0}: ", index);
-                seedCbx.Items.Insert(1, text + seed);
-                Random random = new Random(seed);
-                List<int> list = new List<int>(_DataRowList.Count - lockStudentCount);
-                Dictionary<int, DataRow> dicOrderRows = new Dictionary<int, DataRow>();
-                for (int i = 0; i < _DataRowList.Count - lockStudentCount; i++)
-                {
-                    list.Add(i + 1);
-                    dicOrderRows.Add(i + 1, null);
-                }
-                // 更新DataRow
-                foreach (var item in _DataRowList)
-                {
-                    if ("" + item["lock"] != "true")
-                    {
-                        int orderIndex = random.Next(list.Count);
-                        int order = list[orderIndex];
-                        list.RemoveAt(orderIndex);
-
-                        item["分發順位"] = order;
-                    }
-                }
-                for (int i = 1; i <= 5; i++)
-                {
-                    distribute(i);
-                }
-
-                // ShowDataRow
-                ShowDataRow();
-                dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
-            }
-        }
         private void dataGridViewX1_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
