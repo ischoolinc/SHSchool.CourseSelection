@@ -34,6 +34,19 @@
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.courseTypeCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Lock = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new SHSchool.CourseSelection.Forms.DataGridViewColorBallTextColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.attendType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.labelX5 = new DevComponents.DotNetBar.LabelX();
             this.conditionCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.schoolYearCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
@@ -66,19 +79,6 @@
             this.labelX4 = new DevComponents.DotNetBar.LabelX();
             this.seedCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.exportBtn = new DevComponents.DotNetBar.ButtonX();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Lock = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new SHSchool.CourseSelection.Forms.DataGridViewColorBallTextColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.attendType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -183,6 +183,102 @@
             this.dataGridViewX1.TabIndex = 1;
             this.dataGridViewX1.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.dataGridViewX1_SortCompare);
             this.dataGridViewX1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridViewX1_MouseDown);
+            // 
+            // Column4
+            // 
+            this.Column4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Column4.Frozen = true;
+            this.Column4.HeaderText = "班級";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.Width = 59;
+            // 
+            // Column5
+            // 
+            this.Column5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Column5.Frozen = true;
+            this.Column5.HeaderText = "座號";
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            this.Column5.Width = 59;
+            // 
+            // Column6
+            // 
+            this.Column6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Column6.HeaderText = "姓名";
+            this.Column6.Name = "Column6";
+            this.Column6.ReadOnly = true;
+            this.Column6.Width = 59;
+            // 
+            // Lock
+            // 
+            this.Lock.HeaderText = "鎖定";
+            this.Lock.Name = "Lock";
+            this.Lock.ReadOnly = true;
+            this.Lock.Width = 59;
+            // 
+            // Column10
+            // 
+            this.Column10.HeaderText = "分發順位";
+            this.Column10.Name = "Column10";
+            this.Column10.ReadOnly = true;
+            this.Column10.Width = 85;
+            // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "選修課程";
+            this.Column7.Name = "Column7";
+            this.Column7.ReadOnly = true;
+            this.Column7.Width = 85;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "志願一";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 85;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "志願二";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Width = 85;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "志願三";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.Width = 85;
+            // 
+            // Column8
+            // 
+            this.Column8.HeaderText = "志願四";
+            this.Column8.Name = "Column8";
+            this.Column8.ReadOnly = true;
+            this.Column8.Width = 85;
+            // 
+            // Column9
+            // 
+            this.Column9.HeaderText = "志願五";
+            this.Column9.Name = "Column9";
+            this.Column9.ReadOnly = true;
+            this.Column9.Width = 85;
+            // 
+            // Column11
+            // 
+            this.Column11.HeaderText = "分發志願";
+            this.Column11.Name = "Column11";
+            this.Column11.ReadOnly = true;
+            this.Column11.Width = 85;
+            // 
+            // attendType
+            // 
+            this.attendType.HeaderText = "修課方式";
+            this.attendType.Name = "attendType";
+            this.attendType.ReadOnly = true;
+            this.attendType.Width = 85;
             // 
             // labelX5
             // 
@@ -506,102 +602,6 @@
             this.exportBtn.TabIndex = 21;
             this.exportBtn.Text = "匯出";
             this.exportBtn.Click += new System.EventHandler(this.exportBtn_Click);
-            // 
-            // Column4
-            // 
-            this.Column4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Column4.Frozen = true;
-            this.Column4.HeaderText = "班級";
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            this.Column4.Width = 59;
-            // 
-            // Column5
-            // 
-            this.Column5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Column5.Frozen = true;
-            this.Column5.HeaderText = "座號";
-            this.Column5.Name = "Column5";
-            this.Column5.ReadOnly = true;
-            this.Column5.Width = 59;
-            // 
-            // Column6
-            // 
-            this.Column6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Column6.HeaderText = "姓名";
-            this.Column6.Name = "Column6";
-            this.Column6.ReadOnly = true;
-            this.Column6.Width = 59;
-            // 
-            // Lock
-            // 
-            this.Lock.HeaderText = "鎖定";
-            this.Lock.Name = "Lock";
-            this.Lock.ReadOnly = true;
-            this.Lock.Width = 59;
-            // 
-            // Column10
-            // 
-            this.Column10.HeaderText = "分發順位";
-            this.Column10.Name = "Column10";
-            this.Column10.ReadOnly = true;
-            this.Column10.Width = 85;
-            // 
-            // Column7
-            // 
-            this.Column7.HeaderText = "選修課程";
-            this.Column7.Name = "Column7";
-            this.Column7.ReadOnly = true;
-            this.Column7.Width = 85;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "志願一";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Width = 85;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "志願二";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.Width = 85;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "志願三";
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            this.Column3.Width = 85;
-            // 
-            // Column8
-            // 
-            this.Column8.HeaderText = "志願四";
-            this.Column8.Name = "Column8";
-            this.Column8.ReadOnly = true;
-            this.Column8.Width = 85;
-            // 
-            // Column9
-            // 
-            this.Column9.HeaderText = "志願五";
-            this.Column9.Name = "Column9";
-            this.Column9.ReadOnly = true;
-            this.Column9.Width = 85;
-            // 
-            // Column11
-            // 
-            this.Column11.HeaderText = "分發志願";
-            this.Column11.Name = "Column11";
-            this.Column11.ReadOnly = true;
-            this.Column11.Width = 85;
-            // 
-            // attendType
-            // 
-            this.attendType.HeaderText = "修課方式";
-            this.attendType.Name = "attendType";
-            this.attendType.ReadOnly = true;
-            this.attendType.Width = 85;
             // 
             // AdjustSSAttendForm
             // 

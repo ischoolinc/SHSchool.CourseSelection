@@ -1049,7 +1049,7 @@ FROM
                         list.RemoveAt(orderIndex);
 
                         item["分發順位"] = order;
-                        item["attend_type"] = "志願分發";
+                        //item["attend_type"] = "志願分發";
                     }
                 }
                 for (int i = 1; i <= 5; i++)
@@ -1104,14 +1104,15 @@ FROM
             {
                 sc.StuCount = 0;
             }
-            // 更新DataRow: 清除選修科目結果(只有非鎖定學生並且非志願分發學生才能清除)
+            // 更新DataRow: 清除選修科目結果(只有非鎖定學生並且志願分發學生才能清除)
             foreach (DataRow row in _DataRowList)
             {
-                if ("" + row["lock"] == "false" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏") 
+                if (("" + row["lock"] == "false" && "" + row["attend_type"] == "志願分發") || ("" + row["lock"] == "false" && "" + row["attend_type"] == "")) 
                 {
                     row["ref_subject_id"] = "";
                     row["選課課程"] = "";
                     row["attend_type"] = "";
+                    row["分發志願"] = "";
                 }
                 _DicSubjectData["" + row["ref_subject_id"]].StuCount++; // 紀錄選修科目學生人數
             }
@@ -1149,7 +1150,7 @@ FROM
             int lockStudentCount = 0;
             foreach (DataRow row in _DataRowList)
             {
-                if ("" + row["lock"] == "true")
+                if ("" + row["lock"] == "true" || "" + row["attend_type"] == "指定" || "" + row["attend_type"] == "先搶先贏")
                 {
                     lockStudentCount++;
                 }
@@ -1165,7 +1166,7 @@ FROM
             // 更新DataRow
             foreach (var item in _DataRowList)
             {
-                if ("" + item["lock"] != "true")
+                if ("" + item["lock"] != "true" && "" + item["attend_type"] != "指定" && "" + item["attend_type"] != "先搶先贏")
                 {
                     int orderIndex = random.Next(list.Count);
                     int order = list[orderIndex];
@@ -1278,7 +1279,7 @@ FROM
             Dictionary<int, DataRow> dicSortDataRow = new Dictionary<int, DataRow>();
             foreach (var row in _DataRowList)
             {
-                if ("" + row["分發順位"] == "" && "" + row["lock"] != "true")
+                if ("" + row["分發順位"] == "" && "" + row["lock"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
                 {
                     MessageBox.Show("請先產生分發順位!");
                     return;
@@ -1319,6 +1320,7 @@ FROM
                             row["ref_subject_id"] = wishSubjectID;
                             row["選課課程"] = subjectName;
                             row["分發志願"] = wishOrder;
+                            row["attend_type"] = "志願分發";
                             _DicSubjectData[wishSubjectID].StuCount++;
                         }
                         if (studentCount >= subjectLimit) // 沒名額
