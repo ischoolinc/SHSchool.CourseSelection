@@ -1277,22 +1277,29 @@ FROM
             List<int> list = new List<int>(_DataRowList.Count);
             // 將DataRow按分發順位排序
             Dictionary<int, DataRow> dicSortDataRow = new Dictionary<int, DataRow>();
+            bool keepGoing = true;
             foreach (var row in _DataRowList)
             {
-                if ("" + row["分發順位"] == "" && "" + row["lock"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
+                if (keepGoing)
                 {
-                    MessageBox.Show("請先產生分發順位!");
-                    return;
-                }
-                if ("" + row["lock"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
-                {
-                    dicSortDataRow.Add(int.Parse("" + row["分發順位"]), row);
-                }
-                
-                // 紀錄已分發科目人數
-                if ("" + row["ref_subject_id"] != "")
-                {
-                    _DicSubjectData["" + row["ref_subject_id"]].StuCount++;
+                    if ("" + row["分發順位"] == "" && "" + row["lock"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
+                    {
+                        MessageBox.Show("請先產生分發順位!");                      
+                        keepGoing = false;
+                    }
+                    if (keepGoing)
+                    {
+                        if ("" + row["lock"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
+                        {
+                            dicSortDataRow.Add(int.Parse("" + row["分發順位"]), row);
+                        }
+
+                        // 紀錄已分發科目人數
+                        if ("" + row["ref_subject_id"] != "")
+                        {
+                            _DicSubjectData["" + row["ref_subject_id"]].StuCount++;
+                        }
+                    }
                 }
             }
 

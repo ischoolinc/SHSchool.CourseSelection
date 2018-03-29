@@ -81,16 +81,15 @@ namespace SHSchool.CourseSelection.Forms
             string sql = string.Format(@"
                 SELECT
                     subject_course.*
-                    , subject.school_year
-                    , subject.semester
-                    , course.course_name
                 FROM
                    $ischool.course_selection.subject_course AS subject_course
                     LEFT OUTER JOIN $ischool.course_selection.subject AS subject
                         ON subject.uid = subject_course.ref_subject_id
-                    LEFT OUTER JOIN course
-                        ON course.id = subject_course.ref_course_id
-            ");
+                WHERE 
+                    subject.school_year = {0}
+                    AND subject.semester = {1}
+                    AND subject_course.ref_subject_id = {2}
+                    ",schoolYearCbx.Text,semesterCbx.Text,subjectCbx.Tag);
             QueryHelper qh = new QueryHelper();
             DataTable dt = qh.Select(sql);
 
@@ -100,27 +99,25 @@ namespace SHSchool.CourseSelection.Forms
             int i = 0;
             foreach (DataRow row in dt.Rows)
             {
-                if ("" + subjectCbx.Tag == "" + row["ref_subject_id"] && schoolYearCbx.Text == "" + row["school_year"] && semesterCbx.Text == "" + row["semester"])
-                {
-                    ButtonX button = new ButtonX();
-                    button.FocusCuesEnabled = false;
-                    button.Style = eDotNetBarStyle.Office2007;
-                    button.ColorTable = eButtonColor.Flat;
-                    button.AutoSize = true;
-                    button.Shape = new DevComponents.DotNetBar.RoundRectangleShapeDescriptor(15);
-                    button.TextAlignment = eButtonTextAlignment.Left;
-                    button.Size = new Size(110, 23);
-                    button.Text = "" + row["course_name"]; //"test" + sc.Class_type;
-                    button.Image = GetColorBallImage(colors[i]);
-                    // 課班UID
-                    button.Tag = "" + row["uid"];
-                    button.Margin = new System.Windows.Forms.Padding(3);
-                    button.Click += new EventHandler(Swap);
-                    // 課班UID
-                    _CourseName.Add("" + row["uid"],"" + row["course_name"]/*sc.Class_type*/);
-                    _CourseColor.Add("" + row["uid"], colors[i++]);
-                    this.flowLayoutPanel1.Controls.Add(button);
-                }
+                ButtonX button = new ButtonX();
+                button.FocusCuesEnabled = false;
+                button.Style = eDotNetBarStyle.Office2007;
+                button.ColorTable = eButtonColor.Flat;
+                button.AutoSize = true;
+                button.Shape = new DevComponents.DotNetBar.RoundRectangleShapeDescriptor(15);
+                button.TextAlignment = eButtonTextAlignment.Left;
+                button.Size = new Size(110, 23);
+                button.Text = "" + row["class_type"]; 
+                button.Image = GetColorBallImage(colors[i]);
+                // 課班UID
+                button.Tag = "" + row["uid"];
+                button.Margin = new System.Windows.Forms.Padding(3);
+                button.Click += new EventHandler(Swap);
+                // 課班UID
+                _CourseName.Add("" + row["uid"],"" + row["class_type"]/*sc.Class_type*/);
+                _CourseColor.Add("" + row["uid"], colors[i++]);
+                this.flowLayoutPanel1.Controls.Add(button);
+                
             }
             #endregion
 
@@ -240,56 +237,40 @@ namespace SHSchool.CourseSelection.Forms
                 QueryHelper queryhelper = new QueryHelper();
                 #region SQL 
                 string selectSQL = string.Format(@"
-                SELECT 
-	                ref_student_id,
-	                ref_subject_course_id, 
-	                subject_course.ref_course_id,
-                    subject_course.class_type,
-                    course.course_name,
-	                student.student_number,
-	                student.name,
-	                student.gender,
-	                student.ref_class_id,
-	                class.class_name,
-	                student.seat_no
-                FROM 
-	                $ischool.course_selection.ss_attend AS ss_attend
-                LEFT OUTER JOIN
-                (
-	                SELECT 
-		                ref_course_id,uid,class_type
-	                FROM 
-		                $ischool.course_selection.subject_course 
-                )subject_course on subject_course.uid =  ss_attend.ref_subject_course_id
-                LEFT OUTER JOIN
-                (
-	                SELECT
-		                student_number,
-		                name,
-		                gender,
-		                ref_class_id,
-		                seat_no,
-		                id
-	                FROM
-		                student
-                )student on student.id = ref_student_id
-                LEFT OUTER JOIN
-                (
-	                SELECT
-		                id,
-		                class_name
-	                FROM 
-		                class
-                )class on class.id = student.ref_class_id
-                LEFT OUTER JOIN
-                (
-	                SELECT
-		                id,
-		                course_name
-	                FROM
-		                course
-                )course on course.id = subject_course.ref_course_id                
-                WHERE ref_subject_id = {0}
+SELECT 
+	student.id AS ref_student_id
+	, student.student_number
+	, student.name
+	, student.gender
+	, class.class_name
+	, student.seat_no
+    , subject_course.uid AS ref_subject_course_id
+	, subject_course.class_type
+FROM
+	$ischool.course_selection.subject_class_selection AS scs
+	LEFT OUTER JOIN (
+		SELECT 
+			*
+		FROM
+			student
+		WHERE
+			status IN (1,2)
+	) student ON student.ref_class_id = scs.ref_class_id
+	LEFT OUTER JOIN class
+		ON class.id = scs.ref_class_id
+	LEFT OUTER JOIN	(
+		SELECT 
+			*
+		FROM
+			$ischool.course_selection.ss_attend
+		WHERE
+			ref_subject_id = {0}
+	) ss_attend ON ss_attend.ref_student_id = student.id
+	LEFT OUTER JOIN $ischool.course_selection.subject_course AS subject_course
+		ON subject_course.uid = ss_attend.ref_subject_course_id
+WHERE
+    scs.ref_subject_id = {0}
+    AND ss_attend.uid IS NOT NULL
                 ", "" + subjectCbx.Tag);
 
                 #endregion
@@ -307,7 +288,7 @@ namespace SHSchool.CourseSelection.Forms
                         {
                             student["gender"] = "男";
                         }
-                        if ("" + student["gender"] == "2")
+                        if ("" + student["gender"] == "0")
                         {
                             student["gender"] = "女";
                             
@@ -323,9 +304,7 @@ namespace SHSchool.CourseSelection.Forms
                     datarow.Cells[index++].Value = student["name"];
                     if ("" + student["ref_subject_course_id"] != "")
                     {
-                        //((DataGridViewColorBallTextCell)datarow.Cells[5]).Value = "" + student["course_name"];
                         ((DataGridViewColorBallTextCell)datarow.Cells[6]).Value = "" + student["class_type"];
-                        //((DataGridViewColorBallTextCell)datarow.Cells[5]).Color = _CourseColor["" + student["ref_subject_course_id"]];
                         ((DataGridViewColorBallTextCell)datarow.Cells[6]).Color = _CourseColor["" + student["ref_subject_course_id"]];
                         // 紀錄課程、學生資訊。
                         if (_CourseStudentIDdic.ContainsKey("" + student["ref_subject_course_id"]))
@@ -340,9 +319,7 @@ namespace SHSchool.CourseSelection.Forms
                     }
                     if ("" + student["ref_subject_course_id"] == "")
                     {
-                        //((DataGridViewColorBallTextCell)datarow.Cells[5]).Value = _CourseName[""];
                         ((DataGridViewColorBallTextCell)datarow.Cells[6]).Value = _CourseName[""];
-                        //((DataGridViewColorBallTextCell)datarow.Cells[5]).Color = _CourseColor[""];
                         ((DataGridViewColorBallTextCell)datarow.Cells[6]).Color = _CourseColor[""];
                         // 紀錄課程、學生資訊。
                         if (_CourseStudentIDdic.ContainsKey("" + student["ref_subject_course_id"]))
