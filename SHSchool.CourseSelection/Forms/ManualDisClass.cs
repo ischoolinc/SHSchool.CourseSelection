@@ -238,39 +238,22 @@ namespace SHSchool.CourseSelection.Forms
                 #region SQL 
                 string selectSQL = string.Format(@"
 SELECT 
-	student.id AS ref_student_id
+	ss_attend.*
 	, student.student_number
 	, student.name
 	, student.gender
-	, class.class_name
 	, student.seat_no
-    , subject_course.uid AS ref_subject_course_id
-	, subject_course.class_type
-FROM
-	$ischool.course_selection.subject_class_selection AS scs
-	LEFT OUTER JOIN (
-		SELECT 
-			*
-		FROM
-			student
-		WHERE
-			status IN (1,2)
-	) student ON student.ref_class_id = scs.ref_class_id
+	, class.class_name
+    , subject_course.class_type
+FROM 
+	$ischool.course_selection.ss_attend AS ss_attend
+	LEFT OUTER JOIN student
+		ON student.id = ss_attend.ref_student_id
 	LEFT OUTER JOIN class
-		ON class.id = scs.ref_class_id
-	LEFT OUTER JOIN	(
-		SELECT 
-			*
-		FROM
-			$ischool.course_selection.ss_attend
-		WHERE
-			ref_subject_id = {0}
-	) ss_attend ON ss_attend.ref_student_id = student.id
-	LEFT OUTER JOIN $ischool.course_selection.subject_course AS subject_course
-		ON subject_course.uid = ss_attend.ref_subject_course_id
-WHERE
-    scs.ref_subject_id = {0}
-    AND ss_attend.uid IS NOT NULL
+		ON class.id = student.ref_class_id
+    LEFT OUTER JOIN $ischool.course_selection.subject_course AS subject_course
+        ON subject_course.uid = ss_attend.ref_subject_course_id
+WHERE ss_attend.ref_subject_id = {0}
                 ", "" + subjectCbx.Tag);
 
                 #endregion
@@ -457,7 +440,7 @@ WHERE
 	               , {1}::BIGINT AS ref_student_id
 	               , {2}::BIGINT AS ref_subject_id
 
-                    ", ("" + dr.Cells[6].Tag) == "" ? null  : ("" + dr.Cells[6].Tag), "" + dr.Tag, "" + subjectCbx.Tag);
+                    ", ("" + dr.Cells[6].Tag) == "" ? "NULL"  : ("" + dr.Cells[6].Tag), "" + dr.Tag, "" + subjectCbx.Tag);
                 dataList.Add(data);
             }
             string dataRow = string.Join(" UNION ALL", dataList);
