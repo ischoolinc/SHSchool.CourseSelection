@@ -197,26 +197,19 @@ SELECT
 	ss_attend.ref_subject_id,
 	ss_attend.ref_subject_course_id, 
 	subject_course.ref_course_id,
-	subject_course.school_year,
-	subject_course.semester,
-    subject_course.course_type
+	subject.school_year,
+	subject.semester,
+    subject.type
 FROM 
     $ischool.course_selection.ss_attend AS ss_attend
-LEFT OUTER JOIN
-(
-	SELECT 
-        uid,
-        ref_course_id,
-        ref_subject_id,
-        course_type,
-        school_year,
-        semester
-	FROM 
-        $ischool.course_selection.subject_course 
-	WHERE 
-        school_year = {0} AND semester = {1}	
-)subject_course ON subject_course.uid = ss_attend.ref_subject_course_id
-WHERE school_year = {0} AND semester = {1} AND course_type = '{2}'"
+    LEFT OUTER JOIN $ischool.course_selection.subject_course AS subject_course 
+        ON subject_course.uid = ss_attend.ref_subject_course_id
+    LEFT OUTER JOIN $ischool.course_selection.subject AS subject
+        ON subject.uid = ss_attend.ref_subject_id
+WHERE 
+    subject.school_year = {0} 
+    AND subject.semester = {1} 
+    AND subject.type = '{2}'"
             , schoolYearCbx.Text, semesterCbx.Text,courseTypeCbx.Text);
             #endregion
 
@@ -233,6 +226,16 @@ WHERE school_year = {0} AND semester = {1} AND course_type = '{2}'"
             }
             List<SCAttendRecord> scrOldList = SCAttend.SelectByStudentIDAndCourseID(studentCourseDic.Keys.ToList(),studentCourseDic.Values.ToList());
             List<SCETakeRecord> sctList = SCETake.SelectByStudentAndCourse(studentCourseDic.Keys.ToList(), studentCourseDic.Values.ToList());
+
+            if (scrOldList.Count > 0)
+            {
+                DialogResult result = MessageBox.Show("已轉入修課學生，確定重複轉入修課學生將會清除學生原課程成績以及原修課紀錄 ","警告",MessageBoxButtons.YesNo);
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+            }
+
             SCAttend.Delete(scrOldList);
             SCETake.Delete(sctList);
 
