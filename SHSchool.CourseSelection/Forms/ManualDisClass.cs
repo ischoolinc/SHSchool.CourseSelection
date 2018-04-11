@@ -30,6 +30,8 @@ namespace SHSchool.CourseSelection.Forms
         // 紀錄選修課程分配到的學生
         Dictionary<string, List<string>> _CourseStudentIDdic = new Dictionary<string, List<string>>();
 
+        private string _selectedSubjectID = "";
+
         public ManualDisClass()
         {
             InitializeComponent();
@@ -68,7 +70,7 @@ namespace SHSchool.CourseSelection.Forms
             // 透過Tag紀錄選取的科目ID
             if (subjectCbx.Text != "")
             {
-                subjectCbx.Tag = subjectNamedic[subjectCbx.Text];
+                _selectedSubjectID = subjectNamedic[subjectCbx.Text];
             }
 
             _CourseColor.Clear();
@@ -89,7 +91,7 @@ namespace SHSchool.CourseSelection.Forms
                     subject.school_year = {0}
                     AND subject.semester = {1}
                     AND subject_course.ref_subject_id = {2}
-                    ",schoolYearCbx.Text,semesterCbx.Text,subjectCbx.Tag);
+                    ",schoolYearCbx.Text,semesterCbx.Text, _selectedSubjectID);
             QueryHelper qh = new QueryHelper();
             DataTable dt = qh.Select(sql);
 
@@ -253,8 +255,8 @@ FROM
 		ON class.id = student.ref_class_id
     LEFT OUTER JOIN $ischool.course_selection.subject_course AS subject_course
         ON subject_course.uid = ss_attend.ref_subject_course_id
-WHERE ss_attend.ref_subject_id = {0}
-                ", "" + subjectCbx.Tag);
+WHERE subject_course.ref_subject_id = {0}
+                ", "" + _selectedSubjectID);
 
                 #endregion
                 DataTable studentData = queryhelper.Select(selectSQL);
@@ -440,7 +442,7 @@ WHERE ss_attend.ref_subject_id = {0}
 	               , {1}::BIGINT AS ref_student_id
 	               , {2}::BIGINT AS ref_subject_id
 
-                    ", ("" + dr.Cells[6].Tag) == "" ? "NULL"  : ("" + dr.Cells[6].Tag), "" + dr.Tag, "" + subjectCbx.Tag);
+                    ", ("" + dr.Cells[6].Tag) == "" ? "NULL"  : ("" + dr.Cells[6].Tag), "" + dr.Tag, "" + _selectedSubjectID);
                 dataList.Add(data);
             }
             string dataRow = string.Join(" UNION ALL", dataList);
@@ -465,11 +467,11 @@ WHERE
 
 
             MessageBox.Show("儲存成功");
-            ReloadDataGridView();
             ReloadSubjectCbx();
+            ReloadDataGridView();
             foreach (var subject in subjectNamedic)
             {
-                if (subject.Value == "" + subjectCbx.Tag)
+                if (subject.Value == "" + _selectedSubjectID)
                 {
                     subjectCbx.Text = subject.Key;
                 }
@@ -565,9 +567,9 @@ WHERE
 
             AccessHelper access = new AccessHelper();
             //取得選修科目班級
-            List<UDT.SubjectCourse> subjectList = access.Select<UDT.SubjectCourse>("ref_subject_id = " + "'" + subjectCbx.Tag + "'");
+            List<UDT.SubjectCourse> subjectList = access.Select<UDT.SubjectCourse>("ref_subject_id = " + "'" + _selectedSubjectID + "'");
             //// 取得選課學生
-            List<UDT.SSAttend> ssAttendList = access.Select<UDT.SSAttend>("ref_subject_id = " + "'" + subjectCbx.Tag + "'");
+            List<UDT.SSAttend> ssAttendList = access.Select<UDT.SSAttend>("ref_subject_id = " + "'" + _selectedSubjectID + "'");
 
             List<Subject_Class> sbcList = new List<Subject_Class>();
             Dictionary<string, Subject_Class> classDic = new Dictionary<string, Subject_Class>();
