@@ -255,7 +255,7 @@ FROM
 		ON class.id = student.ref_class_id
     LEFT OUTER JOIN $ischool.course_selection.subject_course AS subject_course
         ON subject_course.uid = ss_attend.ref_subject_course_id
-WHERE subject_course.ref_subject_id = {0}
+WHERE ss_attend.ref_subject_id = {0}
                 ", "" + _selectedSubjectID);
 
                 #endregion

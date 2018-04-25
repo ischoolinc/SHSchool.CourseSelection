@@ -579,20 +579,31 @@ WITH data_row AS(
 					data_type = '刪除'
 			)
 	RETURNING *
-) 
-DELETE
+) ,delete_subject_course AS(
+    DELETE
+    FROM
+	    $ischool.course_selection.subject_course
+    WHERE
+	    uid IN(
+			    SELECT
+				    ref_subject_course_id
+			    FROM
+				    data_row
+			    WHERE
+				    data_type = '刪除'
+		)    
+    RETURNING *
+)
+UPDATE 
+    $ischool.course_selection.ss_attend AS ss_attend
+SET
+    ref_subject_course_id = NULL
 FROM
-	$ischool.course_selection.subject_course
+    data_row
 WHERE
-	uid IN(
-			SELECT
-				ref_subject_course_id
-			FROM
-				data_row
-			WHERE
-				data_type = '刪除'
-		)
-                ",dataRow);
+    data_row.ref_subject_course_id = ss_attend.ref_subject_course_id
+    AND data_row.data_type = '刪除'
+                ", dataRow);
             #endregion
 
             UpdateHelper up = new UpdateHelper();
