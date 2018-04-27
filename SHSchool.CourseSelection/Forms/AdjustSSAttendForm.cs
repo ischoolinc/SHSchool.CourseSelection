@@ -92,7 +92,7 @@ namespace SHSchool.CourseSelection.Forms
                         type 
                     FROM 
                         $ischool.course_selection.subject
-                    WHERE school_year = {0} AND semester = {1}
+                    WHERE school_year = {0} AND semester = {1} AND type IS NOT NULL
                     ",schoolYearCbx.Text,semesterCbx.Text);
 
                 DataTable dt = qh.Select(sql);
