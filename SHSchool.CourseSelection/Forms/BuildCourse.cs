@@ -363,7 +363,7 @@ namespace SHSchool.CourseSelection.Forms
                 }
 
                 string courseName = courseTypeLb.Text + " " + subjectName + " " + level + " " + classType;
-                string credit = _subjectDic[subjectID].Credit;
+                string credit = _subjectDic[subjectID].Credit == "" ? "NULL" : _subjectDic[subjectID].Credit;
 
                 string data = string.Format(@"
 SELECT
@@ -375,7 +375,7 @@ SELECT
 	, '{5}'::TEXT AS class_type
 	, {6}::INT AS subject_level
 	, '{7}'::TEXT AS course_name
-	, {8} AS credit
+	, {8} ::REAL AS credit
 	, {9} AS school_year
 	, {10} AS semester   
                     ", dataType, subjectID, subjectCourseID, courseID, subjectName, classType, _subjectDic[subjectID].Level, courseName, credit,schoolYearLb.Text,semesterLb.Text);
