@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -16,6 +16,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,6 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,6 +35,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Aspose.Cells_201402, Version=7.7.1.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
@@ -198,12 +201,6 @@
     <Compile Include="Forms\ClassSelectCourse_Setting.Designer.cs">
       <DependentUpon>ClassSelectCourse_Setting.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\CourseCorrespond.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\CourseCorrespond.Designer.cs">
-      <DependentUpon>CourseCorrespond.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\CourseCorrespondData.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -221,18 +218,6 @@
     </Compile>
     <Compile Include="Forms\frmOpeningTime.Designer.cs">
       <DependentUpon>frmOpeningTime.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\frmSelectableSubject_Management.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\frmSelectableSubject_Management.Designer.cs">
-      <DependentUpon>frmSelectableSubject_Management.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\frmSSAttend_Management.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\frmSSAttend_Management.Designer.cs">
-      <DependentUpon>frmSSAttend_Management.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmSSAttend_Subject.cs">
       <SubType>Form</SubType>
@@ -328,9 +313,6 @@
     <EmbeddedResource Include="Forms\ClassSelectCourse_Setting.resx">
       <DependentUpon>ClassSelectCourse_Setting.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\CourseCorrespond.resx">
-      <DependentUpon>CourseCorrespond.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\CourseCorrespondData.resx">
       <DependentUpon>CourseCorrespondData.cs</DependentUpon>
     </EmbeddedResource>
@@ -339,12 +321,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmOpeningTime.resx">
       <DependentUpon>frmOpeningTime.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmSelectableSubject_Management.resx">
-      <DependentUpon>frmSelectableSubject_Management.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmSSAttend_Management.resx">
-      <DependentUpon>frmSSAttend_Management.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmSSAttend_Subject.resx">
       <DependentUpon>frmSSAttend_Subject.cs</DependentUpon>

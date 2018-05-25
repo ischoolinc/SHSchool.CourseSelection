@@ -55,6 +55,7 @@
             // 
             this.cboSchoolYear.DisplayMember = "Text";
             this.cboSchoolYear.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cboSchoolYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSchoolYear.FormattingEnabled = true;
             this.cboSchoolYear.ItemHeight = 19;
             this.cboSchoolYear.Location = new System.Drawing.Point(252, 12);
@@ -98,6 +99,7 @@
             // 
             this.cboSemester.DisplayMember = "Text";
             this.cboSemester.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cboSemester.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSemester.FormattingEnabled = true;
             this.cboSemester.ItemHeight = 19;
             this.cboSemester.Location = new System.Drawing.Point(379, 12);

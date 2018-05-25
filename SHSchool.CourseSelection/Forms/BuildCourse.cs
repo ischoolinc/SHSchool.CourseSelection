@@ -249,6 +249,18 @@ namespace SHSchool.CourseSelection.Forms
                 case 3:
                     level = "III";
                     break;
+                case 4:
+                    level = "IV";
+                    break;
+                case 5:
+                    level = "V";
+                    break;
+                case 6:
+                    level = "VI";
+                    break;
+                default:
+                    level = "" + _subjectDic[subjectID].Level;
+                    break;
             }
             #endregion
             
@@ -291,6 +303,18 @@ namespace SHSchool.CourseSelection.Forms
                         break;
                     case 3:
                         level = "III";
+                        break;
+                    case 4:
+                        level = "IV";
+                        break;
+                    case 5:
+                        level = "V";
+                        break;
+                    case 6:
+                        level = "VI";
+                        break;
+                    default:
+                        level = "" + dataGridViewX1.Rows[e.RowIndex].Cells[4].Value;
                         break;
                 }
                 dataGridViewX1.Rows[e.RowIndex].Cells[1].Value = dataGridViewX1.Rows[e.RowIndex].Cells[2].Value + " " +
@@ -359,6 +383,18 @@ namespace SHSchool.CourseSelection.Forms
                         break;
                     case 3:
                         level = "III";
+                        break;
+                    case 4:
+                        level = "IV";
+                        break;
+                    case 5:
+                        level = "V";
+                        break;
+                    case 6:
+                        level = "VI";
+                        break;
+                    default:
+                        level = "" + row.Cells["level"].Value;
                         break;
                 }
 

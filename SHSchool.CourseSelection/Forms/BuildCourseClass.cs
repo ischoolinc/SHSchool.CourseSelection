@@ -18,6 +18,7 @@ namespace SHSchool.CourseSelection.Forms
         public BuildCourseClass()
         {
             InitializeComponent();
+            this.ImeMode = ImeMode.OnHalf;
 
             #region 學年、學期
             AccessHelper access = new AccessHelper();
@@ -105,7 +106,7 @@ namespace SHSchool.CourseSelection.Forms
                     else
                     {
                         datarow.Cells[index++].Value = "" + dr["_course_count"];
-                        datarow.Cells[index].Value = "" + dr["_course_count"];
+                        datarow.Cells[index++].Value = "" + dr["_course_count"];
                     }
                     
                     dataGridViewX1.Rows[dataGridViewX1.Rows.Add(datarow)].Tag = "" + dr["uid"];
@@ -121,16 +122,22 @@ namespace SHSchool.CourseSelection.Forms
             if (schoolYearCbx.Text != "" && semesterCbx.Text != "")
             {
                 courseTypeCbx.Items.Clear();
-                QueryHelper helper = new QueryHelper();
-                string selectSQL = string.Format(@"
+                int tryParseSchoolYear, tryParseSemester;
+                if (int.TryParse(schoolYearCbx.Text, out tryParseSchoolYear) && int.TryParse(semesterCbx.Text, out tryParseSemester)) {
+                    QueryHelper helper = new QueryHelper();
+                    string selectSQL = string.Format(@"
                 SELECT DISTINCT 
                     type 
                 FROM $ischool.course_selection.subject 
                 WHERE school_year = {0} AND semester = {1}", schoolYearCbx.Text, semesterCbx.Text);
-                foreach (DataRow row in helper.Select(selectSQL).Rows)
-                {
-                    courseTypeCbx.Items.Add("" + row["type"]);
+                    foreach (DataRow row in helper.Select(selectSQL).Rows)
+                    {
+                        courseTypeCbx.Items.Add("" + row["type"]);
+                    }
                 }
+                
+                if(courseTypeCbx.Items.Count==0)
+                    courseTypeCbx.Items.Add("");
                 courseTypeCbx.SelectedIndex = 0;
             }
             #endregion

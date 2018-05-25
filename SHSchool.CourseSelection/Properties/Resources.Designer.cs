@@ -82,7 +82,8 @@ namespace SHSchool.CourseSelection.Properties {
         ///&lt;xsl:variable name=&quot;uppercase&quot; select=&quot;&apos;ABCDEFGHIJKLMNOPQRSTUVWXYZ&apos;&quot; /&gt;
         ///&lt;html&gt;
         ///	&lt;head&gt;
-        ///	&lt;s [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
+        ///	&lt;style&gt;
+        ///	tabl [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
         /// </summary>
         internal static string format {
             get {
@@ -156,7 +157,7 @@ namespace SHSchool.CourseSelection.Properties {
         ///        &lt;/Detector&gt;
         ///    &lt;/DuplicateDetection&gt;
         ///    &lt;FieldList&gt;
-        ///        &lt;!--科目系統編號, 學年度, 學期, [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
+        ///        &lt;!--科目系統編號, 學年度, 學期, 科目名稱, 級別, 學分,  [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
         /// </summary>
         internal static string Subject_Import {
             get {
