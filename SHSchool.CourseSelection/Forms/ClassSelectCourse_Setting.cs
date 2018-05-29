@@ -192,15 +192,15 @@ namespace SHSchool.CourseSelection.Forms
                 }
                 BGW.ReportProgress(progress);
                 // 刪除舊資料(班級選課管理):刪除CheckState != Indeterminate 的資料
+
+                string subjectIDs = string.Join(",",subjectIDList);
                 foreach (var _class in classDic)
                 {
                     progress += 40 / classDic.Count;
                     BGW.ReportProgress(progress);
-                    foreach (string subjectID in subjectIDList)
-                    {
-                        List<UDT.SubjectClassSelection> scsOLDList = access.Select<UDT.SubjectClassSelection>("ref_class_id = " + _class.Key + " AND ref_subject_id =" + subjectID);
-                        access.DeletedValues(scsOLDList);
-                    }
+
+                    List<UDT.SubjectClassSelection> scsOLDList = access.Select<UDT.SubjectClassSelection>("ref_class_id = " + _class.Key + " AND ref_subject_id IN(" + subjectIDs + ")");
+                    access.DeletedValues(scsOLDList);
                 }
 
                 // 新增資料(班級選課管理):新增CheckState == Checked 的資料

@@ -412,30 +412,6 @@ WHERE ss_attend.ref_subject_id = {0}
             List<string> dataList = new List<string>();
             foreach (DataGridViewRow dr in dataGridViewX1.Rows)
             {
-                #region 舊寫法
-                //if ("" + dr.Cells[6].Tag != "" && dr.Cells[6].Tag != null) // 有分班學生
-                //{
-                //    string updateSQL = string.Format(@"
-                //    UPDATE $ischool.course_selection.ss_attend
-                //    SET ref_subject_course_id = {0}
-                //    WHERE ref_student_id = {1} AND ref_subject_id = {2}
-                //", "" + dr.Cells[6].Tag, "" + dr.Tag, "" + subjectCbx.Tag);
-
-                //    UpdateHelper updateHelper = new UpdateHelper();
-                //    updateHelper.Execute(updateSQL);
-                //}
-                //if ("" + dr.Cells[6].Tag == "") // 未分班學生
-                //{
-                //    string updateSQL = string.Format(@"
-                //    UPDATE $ischool.course_selection.ss_attend
-                //    SET ref_subject_course_id = {0}
-                //    WHERE ref_student_id = {1} AND ref_subject_id = {2}
-                //", "null", "" + dr.Tag, "" + subjectCbx.Tag);
-
-                //    UpdateHelper updateHelper = new UpdateHelper();
-                //    updateHelper.Execute(updateSQL);
-                //}
-                #endregion
                 string data = string.Format(@"
                 SELECT
 	               {0}::BIGINT AS ref_subject_course_id

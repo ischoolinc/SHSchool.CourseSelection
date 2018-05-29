@@ -36,6 +36,8 @@ namespace SHSchool.CourseSelection.Forms
 
         }
 
+        BackgroundWorker BGW = new BackgroundWorker();
+
         public void ReloadDataGridView()
         {
             dataGridViewX1.Rows.Clear();
@@ -88,53 +90,74 @@ namespace SHSchool.CourseSelection.Forms
             if (courseTypeCbx.Text != "")
             {
                 Dictionary<string, string> classDic = new Dictionary<string, string>();
-
                 QueryHelper qh = new QueryHelper();
-                DataTable dt = qh.Select(selectSQl);
+                pictureBox1.Visible = true;
 
-                int row = -1;
-                foreach (DataRow dr in dt.Rows)
-                {
-                    // 班級對應多筆科目
-                    if (classDic.ContainsKey("" + dr["ref_class_id"]) && "" +  dr["subject_name"] != "")
+                string schoolYear = schoolYearCbx.Text;
+                string semester = semesterCbx.Text;
+                string courseType = courseTypeCbx.Text;
+
+                DataTable dt = null;
+
+                BGW = new BackgroundWorker();
+
+                BGW.DoWork += delegate {
+                    dt = qh.Select(selectSQl);
+                };
+                BGW.RunWorkerCompleted += delegate {
+                    if (schoolYear == schoolYearCbx.Text && semester == semesterCbx.Text && courseType == courseTypeCbx.Text)
                     {
-                        if (classDic["" + dr["ref_class_id"]] != "")
+                        int row = -1;
+                        foreach (DataRow dr in dt.Rows)
                         {
-                            classDic["" + dr["ref_class_id"]] += "、";
-                        }
-                        classDic["" + dr["ref_class_id"]] += dr["subject_name"];
+                            // 班級對應多筆科目
+                            if (classDic.ContainsKey("" + dr["ref_class_id"]) && "" + dr["subject_name"] != "")
+                            {
+                                if (classDic["" + dr["ref_class_id"]] != "")
+                                {
+                                    classDic["" + dr["ref_class_id"]] += "、";
+                                }
+                                classDic["" + dr["ref_class_id"]] += dr["subject_name"];
 
-                        dataGridViewX1.Rows[row].Cells[2].Value = int.Parse("" + dataGridViewX1.Rows[row].Cells[2].Value) + 1;
-                        dataGridViewX1.Rows[row].Cells[3].Value = classDic["" + dr["ref_class_id"]];
+                                dataGridViewX1.Rows[row].Cells[2].Value = int.Parse("" + dataGridViewX1.Rows[row].Cells[2].Value) + 1;
+                                dataGridViewX1.Rows[row].Cells[3].Value = classDic["" + dr["ref_class_id"]];
+                            }
+                            // 班級對應單筆科目
+                            if (!classDic.ContainsKey("" + dr["ref_class_id"]))
+                            {
+                                classDic.Add("" + dr["ref_class_id"], "" + dr["subject_name"]);
+
+                                DataGridViewRow datarow = new DataGridViewRow();
+                                datarow.CreateCells(dataGridViewX1);
+
+                                int index = 0;
+                                datarow.Cells[index++].Value = "" + dr["grade_year"];
+                                datarow.Cells[index++].Value = "" + dr["class_name"];
+                                // 紀錄班級科目數
+                                if ("" + dr["subject_name"] != "")
+                                {
+                                    datarow.Cells[index++].Value = 1;
+                                }
+                                if ("" + dr["subject_name"] == "")
+                                {
+                                    datarow.Cells[index++].Value = 0;
+                                }
+                                datarow.Cells[index++].Value = "" + dr["subject_name"];
+                                datarow.Tag = "" + dr["ref_class_id"];
+
+                                dataGridViewX1.Rows.Add(datarow);
+                                row++;
+                            }
+
+                        }
+                        pictureBox1.Visible = false;
                     }
-                    // 班級對應單筆科目
-                    if (!classDic.ContainsKey("" + dr["ref_class_id"]))
+                    else
                     {
-                        classDic.Add("" + dr["ref_class_id"],"" + dr["subject_name"]);
-
-                        DataGridViewRow datarow = new DataGridViewRow();
-                        datarow.CreateCells(dataGridViewX1);
-
-                        int index = 0;
-                        datarow.Cells[index++].Value = "" + dr["grade_year"];
-                        datarow.Cells[index++].Value = "" + dr["class_name"];
-                        // 紀錄班級科目數
-                        if ("" + dr["subject_name"] != "")
-                        {
-                            datarow.Cells[index++].Value = 1;
-                        }
-                        if ("" + dr["subject_name"] == "")
-                        {
-                            datarow.Cells[index++].Value = 0;
-                        }
-                        datarow.Cells[index++].Value = "" + dr["subject_name"];
-                        datarow.Tag = "" + dr["ref_class_id"];
-
-                        dataGridViewX1.Rows.Add(datarow);
-                        row++;
+                        ReloadDataGridView();
                     }
-                    
-                }
+                };
+                BGW.RunWorkerAsync();
             }
         }
 

@@ -38,6 +38,9 @@ namespace SHSchool.CourseSelection.Forms
 
         private ContextMenu menu = new ContextMenu();
 
+        AccessHelper access = new AccessHelper();
+        QueryHelper qh = new QueryHelper();
+
         public AdjustSSAttendForm()
         {
 
@@ -47,18 +50,15 @@ namespace SHSchool.CourseSelection.Forms
 
             InitializeComponent();
 
-            AccessHelper access = new AccessHelper();
-            QueryHelper qh = new QueryHelper();
-
             #region Init SchoolYearLb、SemesterLb
             {
                 List<UDT.OpeningTime> timeList = access.Select<UDT.OpeningTime>();
 
-                for (int i = 0; i < 3; i++)
-                {
-                    schoolYearCbx.Items.Add(timeList[0].SchoolYear - i);
-                }
-                schoolYearCbx.SelectedIndex = 0;
+                schoolYearCbx.Items.Add(timeList[0].SchoolYear + 1);
+                schoolYearCbx.Items.Add(timeList[0].SchoolYear);
+                schoolYearCbx.Items.Add(timeList[0].SchoolYear - 1);
+
+                schoolYearCbx.SelectedIndex = 1;
 
                 semesterCbx.Items.Add(1);
                 semesterCbx.Items.Add(2);
@@ -74,45 +74,13 @@ namespace SHSchool.CourseSelection.Forms
             }
             #endregion
 
-            #region allSubjectDic
-
-            List<UDT.Subject> allSbList = access.Select<UDT.Subject>("school_year = " + schoolYearCbx.Text + " AND semester = " + semesterCbx.Text);
-            foreach (UDT.Subject sb in allSbList)
-            {
-                allSubjectDic.Add(sb.UID, sb.SubjectName);
-            }
-            // 新增空白按鈕
-            allSubjectDic.Add("","空白");
-            #endregion
-
-            #region Init CourseTypeCbx
-            {
-                string sql = string.Format(@"
-                    SELECT DISTINCT 
-                        type 
-                    FROM 
-                        $ischool.course_selection.subject
-                    WHERE school_year = {0} AND semester = {1} AND type IS NOT NULL
-                    ",schoolYearCbx.Text,semesterCbx.Text);
-
-                DataTable dt = qh.Select(sql);
-
-                foreach (DataRow dr in dt.Rows)
-                {
-                    courseTypeCbx.Items.Add(dr["type"]);
-                }
-
-                courseTypeCbx.SelectedIndex = 0;
-            }
-            #endregion
-
             #region Init 分發順序
             if (btnEasy.Checked)
             {
                 seedCbx.Enabled = false;
             }
-            seedCbx.Items.Add("隨機");
-            seedCbx.SelectedIndex = 0;
+            //seedCbx.Items.Add("隨機");
+            //seedCbx.SelectedIndex = 0;
             #endregion
 
             #region Init 右鍵選單
@@ -159,7 +127,64 @@ namespace SHSchool.CourseSelection.Forms
             #endregion
 
         }
-        
+
+        private void ReloadCourseTypeCbx()
+        {
+            courseTypeCbx.Items.Clear();
+            string sql = string.Format(@"
+                    SELECT DISTINCT 
+                        type 
+                    FROM 
+                        $ischool.course_selection.subject
+                    WHERE school_year = {0} AND semester = {1} AND type IS NOT NULL
+                    ", schoolYearCbx.Text, semesterCbx.Text);
+
+            DataTable dt = qh.Select(sql);
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                courseTypeCbx.Items.Add(dr["type"]);
+            }
+            if (courseTypeCbx.Items.Count > 0)
+            {
+                courseTypeCbx.SelectedIndex = 0;
+            }
+            if (courseTypeCbx.Items.Count == 0)
+            {
+                conditionCbx.Items.Clear();
+            }
+        }
+
+        private void ReloadAllSubjectDic()
+        {
+            allSubjectDic.Clear();
+            List<UDT.Subject> allSbList = access.Select<UDT.Subject>("school_year = " + schoolYearCbx.Text + " AND semester = " + semesterCbx.Text);
+            foreach (UDT.Subject sb in allSbList)
+            {
+                allSubjectDic.Add(sb.UID, sb.SubjectName);
+            }
+            // 新增空白按鈕
+            allSubjectDic.Add("", "空白");
+        }
+
+        private void schoolYearCbx_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (semesterCbx.Text != "")
+            {
+                ReloadAllSubjectDic();
+                ReloadCourseTypeCbx();
+            }
+        }
+
+        private void semesterCbx_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (schoolYearCbx.Text != "")
+            {
+                ReloadAllSubjectDic();
+                ReloadCourseTypeCbx();
+            }
+        }
+
         private void courseTypeCbx_TextChanged(object sender, EventArgs e)
         {
             #region SQL
@@ -368,12 +393,19 @@ WHERE
             #endregion
         }
 
+        BackgroundWorker _BKWReloadDataGridView = new BackgroundWorker();
+        
         public void ReloadDataGridView()
         {
             _DataRowList.Clear();
             dataGridViewX1.Rows.Clear();
-            if (courseTypeCbx.Text != string.Empty)
+            if (courseTypeCbx.Text != "" && !_BKWReloadDataGridView.IsBusy)
             {
+                string schoolYear = schoolYearCbx.Text;
+                string semester = semesterCbx.Text;
+                string courseType = courseTypeCbx.Text;
+                pictureBox1.Visible = true;
+                // isLoading = true;
                 #region SQL
                 string sql = string.Format(@"
 
@@ -519,48 +551,63 @@ ORDER BY
 	, target_student.seat_no
 	, target_student.id
 "
-                    , schoolYearCbx.Text,semesterCbx.Text,courseTypeCbx.Text);
-
-
+                    , schoolYear, semester, courseType);
                 #endregion
-
                 QueryHelper qh = new QueryHelper();
-                DataTable dt = qh.Select(sql);
-                foreach (DataRow row in dt.Rows)
-                {
-                    _DataRowList.Add(row);
-                    int index = 0;
-                    DataGridViewRow datarow = new DataGridViewRow();
-                    datarow.CreateCells(dataGridViewX1);
+                DataTable dt = null;
+                _BKWReloadDataGridView = new BackgroundWorker();
 
-                    datarow.Cells[index++].Value = "" + row["class_name"];
-                    datarow.Cells[index++].Value = "" + row["seat_no"];
-                    datarow.Cells[index].Tag = "" + row["id"]; // 記錄學生ID
-                    datarow.Cells[index++].Value = "" + row["name"];
-                    datarow.Cells[index++].Value = ("" + row["lock"]) == "true" ? "是" : "";
-                    if ("" + row["lock"] == "true")
+                _BKWReloadDataGridView.DoWork += delegate {
+                    dt = qh.Select(sql);
+                };
+                _BKWReloadDataGridView.RunWorkerCompleted += delegate {
+                    if (schoolYear == schoolYearCbx.Text && semester == semesterCbx.Text && courseType == courseTypeCbx.Text)
                     {
-                        datarow.DefaultCellStyle.BackColor = Color.YellowGreen;
-                    }
-                    datarow.Cells[index++].Value = ""+ row["分發順位"];
+                        // isLoading = false;
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            _DataRowList.Add(row);
+                            int index = 0;
+                            DataGridViewRow datarow = new DataGridViewRow();
+                            datarow.CreateCells(dataGridViewX1);
 
-                    if ("" + row["ref_subject_id"] != string.Empty)
-                    {
-                        ((DataGridViewColorBallTextCell)datarow.Cells[index]).Value = "" + row["選課課程"];
-                        ((DataGridViewColorBallTextCell)datarow.Cells[index]).Color = subjectColorDic["" + row["ref_subject_id"]];
-                    }
-                    datarow.Cells[index++].Tag = "" + row["ref_subject_id"];
-                    datarow.Cells[index++].Value = "" + row["志願1"];
-                    datarow.Cells[index++].Value = "" + row["志願2"];
-                    datarow.Cells[index++].Value = "" + row["志願3"];
-                    datarow.Cells[index++].Value = "" + row["志願4"];
-                    datarow.Cells[index++].Value = "" + row["志願5"];
-                    datarow.Cells[index++].Value = ""; // 分發志願
-                    datarow.Cells[index++].Value = "" + row["attend_type"];
+                            datarow.Cells[index++].Value = "" + row["class_name"];
+                            datarow.Cells[index++].Value = "" + row["seat_no"];
+                            datarow.Cells[index].Tag = "" + row["id"]; // 記錄學生ID
+                            datarow.Cells[index++].Value = "" + row["name"];
+                            datarow.Cells[index++].Value = ("" + row["lock"]) == "true" ? "是" : "";
+                            if ("" + row["lock"] == "true")
+                            {
+                                datarow.DefaultCellStyle.BackColor = Color.YellowGreen;
+                            }
+                            datarow.Cells[index++].Value = "" + row["分發順位"];
 
-                    datarow.Tag = row;
-                    dataGridViewX1.Rows.Add(datarow);
-                }
+                            if ("" + row["ref_subject_id"] != string.Empty)
+                            {
+                                ((DataGridViewColorBallTextCell)datarow.Cells[index]).Value = "" + row["選課課程"];
+                                ((DataGridViewColorBallTextCell)datarow.Cells[index]).Color = subjectColorDic["" + row["ref_subject_id"]];
+                            }
+                            datarow.Cells[index++].Tag = "" + row["ref_subject_id"];
+                            datarow.Cells[index++].Value = "" + row["志願1"];
+                            datarow.Cells[index++].Value = "" + row["志願2"];
+                            datarow.Cells[index++].Value = "" + row["志願3"];
+                            datarow.Cells[index++].Value = "" + row["志願4"];
+                            datarow.Cells[index++].Value = "" + row["志願5"];
+                            datarow.Cells[index++].Value = ""; // 分發志願
+                            datarow.Cells[index++].Value = "" + row["attend_type"];
+
+                            datarow.Tag = row;
+                            dataGridViewX1.Rows.Add(datarow);
+                        }
+                        pictureBox1.Visible = false;
+                    }
+                    else {
+                        ReloadDataGridView();
+                    }
+                };
+                _BKWReloadDataGridView.RunWorkerAsync();
+                
+
             }
         }
 
@@ -707,126 +754,141 @@ ORDER BY
             {
                 DataRow row = (DataRow)datarow.Tag;
                 string data = string.Format(@"
-                SELECT
-                    {0}::BIGINT AS ref_student_id
-                    , {1}::BIGINT AS ref_subject_id
-                    , '{2}'::TEXT AS subject_name
-                    , {3}::BOOLEAN AS lock
-                    , '{4}'::TEXT AS attend_type
+    SELECT
+        {0}::BIGINT AS ref_student_id
+        , {1}::BIGINT AS ref_subject_id
+        , '{2}'::TEXT AS subject_name
+        , {3}::BOOLEAN AS lock
+        , '{4}'::TEXT AS attend_type
+        , {5}::INTEGER AS school_year
+        , {6}::INTEGER AS semester
+        , '{7}'::TEXT AS type
+        , '{8}'::TEXT AS seed
                 ", row["id"]
                 ,"" + datarow.Cells[5].Tag == "" ? "NULL" : "" + datarow.Cells[5].Tag
                 ,"" + datarow.Cells[5].Value == "" ? "NULL" : "" + datarow.Cells[5].Value
                 ,"" + datarow.Cells["lock"].Value == "是" ? "true" : "false"
-                ,"" + datarow.Cells["attendType"].Value == "" ? "NULL" : "" + datarow.Cells["attendType"].Value);
-
+                ,"" + datarow.Cells["attendType"].Value == "" ? "NULL" : "" + datarow.Cells["attendType"].Value
+                , schoolYearCbx.Text
+                , semesterCbx.Text
+                , courseTypeCbx.Text
+                , seedCbx.Text
+                );
                 dataList.Add(data);
             }
 
             string attendData = string.Join(" UNION ALL", dataList);
-
             #region SQL
             string sql = string.Format(@"
 WITH data_row AS(
-	{0}
-) ,olddata_row AS (
-	SELECT
-		ss_attend.ref_subject_id
-		, ss_attend.ref_student_id
-        , ss_attend.lock
-        , ss_attend.attend_type
-		, subject.subject_name
-	FROM
-		$ischool.course_selection.ss_attend AS ss_attend
-		LEFT OUTER JOIN $ischool.course_selection.subject AS subject
-			ON subject.uid = ss_attend.ref_subject_id
-	WHERE
-		subject.school_year = {1}
-		AND subject.semester = {2}
-        AND subject.type = '{5}'
-) ,upsert_data AS(
-	SELECT 
-		data_row.ref_subject_id
-		, data_row.ref_student_id
-        , data_row.lock
-        , data_row.attend_type
-		, attend.uid
-	FROM 
-		data_row
-		LEFT OUTER JOIN (
-			SELECT 
-				subject.school_year
-				, subject.semester
-				, attend.uid
-				, attend.ref_student_id
-				, attend.ref_subject_id
-			FROM
-				$ischool.course_selection.ss_attend AS attend
-				LEFT OUTER JOIN $ischool.course_selection.subject AS subject
-					ON  attend.ref_subject_id = subject.uid
-			WHERE 
-				subject.school_year = {1}
-				AND subject.semester = {2}
-		) attend 
-			ON attend.ref_student_id = data_row.ref_student_id
-	--WHERE
-		--attend.uid IS NOT NULL
-) ,update_data AS(
-	UPDATE $ischool.course_selection.ss_attend 
-	SET
-		ref_subject_id = upsert_data.ref_subject_id
-        , lock = upsert_data.lock
-        , attend_type = upsert_data.attend_type
-	FROM
-		upsert_data
-	WHERE
-		$ischool.course_selection.ss_attend.uid = upsert_data.uid
-		--AND upsert_data.uid IS NOT NULL
-
-	RETURNING $ischool.course_selection.ss_attend.*
+    {0}           
+) ,source AS(
+    SELECT
+        data_row.*
+        , ROW_NUMBER() OVER( PARTITION BY data_row.ref_student_id ) AS row_number
+    FROM
+        data_row
+) ,data_source AS (
+    SELECT
+        source.*
+        , ss_attend.uid
+        , ss_attend.subject_name AS orig_subject_name
+        , ss_attend.lock AS orig_lock
+        , ss_attend.attend_type AS orig_attend_type
+        , CASE 
+            WHEN ss_attend.ref_subject_id = source.ref_subject_id AND ss_attend.lock <> source.lock AND source.row_number = 1 THEN 'update'  
+            WHEN ss_attend.ref_subject_id is null AND source.ref_subject_id is not null AND source.row_number = 1 THEN 'insert' 
+            WHEN ss_attend.ref_subject_id <> source.ref_subject_id AND source.ref_subject_id is not null AND source.row_number = 1 THEN 'delete_insert'
+            WHEN ss_attend.ref_subject_id <> source.ref_subject_id OR source.ref_subject_id is null OR source.row_number > 1 THEN 'delete'
+            --WHEN ss_attend.ref_subject_id = data_row.ref_subject_id AND ss_attend.lock = data_row.lock THEN 'nochange' 
+            ELSE 'nochange'
+            END AS status
+    FROM 
+        source
+        LEFT OUTER JOIN (
+            SELECT
+                ss_attend.uid
+                , ss_attend.ref_subject_id
+                , ss_attend.ref_student_id
+                , ss_attend.lock
+                , ss_attend.attend_type
+                , subject.subject_name
+                , subject.school_year
+                , subject.semester
+            FROM
+                $ischool.course_selection.ss_attend AS ss_attend
+                LEFT OUTER JOIN $ischool.course_selection.subject AS subject
+                    ON subject.uid = ss_attend.ref_subject_id 
+        ) AS ss_attend 
+            ON ss_attend.ref_student_id = source.ref_student_id
+            AND ss_attend.school_year = source.school_year
+            AND ss_attend.semester = source.semester
+            AND ss_attend.attend_type = source.attend_type
+) ,delete_data AS(
+    DELETE
+    FROM
+        $ischool.course_selection.ss_attend AS ss_attend
+    WHERE
+        uid IN(SELECT uid FROM data_source WHERE status = 'delete' OR status = 'delete_insert' )
+    RETURNING *
 ) ,insert_data AS(
-	INSERT INTO 
-		$ischool.course_selection.ss_attend(ref_student_id,ref_subject_id,lock,attend_type)
-	SELECT
-		upsert_data.ref_student_id
-		, upsert_data.ref_subject_id
-        , upsert_data.lock
-        , upsert_data.attend_type
-	FROM
-		upsert_data
-	WHERE upsert_data.uid IS NULL
-
-	RETURNING $ischool.course_selection.ss_attend.*
-)
+    INSERT INTO $ischool.course_selection.ss_attend(
+        ref_student_id
+        , ref_subject_id
+        , attend_type
+        , lock
+    )
+    SELECT 
+        ref_student_id
+        , ref_subject_id
+        , attend_type
+        , lock
+    FROM
+        data_source
+    WHERE
+        status = 'delete_insert' 
+        OR status = 'insert'
+    RETURNING *
+) ,update_data AS(
+    UPDATE $ischool.course_selection.ss_attend
+    SET
+        lock = data_source.lock
+    FROM
+        data_source
+    WHERE
+        $ischool.course_selection.ss_attend.uid = data_source.uid
+        AND status = 'update'
+    RETURNING *
+) 
 -- 新增 LOG
 INSERT INTO log(
-	actor
-	, action_type
-	, action
-	, target_category
-	, target_id
-	, server_time
-	, client_info
-	, action_by
-	, description
+    actor
+    , action_type
+    , action
+    , target_category
+    , target_id
+    , server_time
+    , client_info
+    , action_by
+    , description
 )
 SELECT 
-	'{3}'::TEXT AS actor
-	, 'Record' AS action_type
-	, data_row.attend_type AS action
-	, 'student'::TEXT AS target_category
-	, data_row.ref_student_id AS target_id
-	, now() AS server_time
-	, '{4}' AS client_info
-	, '選課結果及分發'AS action_by   
-	, '學生「'|| student.name || '」選修科目結果「' || olddata_row.subject_name || '」變更為「' || data_row.subject_name || ' 」選課鎖定狀態「' || olddata_row.lock || '」變更為「' || data_row.lock || ' 」  使用者「{3}」' AS description 
+    '{1}'::TEXT AS actor
+    , 'Record' AS action_type
+    , data_row.attend_type AS action
+    , 'student'::TEXT AS target_category
+    , data_row.ref_student_id AS target_id
+    , now() AS server_time
+    , '{2}' AS client_info
+    , '選課結果及分發'AS action_by   
+    , '學生「'|| student.name || '」選修科目結果「' || data_source.orig_subject_name || '」變更為「' || data_source.subject_name || ' 」選課鎖定狀態「' || data_source.orig_lock || '」變更為「' || data_source.lock || ' 」選課種子「' || data_source.seed || ' 」  使用者「{2}」' AS description 
 FROM
-	data_row
-	LEFT OUTER JOIN student ON student.id = data_row.ref_student_id 
-	LEFT OUTER JOIN olddata_row ON olddata_row.ref_student_id = data_row.ref_student_id
-	--LEFT OUTER JOIN teacher ON teacher.id = data_row.ref_teacher_id 
-
-    
-            ", attendData,schoolYearCbx.Text,semesterCbx.Text,_actor,_client_info,courseTypeCbx.Text);
+    data_row
+    LEFT OUTER JOIN student 
+        ON student.id = data_row.ref_student_id 
+    LEFT OUTER JOIN data_source 
+        ON data_source.ref_student_id = data_row.ref_student_id
+            ", attendData, _actor, _client_info);
             #endregion
 
             #region SQL文字檔
@@ -843,11 +905,41 @@ FROM
             //QueryHelper qh = new QueryHelper();
             //qh.Select(sql);
             #endregion
-
+            _BKWReloadDataGridView = new BackgroundWorker();
+            
             UpdateHelper up = new UpdateHelper();
-            up.Execute(sql);
 
-            MessageBox.Show("儲存成功~");
+            pictureBox1.Visible = true;
+            schoolYearCbx.Enabled = false;
+            semesterCbx.Enabled = false;
+            courseTypeCbx.Enabled = false;
+            conditionCbx.Enabled = false;
+            dataGridViewX1.Enabled = false;
+            exportBtn.Enabled = false;
+            buttonX1.Enabled = false;
+            seedCbx.Enabled = false;
+            saveBtn.Enabled = false;
+            leaveBtn.Enabled = false;
+
+            _BKWReloadDataGridView.DoWork += delegate {
+                up.Execute(sql);
+            };
+            _BKWReloadDataGridView.RunWorkerCompleted += delegate {
+                pictureBox1.Visible = false;
+                schoolYearCbx.Enabled = true;
+                semesterCbx.Enabled = true;
+                courseTypeCbx.Enabled = true;
+                conditionCbx.Enabled = true;
+                dataGridViewX1.Enabled = true;
+                exportBtn.Enabled = true;
+                buttonX1.Enabled = true;
+                seedCbx.Enabled = true;
+                saveBtn.Enabled = true;
+                leaveBtn.Enabled = true;
+                MessageBox.Show("儲存成功!");
+            };
+            _BKWReloadDataGridView.RunWorkerAsync();
+            
 
         }
 
@@ -1142,10 +1234,11 @@ FROM
             if (seedCbx.Text == "隨機")
             {
                 seed = new Random().Next(3000);
+                int index = seedCbx.Items.Count;
+                string text = string.Format("代碼{0}: ", index);
+                seedCbx.Items.Insert(1, text + seed);
             }
-            int index = seedCbx.Items.Count;
-            string text = string.Format("代碼{0}: ",index);
-            seedCbx.Items.Insert(1, text + seed);
+
             Random random = new Random(seed);
             int lockStudentCount = 0;
             foreach (DataRow row in _DataRowList)
@@ -1348,6 +1441,8 @@ FROM
                 menu.Show(dataGridViewX1,new Point(e.X,e.Y));
             }
         }
+
+        
     }
 }
 

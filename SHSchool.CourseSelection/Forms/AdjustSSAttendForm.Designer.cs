@@ -53,6 +53,7 @@
             this.semesterCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.leaveBtn = new DevComponents.DotNetBar.ButtonX();
             this.saveBtn = new DevComponents.DotNetBar.ButtonX();
             this.subDetailLb = new DevComponents.DotNetBar.LabelX();
@@ -81,6 +82,7 @@
             this.exportBtn = new DevComponents.DotNetBar.ButtonX();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // labelX1
@@ -322,6 +324,7 @@
             this.schoolYearCbx.Size = new System.Drawing.Size(60, 25);
             this.schoolYearCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.schoolYearCbx.TabIndex = 11;
+            this.schoolYearCbx.SelectedIndexChanged += new System.EventHandler(this.schoolYearCbx_SelectedIndexChanged);
             // 
             // semesterCbx
             // 
@@ -335,6 +338,7 @@
             this.semesterCbx.Size = new System.Drawing.Size(50, 25);
             this.semesterCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.semesterCbx.TabIndex = 12;
+            this.semesterCbx.SelectedIndexChanged += new System.EventHandler(this.semesterCbx_SelectedIndexChanged);
             // 
             // flowLayoutPanel1
             // 
@@ -354,12 +358,24 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.dataGridViewX1);
             this.panel1.Controls.Add(this.flowLayoutPanel1);
             this.panel1.Location = new System.Drawing.Point(12, 40);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1031, 519);
             this.panel1.TabIndex = 14;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.White;
+            this.pictureBox1.Image = global::SHSchool.CourseSelection.Properties.Resources.loading;
+            this.pictureBox1.Location = new System.Drawing.Point(465, 226);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(37, 37);
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Visible = false;
             // 
             // leaveBtn
             // 
@@ -580,7 +596,6 @@
             this.seedCbx.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.seedCbx.DisplayMember = "Text";
             this.seedCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.seedCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.seedCbx.FormattingEnabled = true;
             this.seedCbx.ItemHeight = 19;
             this.seedCbx.Location = new System.Drawing.Point(261, 566);
@@ -631,6 +646,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -688,5 +704,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
         private System.Windows.Forms.DataGridViewTextBoxColumn attendType;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

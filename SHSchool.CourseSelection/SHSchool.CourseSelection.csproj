@@ -414,6 +414,7 @@
     <Content Include="Library\ReportHelper.XML" />
     <Content Include="Library\SHSchool.Data.dll" />
     <Content Include="Library\SHSchool.Data.xml" />
+    <Content Include="Resources\loading.gif" />
     <None Include="Resources\paste_64.png" />
     <None Include="Resources\searchHistory.png" />
     <None Include="Resources\format.xsl" />
