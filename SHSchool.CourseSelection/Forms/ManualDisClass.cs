@@ -168,7 +168,7 @@ namespace SHSchool.CourseSelection.Forms
                 }
                 courseTypeCbx.SelectedIndex = 0;
             }
-            ReloadSubjectCbx();
+            //ReloadSubjectCbx();
         }
 
         public void ReloadSubjectCbx()
@@ -222,112 +222,132 @@ namespace SHSchool.CourseSelection.Forms
                 }
                 subjectCbx.SelectedIndex = 0;
             }
-            ReloadDataGridView();
+            //ReloadDataGridView();
         }
+
+        BackgroundWorker BGW = new BackgroundWorker();
+
+        DataTable studentData = null;
 
         public void ReloadDataGridView()
         {
-            #region DataGridView 
-
             dataGridViewX1.Rows.Clear();
             studentIDdic.Clear();
 
-            //透過科目ID取得學生選課資料
+            //key
+            string schoolYear = schoolYearCbx.Text;
+            string semester = semesterCbx.Text;
+            string courseType = courseTypeCbx.Text;
+            string subject = subjectCbx.Text;
 
-            if (subjectCbx.Text != "")
-            {
+            pictureBox1.Visible = true;
+            BGW = new BackgroundWorker();
+
+            BGW.DoWork += delegate {
                 QueryHelper queryhelper = new QueryHelper();
                 #region SQL 
                 string selectSQL = string.Format(@"
 SELECT 
-	ss_attend.*
-	, student.student_number
-	, student.name
-	, student.gender
-	, student.seat_no
-	, class.class_name
+    ss_attend.*
+    , student.student_number
+    , student.name
+    , student.gender
+    , student.seat_no
+    , class.class_name
     , subject_course.class_type
 FROM 
-	$ischool.course_selection.ss_attend AS ss_attend
-	LEFT OUTER JOIN student
-		ON student.id = ss_attend.ref_student_id
-	LEFT OUTER JOIN class
-		ON class.id = student.ref_class_id
-    LEFT OUTER JOIN $ischool.course_selection.subject_course AS subject_course
-        ON subject_course.uid = ss_attend.ref_subject_course_id
+    $ischool.course_selection.ss_attend AS ss_attend
+LEFT OUTER JOIN student
+	ON student.id = ss_attend.ref_student_id
+LEFT OUTER JOIN class
+	ON class.id = student.ref_class_id
+LEFT OUTER JOIN $ischool.course_selection.subject_course AS subject_course
+    ON subject_course.uid = ss_attend.ref_subject_course_id
 WHERE ss_attend.ref_subject_id = {0}
-                ", "" + _selectedSubjectID);
+            ", "" + _selectedSubjectID);
 
                 #endregion
-                DataTable studentData = queryhelper.Select(selectSQL);
-                _CourseStudentIDdic.Clear();
-
-                foreach (DataRow student in studentData.Rows)
+                studentData = queryhelper.Select(selectSQL);
+                _CourseStudentIDdic.Clear(); 
+            };
+            BGW.RunWorkerCompleted += delegate {
+                if (schoolYear == schoolYearCbx.Text && semester == semesterCbx.Text && courseType == courseTypeCbx.Text && subject == subjectCbx.Text)
                 {
-                    DataGridViewRow datarow = new DataGridViewRow();
-                    datarow.CreateCells(dataGridViewX1);
-                    int g;
-                    if (int.TryParse("" + student["gender"],out g))
+                    foreach (DataRow student in studentData.Rows)
                     {
-                        if ("" + student["gender"] == "1")
+                        DataGridViewRow datarow = new DataGridViewRow();
+                        datarow.CreateCells(dataGridViewX1);
+                        int g;
+                        if (int.TryParse("" + student["gender"], out g))
                         {
-                            student["gender"] = "男";
+                            if ("" + student["gender"] == "1")
+                            {
+                                student["gender"] = "男";
+                            }
+                            if ("" + student["gender"] == "0")
+                            {
+                                student["gender"] = "女";
+                            }
                         }
-                        if ("" + student["gender"] == "0")
+
+                        int index = 0;
+                        datarow.Cells[index++].Value = student["student_number"];
+                        datarow.Cells[index++].Value = student["name"];
+                        datarow.Cells[index++].Value = student["gender"];
+                        datarow.Cells[index++].Value = student["class_name"];
+                        datarow.Cells[index++].Value = student["seat_no"];
+                        datarow.Cells[index++].Value = student["name"];
+                        if ("" + student["ref_subject_course_id"] != "")
                         {
-                            student["gender"] = "女";
-                            
+                            ((DataGridViewColorBallTextCell)datarow.Cells[6]).Value = "" + student["class_type"];
+                            ((DataGridViewColorBallTextCell)datarow.Cells[6]).Color = _CourseColor["" + student["ref_subject_course_id"]];
+                            // 紀錄課程、學生資訊。
+                            if (_CourseStudentIDdic.ContainsKey("" + student["ref_subject_course_id"]))
+                            {
+                                _CourseStudentIDdic["" + student["ref_subject_course_id"]].Add("" + student["ref_student_id"]);
+                            }
+                            else
+                            {
+                                _CourseStudentIDdic.Add("" + student["ref_subject_course_id"], new List<string>());
+                                _CourseStudentIDdic["" + student["ref_subject_course_id"]].Add("" + student["ref_student_id"]);
+                            }
                         }
+                        if ("" + student["ref_subject_course_id"] == "")
+                        {
+                            ((DataGridViewColorBallTextCell)datarow.Cells[6]).Value = _CourseName[""];
+                            ((DataGridViewColorBallTextCell)datarow.Cells[6]).Color = _CourseColor[""];
+                            // 紀錄課程、學生資訊。
+                            if (_CourseStudentIDdic.ContainsKey("" + student["ref_subject_course_id"]))
+                            {
+                                _CourseStudentIDdic["" + student["ref_subject_course_id"]].Add("" + student["ref_student_id"]);
+                            }
+                            else
+                            {
+                                _CourseStudentIDdic.Add("" + student["ref_subject_course_id"], new List<string>());
+                                _CourseStudentIDdic["" + student["ref_subject_course_id"]].Add("" + student["ref_student_id"]);
+                            }
+                        }
+                        datarow.Tag = "" + student["ref_student_id"];
+                        datarow.Cells[6].Tag = "" + student["ref_subject_course_id"];
+                        datarow.Cells[5].Tag = "" + student["ref_subject_course_id"];
+
+                        dataGridViewX1.Rows.Add(datarow);
                     }
 
-                    int index = 0;
-                    datarow.Cells[index++].Value = student["student_number"];
-                    datarow.Cells[index++].Value = student["name"];
-                    datarow.Cells[index++].Value = student["gender"];
-                    datarow.Cells[index++].Value = student["class_name"];
-                    datarow.Cells[index++].Value = student["seat_no"];
-                    datarow.Cells[index++].Value = student["name"];
-                    if ("" + student["ref_subject_course_id"] != "")
-                    {
-                        ((DataGridViewColorBallTextCell)datarow.Cells[6]).Value = "" + student["class_type"];
-                        ((DataGridViewColorBallTextCell)datarow.Cells[6]).Color = _CourseColor["" + student["ref_subject_course_id"]];
-                        // 紀錄課程、學生資訊。
-                        if (_CourseStudentIDdic.ContainsKey("" + student["ref_subject_course_id"]))
-                        {
-                            _CourseStudentIDdic["" + student["ref_subject_course_id"]].Add("" + student["ref_student_id"]);
-                        }
-                        else
-                        {
-                            _CourseStudentIDdic.Add("" + student["ref_subject_course_id"], new List<string>());
-                            _CourseStudentIDdic["" + student["ref_subject_course_id"]].Add("" + student["ref_student_id"]);
-                        }
-                    }
-                    if ("" + student["ref_subject_course_id"] == "")
-                    {
-                        ((DataGridViewColorBallTextCell)datarow.Cells[6]).Value = _CourseName[""];
-                        ((DataGridViewColorBallTextCell)datarow.Cells[6]).Color = _CourseColor[""];
-                        // 紀錄課程、學生資訊。
-                        if (_CourseStudentIDdic.ContainsKey("" + student["ref_subject_course_id"]))
-                        {
-                            _CourseStudentIDdic["" + student["ref_subject_course_id"]].Add("" + student["ref_student_id"]);
-                        }
-                        else
-                        {
-                            _CourseStudentIDdic.Add("" + student["ref_subject_course_id"], new List<string>());
-                            _CourseStudentIDdic["" + student["ref_subject_course_id"]].Add("" + student["ref_student_id"]);
-                        }
-                    }
-                    datarow.Tag = "" + student["ref_student_id"];
-                    datarow.Cells[6].Tag = "" + student["ref_subject_course_id"];
-                    datarow.Cells[5].Tag = "" + student["ref_subject_course_id"];
-
-                    dataGridViewX1.Rows.Add(datarow);
+                    pictureBox1.Visible = false;
                 }
+                else {
+                    ReloadDataGridView();
+                }
+            };
+            //透過科目ID取得學生選課資料
+            if (subjectCbx.Text != "")
+            {
+                BGW.RunWorkerAsync();
             }
-
+             
             // 計算課班男、女人數
             CountStudents();
-            #endregion
         }
 
         private void Swap(object sender, EventArgs e)
@@ -462,85 +482,6 @@ WHERE
         // 自動分班
         private void autoDisClassBtn_Click(object sender, EventArgs e)
         {
-            #region
-            //AccessHelper access = new AccessHelper();
-            //// 取得選修科目班級
-            //List<UDT.SubjectCourse> sbList = access.Select<UDT.SubjectCourse>("ref_subject_id = " + "'" + subjectCbx.Tag + "'");
-            //List<Subject_Class> classList = new List<Subject_Class>();
-            //Dictionary<string, Subject_Class> classDic = new Dictionary<string, Subject_Class>();
-            //// 取得選課學生
-            //List<UDT.SSAttend> ssAttendList = access.Select<UDT.SSAttend>("ref_subject_id = " + "'" + subjectCbx.Tag + "'");
-
-            //int studentCount = ssAttendList.Count(); // 選課學生人數
-            //int classCount = sbList.Count(); // 選修科目開班數
-            //int limit = studentCount / classCount; // 每班人數限制
-
-            //string[] subjectCourse = new string[sbList.Count];
-
-            //#region 建立課班物件
-            //int index = 0;
-            //foreach (UDT.SubjectCourse sb in sbList)
-            //{
-            //    subjectCourse[index] = "" + sb.UID;
-            //    index++;
-            //    //---建立課班物件
-            //    Subject_Class sbcClass = new Subject_Class();
-            //    sbcClass.RefSubjectID = "" + subjectCbx.Tag;
-            //    sbcClass.RefSubjectCourseID = "" + sb.UID;
-            //    sbcClass.Limit = limit;
-            //    sbcClass.StudentCount = 0; // 初始化
-
-            //    classList.Add(sbcClass);
-            //}
-            //// 如果學生數無法均分
-            //if (studentCount % classCount != 0)
-            //{
-            //    for (int i = 0; i < studentCount % classCount; i++)
-            //    {
-            //        classList[i].Limit += 1;
-            //    }
-            //}
-
-            //foreach (Subject_Class c in classList)
-            //{
-            //    classDic.Add(c.RefSubjectCourseID, c);
-            //}
-            //#endregion
-
-            //// 已選課學生人數
-            //foreach (UDT.SSAttend ssa in ssAttendList)
-            //{
-            //    if (ssa.SubjectCourseID != null)
-            //    {
-            //        classDic["" + ssa.SubjectCourseID].StudentCount += 1;
-            //    }
-            //}
-
-            //// 亂數分班
-            //Random random = new Random();
-
-            //foreach (UDT.SSAttend ssa in ssAttendList)
-            //{
-            //    if (ssa.SubjectCourseID == null)
-            //    {
-            //        int n;
-            //        do
-            //        {
-            //            n = random.Next(0, subjectCourse.Count());
-            //        } while (classDic[subjectCourse[n]].StudentCount >= classDic[subjectCourse[n]].Limit);
-
-            //        ssa.SubjectCourseID = int.Parse("" + subjectCourse[n]);
-            //        classDic[subjectCourse[n]].StudentCount += 1;
-            //        ssAttendList.SaveAll();
-            //    }
-            //}
-            //access.SaveAll(ssAttendList);
-
-            //ReloadDataGridView();
-            //// 分班完成
-            //MessageBox.Show("自動分班完成。");
-            #endregion
-
             AccessHelper access = new AccessHelper();
             //取得選修科目班級
             List<UDT.SubjectCourse> subjectList = access.Select<UDT.SubjectCourse>("ref_subject_id = " + "'" + _selectedSubjectID + "'");

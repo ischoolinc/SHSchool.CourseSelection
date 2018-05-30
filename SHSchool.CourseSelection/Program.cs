@@ -199,10 +199,6 @@ namespace SHSchool.CourseSelection
             }
             #endregion
 
-
-
-
-
             #region 開發工具-自動填入學生選課志願
             //RibbonBarButton mb = MotherForm.RibbonBarItems["教務作業", "開發工具"]["產生學生選課志願"];
             //mb.Size = RibbonBarButton.MenuButtonSize.Medium;
@@ -303,9 +299,6 @@ namespace SHSchool.CourseSelection
 
             //}; 
             #endregion
-
-
-
 
             #region  志願序分發作業 
             // 2018/03/15 選課2.5 hide舊式分發作業

@@ -20,6 +20,8 @@ namespace SHSchool.CourseSelection.Forms
         {
             InitializeComponent();
 
+            pictureBox1.BackColor = Color.White;
+
             #region Init ComboBox
             AccessHelper access = new AccessHelper();
             List<UDT.OpeningTime> openTimeList = access.Select<UDT.OpeningTime>();

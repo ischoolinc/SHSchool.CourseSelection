@@ -152,6 +152,8 @@ namespace SHSchool.CourseSelection.Forms
             if (courseTypeCbx.Items.Count == 0)
             {
                 conditionCbx.Items.Clear();
+                dataGridViewX1.Rows.Clear();
+                flowLayoutPanel1.Controls.Clear();
             }
         }
 
