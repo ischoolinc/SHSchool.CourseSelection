@@ -77,7 +77,7 @@ namespace SHSchool.CourseSelection.Forms
             #region Init 分發順序
             if (btnEasy.Checked)
             {
-                seedCbx.Enabled = false;
+                //seedCbx.Enabled = false;
             }
             //seedCbx.Items.Add("隨機");
             //seedCbx.SelectedIndex = 0;
@@ -752,6 +752,17 @@ ORDER BY
         {
             // 兜資料
             List<string> dataList = new List<string>();
+
+            int seed = 0;
+            string _seed = seedCbx.Text;
+            string[] _seedArray = _seed.Split(':');
+            foreach (string s in _seedArray)
+            {
+                if (int.TryParse(s, out seed))
+                {
+                    seed = int.Parse(s);
+                }
+            }
             foreach (DataGridViewRow datarow in dataGridViewX1.Rows)
             {
                 DataRow row = (DataRow)datarow.Tag;
@@ -765,7 +776,7 @@ ORDER BY
         , {5}::INTEGER AS school_year
         , {6}::INTEGER AS semester
         , '{7}'::TEXT AS type
-        , '{8}'::TEXT AS seed
+        , '{8}'::INTEGER AS seed
                 ", row["id"]
                 ,"" + datarow.Cells[5].Tag == "" ? "NULL" : "" + datarow.Cells[5].Tag
                 ,"" + datarow.Cells[5].Value == "" ? "NULL" : "" + datarow.Cells[5].Value
@@ -774,7 +785,7 @@ ORDER BY
                 , schoolYearCbx.Text
                 , semesterCbx.Text
                 , courseTypeCbx.Text
-                , seedCbx.Text
+                , "" + seed
                 );
                 dataList.Add(data);
             }
@@ -784,30 +795,18 @@ ORDER BY
             string sql = string.Format(@"
 WITH data_row AS(
     {0}           
-) ,source AS(
+) ,source AS (
     SELECT
         data_row.*
-        , ROW_NUMBER() OVER( PARTITION BY data_row.ref_student_id ) AS row_number
-    FROM
-        data_row
-) ,data_source AS (
-    SELECT
-        source.*
-        , ss_attend.uid
+        , ss_attend.uid AS ref_attend_id
+        , ss_attend.ref_subject_id AS orig_subject_id
         , ss_attend.subject_name AS orig_subject_name
         , ss_attend.lock AS orig_lock
         , ss_attend.attend_type AS orig_attend_type
-        , CASE 
-            WHEN ss_attend.ref_subject_id = source.ref_subject_id AND ss_attend.lock <> source.lock AND source.row_number = 1 THEN 'update'  
-            WHEN ss_attend.ref_subject_id is null AND source.ref_subject_id is not null AND source.row_number = 1 THEN 'insert' 
-            WHEN ss_attend.ref_subject_id <> source.ref_subject_id AND source.ref_subject_id is not null AND source.row_number = 1 THEN 'delete_insert'
-            WHEN ss_attend.ref_subject_id <> source.ref_subject_id OR source.ref_subject_id is null OR source.row_number > 1 THEN 'delete'
-            --WHEN ss_attend.ref_subject_id = data_row.ref_subject_id AND ss_attend.lock = data_row.lock THEN 'nochange' 
-            ELSE 'nochange'
-            END AS status
-    FROM 
-        source
-        LEFT OUTER JOIN (
+        , ROW_NUMBER() OVER( PARTITION BY data_row.ref_student_id ) AS index
+    FROM
+        data_row
+        LEFT OUTER JOIN(
             SELECT
                 ss_attend.uid
                 , ss_attend.ref_subject_id
@@ -817,22 +816,57 @@ WITH data_row AS(
                 , subject.subject_name
                 , subject.school_year
                 , subject.semester
+                , subject.type
             FROM
                 $ischool.course_selection.ss_attend AS ss_attend
                 LEFT OUTER JOIN $ischool.course_selection.subject AS subject
                     ON subject.uid = ss_attend.ref_subject_id 
-        ) AS ss_attend 
-            ON ss_attend.ref_student_id = source.ref_student_id
-            AND ss_attend.school_year = source.school_year
-            AND ss_attend.semester = source.semester
-            AND ss_attend.attend_type = source.attend_type
+        ) AS ss_attend
+            ON ss_attend.ref_student_id = data_row.ref_student_id
+            AND ss_attend.school_year = data_row.school_year
+            AND ss_attend.semester = data_row.semester
+            AND ss_attend.type = data_row.type
+) ,data_source AS(
+    SELECT
+        source.*
+        ,CASE 
+            WHEN source.orig_subject_id = source.ref_subject_id AND source.orig_lock <> source.lock AND source.index = 1 THEN 'update'  
+            WHEN source.orig_subject_id is null AND source.ref_subject_id is not null AND source.index = 1 THEN 'insert' 
+            WHEN source.orig_subject_id <> source.ref_subject_id AND source.ref_subject_id is not null AND source.index = 1 THEN 'delete_insert'
+            WHEN source.ref_attend_id is not null AND( source.orig_subject_id <> source.ref_subject_id OR source.ref_subject_id is null OR source.index > 1) THEN 'delete'
+            --WHEN source.orig_subject_id = source.ref_subject_id AND ss_attend.lock = source.lock THEN 'nochange' 
+            ELSE 'nochange'
+            END AS status
+    FROM
+        source
+) ,log_data AS(
+    SELECT
+        data_source.*
+        ,CASE 
+            WHEN data_source.status = 'update' THEN '學生「'|| student.name || '」課程類別「'|| data_source.type ||'」選課鎖定狀態「' || data_source.orig_lock || '」變更為「' || data_source.lock || ' 」選修方式「data_source.attend_type」 使用者「{2}」'
+            WHEN data_source.status = 'insert' THEN '學生「'|| student.name || '」課程類別「'|| data_source.type ||'」 選修科目結果為「' || data_source.subject_name || '」選課鎖定狀態為「' || data_source.lock || '」分發順位代碼「' || data_source.seed || ' 」選修方式「data_source.attend_type」使用者「{2}」'
+            WHEN data_source.status = 'delete_insert' THEN '學生「'|| student.name || '」課程類別「'|| data_source.type ||'」選修科目結果「' || data_source.orig_subject_name || '」變更為「' || data_source.subject_name || ' 」選課鎖定狀態「' || data_source.orig_lock || '」變更為「' || data_source.lock || ' 」分發順位代碼「' || data_source.seed || ' 」選修方式「data_source.attend_type」 使用者「{2}」'
+            WHEN data_source.status = 'delete' THEN '刪除學生「'|| student.name || '」課程類別「'|| data_source.type ||'」 原選修科目結果「' || data_source.orig_subject_name || '」   使用者「{1}」'
+        END AS description
+    FROM
+        data_source
+        LEFT OUTER JOIN student
+            ON student.id = data_source.ref_student_id
 ) ,delete_data AS(
     DELETE
     FROM
-        $ischool.course_selection.ss_attend AS ss_attend
+        $ischool.course_selection.ss_attend
     WHERE
-        uid IN(SELECT uid FROM data_source WHERE status = 'delete' OR status = 'delete_insert' )
-    RETURNING *
+        uid IN (
+            SELECT 
+                ref_attend_id 
+            FROM 
+                data_source 
+            WHERE 
+                status = 'delete' 
+                OR status = 'delete_insert' 
+        )
+    RETURNING $ischool.course_selection.ss_attend.*
 ) ,insert_data AS(
     INSERT INTO $ischool.course_selection.ss_attend(
         ref_student_id
@@ -858,9 +892,9 @@ WITH data_row AS(
     FROM
         data_source
     WHERE
-        $ischool.course_selection.ss_attend.uid = data_source.uid
+        $ischool.course_selection.ss_attend.uid = data_source.ref_attend_id
         AND status = 'update'
-    RETURNING *
+    RETURNING $ischool.course_selection.ss_attend.*
 ) 
 -- 新增 LOG
 INSERT INTO log(
@@ -874,22 +908,22 @@ INSERT INTO log(
     , action_by
     , description
 )
-SELECT 
+SELECT
     '{1}'::TEXT AS actor
     , 'Record' AS action_type
-    , data_row.attend_type AS action
+    , '選課結果及分發' AS action
     , 'student'::TEXT AS target_category
-    , data_row.ref_student_id AS target_id
+    , ref_student_id AS target_id
     , now() AS server_time
     , '{2}' AS client_info
     , '選課結果及分發'AS action_by   
-    , '學生「'|| student.name || '」選修科目結果「' || data_source.orig_subject_name || '」變更為「' || data_source.subject_name || ' 」選課鎖定狀態「' || data_source.orig_lock || '」變更為「' || data_source.lock || ' 」選課種子「' || data_source.seed || ' 」  使用者「{2}」' AS description 
+    , description AS description 
 FROM
-    data_row
-    LEFT OUTER JOIN student 
-        ON student.id = data_row.ref_student_id 
-    LEFT OUTER JOIN data_source 
-        ON data_source.ref_student_id = data_row.ref_student_id
+    log_data
+WHERE
+    description is not null
+
+
             ", attendData, _actor, _client_info);
             #endregion
 
@@ -923,9 +957,11 @@ FROM
             saveBtn.Enabled = false;
             leaveBtn.Enabled = false;
 
+
             _BKWReloadDataGridView.DoWork += delegate {
-                up.Execute(sql);
+                    up.Execute(sql);
             };
+
             _BKWReloadDataGridView.RunWorkerCompleted += delegate {
                 pictureBox1.Visible = false;
                 schoolYearCbx.Enabled = true;
@@ -939,6 +975,8 @@ FROM
                 saveBtn.Enabled = true;
                 leaveBtn.Enabled = true;
                 MessageBox.Show("儲存成功!");
+                
+                ReloadDataGridView();
             };
             _BKWReloadDataGridView.RunWorkerAsync();
             
@@ -1121,10 +1159,13 @@ FROM
                 if (seedCbx.Text == "隨機")
                 {
                     seed = new Random().Next(3000);
+                    int index = seedCbx.Items.Count;
+                    string text = string.Format("代碼{0}: ", index);
+                    seedCbx.Items.Insert(1, text + seed);
+                    seedCbx.SelectedIndex = 1;
                 }
-                int index = seedCbx.Items.Count;
-                string text = string.Format("代碼{0}: ", index);
-                seedCbx.Items.Insert(1, text + seed);
+                
+
                 Random random = new Random(seed);
                 List<int> list = new List<int>(_DataRowList.Count - lockStudentCount);
                 Dictionary<int, DataRow> dicOrderRows = new Dictionary<int, DataRow>();
@@ -1169,7 +1210,7 @@ FROM
             btnClear.Enabled = false;
             btnDistribute.Enabled = false;
             btnOrder.Enabled = false;
-            seedCbx.Enabled = false;
+            //seedCbx.Enabled = false;
         }
 
         /// <summary>
@@ -1184,7 +1225,7 @@ FROM
             btnClear.Enabled = true;
             btnDistribute.Enabled = true;
             btnOrder.Enabled = true;
-            seedCbx.Enabled = true;
+            //seedCbx.Enabled = true;
         }
 
         /// <summary>
@@ -1239,6 +1280,7 @@ FROM
                 int index = seedCbx.Items.Count;
                 string text = string.Format("代碼{0}: ", index);
                 seedCbx.Items.Insert(1, text + seed);
+                seedCbx.SelectedIndex = 1;
             }
 
             Random random = new Random(seed);

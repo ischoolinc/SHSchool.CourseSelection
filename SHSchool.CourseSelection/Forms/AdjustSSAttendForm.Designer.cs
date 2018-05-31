@@ -596,6 +596,7 @@
             this.seedCbx.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.seedCbx.DisplayMember = "Text";
             this.seedCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.seedCbx.FormatString = "N0";
             this.seedCbx.FormattingEnabled = true;
             this.seedCbx.ItemHeight = 19;
             this.seedCbx.Location = new System.Drawing.Point(261, 566);
