@@ -24,6 +24,12 @@ namespace SHSchool.CourseSelection.Forms
             AccessHelper access = new AccessHelper();
             List<UDT.OpeningTime> opTimeList = access.Select<UDT.OpeningTime>();
 
+            if (opTimeList.Count == 0)
+            {
+                opTimeList.Add(new UDT.OpeningTime() { SchoolYear = int.Parse(K12.Data.School.DefaultSchoolYear), Semester = int.Parse(K12.Data.School.DefaultSemester) });
+                opTimeList.SaveAll();
+            }
+
             schoolYearCbx.Items.Add(opTimeList[0].SchoolYear + 1);
             schoolYearCbx.Items.Add(opTimeList[0].SchoolYear);
             schoolYearCbx.Items.Add(opTimeList[0].SchoolYear - 1);
@@ -108,7 +114,7 @@ namespace SHSchool.CourseSelection.Forms
                         datarow.Cells[index++].Value = "" + dr["_course_count"];
                         datarow.Cells[index++].Value = "" + dr["_course_count"];
                     }
-                    
+
                     dataGridViewX1.Rows[dataGridViewX1.Rows.Add(datarow)].Tag = "" + dr["uid"];
                     //dataGridViewX1.Rows.Add(datarow);
                 }
@@ -123,7 +129,8 @@ namespace SHSchool.CourseSelection.Forms
             {
                 courseTypeCbx.Items.Clear();
                 int tryParseSchoolYear, tryParseSemester;
-                if (int.TryParse(schoolYearCbx.Text, out tryParseSchoolYear) && int.TryParse(semesterCbx.Text, out tryParseSemester)) {
+                if (int.TryParse(schoolYearCbx.Text, out tryParseSchoolYear) && int.TryParse(semesterCbx.Text, out tryParseSemester))
+                {
                     QueryHelper helper = new QueryHelper();
                     string selectSQL = string.Format(@"
                 SELECT DISTINCT 
@@ -135,8 +142,8 @@ namespace SHSchool.CourseSelection.Forms
                         courseTypeCbx.Items.Add("" + row["type"]);
                     }
                 }
-                
-                if(courseTypeCbx.Items.Count==0)
+
+                if (courseTypeCbx.Items.Count == 0)
                     courseTypeCbx.Items.Add("");
                 courseTypeCbx.SelectedIndex = 0;
             }
@@ -161,12 +168,12 @@ namespace SHSchool.CourseSelection.Forms
         }
 
         private void buildCourseBtn_Click(object sender, EventArgs e)
-        {            
+        {
             int sy = int.Parse("" + schoolYearCbx.Text);
             int s = int.Parse("" + semesterCbx.Text);
             string courseType = "" + courseTypeCbx.Text;
 
-            BuildCourse buildCourse = new BuildCourse(dataGridViewX1,sy,s,courseType);
+            BuildCourse buildCourse = new BuildCourse(dataGridViewX1, sy, s, courseType);
             buildCourse.ShowDialog();
 
             ReloadDataGridView();
@@ -181,7 +188,7 @@ namespace SHSchool.CourseSelection.Forms
                 dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].ErrorText = "error";
 
             }
-            else if (int.Parse("" + dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value) > 10 )
+            else if (int.Parse("" + dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value) > 10)
             {
                 dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].ErrorText = "error";
             }

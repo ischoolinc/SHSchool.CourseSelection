@@ -70,6 +70,12 @@ namespace SHSchool.CourseSelection.Forms
 
             List<UDT.OpeningTime> opTimeList = Access.Select<UDT.OpeningTime>();
 
+            if (opTimeList.Count == 0)
+            {
+                opTimeList.Add(new UDT.OpeningTime() { SchoolYear = int.Parse(K12.Data.School.DefaultSchoolYear), Semester = int.Parse(K12.Data.School.DefaultSemester) });
+                opTimeList.SaveAll();
+            }
+
             cboSchoolYear.Items.Add(opTimeList[0].SchoolYear + 1);
             cboSchoolYear.Items.Add(opTimeList[0].SchoolYear);
             cboSchoolYear.Items.Add(opTimeList[0].SchoolYear - 1);

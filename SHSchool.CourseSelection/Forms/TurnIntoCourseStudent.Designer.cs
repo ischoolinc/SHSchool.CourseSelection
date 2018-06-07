@@ -143,6 +143,7 @@
             this.courseTypeCbx.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.courseTypeCbx.DisplayMember = "Text";
             this.courseTypeCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.courseTypeCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.courseTypeCbx.FormattingEnabled = true;
             this.courseTypeCbx.ItemHeight = 19;
             this.courseTypeCbx.Location = new System.Drawing.Point(650, 10);

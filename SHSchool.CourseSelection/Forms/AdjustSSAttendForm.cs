@@ -54,6 +54,12 @@ namespace SHSchool.CourseSelection.Forms
             {
                 List<UDT.OpeningTime> timeList = access.Select<UDT.OpeningTime>();
 
+                if (timeList.Count == 0)
+                {
+                    timeList.Add(new UDT.OpeningTime() { SchoolYear = int.Parse(K12.Data.School.DefaultSchoolYear), Semester = int.Parse(K12.Data.School.DefaultSemester) });
+                    timeList.SaveAll();
+                }
+
                 schoolYearCbx.Items.Add(timeList[0].SchoolYear + 1);
                 schoolYearCbx.Items.Add(timeList[0].SchoolYear);
                 schoolYearCbx.Items.Add(timeList[0].SchoolYear - 1);

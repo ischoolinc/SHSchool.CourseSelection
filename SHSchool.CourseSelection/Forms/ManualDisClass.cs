@@ -39,11 +39,16 @@ namespace SHSchool.CourseSelection.Forms
             #region Init SchoolYear Semester
             AccessHelper access = new AccessHelper();
             List<UDT.OpeningTime> opTimeList = access.Select<UDT.OpeningTime>();
+            if (opTimeList.Count == 0)
+            {
+                opTimeList.Add(new UDT.OpeningTime() { SchoolYear = int.Parse(K12.Data.School.DefaultSchoolYear), Semester = int.Parse(K12.Data.School.DefaultSemester) });
+                opTimeList.SaveAll();
+            }
             schoolYearCbx.Items.Add(opTimeList[0].SchoolYear + 1);
             schoolYearCbx.Items.Add(opTimeList[0].SchoolYear);
             schoolYearCbx.Items.Add(opTimeList[0].SchoolYear - 1);
             schoolYearCbx.SelectedIndex = 1;
-            
+
             semesterCbx.Items.Add(1);
             semesterCbx.Items.Add(2);
             semesterCbx.SelectedIndex = opTimeList[0].Semester - 1;
@@ -91,7 +96,7 @@ namespace SHSchool.CourseSelection.Forms
                     subject.school_year = {0}
                     AND subject.semester = {1}
                     AND subject_course.ref_subject_id = {2}
-                    ",schoolYearCbx.Text,semesterCbx.Text, _selectedSubjectID);
+                    ", schoolYearCbx.Text, semesterCbx.Text, _selectedSubjectID);
             QueryHelper qh = new QueryHelper();
             DataTable dt = qh.Select(sql);
 
@@ -109,17 +114,17 @@ namespace SHSchool.CourseSelection.Forms
                 button.Shape = new DevComponents.DotNetBar.RoundRectangleShapeDescriptor(15);
                 button.TextAlignment = eButtonTextAlignment.Left;
                 button.Size = new Size(110, 23);
-                button.Text = "" + row["class_type"]; 
+                button.Text = "" + row["class_type"];
                 button.Image = GetColorBallImage(colors[i]);
                 // 課班UID
                 button.Tag = "" + row["uid"];
                 button.Margin = new System.Windows.Forms.Padding(3);
                 button.Click += new EventHandler(Swap);
                 // 課班UID
-                _CourseName.Add("" + row["uid"],"" + row["class_type"]/*sc.Class_type*/);
+                _CourseName.Add("" + row["uid"], "" + row["class_type"]/*sc.Class_type*/);
                 _CourseColor.Add("" + row["uid"], colors[i++]);
                 this.flowLayoutPanel1.Controls.Add(button);
-                
+
             }
             #endregion
 
@@ -166,7 +171,8 @@ namespace SHSchool.CourseSelection.Forms
                         courseTypeCbx.Items.Add(sc.Type);
                     }
                 }
-                courseTypeCbx.SelectedIndex = 0;
+                if (courseTypeCbx.Items.Count > 0)
+                    courseTypeCbx.SelectedIndex = 0;
             }
             //ReloadSubjectCbx();
         }
@@ -243,7 +249,8 @@ namespace SHSchool.CourseSelection.Forms
             pictureBox1.Visible = true;
             BGW = new BackgroundWorker();
 
-            BGW.DoWork += delegate {
+            BGW.DoWork += delegate
+            {
                 QueryHelper queryhelper = new QueryHelper();
                 #region SQL 
                 string selectSQL = string.Format(@"
@@ -268,9 +275,10 @@ WHERE ss_attend.ref_subject_id = {0}
 
                 #endregion
                 studentData = queryhelper.Select(selectSQL);
-                _CourseStudentIDdic.Clear(); 
+                _CourseStudentIDdic.Clear();
             };
-            BGW.RunWorkerCompleted += delegate {
+            BGW.RunWorkerCompleted += delegate
+            {
                 if (schoolYear == schoolYearCbx.Text && semester == semesterCbx.Text && courseType == courseTypeCbx.Text && subject == subjectCbx.Text)
                 {
                     foreach (DataRow student in studentData.Rows)
@@ -336,7 +344,8 @@ WHERE ss_attend.ref_subject_id = {0}
 
                     pictureBox1.Visible = false;
                 }
-                else {
+                else
+                {
                     ReloadDataGridView();
                 }
             };
@@ -345,7 +354,7 @@ WHERE ss_attend.ref_subject_id = {0}
             {
                 BGW.RunWorkerAsync();
             }
-             
+
             // 計算課班男、女人數
             CountStudents();
         }
@@ -438,7 +447,7 @@ WHERE ss_attend.ref_subject_id = {0}
 	               , {1}::BIGINT AS ref_student_id
 	               , {2}::BIGINT AS ref_subject_id
 
-                    ", ("" + dr.Cells[6].Tag) == "" ? "NULL"  : ("" + dr.Cells[6].Tag), "" + dr.Tag, "" + _selectedSubjectID);
+                    ", ("" + dr.Cells[6].Tag) == "" ? "NULL" : ("" + dr.Cells[6].Tag), "" + dr.Tag, "" + _selectedSubjectID);
                 dataList.Add(data);
             }
             string dataRow = string.Join(" UNION ALL", dataList);
@@ -478,7 +487,7 @@ WHERE
         {
             this.Close();
         }
-        
+
         // 自動分班
         private void autoDisClassBtn_Click(object sender, EventArgs e)
         {
@@ -524,10 +533,10 @@ WHERE
                     sbcList[i].Limit += 1;
                 }
             }
-            
+
             foreach (Subject_Class sbc in sbcList)
             {
-                classDic.Add(sbc.RefSubjectCourseID,sbc);
+                classDic.Add(sbc.RefSubjectCourseID, sbc);
             }
             // 新增未分班
             classDic.Add("", new Subject_Class());
@@ -584,7 +593,7 @@ WHERE
                 }
                 if (!CountDic.ContainsKey("" + datarow.Cells[6].Tag))
                 {
-                    CountDic.Add("" + datarow.Cells[6].Tag,new Count());
+                    CountDic.Add("" + datarow.Cells[6].Tag, new Count());
 
                     if ("" + datarow.Cells[2].Value == "女")
                     {
@@ -594,7 +603,7 @@ WHERE
                     {
                         CountDic["" + datarow.Cells[6].Tag].boy = 1;
                     }
-                    if("" + datarow.Cells[2].Value != "男" && "" + datarow.Cells[2].Value != "女")
+                    if ("" + datarow.Cells[2].Value != "男" && "" + datarow.Cells[2].Value != "女")
                     {
                         CountDic["" + datarow.Cells[6].Tag].understand = 1;
                     }
@@ -602,7 +611,7 @@ WHERE
                 }
             }
             {
-                CountDic.Add("",new Count());
+                CountDic.Add("", new Count());
                 CountDic[""].boy = 0;
                 CountDic[""].girl = 0;
                 CountDic[""].total = 0;

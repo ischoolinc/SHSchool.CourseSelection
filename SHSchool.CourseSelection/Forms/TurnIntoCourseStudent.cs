@@ -23,11 +23,16 @@ namespace SHSchool.CourseSelection.Forms
             {
                 AccessHelper access = new AccessHelper();
                 List<UDT.OpeningTime> openingTime = access.Select<UDT.OpeningTime>();
+                if (openingTime.Count == 0)
+                {
+                    openingTime.Add(new UDT.OpeningTime() { SchoolYear = int.Parse(K12.Data.School.DefaultSchoolYear), Semester = int.Parse(K12.Data.School.DefaultSemester) });
+                    openingTime.SaveAll();
+                }
                 int sy = openingTime[0].SchoolYear;
                 int s = openingTime[0].Semester;
                 // SchoolYear 預設: 開放選課學年度
                 schoolYearCbx.Text = "" + sy;
-                for (int i = 0; i < 3;i++)
+                for (int i = 0; i < 3; i++)
                 {
                     schoolYearCbx.Items.Add(sy - i);
                 }
@@ -35,7 +40,7 @@ namespace SHSchool.CourseSelection.Forms
                 semesterCbx.Text = "" + s;
                 semesterCbx.Items.Add(1);
                 semesterCbx.Items.Add(2);
-            }    
+            }
             #endregion
         }
 
@@ -52,7 +57,7 @@ namespace SHSchool.CourseSelection.Forms
                         $ischool.course_selection.subject 
                     WHERE 
                         school_year = {0} AND semester = {1}"
-                    ,schoolYearCbx.Text,semesterCbx.Text);
+                    , schoolYearCbx.Text, semesterCbx.Text);
                 QueryHelper qh = new QueryHelper();
                 DataTable courseTypes = qh.Select(selectSQL);
 
@@ -60,7 +65,8 @@ namespace SHSchool.CourseSelection.Forms
                 {
                     courseTypeCbx.Items.Add(type["type"]);
                 }
-                courseTypeCbx.SelectedIndex = 0;
+                if (courseTypeCbx.Items.Count > 0)
+                    courseTypeCbx.SelectedIndex = 0;
             }
         }
 
@@ -131,26 +137,26 @@ WHERE subject.school_year = {1} AND subject.semester = {2} AND type = '{0}'"
                     datarow.Tag = "error";
                 }
                 // 有開班、有選課學生、但有未分班學生
-                if (courseCount > 0 && studentCount > 0 && (studentCount - courseStudentCount) > 0 )
+                if (courseCount > 0 && studentCount > 0 && (studentCount - courseStudentCount) > 0)
                 {
                     datarow.Cells[index].Style.ForeColor = Color.Red;
-                    datarow.Cells[index++].Value = "已開班數:"+ courseCount + "、尚有"+ (studentCount - courseStudentCount) + "位學生未分班!";
+                    datarow.Cells[index++].Value = "已開班數:" + courseCount + "、尚有" + (studentCount - courseStudentCount) + "位學生未分班!";
                     datarow.Tag = "error";
                 }
                 // 有開班、沒有學生選課
-                if (courseCount > 0  && studentCount == 0 )
+                if (courseCount > 0 && studentCount == 0)
                 {
                     datarow.Cells[index].Style.ForeColor = Color.Red;
                     datarow.Cells[index++].Value = "已開班數:" + courseCount + "、 沒有學生選課!";
                     datarow.Tag = "error";
                 }
                 // 有開班、有選課學生、學生有分班
-                if (courseCount > 0  && studentCount > 0 && studentCount == courseStudentCount)
+                if (courseCount > 0 && studentCount > 0 && studentCount == courseStudentCount)
                 {
                     datarow.Cells[index++].Value = "已開班數:" + courseCount + "、 選課人數:" + studentCount + "、 已分班人數:" + courseStudentCount;
                     datarow.Tag = "correct";
                 }
-                
+
                 dataGridViewX1.Rows.Add(datarow);
             }
         }
@@ -210,7 +216,7 @@ WHERE
     subject.school_year = {0} 
     AND subject.semester = {1} 
     AND subject.type = '{2}'"
-            , schoolYearCbx.Text, semesterCbx.Text,courseTypeCbx.Text);
+            , schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
             #endregion
 
             QueryHelper qh = new QueryHelper();
@@ -224,12 +230,12 @@ WHERE
             {
                 studentCourseDic.Add("" + dr["ref_student_id"], "" + dr["ref_course_id"]);
             }
-            List<SCAttendRecord> scrOldList = SCAttend.SelectByStudentIDAndCourseID(studentCourseDic.Keys.ToList(),studentCourseDic.Values.ToList());
+            List<SCAttendRecord> scrOldList = SCAttend.SelectByStudentIDAndCourseID(studentCourseDic.Keys.ToList(), studentCourseDic.Values.ToList());
             List<SCETakeRecord> sctList = SCETake.SelectByStudentAndCourse(studentCourseDic.Keys.ToList(), studentCourseDic.Values.ToList());
 
             if (scrOldList.Count > 0)
             {
-                DialogResult result = MessageBox.Show("已轉入修課學生，確定重複轉入修課學生將會清除學生原課程成績以及原修課紀錄 ","警告",MessageBoxButtons.YesNo);
+                DialogResult result = MessageBox.Show("已轉入修課學生，確定重複轉入修課學生將會清除學生原課程成績以及原修課紀錄 ", "警告", MessageBoxButtons.YesNo);
                 if (result == DialogResult.No)
                 {
                     return;

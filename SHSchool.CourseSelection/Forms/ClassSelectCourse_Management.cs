@@ -25,10 +25,15 @@ namespace SHSchool.CourseSelection.Forms
             #region Init ComboBox
             AccessHelper access = new AccessHelper();
             List<UDT.OpeningTime> openTimeList = access.Select<UDT.OpeningTime>();
+            if (openTimeList.Count == 0)
+            {
+                openTimeList.Add(new UDT.OpeningTime() { SchoolYear = int.Parse(K12.Data.School.DefaultSchoolYear), Semester = int.Parse(K12.Data.School.DefaultSemester) });
+                openTimeList.SaveAll();
+            }
             // SchoolYear
             schoolYearCbx.Items.Add(openTimeList[0].SchoolYear - 1);
-            schoolYearCbx.Items.Add(openTimeList[0].SchoolYear );
-            schoolYearCbx.Items.Add(openTimeList[0].SchoolYear +1);
+            schoolYearCbx.Items.Add(openTimeList[0].SchoolYear);
+            schoolYearCbx.Items.Add(openTimeList[0].SchoolYear + 1);
             schoolYearCbx.SelectedIndex = 1;
             // Semester
             semesterCbx.Items.Add(1);
@@ -86,7 +91,7 @@ namespace SHSchool.CourseSelection.Forms
                     student.ref_class_id IS NOT NULL AND 
                     class.grade_year IS NOT NULL 
                 ORDER BY class.grade_year
-                ", schoolYearCbx.Text,semesterCbx.Text,courseTypeCbx.Text);
+                ", schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
             #endregion
 
             if (courseTypeCbx.Text != "")
@@ -103,10 +108,12 @@ namespace SHSchool.CourseSelection.Forms
 
                 BGW = new BackgroundWorker();
 
-                BGW.DoWork += delegate {
+                BGW.DoWork += delegate
+                {
                     dt = qh.Select(selectSQl);
                 };
-                BGW.RunWorkerCompleted += delegate {
+                BGW.RunWorkerCompleted += delegate
+                {
                     if (schoolYear == schoolYearCbx.Text && semester == semesterCbx.Text && courseType == courseTypeCbx.Text)
                     {
                         int row = -1;
@@ -184,7 +191,8 @@ namespace SHSchool.CourseSelection.Forms
                 {
                     courseTypeCbx.Items.Add(type["type"]);
                 }
-                courseTypeCbx.SelectedIndex = 0;
+                if (courseTypeCbx.Items.Count > 0)
+                    courseTypeCbx.SelectedIndex = 0;
             }
         }
 
@@ -208,7 +216,7 @@ namespace SHSchool.CourseSelection.Forms
             this.Close();
         }
 
-        
+
 
         private void setSelectSubjecttBtn_Click(object sender, EventArgs e)
         {
@@ -216,9 +224,9 @@ namespace SHSchool.CourseSelection.Forms
 
             foreach (DataGridViewRow datarow in dataGridViewX1.SelectedRows)
             {
-                selectedClassDic.Add("" + datarow.Tag,"" + datarow.Cells[1].Value);
+                selectedClassDic.Add("" + datarow.Tag, "" + datarow.Cells[1].Value);
             }
-            cscs = new ClassSelectCourse_Setting(schoolYearCbx.Text,semesterCbx.Text,courseTypeCbx.Text,selectedClassDic);
+            cscs = new ClassSelectCourse_Setting(schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text, selectedClassDic);
             cscs.FormClosed += delegate
             {
                 ReloadDataGridView();
