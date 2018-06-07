@@ -290,13 +290,8 @@ namespace SHSchool.CourseSelection
 
             //            i++;
             //        }
-
-
             //    }
-
-
             //    Wish_list.SaveAll();
-
             //}; 
             #endregion
 

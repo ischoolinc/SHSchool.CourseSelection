@@ -32,7 +32,7 @@ namespace SHSchool.CourseSelection.Forms
 
         private List<DataRow> _DataRowList = new List<DataRow>();
 
-        private string  _actor;
+        private string _actor;
 
         private string _client_info;
 
@@ -85,7 +85,7 @@ namespace SHSchool.CourseSelection.Forms
 
             #region Init 右鍵選單
             MenuItem item = new MenuItem("鎖定選課");
-            item.Click += delegate 
+            item.Click += delegate
             {
                 foreach (DataGridViewRow datarow in dataGridViewX1.SelectedRows)
                 {
@@ -106,7 +106,7 @@ namespace SHSchool.CourseSelection.Forms
             menu.MenuItems.Add(item);
 
             MenuItem item2 = new MenuItem("解除鎖定");
-            item2.Click += delegate 
+            item2.Click += delegate
             {
                 foreach (DataGridViewRow datarow in dataGridViewX1.SelectedRows)
                 {
@@ -115,13 +115,13 @@ namespace SHSchool.CourseSelection.Forms
 
                     foreach (DataRow row in _DataRowList)
                     {
-                        if ("" + datarow.Cells[2].Tag == "" + row["id"] )
+                        if ("" + datarow.Cells[2].Tag == "" + row["id"])
                         {
                             row["lock"] = false;
                         }
                     }
                 }
-                
+
             };
             menu.MenuItems.Add(item2);
             #endregion
@@ -239,7 +239,7 @@ GROUP BY
         {
             if (flowLayoutPanel1.Controls.Count > 0)
             {
-                ShowDataRow();
+                ShowDataRow(true);
             }
         }
 
@@ -355,7 +355,7 @@ WHERE
                 subjectColorDic.Add("" + row["uid"], colors[n]);
                 button.Image = GetColorBallImage(colors[n++]);
                 // Subject UID
-                button.Name = "" +row["subject_name"];
+                button.Name = "" + row["subject_name"];
                 button.Tag = "" + row["uid"];
 
                 button.Margin = new System.Windows.Forms.Padding(3);
@@ -396,7 +396,7 @@ WHERE
         }
 
         BackgroundWorker _BKWReloadDataGridView = new BackgroundWorker();
-        
+
         public void ReloadDataGridView()
         {
             _DataRowList.Clear();
@@ -559,10 +559,12 @@ ORDER BY
                 DataTable dt = null;
                 _BKWReloadDataGridView = new BackgroundWorker();
 
-                _BKWReloadDataGridView.DoWork += delegate {
+                _BKWReloadDataGridView.DoWork += delegate
+                {
                     dt = qh.Select(sql);
                 };
-                _BKWReloadDataGridView.RunWorkerCompleted += delegate {
+                _BKWReloadDataGridView.RunWorkerCompleted += delegate
+                {
                     if (schoolYear == schoolYearCbx.Text && semester == semesterCbx.Text && courseType == courseTypeCbx.Text)
                     {
                         // isLoading = false;
@@ -603,12 +605,13 @@ ORDER BY
                         }
                         pictureBox1.Visible = false;
                     }
-                    else {
+                    else
+                    {
                         ReloadDataGridView();
                     }
                 };
                 _BKWReloadDataGridView.RunWorkerAsync();
-                
+
 
             }
         }
@@ -626,8 +629,7 @@ ORDER BY
             if (swapEnabled)
             {
                 ButtonX button = (ButtonX)sender;
-                //bool emptyBtn = ("" + button.Tag) == "" ? true : false;
-
+                #region 警告人數超過
                 // 剩餘名額與調整學生人數比較
                 int limit = _DicSubjectData["" + button.Tag].SubjectLimit;
                 int 剩餘名額 = _DicSubjectData["" + button.Tag].SubjectLimit - _DicSubjectData["" + button.Tag].StuCount;
@@ -653,66 +655,26 @@ ORDER BY
                         }
                     }
                 }
-                #region 更新DataGridView
-                foreach (DataGridViewRow row in dataGridViewX1.SelectedRows)
+                #endregion
+                #region 更新DataRow
+                foreach (DataGridViewRow dgvrow in dataGridViewX1.SelectedRows)
                 {
-                    //if (emptyBtn && "" + row.Cells["attendType"].Value == "指定")
-                    //{
-                    //    MessageBox.Show("");
-                    //    continue;
-                    //}
+                    DataRow row = (DataRow)dgvrow.Tag;
+                    row["ref_subject_id"] = button.Tag;
+
+                    row["選課課程"] = allSubjectDic["" + button.Tag];
                     if ("" + button.Tag == "")
                     {
-                        ((DataGridViewColorBallTextCell)row.Cells[5]).Color = Color.Transparent;
-                        ((DataGridViewColorBallTextCell)row.Cells[5]).Value = "";
-
-                        row.Cells["attendType"].Value = "";
+                        row["attend_type"] = "";
                     }
                     if ("" + button.Tag != "")
                     {
-                        ((DataGridViewColorBallTextCell)row.Cells[5]).Color = subjectColorDic["" + button.Tag];
-                        ((DataGridViewColorBallTextCell)row.Cells[5]).Value = allSubjectDic["" + button.Tag];
-
-                        row.Cells["attendType"].Value = "指定";
+                        row["attend_type"] = "指定";
                     }
-                    dataGridViewX1.Rows[row.Index].Cells[5].Tag = button.Tag;
-
-                }
-
-                #endregion
-
-                foreach (SubjectCountLimit sc in _DicSubjectData.Values)
-                {
-                    sc.StuCount = 0; // 清空人數紀錄
-                }
-
-                #region 更新DataRow
-                // 更新datarow
-                foreach (DataRow row in _DataRowList)
-                {
-                    foreach (DataGridViewRow dgvrow in dataGridViewX1.SelectedRows)
-                    {
-                        if ("" + dgvrow.Cells[2].Tag == "" + row["id"]) // 比對學生ID
-                        {
-                            row["ref_subject_id"] = button.Tag;
-
-                            row["選課課程"] = allSubjectDic["" + button.Tag];
-                            if ("" + button.Tag == "")
-                            {
-                                row["attend_type"] = "";
-                            }
-                            if ("" + button.Tag != "")
-                            {
-                                row["attend_type"] = "指定";
-                            }
-                        }
-                    }
-                    // 重新計算選修科目人數
-                    _DicSubjectData["" + row["ref_subject_id"]].StuCount++;
                 }
                 #endregion
-
-                ReloadButtonXText();
+                //更新顯示
+                ShowDataRow();
             }
             else
             {
@@ -778,10 +740,10 @@ ORDER BY
         , '{7}'::TEXT AS type
         , '{8}'::INTEGER AS seed
                 ", row["id"]
-                ,"" + datarow.Cells[5].Tag == "" ? "NULL" : "" + datarow.Cells[5].Tag
-                ,"" + datarow.Cells[5].Value == "" ? "NULL" : "" + datarow.Cells[5].Value
-                ,"" + datarow.Cells["lock"].Value == "是" ? "true" : "false"
-                ,"" + datarow.Cells["attendType"].Value == "" ? "NULL" : "" + datarow.Cells["attendType"].Value
+                , "" + datarow.Cells[5].Tag == "" ? "NULL" : "" + datarow.Cells[5].Tag
+                , "" + datarow.Cells[5].Value == "" ? "NULL" : "" + datarow.Cells[5].Value
+                , "" + datarow.Cells["lock"].Value == "是" ? "true" : "false"
+                , "" + datarow.Cells["attendType"].Value == "" ? "NULL" : "" + datarow.Cells["attendType"].Value
                 , schoolYearCbx.Text
                 , semesterCbx.Text
                 , courseTypeCbx.Text
@@ -942,7 +904,7 @@ WHERE
             //qh.Select(sql);
             #endregion
             _BKWReloadDataGridView = new BackgroundWorker();
-            
+
             UpdateHelper up = new UpdateHelper();
 
             pictureBox1.Visible = true;
@@ -958,11 +920,13 @@ WHERE
             leaveBtn.Enabled = false;
 
 
-            _BKWReloadDataGridView.DoWork += delegate {
-                    up.Execute(sql);
+            _BKWReloadDataGridView.DoWork += delegate
+            {
+                up.Execute(sql);
             };
 
-            _BKWReloadDataGridView.RunWorkerCompleted += delegate {
+            _BKWReloadDataGridView.RunWorkerCompleted += delegate
+            {
                 pictureBox1.Visible = false;
                 schoolYearCbx.Enabled = true;
                 semesterCbx.Enabled = true;
@@ -975,31 +939,76 @@ WHERE
                 saveBtn.Enabled = true;
                 leaveBtn.Enabled = true;
                 MessageBox.Show("儲存成功!");
-                
+
                 ReloadDataGridView();
             };
             _BKWReloadDataGridView.RunWorkerAsync();
-            
+
 
         }
 
         private void ShowDataRow()
         {
+            ShowDataRow(false);
+        }
+        private void ShowDataRow(bool renewRow)
+        {
             dataGridViewX1.SuspendLayout();
-            dataGridViewX1.Rows.Clear();
-            
-            foreach (var row in _DataRowList)
-            {
-                if (
-                    (conditionCbx.Text == "全部")
-                    || (("" + row["選課課程"]) == conditionCbx.Text)
-                    || (("" + row["選課課程"]) == "" && conditionCbx.Text == "空白")
-                    )
-                {
-                    int index = 0;
-                    DataGridViewRow datarow = new DataGridViewRow();
-                    datarow.CreateCells(dataGridViewX1);
+            if (renewRow)
+                dataGridViewX1.Rows.Clear();
 
+            if (renewRow)
+            {
+                foreach (var row in _DataRowList)
+                {
+                    if (
+                        (conditionCbx.Text == "全部")
+                        || (("" + row["選課課程"]) == conditionCbx.Text)
+                        || (("" + row["選課課程"]) == "" && conditionCbx.Text == "空白")
+                    )
+                    {
+                        int index = 0;
+                        DataGridViewRow datarow = new DataGridViewRow();
+                        datarow.CreateCells(dataGridViewX1);
+
+                        datarow.Cells[index++].Value = "" + row["class_name"];
+                        datarow.Cells[index++].Value = "" + row["seat_no"];
+                        datarow.Cells[index].Tag = "" + row["id"]; // 紀錄學生ID
+                        datarow.Cells[index++].Value = "" + row["name"];
+                        datarow.Cells[index++].Value = ("" + row["lock"]) == "true" ? "是" : "";
+                        if ("" + row["lock"] == "true")
+                        {
+                            datarow.DefaultCellStyle.BackColor = Color.GreenYellow;
+                        }
+                        datarow.Cells[index++].Value = "" + row["分發順位"];
+                        if ("" + row["ref_subject_id"] != string.Empty)
+                        {
+                            ((DataGridViewColorBallTextCell)datarow.Cells[index]).Value = "" + row["選課課程"];
+                            ((DataGridViewColorBallTextCell)datarow.Cells[index]).Color = subjectColorDic["" + row["ref_subject_id"]];
+                        }
+                        datarow.Cells[index++].Tag = "" + row["ref_subject_id"];
+                        for (int i = 1; i <= 5; i++)
+                        {
+                            if ("" + row["志願" + i + "ref_subject_id"] == "" + row["ref_subject_id"] && "" + row["ref_subject_id"] != "")
+                            {
+                                datarow.Cells[index].Style.ForeColor = Color.Red;
+                            }
+                            datarow.Cells[index++].Value = "" + row["志願" + i];
+                        }
+                        datarow.Cells[index++].Value = "" + row["分發志願"];
+                        datarow.Cells[index++].Value = "" + row["attend_type"];
+
+                        datarow.Tag = row;
+                        dataGridViewX1.Rows.Add(datarow);
+                    }
+                }
+            }
+            else
+            {
+                foreach (DataGridViewRow datarow in dataGridViewX1.Rows)
+                {
+                    DataRow row = (DataRow)datarow.Tag;
+                    int index = 0;
                     datarow.Cells[index++].Value = "" + row["class_name"];
                     datarow.Cells[index++].Value = "" + row["seat_no"];
                     datarow.Cells[index].Tag = "" + row["id"]; // 紀錄學生ID
@@ -1009,52 +1018,73 @@ WHERE
                     {
                         datarow.DefaultCellStyle.BackColor = Color.GreenYellow;
                     }
+                    else
+                    {
+                        datarow.DefaultCellStyle.BackColor = dataGridViewX1.DefaultCellStyle.BackColor;
+                    }
                     datarow.Cells[index++].Value = "" + row["分發順位"];
                     if ("" + row["ref_subject_id"] != string.Empty)
                     {
                         ((DataGridViewColorBallTextCell)datarow.Cells[index]).Value = "" + row["選課課程"];
                         ((DataGridViewColorBallTextCell)datarow.Cells[index]).Color = subjectColorDic["" + row["ref_subject_id"]];
                     }
+                    else
+                    {
+                        ((DataGridViewColorBallTextCell)datarow.Cells[index]).Value = "";
+                        ((DataGridViewColorBallTextCell)datarow.Cells[index]).Color = dataGridViewX1.DefaultCellStyle.BackColor;
+                    }
                     datarow.Cells[index++].Tag = "" + row["ref_subject_id"];
-                    for (int i = 1; i <=5; i++)
+                    for (int i = 1; i <= 5; i++)
                     {
                         if ("" + row["志願" + i + "ref_subject_id"] == "" + row["ref_subject_id"] && "" + row["ref_subject_id"] != "")
                         {
                             datarow.Cells[index].Style.ForeColor = Color.Red;
-                            datarow.Cells[10].Value = i;
                         }
-                        datarow.Cells[index++].Value = "" + row["志願"+i];
+                        else
+                        {
+                            datarow.Cells[index].Style.ForeColor = dataGridViewX1.DefaultCellStyle.ForeColor;
+                        }
+                        datarow.Cells[index++].Value = "" + row["志願" + i];
                     }
                     datarow.Cells[index++].Value = "" + row["分發志願"];
                     datarow.Cells[index++].Value = "" + row["attend_type"];
-
-                    datarow.Tag = row;
-                    dataGridViewX1.Rows.Add(datarow);
                 }
             }
             dataGridViewX1.ResumeLayout();
 
-            ReloadButtonXText();
-        }
+            #region 更新按鈕人數統計
+            ReCountSubjectStu();
 
-        private void ReloadButtonXText()
-        {
             foreach (ButtonX btn in flowLayoutPanel1.Controls)
             {
                 string subjectID = "" + btn.Tag;
                 string subjectName = allSubjectDic[subjectID];
 
-                btn.Text = string.Format("({0}/{1})", (""+_DicSubjectData[subjectID].StuCount).PadLeft(3), (""+_DicSubjectData[subjectID].SubjectLimit).PadRight(3)) + subjectName;
+                btn.Text = string.Format("({0}/{1})", ("" + _DicSubjectData[subjectID].StuCount).PadLeft(3), ("" + _DicSubjectData[subjectID].SubjectLimit).PadRight(3)) + subjectName;
                 if (btn.Text.Length > 17)
                 {
                     btn.Text = btn.Text.Substring(0, 17);
                 }
             }
+            #endregion
+        }
+
+        private void ReCountSubjectStu()
+        {
+            foreach (SubjectCountLimit sc in _DicSubjectData.Values)
+            {
+                sc.StuCount = 0; // 清空人數紀錄
+            }
+            foreach (DataRow row in _DataRowList)
+            {
+                // 重新計算選修科目人數
+                _DicSubjectData["" + row["ref_subject_id"]].StuCount++;
+            }
         }
 
         private void dataGridViewX1_SortCompare(object sender, DataGridViewSortCompareEventArgs e)
         {
-            if(e.Column == Column10)
+            if (e.Column == Column10)
             {
                 int v1 = 0, v2 = 0;
                 int.TryParse("" + e.CellValue1, out v1);
@@ -1123,76 +1153,10 @@ WHERE
         {
             if (btnEasy.Checked == true) // 簡單模式
             {
-                foreach (SubjectCountLimit sc in _DicSubjectData.Values)
-                {
-                    sc.StuCount = 0; // 清空科目人數紀錄
-                }
-                int lockStudentCount = 0;
-                // 更新DataRow: 清除選修科目結果
-                foreach (DataRow row in _DataRowList)
-                {
-                    if ("" + row["lock"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
-                    {
-                        row["ref_subject_id"] = "";
-                        row["選課課程"] = "";
-                        _DicSubjectData[""].StuCount++; // 紀錄沒有選修科目學生人數
-                    }
-                    if ("" + row["lock"] == "true" || "" + row["attend_type"] == "指定" || "" + row["attend_type"] == "先搶先贏")
-                    {
-                        lockStudentCount++;
-                    }
-                }
+                btnClear_Click(null, null);
+                btnOrder_Click(null, null);
+                buttonItem9_Click(null, null);
 
-                int seed = 0;
-                if (seedCbx.Text != "隨機")
-                {
-                    string _seed = seedCbx.Text;
-                    string[] _seedArray = _seed.Split(':');
-                    foreach (string s in _seedArray)
-                    {
-                        if (int.TryParse(s, out seed))
-                        {
-                            seed = int.Parse(s);
-                        }
-                    }
-                }
-                if (seedCbx.Text == "隨機")
-                {
-                    seed = new Random().Next(3000);
-                    int index = seedCbx.Items.Count;
-                    string text = string.Format("代碼{0}: ", index);
-                    seedCbx.Items.Insert(1, text + seed);
-                    seedCbx.SelectedIndex = 1;
-                }
-                
-
-                Random random = new Random(seed);
-                List<int> list = new List<int>(_DataRowList.Count - lockStudentCount);
-                Dictionary<int, DataRow> dicOrderRows = new Dictionary<int, DataRow>();
-                for (int i = 0; i < _DataRowList.Count - lockStudentCount; i++)
-                {
-                    list.Add(i + 1);
-                    dicOrderRows.Add(i + 1, null);
-                }
-                // 更新DataRow
-                foreach (var item in _DataRowList)
-                {
-                    if ("" + item["lock"] != "true" && "" + item["attend_type"] != "指定" && "" + item["attend_type"] != "先搶先贏")
-                    {
-                        int orderIndex = random.Next(list.Count);
-                        int order = list[orderIndex];
-                        list.RemoveAt(orderIndex);
-
-                        item["分發順位"] = order;
-                        //item["attend_type"] = "志願分發";
-                    }
-                }
-                for (int i = 1; i <= 5; i++)
-                {
-                    distribute(i);
-                }
-
-                // ShowDataRow
                 ShowDataRow();
                 dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
             }
@@ -1210,6 +1174,7 @@ WHERE
             btnClear.Enabled = false;
             btnDistribute.Enabled = false;
             btnOrder.Enabled = false;
+            buttonX1.AutoExpandOnClick = false;
             //seedCbx.Enabled = false;
         }
 
@@ -1225,6 +1190,7 @@ WHERE
             btnClear.Enabled = true;
             btnDistribute.Enabled = true;
             btnOrder.Enabled = true;
+            buttonX1.AutoExpandOnClick = true;
             //seedCbx.Enabled = true;
         }
 
@@ -1233,25 +1199,20 @@ WHERE
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonItem1_Click(object sender, EventArgs e) 
+        private void btnClear_Click(object sender, EventArgs e)
         {
-            foreach (SubjectCountLimit sc in _DicSubjectData.Values)
-            {
-                sc.StuCount = 0;
-            }
-            // 更新DataRow: 清除選修科目結果(只有非鎖定學生並且志願分發學生才能清除)
             foreach (DataRow row in _DataRowList)
             {
-                if (("" + row["lock"] == "false" && "" + row["attend_type"] == "志願分發") || ("" + row["lock"] == "false" && "" + row["attend_type"] == "")) 
+                if ("" + row["lock"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
                 {
                     row["ref_subject_id"] = "";
                     row["選課課程"] = "";
-                    row["attend_type"] = "";
                     row["分發志願"] = "";
                 }
-                _DicSubjectData["" + row["ref_subject_id"]].StuCount++; // 紀錄選修科目學生人數
             }
-            ShowDataRow();
+            ReCountSubjectStu();
+            if (sender == btnClear)
+                ShowDataRow();
         }
 
         /// <summary>
@@ -1259,61 +1220,79 @@ WHERE
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonItem2_Click(object sender, EventArgs e)
+        private void btnOrder_Click(object sender, EventArgs e)
         {
+            bool match = false;
             int seed = 0;
-            if (seedCbx.Text != "隨機")
-            {
-                string _seed = seedCbx.Text;
-                string[] _seedArray = _seed.Split(':');
-                foreach (string s in _seedArray)
-                {
-                    if (int.TryParse(s, out seed))
-                    {
-                        seed = int.Parse(s);
-                    }
-                }
-            }
             if (seedCbx.Text == "隨機")
             {
+                match = true;
                 seed = new Random().Next(3000);
                 int index = seedCbx.Items.Count;
                 string text = string.Format("代碼{0}: ", index);
                 seedCbx.Items.Insert(1, text + seed);
-                seedCbx.SelectedIndex = 1;
-            }
+                seedCbx.SelectedIndex = 0;
 
-            Random random = new Random(seed);
-            int lockStudentCount = 0;
-            foreach (DataRow row in _DataRowList)
+                lblCurrentSeed.Text = text + seed;
+            }
+            else
             {
-                if ("" + row["lock"] == "true" || "" + row["attend_type"] == "指定" || "" + row["attend_type"] == "先搶先贏")
+                if (int.TryParse(seedCbx.Text, out seed))
                 {
-                    lockStudentCount++;
+                    match = true;
+                    lblCurrentSeed.Text = "指定: " + seed;
+                }
+                else
+                {
+                    string _seed = seedCbx.Text;
+                    string[] _seedArray = _seed.Split(':');
+                    foreach (string s in _seedArray)
+                    {
+                        if (int.TryParse(s, out seed))
+                        {
+                            match = true;
+                            lblCurrentSeed.Text = _seed;
+                            break;
+                        }
+                    }
                 }
             }
-        
-            List<int> list = new List<int>(_DataRowList.Count - lockStudentCount);
-            Dictionary<int, DataRow> dicOrderRows = new Dictionary<int, DataRow>();
-            for (int i = 0; i < (_DataRowList.Count - lockStudentCount); i++)
+            if (match)
             {
-                list.Add(i + 1);
-                dicOrderRows.Add(i + 1, null);
-            }
-            // 更新DataRow
-            foreach (var item in _DataRowList)
-            {
-                if ("" + item["lock"] != "true" && "" + item["attend_type"] != "指定" && "" + item["attend_type"] != "先搶先贏")
+                List<DataRow> processRow = new List<DataRow>();
+                foreach (DataRow row in _DataRowList)
                 {
-                    int orderIndex = random.Next(list.Count);
-                    int order = list[orderIndex];
-                    list.RemoveAt(orderIndex);
+                    row["分發順位"] = "";
+                    if ("" + row["lock"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
+                    {
+                        processRow.Add(row);
+                    }
+                }
 
-                    item["分發順位"] = order;
+
+                Random random = new Random(seed);
+                List<int> list = new List<int>(processRow.Count);
+                for (int i = 0; i < processRow.Count; i++)
+                {
+                    list.Add(i + 1);
+                }
+                // 更新DataRow
+                foreach (var row in _DataRowList)
+                {
+                    if ("" + row["lock"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
+                    {
+                        int orderIndex = random.Next(list.Count);
+                        int order = list[orderIndex];
+                        list.RemoveAt(orderIndex);
+                        row["分發順位"] = order;
+                    }
                 }
             }
-            ShowDataRow();
-            dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
+            if (sender == btnOrder)
+            {
+                ShowDataRow();
+                dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
+            }
         }
 
         /// <summary>
@@ -1325,12 +1304,15 @@ WHERE
         {
             for (int i = 1; i <= 5; i++)
             {
-                distribute(i);
+                distribute(i, i == 1);
             }
 
             // ShowDataRow
-            ShowDataRow();
-            dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
+            if (sender == buttonItem9)
+            {
+                ShowDataRow();
+                dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
+            }
         }
 
         /// <summary>
@@ -1340,10 +1322,13 @@ WHERE
         /// <param name="e"></param>
         private void buttonItem4_Click(object sender, EventArgs e)
         {
-            distribute(1);
+            distribute(1, true);
 
-            ShowDataRow();
-            dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
+            if (sender == buttonItem4)
+            {
+                ShowDataRow();
+                dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
+            }
         }
 
         /// <summary>
@@ -1353,10 +1338,13 @@ WHERE
         /// <param name="e"></param>
         private void buttonItem5_Click(object sender, EventArgs e)
         {
-            distribute(2);
+            distribute(2, true);
 
-            ShowDataRow();
-            dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
+            if (sender == buttonItem5)
+            {
+                ShowDataRow();
+                dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
+            }
         }
 
         /// <summary>
@@ -1366,11 +1354,13 @@ WHERE
         /// <param name="e"></param>
         private void buttonItem6_Click(object sender, EventArgs e)
         {
-            distribute(3);
+            distribute(3, true);
 
-            // ShowDataRow
-            ShowDataRow();
-            dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
+            if (sender == buttonItem6)
+            {
+                ShowDataRow();
+                dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
+            }
         }
 
         /// <summary>
@@ -1380,11 +1370,13 @@ WHERE
         /// <param name="e"></param>
         private void buttonItem7_Click(object sender, EventArgs e)
         {
-            distribute(4);
+            distribute(4, true);
 
-            // ShowDataRow
-            ShowDataRow();
-            dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
+            if (sender == buttonItem7)
+            {
+                ShowDataRow();
+                dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
+            }
         }
 
         /// <summary>
@@ -1394,49 +1386,35 @@ WHERE
         /// <param name="e"></param>
         private void buttonItem8_Click(object sender, EventArgs e)
         {
-            distribute(5);
+            distribute(5, true);
 
-            // ShowDataRow
-            ShowDataRow();
-            dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
+            if (sender == buttonItem8)
+            {
+                ShowDataRow();
+                dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
+            }
         }
 
         /// <summary>
         /// 分發
         /// </summary>
         /// <param name="wishOrder"></param>
-        private void distribute(int wishOrder)
+        private void distribute(int wishOrder, bool showErrorMsg)
         {
-            foreach (SubjectCountLimit sc in _DicSubjectData.Values)
-            {
-                sc.StuCount = 0; // 清空科目人數紀錄
-            }
             List<int> list = new List<int>(_DataRowList.Count);
             // 將DataRow按分發順位排序
             Dictionary<int, DataRow> dicSortDataRow = new Dictionary<int, DataRow>();
-            bool keepGoing = true;
             foreach (var row in _DataRowList)
             {
-                if (keepGoing)
+                if ("" + row["分發順位"] == "" && "" + row["lock"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
                 {
-                    if ("" + row["分發順位"] == "" && "" + row["lock"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
-                    {
-                        MessageBox.Show("請先產生分發順位!");                      
-                        keepGoing = false;
-                    }
-                    if (keepGoing)
-                    {
-                        if ("" + row["lock"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
-                        {
-                            dicSortDataRow.Add(int.Parse("" + row["分發順位"]), row);
-                        }
-
-                        // 紀錄已分發科目人數
-                        if ("" + row["ref_subject_id"] != "")
-                        {
-                            _DicSubjectData["" + row["ref_subject_id"]].StuCount++;
-                        }
-                    }
+                    if (showErrorMsg)
+                        MessageBox.Show("請先產生分發順位!");
+                    break;
+                }
+                if ("" + row["lock"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
+                {
+                    dicSortDataRow.Add(int.Parse("" + row["分發順位"]), row);
                 }
             }
 
@@ -1445,48 +1423,148 @@ WHERE
                 DataRow row = dicSortDataRow[i];
                 string selectedSubjectID = "" + row["ref_subject_id"];
                 string wishSubjectID = "" + row["志願" + wishOrder + "ref_subject_id"];
-                string subjectName = "" + row["志願" + wishOrder];
-                int studentCount = _DicSubjectData[wishSubjectID].StuCount;
-                int subjectLimit = _DicSubjectData[wishSubjectID].SubjectLimit;
 
-                if (selectedSubjectID == "") // 未分發科目
+                if (
+                    selectedSubjectID == ""
+                    && wishSubjectID != ""
+                    && _DicSubjectData.ContainsKey(wishSubjectID)
+                    && _DicSubjectData[wishSubjectID].StuCount < _DicSubjectData[wishSubjectID].SubjectLimit
+                ) // 未分發科目
                 {
-                    if (wishSubjectID == "") // 沒志願
-                    {
-                        row["ref_subject_id"] = "";
-                        _DicSubjectData[""].StuCount++;
-                        row["選課課程"] = "";                        
-                    }
-                    if (wishSubjectID != "") // 有志願
-                    {
-                        if (studentCount < subjectLimit) // 有名額
-                        {
-                            row["ref_subject_id"] = wishSubjectID;
-                            row["選課課程"] = subjectName;
-                            row["分發志願"] = wishOrder;
-                            row["attend_type"] = "志願分發";
-                            _DicSubjectData[wishSubjectID].StuCount++;
-                        }
-                        if (studentCount >= subjectLimit) // 沒名額
-                        {
-                            row["ref_subject_id"] = "";
-                            row["選課課程"] = "";
-                            _DicSubjectData[""].StuCount++;
-                        }
-                    }
+                    row["ref_subject_id"] = wishSubjectID;
+                    row["選課課程"] = "" + row["志願" + wishOrder];
+                    row["分發志願"] = wishOrder;
+                    row["attend_type"] = "志願分發";
+                    _DicSubjectData[wishSubjectID].StuCount++;
                 }
             }
+            ReCountSubjectStu();
         }
 
         private void dataGridViewX1_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
-                menu.Show(dataGridViewX1,new Point(e.X,e.Y));
+                menu.Show(dataGridViewX1, new Point(e.X, e.Y));
             }
         }
 
-        
+        private void labelX2_DoubleClick(object sender, EventArgs e)
+        {
+            btnTrial.Visible = true;
+        }
+
+        private void btnTrialClear_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("此功能為測試選填使用，清除志願選填後將無法回復", "刪除選填志願", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) != DialogResult.OK)
+                return;
+
+            var refSubjectIDList = new List<int>();
+            int i;
+            foreach (var k in _DicSubjectData.Keys)
+            {
+                if (int.TryParse(k, out i))
+                    refSubjectIDList.Add(i);
+            }
+            var list = access.Select<SHSchool.CourseSelection.UDT.SSWish>("ref_subject_id IN (-1, " + string.Join(",", refSubjectIDList) + ")");
+            foreach (var item in list)
+            {
+                item.Deleted = true;
+            }
+            list.SaveAll();
+
+            courseTypeCbx_TextChanged(null, null);
+        }
+
+        private void btnTrialFill_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("此功能為測試選填使用，模擬學生完成志願選填的情況", "模擬選填志願", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) != DialogResult.OK)
+                return;
+            var rand = new Random(new Random().Next(3000));
+            var bkw = new BackgroundWorker();
+            bkw.DoWork += delegate
+            {
+                var refSubjectIDKey = new Dictionary<int, int>();
+                int scale = 0;
+                int tryParseInt;
+                foreach (var k in _DicSubjectData.Keys)
+                {
+                    if (int.TryParse(k, out tryParseInt))
+                    {
+                        scale += _DicSubjectData[k].SubjectLimit;
+                        refSubjectIDKey.Add(tryParseInt, scale);
+                    }
+                }
+                var list = new List<SHSchool.CourseSelection.UDT.SSWish>();
+                foreach (DataRow row in _DataRowList)
+                {
+                    var refStudentID = "" + row["id"];
+                    bool empty = true;
+                    for (int i = 1; i <= 5; i++)
+                    {
+                        if ("" + row["志願" + i + "ref_subject_id"] != "")
+                            empty = false;
+                    }
+                    if (empty)
+                    {
+                        int seed = rand.Next(100);
+                        //Trace.WriteLine(seed);
+                        int wc = 0;
+                        if (seed <= 45)
+                            wc = 5;
+                        else if (seed <= 70)
+                            wc = 4;
+                        else if (seed <= 88)
+                            wc = 3;
+                        else if (seed <= 93)
+                            wc = 2;
+                        else if (seed <= 97)
+                            wc = 1;
+                        else
+                            wc = 0;
+                        var subjectList = new List<int>(refSubjectIDKey.Keys);
+                        for (int wishOrder = 1; wishOrder <= wc; wishOrder++)
+                        {
+                            var c = 0;
+                            foreach (var subject in subjectList)
+                            {
+                                c += refSubjectIDKey[subject];
+                            }
+                            var targetSeed = rand.Next(c);
+                            //Trace.WriteLine(targetSeed);
+                            var targetID = 0;
+                            foreach (var subject in subjectList)
+                            {
+                                c -= refSubjectIDKey[subject];
+                                if (c <= targetSeed)
+                                {
+                                    targetID = subject;
+                                    break;
+                                }
+                            }
+                            subjectList.Remove(targetID);
+                            if (targetID > 0)
+                            {
+                                list.Add(new UDT.SSWish()
+                                {
+                                    StudentID = int.Parse(refStudentID),
+                                    SubjectID = targetID,
+                                    Order = wishOrder
+                                });
+                            }
+                        }
+                    }
+                }
+                list.SaveAll();
+            };
+
+            bkw.RunWorkerCompleted += delegate
+            {
+                courseTypeCbx_TextChanged(null, null);
+            };
+
+            bkw.RunWorkerAsync();
+        }
     }
 }
 

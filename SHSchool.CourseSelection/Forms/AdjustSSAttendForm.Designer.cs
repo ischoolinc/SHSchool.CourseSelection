@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.labelX3 = new DevComponents.DotNetBar.LabelX();
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
@@ -80,6 +80,10 @@
             this.labelX4 = new DevComponents.DotNetBar.LabelX();
             this.seedCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.exportBtn = new DevComponents.DotNetBar.ButtonX();
+            this.lblCurrentSeed = new DevComponents.DotNetBar.LabelX();
+            this.btnTrial = new DevComponents.DotNetBar.ButtonX();
+            this.btnTrialClear = new DevComponents.DotNetBar.ButtonItem();
+            this.btnTrialFill = new DevComponents.DotNetBar.ButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -127,6 +131,7 @@
             this.labelX2.Size = new System.Drawing.Size(58, 23);
             this.labelX2.TabIndex = 4;
             this.labelX2.Text = "選課類別";
+            this.labelX2.DoubleClick += new System.EventHandler(this.labelX2_DoubleClick);
             // 
             // courseTypeCbx
             // 
@@ -165,14 +170,14 @@
             this.Column9,
             this.Column11,
             this.attendType});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewX1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewX1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
             this.dataGridViewX1.Location = new System.Drawing.Point(0, 23);
@@ -512,7 +517,7 @@
             this.btnClear.Name = "btnClear";
             this.btnClear.PopupSide = DevComponents.DotNetBar.ePopupSide.Left;
             this.btnClear.Text = "清除分發";
-            this.btnClear.Click += new System.EventHandler(this.buttonItem1_Click);
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnOrder
             // 
@@ -520,7 +525,7 @@
             this.btnOrder.GlobalItem = false;
             this.btnOrder.Name = "btnOrder";
             this.btnOrder.Text = "產生分發順位";
-            this.btnOrder.Click += new System.EventHandler(this.buttonItem2_Click);
+            this.btnOrder.Click += new System.EventHandler(this.btnOrder_Click);
             // 
             // btnDistribute
             // 
@@ -619,11 +624,59 @@
             this.exportBtn.Text = "匯出";
             this.exportBtn.Click += new System.EventHandler(this.exportBtn_Click);
             // 
+            // lblCurrentSeed
+            // 
+            this.lblCurrentSeed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblCurrentSeed.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.lblCurrentSeed.BackgroundStyle.Class = "";
+            this.lblCurrentSeed.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.lblCurrentSeed.Location = new System.Drawing.Point(404, 568);
+            this.lblCurrentSeed.Name = "lblCurrentSeed";
+            this.lblCurrentSeed.Size = new System.Drawing.Size(333, 21);
+            this.lblCurrentSeed.TabIndex = 22;
+            // 
+            // btnTrial
+            // 
+            this.btnTrial.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnTrial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnTrial.AutoExpandOnClick = true;
+            this.btnTrial.BackColor = System.Drawing.Color.Transparent;
+            this.btnTrial.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.btnTrial.Location = new System.Drawing.Point(806, 568);
+            this.btnTrial.Name = "btnTrial";
+            this.btnTrial.Size = new System.Drawing.Size(75, 23);
+            this.btnTrial.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.btnTrial.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.btnTrialClear,
+            this.btnTrialFill});
+            this.btnTrial.TabIndex = 23;
+            this.btnTrial.Text = "測試工具";
+            this.btnTrial.Visible = false;
+            // 
+            // btnTrialClear
+            // 
+            this.btnTrialClear.GlobalItem = false;
+            this.btnTrialClear.Name = "btnTrialClear";
+            this.btnTrialClear.Text = "清除選填志願";
+            this.btnTrialClear.Click += new System.EventHandler(this.btnTrialClear_Click);
+            // 
+            // btnTrialFill
+            // 
+            this.btnTrialFill.GlobalItem = false;
+            this.btnTrialFill.Name = "btnTrialFill";
+            this.btnTrialFill.Text = "模擬志願選填";
+            this.btnTrialFill.Click += new System.EventHandler(this.btnTrialFill_Click);
+            // 
             // AdjustSSAttendForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1055, 598);
+            this.Controls.Add(this.btnTrial);
+            this.Controls.Add(this.lblCurrentSeed);
             this.Controls.Add(this.exportBtn);
             this.Controls.Add(this.semesterCbx);
             this.Controls.Add(this.schoolYearCbx);
@@ -706,5 +759,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
         private System.Windows.Forms.DataGridViewTextBoxColumn attendType;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private DevComponents.DotNetBar.LabelX lblCurrentSeed;
+        private DevComponents.DotNetBar.ButtonX btnTrial;
+        private DevComponents.DotNetBar.ButtonItem btnTrialClear;
+        private DevComponents.DotNetBar.ButtonItem btnTrialFill;
     }
 }
