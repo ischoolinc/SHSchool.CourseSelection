@@ -305,6 +305,7 @@ WITH target_subject AS(
 			FROM
 				target_class
 		)
+        AND student.status IN ( 1, 2 )
 )
 SELECT 
 	count(target_student.id)
@@ -458,6 +459,7 @@ WITH target_subject AS(
 			FROM
 				target_class
 		)
+        AND student.status IN ( 1, 2 )
 ), student_attend AS(
 	SELECT
 		ref_student_id
@@ -468,13 +470,17 @@ WITH target_subject AS(
 		, subject.subject_name
 	FROM
 		$ischool.course_selection.ss_attend AS attend
-		LEFT OUTER JOIN $ischool.course_selection.subject AS subject ON subject.uid = attend.ref_subject_id
+		LEFT OUTER JOIN $ischool.course_selection.subject AS subject
+            ON subject.uid = attend.ref_subject_id
+        LEFT OUTER JOIN student 
+            ON student.id = attend.ref_student_id
 	WHERE ref_subject_id IN(
 			SELECT
 				uid
 			FROM
 				target_subject
 		)
+        AND student.status IN ( 1, 2 )
 ) , wish_row AS(
 	SELECT
 		wish.ref_student_id
@@ -484,6 +490,8 @@ WITH target_subject AS(
 	FROM
 		$ischool.course_selection.ss_wish AS wish
 		LEFT OUTER JOIN $ischool.course_selection.subject ON $ischool.course_selection.subject.uid = wish.ref_subject_id
+        LEFT OUTER JOIN student 
+            ON student.id = wish.ref_student_id
 	WHERE
 		ref_subject_id IN(
 			SELECT 
@@ -491,6 +499,7 @@ WITH target_subject AS(
 			FROM
 				target_subject
 		)
+        AND student.status IN ( 1, 2 )
 ) , wish AS(
 	SELECT
 		ref_student_id
