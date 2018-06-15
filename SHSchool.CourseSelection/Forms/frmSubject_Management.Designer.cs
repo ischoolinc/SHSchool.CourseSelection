@@ -157,7 +157,7 @@
             // Type
             // 
             this.Type.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Type.HeaderText = "選課類別";
+            this.Type.HeaderText = "課程類別";
             this.Type.Name = "Type";
             this.Type.ReadOnly = true;
             this.Type.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -213,7 +213,7 @@
             this.Delete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Delete.BackColor = System.Drawing.Color.Transparent;
             this.Delete.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Delete.Location = new System.Drawing.Point(674, 527);
+            this.Delete.Location = new System.Drawing.Point(690, 527);
             this.Delete.Name = "Delete";
             this.Delete.Size = new System.Drawing.Size(75, 23);
             this.Delete.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -255,7 +255,7 @@
             this.Addd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Addd.BackColor = System.Drawing.Color.Transparent;
             this.Addd.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Addd.Location = new System.Drawing.Point(483, 527);
+            this.Addd.Location = new System.Drawing.Point(528, 527);
             this.Addd.Name = "Addd";
             this.Addd.Size = new System.Drawing.Size(75, 23);
             this.Addd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -269,7 +269,7 @@
             this.Update.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Update.BackColor = System.Drawing.Color.Transparent;
             this.Update.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Update.Location = new System.Drawing.Point(577, 527);
+            this.Update.Location = new System.Drawing.Point(609, 527);
             this.Update.Name = "Update";
             this.Update.Size = new System.Drawing.Size(75, 23);
             this.Update.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;

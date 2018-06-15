@@ -82,8 +82,12 @@ namespace SHSchool.CourseSelection.Forms
                 mRecord.SubjectName = this.SubjectName.Text.Trim();
                 if (!string.IsNullOrWhiteSpace(this.Level.Text))
                     mRecord.Level = int.Parse(this.Level.Text.Trim());
+                else
+                    mRecord.Level = null;
                 if (!string.IsNullOrWhiteSpace(this.Credit.Text))
                     mRecord.Credit = int.Parse(this.Credit.Text.Trim());
+                else
+                    mRecord.Credit = null;
                 mRecord.Institute = this.Institute.Text.Trim();
                 mRecord.Type = this.Type.Text.Trim();
                 mRecord.Limit = int.Parse(this.Limit.Text.Trim());

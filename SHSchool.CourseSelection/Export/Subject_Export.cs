@@ -36,19 +36,25 @@ namespace SHSchool.CourseSelection.Export
             if (!int.TryParse(K12.Data.School.DefaultSchoolYear, out school_year))
                 school_year = DateTime.Today.Year - 1911;
 
-            this.cboSchoolYear.Items.Add("");
+            this.cboSchoolYear.Items.Add(school_year - 2);
+            this.cboSchoolYear.Items.Add(school_year - 1);
             this.cboSchoolYear.Items.Add(school_year);
             this.cboSchoolYear.Items.Add(school_year + 1);
             this.cboSchoolYear.Items.Add(school_year + 2);
+
+            this.cboSchoolYear.SelectedIndex = 2;
         }
 
         private void InitSemester()
         {
             this.cboSemester.Items.Clear();
 
-            this.cboSemester.Items.Add("");
             this.cboSemester.Items.Add("1");
             this.cboSemester.Items.Add("2");
+            if (K12.Data.School.DefaultSemester == "1")
+                this.cboSemester.SelectedIndex = 0;
+            else
+                this.cboSemester.SelectedIndex = 1;
         }
 
         private void InitializeData()
@@ -79,7 +85,29 @@ namespace SHSchool.CourseSelection.Export
             string semester = string.IsNullOrEmpty(this.cboSemester.Text) ? "0" : this.cboSemester.Text;
             string querySQL = string.Empty;
 
-            querySQL = string.Format(@"select uid as 科目系統編號, school_year as 學年度, semester as 學期, subject_name as 科目名稱, level as 級別, credit as 學分, type as 課程類別, ""limit"" as 修課人數上限, goal as 教學目標, content as 教學內容, memo as 備註 from $ischool.course_selection.subject where school_year='{0}' and semester='{1}' order by subject_name, level", school_year, semester);
+            querySQL = string.Format(@"
+SELECT 
+    uid as 科目系統編號
+    , school_year as 學年度
+    , semester as 學期
+    , institute as 教學單位
+    , subject_name as 科目名稱
+    , level as 級別
+    , credit as 學分數
+    , type as 課程類別
+    , ""limit"" as 修課人數上限
+    , goal as 教學目標
+    , content as 教學內容
+    , memo as 備註 
+FROM
+    $ischool.course_selection.subject 
+WHERE
+    school_year='{0}' 
+    AND semester='{1}' 
+ORDER BY
+    subject_name
+    , level", school_year, semester);
+
 
             return querySQL;
         }

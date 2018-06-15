@@ -97,17 +97,13 @@ namespace SHSchool.CourseSelection.Forms
                 {
                     if ("" + datarow.Cells[5].Value != "") // 已選上課程學生才能鎖課
                     {
-                        datarow.Cells["Lock"].Value = "是";
-                        datarow.DefaultCellStyle.BackColor = Color.YellowGreen;
-                        foreach (DataRow row in _DataRowList)
-                        {
-                            if (("" + datarow.Cells[2].Tag) == ("" + row["id"]))
-                            {
-                                row["lock"] = true;
-                            }
-                        }
+                        ((DataRow)datarow.Tag)["lock"] = "true";
+                        //datarow.Cells["Lock"].Value = "是";
+                        //datarow.DefaultCellStyle.BackColor = Color.YellowGreen;
+                        //((DataRow)datarow.Tag)["lock"] = true;
                     }
                 }
+                ShowDataRow();
             };
             menu.MenuItems.Add(item);
 
@@ -116,18 +112,12 @@ namespace SHSchool.CourseSelection.Forms
             {
                 foreach (DataGridViewRow datarow in dataGridViewX1.SelectedRows)
                 {
-                    datarow.Cells["Lock"].Value = "";
-                    datarow.DefaultCellStyle.BackColor = Color.White;
-
-                    foreach (DataRow row in _DataRowList)
-                    {
-                        if ("" + datarow.Cells[2].Tag == "" + row["id"])
-                        {
-                            row["lock"] = false;
-                        }
-                    }
+                    ((DataRow)datarow.Tag)["lock"] = "false";
+                    //datarow.Cells["Lock"].Value = "";
+                    //datarow.DefaultCellStyle.BackColor = Color.White;
+                    //((DataRow)datarow.Tag)["lock"] = false;
                 }
-
+                ShowDataRow();
             };
             menu.MenuItems.Add(item2);
             #endregion
@@ -586,38 +576,8 @@ ORDER BY
                         foreach (DataRow row in dt.Rows)
                         {
                             _DataRowList.Add(row);
-                            int index = 0;
-                            DataGridViewRow datarow = new DataGridViewRow();
-                            datarow.CreateCells(dataGridViewX1);
-
-                            datarow.Cells[index++].Value = "" + row["class_name"];
-                            datarow.Cells[index++].Value = "" + row["seat_no"];
-                            datarow.Cells[index].Tag = "" + row["id"]; // 記錄學生ID
-                            datarow.Cells[index++].Value = "" + row["name"];
-                            datarow.Cells[index++].Value = ("" + row["lock"]) == "true" ? "是" : "";
-                            if ("" + row["lock"] == "true")
-                            {
-                                datarow.DefaultCellStyle.BackColor = Color.YellowGreen;
-                            }
-                            datarow.Cells[index++].Value = "" + row["分發順位"];
-
-                            if ("" + row["ref_subject_id"] != string.Empty)
-                            {
-                                ((DataGridViewColorBallTextCell)datarow.Cells[index]).Value = "" + row["選課課程"];
-                                ((DataGridViewColorBallTextCell)datarow.Cells[index]).Color = subjectColorDic["" + row["ref_subject_id"]];
-                            }
-                            datarow.Cells[index++].Tag = "" + row["ref_subject_id"];
-                            datarow.Cells[index++].Value = "" + row["志願1"];
-                            datarow.Cells[index++].Value = "" + row["志願2"];
-                            datarow.Cells[index++].Value = "" + row["志願3"];
-                            datarow.Cells[index++].Value = "" + row["志願4"];
-                            datarow.Cells[index++].Value = "" + row["志願5"];
-                            datarow.Cells[index++].Value = ""; // 分發志願
-                            datarow.Cells[index++].Value = "" + row["attend_type"];
-
-                            datarow.Tag = row;
-                            dataGridViewX1.Rows.Add(datarow);
                         }
+                        ShowDataRow(true);
                         pictureBox1.Visible = false;
                     }
                     else
@@ -731,7 +691,7 @@ ORDER BY
             List<string> dataList = new List<string>();
 
             int seed = 0;
-            string _seed = seedCbx.Text;
+            string _seed = lblCurrentSeed.Text;
             string[] _seedArray = _seed.Split(':');
             foreach (string s in _seedArray)
             {
@@ -747,18 +707,18 @@ ORDER BY
     SELECT
         {0}::BIGINT AS ref_student_id
         , {1}::BIGINT AS ref_subject_id
-        , '{2}'::TEXT AS subject_name
+        , {2}::TEXT AS subject_name
         , {3}::BOOLEAN AS lock
-        , '{4}'::TEXT AS attend_type
+        , {4}::TEXT AS attend_type
         , {5}::INTEGER AS school_year
         , {6}::INTEGER AS semester
         , '{7}'::TEXT AS type
-        , '{8}'::INTEGER AS seed
+        , {8}::INTEGER AS seed
                 ", row["id"]
-                , "" + datarow.Cells[5].Tag == "" ? "NULL" : "" + datarow.Cells[5].Tag
-                , "" + datarow.Cells[5].Value == "" ? "NULL" : "" + datarow.Cells[5].Value
-                , "" + datarow.Cells["lock"].Value == "是" ? "true" : "false"
-                , "" + datarow.Cells["attendType"].Value == "" ? "NULL" : "" + datarow.Cells["attendType"].Value
+                , "" + row["ref_subject_id"] == "" ? "NULL" : "" + row["ref_subject_id"]
+                , "" + row["選課課程"] == "" ? "NULL" : "'" + row["選課課程"] + "'"
+                , "" + row["lock"] == "true" ? "true" : "false"
+                , "" + row["attend_type"] == "" ? "NULL" : "'" + row["attend_type"] + "'"
                 , schoolYearCbx.Text
                 , semesterCbx.Text
                 , courseTypeCbx.Text
@@ -820,10 +780,35 @@ WITH data_row AS(
     SELECT
         data_source.*
         ,CASE 
-            WHEN data_source.status = 'update' THEN '學生「'|| student.name || '」課程類別「'|| data_source.type ||'」選課鎖定狀態「' || data_source.orig_lock || '」變更為「' || data_source.lock || ' 」選修方式「data_source.attend_type」 使用者「{2}」'
-            WHEN data_source.status = 'insert' THEN '學生「'|| student.name || '」課程類別「'|| data_source.type ||'」 選修科目結果為「' || data_source.subject_name || '」選課鎖定狀態為「' || data_source.lock || '」分發順位代碼「' || data_source.seed || ' 」選修方式「data_source.attend_type」使用者「{2}」'
-            WHEN data_source.status = 'delete_insert' THEN '學生「'|| student.name || '」課程類別「'|| data_source.type ||'」選修科目結果「' || data_source.orig_subject_name || '」變更為「' || data_source.subject_name || ' 」選課鎖定狀態「' || data_source.orig_lock || '」變更為「' || data_source.lock || ' 」分發順位代碼「' || data_source.seed || ' 」選修方式「data_source.attend_type」 使用者「{2}」'
-            WHEN data_source.status = 'delete' THEN '刪除學生「'|| student.name || '」課程類別「'|| data_source.type ||'」 原選修科目結果「' || data_source.orig_subject_name || '」   使用者「{1}」'
+            WHEN data_source.status = 'update'::text THEN 
+'學生「'|| student.name || '」
+課程類別「'|| data_source.type ||'」選修科目「' || data_source.subject_name || '」
+變更選課鎖定狀態為「' || data_source.lock || '」'
+
+            WHEN data_source.status = 'insert'::text AND data_source.attend_type = '指定'::text THEN 
+'學生「'|| student.name || '」
+課程類別「'|| data_source.type ||'」選修科目「指定」為「' || data_source.subject_name || '」'|| (CASE WHEN data_source.lock = true THEN '
+鎖定狀態為「' || data_source.lock || '」' ELSE '' END)
+
+            WHEN data_source.status = 'insert'::text AND data_source.attend_type = '志願分發'::text THEN 
+'學生「'|| student.name || '」
+課程類別「'|| data_source.type ||'」選修科目「志願分發(分發順位代碼' || data_source.seed || ')」為「' || data_source.subject_name || '」'|| (CASE WHEN data_source.lock = true THEN '
+鎖定狀態為「' || data_source.lock || '」' ELSE '' END)
+
+            WHEN data_source.status = 'delete_insert'::text AND data_source.attend_type = '指定'::text THEN 
+'學生「'|| student.name || '」
+課程類別「'|| data_source.type ||'」
+自移除原選修科目「' || data_source.orig_subject_name || '」改「指定」為「' || data_source.subject_name || '」'|| (CASE WHEN data_source.lock = true THEN '
+鎖定狀態為「' || data_source.lock || '」' ELSE '' END)
+
+            WHEN data_source.status = 'delete_insert'::text AND data_source.attend_type = '志願分發'::text THEN 
+'學生「'|| student.name || '」
+課程類別「'|| data_source.type ||'」
+自移除原選修科目「' || data_source.orig_subject_name || '」改「志願分發(分發順位代碼' || data_source.seed || ')」為「' || data_source.subject_name || '」'|| (CASE WHEN data_source.lock = true THEN '
+鎖定狀態為「' || data_source.lock || '」' ELSE '' END)
+
+            WHEN data_source.status = 'delete'::text THEN 
+'刪除學生「'|| student.name || '」課程類別「'|| data_source.type ||'」 原選修科目結果「' || data_source.orig_subject_name || '」'
         END AS description
     FROM
         data_source
@@ -866,6 +851,7 @@ WITH data_row AS(
     UPDATE $ischool.course_selection.ss_attend
     SET
         lock = data_source.lock
+        , last_update = now()
     FROM
         data_source
     WHERE
@@ -1173,7 +1159,7 @@ WHERE
                 buttonItem9_Click(null, null);
 
                 ShowDataRow();
-                dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
+                //dataGridViewX1.Sort(Column10, ListSortDirection.Ascending);
             }
         }
 

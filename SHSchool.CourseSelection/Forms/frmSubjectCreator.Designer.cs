@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
+            this.labelX9 = new DevComponents.DotNetBar.LabelX();
+            this.Level = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.Memo = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.labelX8 = new DevComponents.DotNetBar.LabelX();
             this.Content = new DevComponents.DotNetBar.Controls.TextBoxX();
@@ -45,10 +47,8 @@
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.Cancel = new DevComponents.DotNetBar.ButtonX();
             this.Save = new DevComponents.DotNetBar.ButtonX();
-            this.Institute = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
-            this.labelX9 = new DevComponents.DotNetBar.LabelX();
-            this.Level = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.Institute = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.panelEx1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,6 +56,7 @@
             // 
             this.panelEx1.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.panelEx1.Controls.Add(this.Institute);
             this.panelEx1.Controls.Add(this.labelX9);
             this.panelEx1.Controls.Add(this.Level);
             this.panelEx1.Controls.Add(this.Memo);
@@ -74,13 +75,12 @@
             this.panelEx1.Controls.Add(this.labelX2);
             this.panelEx1.Controls.Add(this.Cancel);
             this.panelEx1.Controls.Add(this.Save);
-            this.panelEx1.Controls.Add(this.Institute);
             this.panelEx1.Controls.Add(this.labelX1);
             this.panelEx1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEx1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.panelEx1.Location = new System.Drawing.Point(0, 0);
             this.panelEx1.Name = "panelEx1";
-            this.panelEx1.Size = new System.Drawing.Size(784, 562);
+            this.panelEx1.Size = new System.Drawing.Size(784, 625);
             this.panelEx1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx1.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -90,12 +90,38 @@
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 2;
             // 
+            // labelX9
+            // 
+            // 
+            // 
+            // 
+            this.labelX9.BackgroundStyle.Class = "";
+            this.labelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX9.Location = new System.Drawing.Point(41, 52);
+            this.labelX9.Name = "labelX9";
+            this.labelX9.Size = new System.Drawing.Size(45, 21);
+            this.labelX9.TabIndex = 16;
+            this.labelX9.Text = "級別";
+            this.labelX9.TextAlignment = System.Drawing.StringAlignment.Far;
+            // 
+            // Level
+            // 
+            // 
+            // 
+            // 
+            this.Level.Border.Class = "TextBoxBorder";
+            this.Level.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.Level.Location = new System.Drawing.Point(93, 52);
+            this.Level.Name = "Level";
+            this.Level.Size = new System.Drawing.Size(92, 25);
+            this.Level.TabIndex = 2;
+            // 
             // Memo
             // 
             this.Memo.AcceptsReturn = true;
-            this.Memo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.Memo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 
@@ -104,8 +130,9 @@
             this.Memo.Location = new System.Drawing.Point(93, 428);
             this.Memo.Multiline = true;
             this.Memo.Name = "Memo";
-            this.Memo.Size = new System.Drawing.Size(663, 85);
-            this.Memo.TabIndex = 15;
+            this.Memo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.Memo.Size = new System.Drawing.Size(663, 148);
+            this.Memo.TabIndex = 8;
             // 
             // labelX8
             // 
@@ -124,8 +151,8 @@
             // Content
             // 
             this.Content.AcceptsReturn = true;
-            this.Content.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.Content.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 
@@ -134,8 +161,9 @@
             this.Content.Location = new System.Drawing.Point(93, 260);
             this.Content.Multiline = true;
             this.Content.Name = "Content";
+            this.Content.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.Content.Size = new System.Drawing.Size(663, 150);
-            this.Content.TabIndex = 13;
+            this.Content.TabIndex = 7;
             // 
             // labelX7
             // 
@@ -154,8 +182,8 @@
             // Goal
             // 
             this.Goal.AcceptsReturn = true;
-            this.Goal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.Goal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 
@@ -164,8 +192,9 @@
             this.Goal.Location = new System.Drawing.Point(93, 92);
             this.Goal.Multiline = true;
             this.Goal.Name = "Goal";
+            this.Goal.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.Goal.Size = new System.Drawing.Size(663, 150);
-            this.Goal.TabIndex = 11;
+            this.Goal.TabIndex = 6;
             // 
             // labelX6
             // 
@@ -197,8 +226,6 @@
             // 
             // Limit
             // 
-            this.Limit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 
@@ -207,7 +234,7 @@
             this.Limit.Location = new System.Drawing.Point(664, 52);
             this.Limit.Name = "Limit";
             this.Limit.Size = new System.Drawing.Size(92, 25);
-            this.Limit.TabIndex = 9;
+            this.Limit.TabIndex = 5;
             // 
             // labelX4
             // 
@@ -225,8 +252,6 @@
             // 
             // Type
             // 
-            this.Type.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 
@@ -235,7 +260,7 @@
             this.Type.Location = new System.Drawing.Point(458, 52);
             this.Type.Name = "Type";
             this.Type.Size = new System.Drawing.Size(92, 25);
-            this.Type.TabIndex = 7;
+            this.Type.TabIndex = 4;
             // 
             // labelX3
             // 
@@ -253,8 +278,6 @@
             // 
             // Credit
             // 
-            this.Credit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 
@@ -263,12 +286,10 @@
             this.Credit.Location = new System.Drawing.Point(263, 52);
             this.Credit.Name = "Credit";
             this.Credit.Size = new System.Drawing.Size(92, 25);
-            this.Credit.TabIndex = 5;
+            this.Credit.TabIndex = 3;
             // 
             // SubjectName
             // 
-            this.SubjectName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 
@@ -277,7 +298,7 @@
             this.SubjectName.Location = new System.Drawing.Point(458, 12);
             this.SubjectName.Name = "SubjectName";
             this.SubjectName.Size = new System.Drawing.Size(298, 25);
-            this.SubjectName.TabIndex = 3;
+            this.SubjectName.TabIndex = 1;
             // 
             // labelX2
             // 
@@ -298,10 +319,10 @@
             this.Cancel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Cancel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Cancel.Location = new System.Drawing.Point(702, 525);
+            this.Cancel.Location = new System.Drawing.Point(702, 588);
             this.Cancel.Name = "Cancel";
             this.Cancel.Size = new System.Drawing.Size(54, 23);
-            this.Cancel.TabIndex = 2;
+            this.Cancel.TabIndex = 10;
             this.Cancel.Text = "取消";
             this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
             // 
@@ -310,26 +331,12 @@
             this.Save.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Save.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Save.Location = new System.Drawing.Point(635, 525);
+            this.Save.Location = new System.Drawing.Point(642, 588);
             this.Save.Name = "Save";
             this.Save.Size = new System.Drawing.Size(54, 23);
-            this.Save.TabIndex = 0;
+            this.Save.TabIndex = 9;
             this.Save.Text = "儲存";
             this.Save.Click += new System.EventHandler(this.Save_Click);
-            // 
-            // Institute
-            // 
-            this.Institute.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            // 
-            // 
-            // 
-            this.Level.Border.Class = "TextBoxBorder";
-            this.Level.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.Institute.Location = new System.Drawing.Point(93, 12);
-            this.Institute.Name = "Institute";
-            this.Institute.Size = new System.Drawing.Size(262, 25);
-            this.Institute.TabIndex = 1;
             // 
             // labelX1
             // 
@@ -345,39 +352,23 @@
             this.labelX1.Text = "科目名稱";
             this.labelX1.TextAlignment = System.Drawing.StringAlignment.Far;
             // 
-            // labelX9
+            // Institute
             // 
             // 
             // 
             // 
-            this.labelX9.BackgroundStyle.Class = "";
-            this.labelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX9.Location = new System.Drawing.Point(41, 52);
-            this.labelX9.Name = "labelX9";
-            this.labelX9.Size = new System.Drawing.Size(45, 21);
-            this.labelX9.TabIndex = 16;
-            this.labelX9.Text = "級別";
-            this.labelX9.TextAlignment = System.Drawing.StringAlignment.Far;
-            // 
-            // Level
-            // 
-            this.Level.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            // 
-            // 
-            // 
-            this.Level.Border.Class = "TextBoxBorder";
-            this.Level.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.Level.Location = new System.Drawing.Point(93, 52);
-            this.Level.Name = "Level";
-            this.Level.Size = new System.Drawing.Size(92, 25);
-            this.Level.TabIndex = 17;
+            this.Institute.Border.Class = "TextBoxBorder";
+            this.Institute.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.Institute.Location = new System.Drawing.Point(93, 12);
+            this.Institute.Name = "Institute";
+            this.Institute.Size = new System.Drawing.Size(283, 25);
+            this.Institute.TabIndex = 0;
             // 
             // frmSubjectCreator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 562);
+            this.ClientSize = new System.Drawing.Size(784, 625);
             this.Controls.Add(this.panelEx1);
             this.Name = "frmSubjectCreator";
             this.Text = "新增科目";
@@ -392,7 +383,6 @@
         private DevComponents.DotNetBar.LabelX labelX2;
         private DevComponents.DotNetBar.ButtonX Cancel;
         private DevComponents.DotNetBar.ButtonX Save;
-        private DevComponents.DotNetBar.Controls.TextBoxX Institute;
         private DevComponents.DotNetBar.LabelX labelX1;
         private DevComponents.DotNetBar.LabelX labelX3;
         private DevComponents.DotNetBar.Controls.TextBoxX Credit;
@@ -409,5 +399,6 @@
         private DevComponents.DotNetBar.Controls.TextBoxX Type;
         private DevComponents.DotNetBar.LabelX labelX9;
         private DevComponents.DotNetBar.Controls.TextBoxX Level;
+        private DevComponents.DotNetBar.Controls.TextBoxX Institute;
     }
 }

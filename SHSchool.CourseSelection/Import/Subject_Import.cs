@@ -112,6 +112,7 @@ namespace SHSchool.CourseSelection.Import
                 string subject_uid = row.GetValue("科目系統編號").Trim();
                 string school_year = row.GetValue("學年度").Trim();
                 string semester = row.GetValue("學期").Trim();
+                string institute = row.GetValue("教學單位").Trim();
                 string subject_name = row.GetValue("科目名稱").Trim();
                 string level = row.GetValue("級別").Trim();
 
@@ -143,6 +144,8 @@ namespace SHSchool.CourseSelection.Import
                         subjectRecord.SchoolYear = int.Parse(school_year);
                     if (mOption.SelectedFields.Contains("學期") && !string.IsNullOrEmpty(semester))
                         subjectRecord.Semester = int.Parse(semester);
+                    if (mOption.SelectedFields.Contains("教學單位") && !string.IsNullOrEmpty(institute))
+                        subjectRecord.Institute = institute;
                     if (mOption.SelectedFields.Contains("科目名稱") && !string.IsNullOrEmpty(subject_name))
                         subjectRecord.SubjectName = subject_name;
                     if (mOption.SelectedFields.Contains("級別"))

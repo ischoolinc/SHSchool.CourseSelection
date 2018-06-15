@@ -343,7 +343,7 @@
             this.labelX4.Name = "labelX4";
             this.labelX4.Size = new System.Drawing.Size(61, 23);
             this.labelX4.TabIndex = 9;
-            this.labelX4.Text = "選課類別";
+            this.labelX4.Text = "課程類別";
             // 
             // courseTypeCbx
             // 
