@@ -283,7 +283,7 @@
             // Column4
             // 
             this.Column4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Column4.HeaderText = "學分";
+            this.Column4.HeaderText = "學分數";
             this.Column4.Name = "Column4";
             this.Column4.Width = 59;
             // 

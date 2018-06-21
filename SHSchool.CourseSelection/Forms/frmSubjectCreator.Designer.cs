@@ -273,7 +273,7 @@
             this.labelX3.Name = "labelX3";
             this.labelX3.Size = new System.Drawing.Size(53, 21);
             this.labelX3.TabIndex = 4;
-            this.labelX3.Text = "學分";
+            this.labelX3.Text = "學分數";
             this.labelX3.TextAlignment = System.Drawing.StringAlignment.Far;
             // 
             // Credit

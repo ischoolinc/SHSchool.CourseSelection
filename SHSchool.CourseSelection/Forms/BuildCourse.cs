@@ -21,13 +21,13 @@ namespace SHSchool.CourseSelection.Forms
         private Dictionary<string, Dictionary<string, _SubjectCourse>> _subjectCourseDic = new Dictionary<string, Dictionary<string, _SubjectCourse>>();
         private Dictionary<string, _Subject> _subjectDic = new Dictionary<string, _Subject>();
 
-        public BuildCourse(DataGridView dgv,int sy,int s,string type)
+        public BuildCourse(DataGridView dgv, int sy, int s, string type)
         {
             InitializeComponent();
 
             _schoolYear = sy;
             _semester = s;
-           
+
             // Init Lb
             schoolYearLb.Text = "" + sy;
             semesterLb.Text = "" + s;
@@ -100,8 +100,10 @@ namespace SHSchool.CourseSelection.Forms
                 foreach (DataGridViewRow dr in dgv.Rows)
                 {
                     string subjectID = "" + dr.Tag;
-                    int 設定開班數 = int.Parse("" + dr.Cells["buildCourseCount"].Value);
-                    int 已開班數 = int.Parse("" + dr.Cells["courseCount"].Value);
+                    int 設定開班數 = 0;
+                    int.TryParse("" + dr.Cells["buildCourseCount"].Value, out 設定開班數);
+                    int 已開班數 = 0;
+                    int.TryParse("" + dr.Cells["courseCount"].Value, out 已開班數);
 
                     // Update 修改
                     if (設定開班數 == 已開班數 && 設定開班數 != 0)
@@ -132,7 +134,7 @@ namespace SHSchool.CourseSelection.Forms
                             int index = 0;
                             DataGridViewRow datarow = new DataGridViewRow();
                             datarow.CreateCells(dataGridViewX1);
-                            
+
                             //if (設定開班數 == 1)
                             //{
                             //    sbc.ClassType = "";
@@ -142,7 +144,7 @@ namespace SHSchool.CourseSelection.Forms
                                 datarow.Cells[index++].Value = "刪除";
                                 datarow.DefaultCellStyle.ForeColor = Color.Red;
                             }
-                            if(n <= 設定開班數)
+                            if (n <= 設定開班數)
                             {
                                 datarow.Cells[index++].Value = "修改";
                             }
@@ -193,10 +195,10 @@ namespace SHSchool.CourseSelection.Forms
                 }
             }
             #endregion
-            
+
         }
 
-        public void InitDataGridView(string _dataType,int i,int count,string subjectID)
+        public void InitDataGridView(string _dataType, int i, int count, string subjectID)
         {
             #region Switch 級別、班別
             string[] mark = new string[10];
@@ -237,39 +239,46 @@ namespace SHSchool.CourseSelection.Forms
                     mark[i] = "";
                     break;
             }
-
-            switch (int.Parse(_subjectDic[subjectID].Level))
+            int tryParseInt = -1;
+            if (int.TryParse(_subjectDic[subjectID].Level, out tryParseInt))
             {
-                case 1:
-                    level = "I";
-                    break;
-                case 2:
-                    level = "II";
-                    break;
-                case 3:
-                    level = "III";
-                    break;
-                case 4:
-                    level = "IV";
-                    break;
-                case 5:
-                    level = "V";
-                    break;
-                case 6:
-                    level = "VI";
-                    break;
-                default:
-                    level = "" + _subjectDic[subjectID].Level;
-                    break;
+                switch (tryParseInt)
+                {
+                    case 1:
+                        level = "I";
+                        break;
+                    case 2:
+                        level = "II";
+                        break;
+                    case 3:
+                        level = "III";
+                        break;
+                    case 4:
+                        level = "IV";
+                        break;
+                    case 5:
+                        level = "V";
+                        break;
+                    case 6:
+                        level = "VI";
+                        break;
+                    default:
+                        level = "" + tryParseInt;
+                        break;
+                }
+            }
+            else
+            {
+                level = "";
             }
             #endregion
-            
+
             //如果 設定開班數 count = 1，不加班別
             if (count == 1)
             {
                 mark[i] = "";
             }
-            
+
             DataGridViewRow datarow = new DataGridViewRow();
             datarow.CreateCells(dataGridViewX1);
             int index = 0;
@@ -293,29 +302,33 @@ namespace SHSchool.CourseSelection.Forms
             if (e.ColumnIndex == 5 && e.RowIndex >= 0)
             {
                 string level = "";
-                switch (int.Parse("" + dataGridViewX1.Rows[e.RowIndex].Cells[4].Value))
+                int tryParseInt = 0;
+                if (int.TryParse("" + dataGridViewX1.Rows[e.RowIndex].Cells[4].Value, out tryParseInt))
                 {
-                    case 1:
-                        level = "I";
-                        break;
-                    case 2:
-                        level = "II";
-                        break;
-                    case 3:
-                        level = "III";
-                        break;
-                    case 4:
-                        level = "IV";
-                        break;
-                    case 5:
-                        level = "V";
-                        break;
-                    case 6:
-                        level = "VI";
-                        break;
-                    default:
-                        level = "" + dataGridViewX1.Rows[e.RowIndex].Cells[4].Value;
-                        break;
+                    switch (tryParseInt)
+                    {
+                        case 1:
+                            level = "I";
+                            break;
+                        case 2:
+                            level = "II";
+                            break;
+                        case 3:
+                            level = "III";
+                            break;
+                        case 4:
+                            level = "IV";
+                            break;
+                        case 5:
+                            level = "V";
+                            break;
+                        case 6:
+                            level = "VI";
+                            break;
+                        default:
+                            level = "" + dataGridViewX1.Rows[e.RowIndex].Cells[4].Value;
+                            break;
+                    }
                 }
                 dataGridViewX1.Rows[e.RowIndex].Cells[1].Value = dataGridViewX1.Rows[e.RowIndex].Cells[2].Value + " " +
                                                                  dataGridViewX1.Rows[e.RowIndex].Cells[3].Value + " " +
@@ -357,7 +370,7 @@ namespace SHSchool.CourseSelection.Forms
                     MessageBox.Show("課程名稱重複!!");
                     return;
                 }
-                if(!courseNameList.Contains("" + datarow.Cells["courseName"].Value))
+                if (!courseNameList.Contains("" + datarow.Cells["courseName"].Value))
                 {
                     courseNameList.Add("" + datarow.Cells["courseName"].Value);
                 }
@@ -373,32 +386,36 @@ namespace SHSchool.CourseSelection.Forms
                 string subjectName = _subjectDic[subjectID].SubjectName;
                 string classType = "" + row.Cells["classType"].Value;
                 string level = _subjectDic[subjectID].Level;
-                switch (int.Parse("" + row.Cells["level"].Value))
+                int tryParseInt = 0;
+                if (int.TryParse("" + row.Cells["level"].Value, out tryParseInt))
                 {
-                    case 1:
-                        level = "I";
-                        break;
-                    case 2:
-                        level = "II";
-                        break;
-                    case 3:
-                        level = "III";
-                        break;
-                    case 4:
-                        level = "IV";
-                        break;
-                    case 5:
-                        level = "V";
-                        break;
-                    case 6:
-                        level = "VI";
-                        break;
-                    default:
-                        level = "" + row.Cells["level"].Value;
-                        break;
+                    switch (tryParseInt)
+                    {
+                        case 1:
+                            level = "I";
+                            break;
+                        case 2:
+                            level = "II";
+                            break;
+                        case 3:
+                            level = "III";
+                            break;
+                        case 4:
+                            level = "IV";
+                            break;
+                        case 5:
+                            level = "V";
+                            break;
+                        case 6:
+                            level = "VI";
+                            break;
+                        default:
+                            level = "" + row.Cells["level"].Value;
+                            break;
+                    }
                 }
 
-                string courseName = courseTypeLb.Text + " " + subjectName + " " + level + " " + classType;
+                string courseName = (courseTypeLb.Text + " " + subjectName + " " + level + " " + classType).Trim();
                 string credit = _subjectDic[subjectID].Credit == "" ? "NULL" : _subjectDic[subjectID].Credit;
 
                 string data = string.Format(@"
@@ -414,7 +431,19 @@ SELECT
 	, {8} ::REAL AS credit
 	, {9} AS school_year
 	, {10} AS semester   
-                    ", dataType, subjectID, subjectCourseID, courseID, subjectName, classType, _subjectDic[subjectID].Level, courseName, credit,schoolYearLb.Text,semesterLb.Text);
+                    "
+                    , dataType
+                    , subjectID
+                    , subjectCourseID
+                    , courseID
+                    , subjectName
+                    , classType
+                    , int.TryParse(_subjectDic[subjectID].Level, out tryParseInt) ? ("" + tryParseInt) : "NULL"
+                    , courseName
+                    , credit
+                    , schoolYearLb.Text
+                    , semesterLb.Text
+                );
 
                 dataList.Add(data);
 
@@ -541,7 +570,7 @@ SELECT
                 #endregion
             }
 
-            string dataRow = string.Join("\r UNION ALL",dataList);
+            string dataRow = string.Join("\r UNION ALL", dataList);
 
             #region SQL
             string sql = string.Format(@"
@@ -654,7 +683,7 @@ WHERE
             {
                 MessageBox.Show("課程建立失敗!");
             }
-            
+
         }
     }
 }
@@ -666,7 +695,7 @@ class _SubjectCourse
     public string CourseName { get; set; }
     public string CourseID { get; set; }
     public string ClassType { get; set; }
-    
+
 }
 class _Subject
 {

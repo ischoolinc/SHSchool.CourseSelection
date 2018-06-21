@@ -121,7 +121,7 @@ namespace SHSchool.CourseSelection.Import
                 //  若鍵值不為「科目系統編號」，則查出哪些課程是要新增的
                 if (keyField != "科目系統編號")
                 {
-                    filterSubjectRecords = ExistingSubjectRecords.Where(x => (x.SchoolYear.ToString() == school_year)).Where(x => (x.Semester.ToString() == semester)).Where(x => (x.SubjectName.ToString().Trim() == subject_name)).Where(x => ((x.Level.HasValue ? x.Level.Value.ToString() : "") == level));     
+                    filterSubjectRecords = ExistingSubjectRecords.Where(x => (x.SchoolYear.ToString() == school_year)).Where(x => (x.Semester.ToString() == semester)).Where(x => (x.SubjectName.ToString().Trim() == subject_name)).Where(x => ((x.Level.HasValue ? x.Level.Value.ToString() : "") == level));
                 }
                 else
                     filterSubjectRecords = ExistingSubjectRecords.Where(x => x.UID == subject_uid);
@@ -144,8 +144,6 @@ namespace SHSchool.CourseSelection.Import
                         subjectRecord.SchoolYear = int.Parse(school_year);
                     if (mOption.SelectedFields.Contains("學期") && !string.IsNullOrEmpty(semester))
                         subjectRecord.Semester = int.Parse(semester);
-                    if (mOption.SelectedFields.Contains("教學單位") && !string.IsNullOrEmpty(institute))
-                        subjectRecord.Institute = institute;
                     if (mOption.SelectedFields.Contains("科目名稱") && !string.IsNullOrEmpty(subject_name))
                         subjectRecord.SubjectName = subject_name;
                     if (mOption.SelectedFields.Contains("級別"))
@@ -156,12 +154,15 @@ namespace SHSchool.CourseSelection.Import
                             subjectRecord.Level = int.Parse(level);
                     }
                 }
+                if (mOption.SelectedFields.Contains("教學單位") && !string.IsNullOrEmpty(institute))
+                    subjectRecord.Institute = institute;
                 if (mOption.SelectedFields.Contains("學分數"))
                 {
-                    if (string.IsNullOrEmpty(row.GetValue("學分數")))
-                        subjectRecord.Credit = null;
+                    int tryParseInt = 0;
+                    if (int.TryParse(row.GetValue("學分數"), out tryParseInt))
+                        subjectRecord.Credit = tryParseInt;
                     else
-                        subjectRecord.Credit = int.Parse(row.GetValue("學分數").Trim());
+                        subjectRecord.Credit = null;
                 }
                 if (mOption.SelectedFields.Contains("課程類別") && !string.IsNullOrWhiteSpace(row.GetValue("課程類別")))
                     subjectRecord.Type = row.GetValue("課程類別").Trim();

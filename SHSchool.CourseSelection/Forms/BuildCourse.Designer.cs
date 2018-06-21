@@ -198,7 +198,7 @@
             this.credit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.credit.DefaultCellStyle = dataGridViewCellStyle4;
-            this.credit.HeaderText = "學分";
+            this.credit.HeaderText = "學分數";
             this.credit.Name = "credit";
             this.credit.ReadOnly = true;
             this.credit.Width = 59;

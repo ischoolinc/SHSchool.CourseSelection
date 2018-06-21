@@ -127,7 +127,7 @@
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.credit.DefaultCellStyle = dataGridViewCellStyle3;
-            this.credit.HeaderText = "學分";
+            this.credit.HeaderText = "學分數";
             this.credit.Name = "credit";
             this.credit.ReadOnly = true;
             this.credit.Width = 59;
@@ -287,7 +287,7 @@
             dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle9.BackColor = System.Drawing.Color.LightGray;
             this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle9;
-            this.dataGridViewTextBoxColumn3.HeaderText = "學分";
+            this.dataGridViewTextBoxColumn3.HeaderText = "學分數";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
             // 

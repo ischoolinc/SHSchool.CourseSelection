@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.labelX3 = new DevComponents.DotNetBar.LabelX();
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
@@ -55,7 +55,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.leaveBtn = new DevComponents.DotNetBar.ButtonX();
-            this.saveBtn = new DevComponents.DotNetBar.ButtonX();
+            this.btnSave = new DevComponents.DotNetBar.ButtonX();
             this.subDetailLb = new DevComponents.DotNetBar.LabelX();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -146,7 +146,7 @@
             this.courseTypeCbx.Size = new System.Drawing.Size(110, 25);
             this.courseTypeCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.courseTypeCbx.TabIndex = 5;
-            this.courseTypeCbx.TextChanged += new System.EventHandler(this.courseTypeCbx_TextChanged);
+            this.courseTypeCbx.SelectedIndexChanged += new System.EventHandler(this.courseTypeCbx_SelectedIndexChanged);
             // 
             // dataGridViewX1
             // 
@@ -170,14 +170,14 @@
             this.Column9,
             this.Column11,
             this.attendType});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewX1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewX1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
             this.dataGridViewX1.Location = new System.Drawing.Point(0, 23);
@@ -315,7 +315,7 @@
             this.conditionCbx.Size = new System.Drawing.Size(155, 25);
             this.conditionCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.conditionCbx.TabIndex = 10;
-            this.conditionCbx.SelectedIndexChanged += new System.EventHandler(this.conditionCbx_TextChanged);
+            this.conditionCbx.SelectedIndexChanged += new System.EventHandler(this.conditionCbx_SelectedIndexChanged);
             // 
             // schoolYearCbx
             // 
@@ -396,19 +396,19 @@
             this.leaveBtn.Text = "離開";
             this.leaveBtn.Click += new System.EventHandler(this.leaveBtn_Click);
             // 
-            // saveBtn
+            // btnSave
             // 
-            this.saveBtn.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.saveBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveBtn.BackColor = System.Drawing.Color.Transparent;
-            this.saveBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.saveBtn.Location = new System.Drawing.Point(887, 567);
-            this.saveBtn.Name = "saveBtn";
-            this.saveBtn.Size = new System.Drawing.Size(75, 23);
-            this.saveBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.saveBtn.TabIndex = 16;
-            this.saveBtn.Text = "儲存";
-            this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
+            this.btnSave.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.BackColor = System.Drawing.Color.Transparent;
+            this.btnSave.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.btnSave.Location = new System.Drawing.Point(887, 567);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.btnSave.TabIndex = 16;
+            this.btnSave.Text = "儲存";
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // subDetailLb
             // 
@@ -690,7 +690,7 @@
             this.Controls.Add(this.labelX4);
             this.Controls.Add(this.buttonX1);
             this.Controls.Add(this.subDetailLb);
-            this.Controls.Add(this.saveBtn);
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.leaveBtn);
             this.Controls.Add(this.panel1);
             this.DoubleBuffered = true;
@@ -728,7 +728,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private System.Windows.Forms.Panel panel1;
         private DevComponents.DotNetBar.ButtonX leaveBtn;
-        private DevComponents.DotNetBar.ButtonX saveBtn;
+        private DevComponents.DotNetBar.ButtonX btnSave;
         private DevComponents.DotNetBar.LabelX subDetailLb;
         private DevComponents.DotNetBar.ButtonX buttonX1;
         private DevComponents.DotNetBar.LabelX labelX4;

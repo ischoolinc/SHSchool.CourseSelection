@@ -167,7 +167,7 @@
             // Credit
             // 
             this.Credit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Credit.HeaderText = "學分";
+            this.Credit.HeaderText = "學分數";
             this.Credit.Name = "Credit";
             this.Credit.ReadOnly = true;
             this.Credit.Resizable = System.Windows.Forms.DataGridViewTriState.True;

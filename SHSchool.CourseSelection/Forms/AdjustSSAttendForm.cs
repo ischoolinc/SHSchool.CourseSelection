@@ -183,7 +183,8 @@ namespace SHSchool.CourseSelection.Forms
             }
         }
 
-        private void courseTypeCbx_TextChanged(object sender, EventArgs e)
+
+        private void courseTypeCbx_SelectedIndexChanged(object sender, EventArgs e)
         {
             #region SQL
             string sql = string.Format(@"
@@ -231,12 +232,13 @@ GROUP BY
             seedCbx.SelectedIndex = 0;
         }
 
-        private void conditionCbx_TextChanged(object sender, EventArgs e)
+        private void conditionCbx_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (flowLayoutPanel1.Controls.Count > 0)
             {
                 ShowDataRow(true);
             }
+            btnSave.Enabled = conditionCbx.SelectedIndex == 0;
         }
 
         public void ReloadConditionCbx(DataTable dt)
@@ -685,7 +687,7 @@ ORDER BY
             this.Close();
         }
 
-        private void saveBtn_Click(object sender, EventArgs e)
+        private void btnSave_Click(object sender, EventArgs e)
         {
             // 兜資料
             List<string> dataList = new List<string>();
@@ -917,7 +919,7 @@ WHERE
             exportBtn.Enabled = false;
             buttonX1.Enabled = false;
             seedCbx.Enabled = false;
-            saveBtn.Enabled = false;
+            btnSave.Enabled = false;
             leaveBtn.Enabled = false;
 
 
@@ -937,7 +939,7 @@ WHERE
                 exportBtn.Enabled = true;
                 buttonX1.Enabled = true;
                 seedCbx.Enabled = true;
-                saveBtn.Enabled = true;
+                btnSave.Enabled = true;
                 leaveBtn.Enabled = true;
                 MessageBox.Show("儲存成功!");
 
@@ -1474,7 +1476,7 @@ WHERE
             }
             list.SaveAll();
 
-            courseTypeCbx_TextChanged(null, null);
+            courseTypeCbx_SelectedIndexChanged(null, null);
         }
 
         private void btnTrialFill_Click(object sender, EventArgs e)
@@ -1561,7 +1563,7 @@ WHERE
 
             bkw.RunWorkerCompleted += delegate
             {
-                courseTypeCbx_TextChanged(null, null);
+                courseTypeCbx_SelectedIndexChanged(null, null);
             };
 
             bkw.RunWorkerAsync();
