@@ -30,6 +30,7 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
             this.stuNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -50,10 +51,9 @@
             this.closeBtn = new DevComponents.DotNetBar.ButtonX();
             this.labelX4 = new DevComponents.DotNetBar.LabelX();
             this.courseTypeCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupPanel1
@@ -103,6 +103,17 @@
             this.groupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.groupPanel1.TabIndex = 0;
             this.groupPanel1.Text = "學生分班";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.White;
+            this.pictureBox1.Image = global::SHSchool.CourseSelection.Properties.Resources.loading;
+            this.pictureBox1.Location = new System.Drawing.Point(354, 208);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(37, 37);
+            this.pictureBox1.TabIndex = 5;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Visible = false;
             // 
             // dataGridViewX1
             // 
@@ -360,16 +371,6 @@
             this.courseTypeCbx.TabIndex = 10;
             this.courseTypeCbx.TextChanged += new System.EventHandler(this.courseTypeCbx_TextChanged);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.White;
-            this.pictureBox1.Image = global::SHSchool.CourseSelection.Properties.Resources.loading;
-            this.pictureBox1.Location = new System.Drawing.Point(354, 208);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(37, 37);
-            this.pictureBox1.TabIndex = 5;
-            this.pictureBox1.TabStop = false;
-            // 
             // ManualDisClass
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -393,10 +394,11 @@
             this.MinimumSize = new System.Drawing.Size(680, 600);
             this.Name = "ManualDisClass";
             this.Text = "選課分班";
+            this.Load += new System.EventHandler(this.ManualDisClass_Load);
             this.groupPanel1.ResumeLayout(false);
             this.groupPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -106,6 +106,8 @@ namespace SHSchool.CourseSelection.Forms
                 return;
 
             List<UDT.Subject> records = Access.Select<UDT.Subject>(string.Format("school_year = {0} and semester = {1}", this.cboSchoolYear.Text, this.cboSemester.Text));
+            records.Sort(Tool.SubjectSortRule);
+            
             this.dgvData.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             this.dgvData.Columns[7].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgvData.Columns[8].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -370,18 +372,22 @@ namespace SHSchool.CourseSelection.Forms
                 return;
             }
 
-            try
+            DialogResult result = MsgBox.Show(string.Format("是否確定刪除 {0} 此科目?", this.dgvData.SelectedRows[0].Cells[2].Value), "警告", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
             {
-                UDT.Subject record = this.dgvData.SelectedRows[0].Tag as UDT.Subject;
-                record.Deleted = true;
+                try
+                {
+                    UDT.Subject record = this.dgvData.SelectedRows[0].Tag as UDT.Subject;
+                    record.Deleted = true;
 
-                record.Save();
+                    record.Save();
 
-                this.InitSubject();
-            }
-            catch (Exception ex)
-            {
-                MsgBox.Show(ex.Message);
+                    this.InitSubject();
+                }
+                catch (Exception ex)
+                {
+                    MsgBox.Show(ex.Message);
+                }
             }
         }
 

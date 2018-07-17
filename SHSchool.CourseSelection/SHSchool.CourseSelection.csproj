@@ -139,6 +139,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAO\SubjectDAO.cs" />
     <Compile Include="Event\DeliverActiveRecord.cs" />
     <Compile Include="Event\DeliverActiveRecordEvent.cs" />
     <Compile Include="Export\SSAttend_NoneSelectStudent_Export.cs">
@@ -271,6 +272,7 @@
     <Compile Include="Test\AutoSelectStuWish.Designer.cs">
       <DependentUpon>AutoSelectStuWish.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tool.cs" />
     <Compile Include="UDT\Identity.cs" />
     <Compile Include="UDT\OpeningTime.cs" />
     <Compile Include="UDT\SIRelation.cs" />

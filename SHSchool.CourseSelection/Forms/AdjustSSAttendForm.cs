@@ -183,7 +183,6 @@ namespace SHSchool.CourseSelection.Forms
             }
         }
 
-
         private void courseTypeCbx_SelectedIndexChanged(object sender, EventArgs e)
         {
             #region SQL
@@ -191,6 +190,7 @@ namespace SHSchool.CourseSelection.Forms
 SELECT 
 	subject.uid
 	, subject_name
+    , subject.level
 	, subject.school_year
 	, subject.semester
 	, subject.type
@@ -211,6 +211,11 @@ GROUP BY
 	, subject.semester
 	, subject.type
 	, subject.limit
+ORDER BY
+    subject.type
+    , subject.subject_name
+    , subject.level
+    , subject.credit
 ", schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
 
             #endregion
@@ -250,7 +255,10 @@ GROUP BY
                 conditionCbx.Items.Add("空白");
                 foreach (DataRow row in dt.Rows)
                 {
-                    string subjectName = "" + row["subject_name"];
+                    //string level = RomanChar("" + row["level"]);
+                    string level = Tool.RomanChar("" + row["level"]);
+
+                    string subjectName = string.Format("{0} {1}", row["subject_name"], level);
                     string subjectID = "" + row["uid"];
                     int subjectLimit = int.Parse("" + row["limit"]);
                     int studentCount = int.Parse("" + row["count"]);
@@ -341,11 +349,18 @@ WHERE
                 button.TextAlignment = eButtonTextAlignment.Left;
                 button.Size = new Size(220, 20);
 
-                button.Text = "( " + row["count"] + "/" + row["limit"] + " )" + row["subject_name"];
-                if (button.Text.Length > 17)
+                //button.Text = "( " + row["count"] + "/" + row["limit"] + " )" + row["subject_name"];
+                string _subjectName = "";
+                if (("" + row["subject_name"]).Length > 7)
                 {
-                    button.Text = button.Text.Substring(0, 17);
+                    _subjectName = ("" + row["subject_name"]).Substring(0, 7);
                 }
+                button.Text = string.Format("( {0}/{1} ){2} {3}", "" + row["count"], "" + row["limit"], _subjectName, Tool.RomanChar("" + row["level"]));
+                
+                //if (button.Text.Length > 17)
+                //{
+                //    button.Text = button.Text.Substring(0, 17);
+                //}
                 if (n >= 8)
                 {
                     n = n % 8;
@@ -355,7 +370,7 @@ WHERE
                 button.Image = GetColorBallImage(colors[n++]);
                 // Subject UID
                 button.Name = "" + row["subject_name"];
-                button.Tag = "" + row["uid"];
+                button.Tag = row; //"" + row["uid"];
 
                 button.Margin = new System.Windows.Forms.Padding(3);
                 button.Click += new EventHandler(Swap);
@@ -962,11 +977,13 @@ WHERE
 
             if (renewRow)
             {
+                Tool tool = new Tool(schoolYearCbx.Text, semesterCbx.Text);
+
                 foreach (var row in _DataRowList)
                 {
                     if (
                         (conditionCbx.Text == "全部")
-                        || (("" + row["選課課程"]) == conditionCbx.Text)
+                        || (Tool.SubjectNameAndLevel("" + row["ref_subject_id"]) == conditionCbx.Text) //(("" + row["選課課程"]) == conditionCbx.Text)
                         || (("" + row["選課課程"]) == "" && conditionCbx.Text == "空白")
                     )
                     {
@@ -986,7 +1003,7 @@ WHERE
                         datarow.Cells[index++].Value = "" + row["分發順位"];
                         if ("" + row["ref_subject_id"] != string.Empty)
                         {
-                            ((DataGridViewColorBallTextCell)datarow.Cells[index]).Value = "" + row["選課課程"];
+                            ((DataGridViewColorBallTextCell)datarow.Cells[index]).Value = Tool.SubjectNameAndLevel("" + row["ref_subject_id"]);//"" + row["選課課程"];
                             ((DataGridViewColorBallTextCell)datarow.Cells[index]).Color = subjectColorDic["" + row["ref_subject_id"]];
                         }
                         datarow.Cells[index++].Tag = "" + row["ref_subject_id"];
@@ -996,7 +1013,7 @@ WHERE
                             {
                                 datarow.Cells[index].Style.ForeColor = Color.Red;
                             }
-                            datarow.Cells[index++].Value = "" + row["志願" + i];
+                            datarow.Cells[index++].Value = Tool.SubjectNameAndLevel("" + row[string.Format("志願{0}ref_subject_id", i)]);//"" + row["志願" + i];
                         }
                         datarow.Cells[index++].Value = "" + row["分發志願"];
                         datarow.Cells[index++].Value = "" + row["attend_type"];
@@ -1060,14 +1077,31 @@ WHERE
 
             foreach (ButtonX btn in flowLayoutPanel1.Controls)
             {
-                string subjectID = "" + btn.Tag;
-                string subjectName = allSubjectDic[subjectID];
-
-                btn.Text = string.Format("({0}/{1})", ("" + _DicSubjectData[subjectID].StuCount).PadLeft(3), ("" + _DicSubjectData[subjectID].SubjectLimit).PadRight(3)) + subjectName;
-                if (btn.Text.Length > 17)
+                string subjectID = "";
+                string level = "";
+                if ("" + btn.Tag == "")
                 {
-                    btn.Text = btn.Text.Substring(0, 17);
+                    subjectID = "" + btn.Tag;
                 }
+                else
+                {
+                    DataRow row = (DataRow)btn.Tag;
+                    subjectID = "" + row["uid"];
+                    level = "" + row["level"];
+                }
+                
+                string subjectName = allSubjectDic[subjectID];
+                if (subjectName.Length > 7)
+                {
+                    subjectName = subjectName.Substring(0,7);
+                }
+
+                //btn.Text = string.Format("({0}/{1})", ("" + _DicSubjectData[subjectID].StuCount).PadLeft(3), ("" + _DicSubjectData[subjectID].SubjectLimit).PadRight(3)) + subjectName;
+                btn.Text = string.Format("( {0}/{1} ){2} {3}", "" + _DicSubjectData[subjectID].StuCount, "" + _DicSubjectData[subjectID].SubjectLimit, subjectName, Tool.RomanChar(level));
+                //if (btn.Text.Length > 17)
+                //{
+                //    btn.Text = btn.Text.Substring(0, 17);
+                //}
             }
             #endregion
         }
@@ -1435,7 +1469,7 @@ WHERE
                 ) // 未分發科目
                 {
                     row["ref_subject_id"] = wishSubjectID;
-                    row["選課課程"] = "" + row["志願" + wishOrder];
+                    row["選課課程"] = Tool.SubjectNameAndLevel(wishSubjectID);//"" + row["志願" + wishOrder];
                     row["分發志願"] = wishOrder;
                     row["attend_type"] = "志願分發";
                     _DicSubjectData[wishSubjectID].StuCount++;

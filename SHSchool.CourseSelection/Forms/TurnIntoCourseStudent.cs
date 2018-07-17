@@ -66,12 +66,19 @@ namespace SHSchool.CourseSelection.Forms
                     courseTypeCbx.Items.Add(type["type"]);
                 }
                 if (courseTypeCbx.Items.Count > 0)
+                {
                     courseTypeCbx.SelectedIndex = 0;
+                }
+                else
+                {
+                    dataGridViewX1.Rows.Clear();
+                }
             }
         }
 
         public void ReloadDataGridView()
         {
+            dataGridViewX1.Rows.Clear();
             #region SQL
             string selectSQL = string.Format(@"
 SELECT 
@@ -161,19 +168,18 @@ WHERE subject.school_year = {1} AND subject.semester = {2} AND type = '{0}'"
             }
         }
 
-        private void schoolYearCbx_TextChanged(object sender, EventArgs e)
+        private void schoolYearCbx_SelectedIndexChanged(object sender, EventArgs e)
         {
             ReloadCourseTypeCbx();
         }
 
-        private void semesterCbx_TextChanged(object sender, EventArgs e)
+        private void semesterCbx_SelectedIndexChanged(object sender, EventArgs e)
         {
             ReloadCourseTypeCbx();
         }
 
         private void courseTypeCbx_TextChanged(object sender, EventArgs e)
         {
-            dataGridViewX1.Rows.Clear();
             ReloadDataGridView();
         }
 
@@ -256,5 +262,7 @@ WHERE
             SCAttend.Insert(scrNewList);
             MessageBox.Show("轉入成功!");
         }
+
+        
     }
 }

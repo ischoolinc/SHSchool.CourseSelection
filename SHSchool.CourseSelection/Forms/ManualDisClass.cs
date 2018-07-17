@@ -35,7 +35,10 @@ namespace SHSchool.CourseSelection.Forms
         public ManualDisClass()
         {
             InitializeComponent();
+        }
 
+        private void ManualDisClass_Load(object sender, EventArgs e)
+        {
             #region Init SchoolYear Semester
             AccessHelper access = new AccessHelper();
             List<UDT.OpeningTime> opTimeList = access.Select<UDT.OpeningTime>();
@@ -187,44 +190,56 @@ namespace SHSchool.CourseSelection.Forms
             {
                 #region SQL
                 string selectSQL = string.Format(@"
-                SELECT 
-	                uid,
-	                subject_name ,
-	                ss_attend.count AS s_count,
-	                attend.count AS c_count
-                FROM $ischool.course_selection.subject  AS subject
-                LEFT OUTER JOIN
-                (
-	                SELECT
-		                ref_subject_id,
-		                count(*)
-	                FROM
-		                $ischool.course_selection.ss_attend AS ss_attend
-	                GROUP BY ss_attend.ref_subject_id
-                )ss_attend ON ss_attend.ref_subject_id = subject.uid 
-                LEFT OUTER JOIN
-                (
-	                SELECT
-		                ref_subject_id,
-		                count(ref_subject_course_id)
-	                FROM
-		                $ischool.course_selection.ss_attend AS ss_attend
-	                WHERE ref_subject_course_id IS NOT NULL
-	                GROUP BY ss_attend.ref_subject_id
-                )attend ON attend.ref_subject_id = subject.uid
-                WHERE school_year = {0} AND semester = {1} AND type = '{2}'
-                ORDER BY s_count
+SELECT 
+	uid
+	, subject_name 
+    , subject.level
+	, ss_attend.count AS s_count
+	, attend.count AS c_count
+FROM 
+    $ischool.course_selection.subject  AS subject
+    LEFT OUTER JOIN
+    (
+	    SELECT
+		    ref_subject_id,
+		    count(*)
+	    FROM
+		    $ischool.course_selection.ss_attend AS ss_attend
+	    GROUP BY ss_attend.ref_subject_id
+    )ss_attend ON ss_attend.ref_subject_id = subject.uid 
+    LEFT OUTER JOIN
+    (
+	    SELECT
+		    ref_subject_id,
+		    count(ref_subject_course_id)
+	    FROM
+		    $ischool.course_selection.ss_attend AS ss_attend
+	    WHERE ref_subject_course_id IS NOT NULL
+	    GROUP BY ss_attend.ref_subject_id
+    )attend ON attend.ref_subject_id = subject.uid
+WHERE 
+    school_year = {0} 
+    AND semester = {1} 
+    AND type = '{2}'
+ORDER BY 
+    subject.type
+    , subject.subject_name
+    , subject.level
+    , subject.credit
+    --s_count
                 ", schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
                 #endregion
                 QueryHelper queryHelper = new QueryHelper();
                 DataTable subjectRecord = queryHelper.Select(selectSQL);
                 subjectCbx.Items.Clear();
                 subjectNamedic.Clear();
-                subjectRecord.DefaultView.Sort = "s_count DESC ";
+                //subjectRecord.DefaultView.Sort = "s_count DESC ";
                 foreach (DataRow subject in subjectRecord.Rows)
                 {
-                    subjectCbx.Items.Add("(" + subject["c_count"] + "/" + subject["s_count"] + ")" + subject["subject_name"]);
-                    subjectNamedic.Add("(" + subject["c_count"] + "/" + subject["s_count"] + ")" + subject["subject_name"], "" + subject["uid"]);
+                    string subjectName = string.Format("({0}/{1}){2} {3}", subject["c_count"], subject["s_count"], subject["subject_name"], Tool.RomanChar("" + subject["level"]));
+                    //subjectCbx.Items.Add("(" + subject["c_count"] + "/" + subject["s_count"] + ")" + subject["subject_name"]);
+                    subjectCbx.Items.Add(subjectName);
+                    subjectNamedic.Add(subjectName, "" + subject["uid"]);
                 }
                 subjectCbx.SelectedIndex = 0;
             }
@@ -237,6 +252,8 @@ namespace SHSchool.CourseSelection.Forms
 
         public void ReloadDataGridView()
         {
+            this.pictureBox1.Visible = true;
+
             dataGridViewX1.Rows.Clear();
             studentIDdic.Clear();
 
@@ -246,9 +263,7 @@ namespace SHSchool.CourseSelection.Forms
             string courseType = courseTypeCbx.Text;
             string subject = subjectCbx.Text;
 
-            pictureBox1.Visible = true;
             BGW = new BackgroundWorker();
-
             BGW.DoWork += delegate
             {
                 QueryHelper queryhelper = new QueryHelper();
@@ -342,7 +357,7 @@ WHERE ss_attend.ref_subject_id = {0}
                         dataGridViewX1.Rows.Add(datarow);
                     }
 
-                    pictureBox1.Visible = false;
+                    this.pictureBox1.Visible = false;
                 }
                 else
                 {
@@ -622,6 +637,8 @@ WHERE
                 c.Text = classDic["" + c.Tag].ClassType + "(" + (CountDic["" + c.Tag].boy > 0 ? " " + CountDic["" + c.Tag].boy + "男" : "") + (CountDic["" + c.Tag].girl > 0 ? " " + CountDic["" + c.Tag].girl + "女" : "") + (CountDic["" + c.Tag].understand > 0 ? " " + CountDic["" + c.Tag].understand + "未知性別" : "") + " 共" + CountDic["" + c.Tag].total + "人" + " )";
             }
         }
+
+        
     }
 
     class DataGridViewColorBallTextCell : DataGridViewTextBoxCell
