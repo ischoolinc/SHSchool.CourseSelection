@@ -31,27 +31,6 @@ namespace SHSchool.CourseSelection.Report
             this.CurrentSemester = openingTimes[0].Semester;
         }
 
-        private string RomanChar(string level)
-        {
-            switch (level)
-            {
-                case "1":
-                    return "Ⅰ";
-                case "2":
-                    return "Ⅱ";
-                case "3":
-                    return "Ⅲ";
-                case "4":
-                    return "Ⅳ";
-                case "5":
-                    return "Ⅴ";
-                case "6":
-                    return "Ⅵ";
-                default:
-                    return "";
-            }
-        }
-
         public void Execute()
         {
             try
@@ -133,14 +112,14 @@ namespace SHSchool.CourseSelection.Report
                     string teacher_name = (filterSSAttends.ElementAt(0)["teacher_name"] + "");
                     instanceSheet.Cells[1, 0].PutValue("班導師：" + teacher_name);
                     instanceSheet.PageSetup.PrintTitleRows = "$1:$3";
-                    //  填入學生選修科目資料：座號	學號	姓名	科目			學分	課程類別
+                    //  填入學生選修科目資料：座號	學號 姓名 科目 學分 課程類別
                     int i = 3;
                     foreach (DataRow row in filterSSAttends)
                     {
                         instanceSheet.Cells[i, 0].PutValue(row["seat_no"] + "");
                         instanceSheet.Cells[i, 1].PutValue(row["student_number"] + "");
                         instanceSheet.Cells[i, 2].PutValue(row["student_name"] + "");
-                        instanceSheet.Cells[i, 3].PutValue(row["subject_name"] + "" + RomanChar(row["level"] + ""));
+                        instanceSheet.Cells[i, 3].PutValue(row["subject_name"] + "" + Tool.RomanChar(row["level"] + ""));
                         instanceSheet.Cells[i, 6].PutValue(row["credit"] + "");
                         instanceSheet.Cells[i, 7].PutValue(row["type"] + "");
 

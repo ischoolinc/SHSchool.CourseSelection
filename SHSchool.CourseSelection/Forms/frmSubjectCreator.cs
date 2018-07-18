@@ -30,6 +30,30 @@ namespace SHSchool.CourseSelection.Forms
             this.semester = semester;
 
             this.Load += new EventHandler(frmSubjectCreator_Load);
+
+            if (title == "檢視科目資料")
+            {
+                this.SubjectName.Enabled = false;
+                this.Institute.Enabled = false;
+                this.Level.Enabled = false;
+                this.Credit.Enabled = false;
+                this.Type.Enabled = false;
+                this.Limit.Enabled = false;
+                this.Goal.Enabled = false;
+                this.Content.Enabled = false;
+                this.Memo.Enabled = false;
+
+                this.Save.Enabled = false;
+                this.Cancel.Enabled = false;
+                //---
+                this.tbxPreSubject.Enabled = false;
+                this.tbxPreSubjectLevel.Enabled = false;
+                this.tbxCrossType1.Enabled = false;
+                this.tbxCrossType2.Enabled = false;
+                this.cbxPreSubjectBlockMode.Enabled = false;
+                this.cbxRejoinMode.Enabled = false;
+                this.ckbxDisable.Enabled = false;
+            }
         }
 
         public frmSubjectCreator(string title) : this(title, string.Empty, string.Empty)        {        }
@@ -64,6 +88,14 @@ namespace SHSchool.CourseSelection.Forms
             this.Goal.Text = mRecord.Goal.Trim().Replace("\n", "\r\n");
             this.Content.Text = mRecord.Content.Trim().Replace("\n", "\r\n");
             this.Memo.Text = mRecord.Memo.Trim().Replace("\n", "\r\n");
+            //--
+            this.tbxPreSubject.Text = mRecord.PreSubject.Trim();
+            this.tbxPreSubjectLevel.Text = mRecord.PreSubjectLevel.ToString().Trim() == "0" ? "" : mRecord.PreSubjectLevel.ToString().Trim();
+            this.tbxCrossType1.Text = mRecord.CrossType1.Trim();
+            this.tbxCrossType2.Text = mRecord.CrossType2.Trim();
+            this.cbxPreSubjectBlockMode.Text = mRecord.PreSubjectBlockMode.Trim();
+            this.cbxRejoinMode.Text = mRecord.RejoinBlockMode.Trim();
+            this.ckbxDisable.Checked = mRecord.Disabled;
         }
 
         private void Cancel_Click(object sender, EventArgs e)
@@ -94,6 +126,21 @@ namespace SHSchool.CourseSelection.Forms
                 mRecord.Goal = this.Goal.Text.Trim();
                 mRecord.Content = this.Content.Text.Trim();
                 mRecord.Memo = this.Memo.Text.Trim();
+                //---
+                mRecord.PreSubject = this.tbxPreSubject.Text.Trim();
+                if (!string.IsNullOrWhiteSpace(this.tbxPreSubjectLevel.Text))
+                {
+                    mRecord.PreSubjectLevel = int.Parse(this.tbxPreSubjectLevel.Text.Trim());
+                }
+                else
+                {
+                    mRecord.PreSubjectLevel = null;
+                }
+                mRecord.PreSubjectBlockMode = this.cbxPreSubjectBlockMode.SelectedItem.ToString().Trim();
+                mRecord.RejoinBlockMode = this.cbxRejoinMode.SelectedItem.ToString().Trim();
+                mRecord.Disabled = this.ckbxDisable.Checked;
+                mRecord.CrossType1 = this.tbxCrossType1.Text.Trim();
+                mRecord.CrossType2 = this.tbxCrossType2.Text.Trim();
 
                 mRecord.Save();
                 this.DialogResult = DialogResult.OK;
@@ -113,6 +160,7 @@ namespace SHSchool.CourseSelection.Forms
             bool result;
             bool is_valid = true;
 
+            // 驗證科目名稱
             if (string.IsNullOrWhiteSpace(this.SubjectName.Text))
             {
                 errorProvider1.SetError(this.SubjectName, "必填");
@@ -121,6 +169,7 @@ namespace SHSchool.CourseSelection.Forms
             else
                 errorProvider1.SetError(this.SubjectName, "");
 
+            // 驗證級別
             if (!string.IsNullOrWhiteSpace(this.Level.Text))
             {
                 result = int.TryParse(this.Level.Text.Trim(), out no);
@@ -136,6 +185,7 @@ namespace SHSchool.CourseSelection.Forms
             else
                 errorProvider1.SetError(this.Level, "");
 
+            // 驗證學分數
             if (!string.IsNullOrWhiteSpace(this.Credit.Text))
             {
                 result = int.TryParse(this.Credit.Text.Trim(), out no);
@@ -151,6 +201,7 @@ namespace SHSchool.CourseSelection.Forms
             else
                 errorProvider1.SetError(this.Credit, "");
 
+            // 驗證人數上限
             if (string.IsNullOrWhiteSpace(this.Limit.Text))
             {
                 errorProvider1.SetError(this.Limit, "必填");
@@ -168,6 +219,22 @@ namespace SHSchool.CourseSelection.Forms
                 else
                     errorProvider1.SetError(this.Limit, "");
             }
+
+            // 驗證前導課程級別
+            if (!string.IsNullOrWhiteSpace(this.tbxPreSubjectLevel.Text))
+            {
+                result = int.TryParse(this.tbxPreSubjectLevel.Text.Trim(), out no);
+
+                if (!result)
+                {
+                    errorProvider1.SetError(this.tbxPreSubjectLevel, "請填阿拉伯數字");
+                    is_valid = false;
+                }
+                else
+                    errorProvider1.SetError(this.tbxPreSubjectLevel, "");
+            }
+            else
+                errorProvider1.SetError(this.tbxPreSubjectLevel, "");
 
             return is_valid;
         }

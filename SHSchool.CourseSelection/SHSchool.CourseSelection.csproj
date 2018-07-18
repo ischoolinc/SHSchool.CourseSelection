@@ -280,6 +280,7 @@
     <Compile Include="UDT\SSWish.cs" />
     <Compile Include="UDT\SSAttend.cs" />
     <Compile Include="UDT\Subject.cs" />
+    <Compile Include="UDT\SubjectBlock.cs" />
     <Compile Include="UDT\SubjectClassSelection.cs" />
     <Compile Include="UDT\SubjectCourse.cs" />
   </ItemGroup>

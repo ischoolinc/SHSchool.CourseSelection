@@ -67,17 +67,17 @@ namespace SHSchool.CourseSelection
             switch (level)
             {
                 case "1":
-                    return "Ⅰ";
+                    return "I";
                 case "2":
-                    return "Ⅱ";
+                    return "II";
                 case "3":
-                    return "Ⅲ";
+                    return "III";
                 case "4":
-                    return "Ⅳ";
+                    return "IV";
                 case "5":
-                    return "Ⅴ";
+                    return "V";
                 case "6":
-                    return "Ⅵ";
+                    return "VI";
                 default:
                     return "";
             }
