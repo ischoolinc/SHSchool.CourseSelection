@@ -54,6 +54,10 @@ namespace SHSchool.CourseSelection.Import
                 string semester = x.GetValue("學期").Trim();
                 string subject_name = x.GetValue("科目名稱").Trim();
                 string level = x.GetValue("級別").Trim();
+                string crossType1 = x.GetValue("跨課程類別1").Trim();
+                string crossType2 = x.GetValue("跨課程類別2").Trim();
+
+                DAO.SubjectDAO subjectDAO = new DAO.SubjectDAO(school_year, semester);
 
                 //  若鍵值為「科目系統編號」，則必須存在於系統中，且「學年度+學期+科目名稱+級別」不可重覆
                 if (keyField == "科目系統編號")
@@ -69,6 +73,14 @@ namespace SHSchool.CourseSelection.Import
                     //    if (Rows.Where(y => (y.GetValue("學年度").Trim() == school_year)).Where(y => (y.GetValue("學期").Trim() == semester)).Where(y => (y.GetValue("科目名稱").Trim() == subject_name)).Where(y => (y.GetValue("級別").Trim() == level)).Count() > 1)
                     //        Messages[x.Position].MessageItems.Add(new MessageItem(EMBA.Validator.ErrorType.Error, EMBA.Validator.ValidatorType.Row, "「學年度+學期+科目名稱+級別」重覆。"));
                     //}
+                    if (!DAO.SubjectDAO.CheckSubjectTypeInSystem(crossType1))
+                    {
+                        Messages[x.Position].MessageItems.Add(new MessageItem(EMBA.Validator.ErrorType.Error, EMBA.Validator.ValidatorType.Row, "跨課程類別1不存在系統。"));
+                    }
+                    if (!DAO.SubjectDAO.CheckSubjectTypeInSystem(crossType2))
+                    {
+                        Messages[x.Position].MessageItems.Add(new MessageItem(EMBA.Validator.ErrorType.Error, EMBA.Validator.ValidatorType.Row, "跨課程類別2不存在系統。"));
+                    }
                 }
                 else
                 {
@@ -78,12 +90,20 @@ namespace SHSchool.CourseSelection.Import
                         Messages[x.Position].MessageItems.Add(new MessageItem(EMBA.Validator.ErrorType.Error, EMBA.Validator.ValidatorType.Row, "學期不可空白。"));
                     if (string.IsNullOrEmpty(subject_name))
                         Messages[x.Position].MessageItems.Add(new MessageItem(EMBA.Validator.ErrorType.Error, EMBA.Validator.ValidatorType.Row, "科目名稱不可空白。"));
+                    if (!DAO.SubjectDAO.CheckSubjectTypeInSystem(crossType1))
+                    {
+                        Messages[x.Position].MessageItems.Add(new MessageItem(EMBA.Validator.ErrorType.Error, EMBA.Validator.ValidatorType.Row, "跨課程類別1不存在系統。"));
+                    }
+                    if (!DAO.SubjectDAO.CheckSubjectTypeInSystem(crossType2))
+                    {
+                        Messages[x.Position].MessageItems.Add(new MessageItem(EMBA.Validator.ErrorType.Error, EMBA.Validator.ValidatorType.Row, "跨課程類別2不存在系統。"));
+                    }
                 }
             });
 
             #endregion
         }
-
+        
         public override XDocument GetValidateRule()
         {
             return XDocument.Parse(SHSchool.CourseSelection.Properties.Resources.Subject_Import);
@@ -178,6 +198,21 @@ namespace SHSchool.CourseSelection.Import
 
                 if (mOption.SelectedFields.Contains("備註") && !string.IsNullOrWhiteSpace(row.GetValue("備註")))
                     subjectRecord.Memo = row.GetValue("備註").Trim();
+                // 2018/07/19 羿均 新增欄位
+                if (mOption.SelectedFields.Contains("前導課程科目") && !string.IsNullOrWhiteSpace(row.GetValue("前導課程科目")))
+                    subjectRecord.PreSubject = row.GetValue("前導課程科目").Trim();
+                if (mOption.SelectedFields.Contains("前導課程級別") && !string.IsNullOrWhiteSpace(row.GetValue("前導課程級別")))
+                    subjectRecord.PreSubjectLevel = int.Parse(row.GetValue("前導課程級別").Trim());
+                if (mOption.SelectedFields.Contains("前導課程採計方式") && !string.IsNullOrWhiteSpace(row.GetValue("前導課程採計方式")))
+                    subjectRecord.PreSubjectBlockMode = row.GetValue("前導課程採計方式").Trim();
+                if (mOption.SelectedFields.Contains("重複修課採計方式") && !string.IsNullOrWhiteSpace(row.GetValue("重複修課採計方式")))
+                    subjectRecord.RejoinBlockMode = row.GetValue("重複修課採計方式").Trim();
+                if (mOption.SelectedFields.Contains("不開課") && !string.IsNullOrWhiteSpace(row.GetValue("不開課")))
+                    subjectRecord.Disabled = bool.Parse(row.GetValue("不開課").Trim());
+                if (mOption.SelectedFields.Contains("跨課程類別1") && !string.IsNullOrWhiteSpace(row.GetValue("跨課程類別1")))
+                    subjectRecord.CrossType1 = row.GetValue("跨課程類別1").Trim();
+                if (mOption.SelectedFields.Contains("跨課程類別2") && !string.IsNullOrWhiteSpace(row.GetValue("跨課程類別2")))
+                    subjectRecord.CrossType2 = row.GetValue("跨課程類別2").Trim();
 
                 if (subjectRecord.RecordStatus == RecordStatus.Insert)
                     insertSubjectRecords.Add(subjectRecord);

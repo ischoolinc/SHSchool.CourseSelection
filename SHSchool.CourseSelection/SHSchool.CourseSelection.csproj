@@ -43,6 +43,11 @@
       <HintPath>Library\Aspose.Cells_201402.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Campus.DocumentValidator, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\Campus.DocumentValidator.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="DevComponents.DotNetBar2, Version=9.5.0.1, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\ischool source\ischool@debug\components\DevComponents.DotNetBar2.dll</HintPath>
@@ -371,13 +376,17 @@
     <None Include="Resources\Import.Image.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Import\Subject_Import.xml" />
+    <Content Include="Import\Subject_Import.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Library\Aspose.Cells.dll" />
     <Content Include="Library\Aspose.Cells.GridDesktop.dll" />
     <Content Include="Library\Aspose.Cells.GridDesktop.xml" />
     <Content Include="Library\Aspose.Cells.xml" />
     <Content Include="Library\Aspose.Cells_201402.dll" />
     <Content Include="Library\Aspose.Words.dll" />
+    <Content Include="Library\Campus.DocumentValidator.dll" />
+    <Content Include="Library\Campus.DocumentValidator.xml" />
     <Content Include="Library\Campus.Windows.dll" />
     <Content Include="Library\DevComponents.DotNetBar2.dll" />
     <Content Include="Library\DevComponents.DotNetBar2.xml" />

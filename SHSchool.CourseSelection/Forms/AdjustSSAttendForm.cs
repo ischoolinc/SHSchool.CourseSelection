@@ -333,7 +333,7 @@ WHERE
 
         public void ReloadFlowLayoutPanel(DataTable dt)
         {
-            Color[] colors = new Color[] { Color.Red, Color.Yellow, Color.Blue, Color.PowderBlue, Color.Orange, Color.Green, Color.Purple, Color.Brown, Color.Gray };
+            Color[] colors = new Color[] { Color.Red, Color.Yellow, Color.Blue, Color.PowderBlue, Color.Orange, Color.Green, Color.Purple, Color.Brown};
 
             #region Init Button
             subjectColorDic.Clear();
@@ -361,16 +361,16 @@ WHERE
                 //{
                 //    button.Text = button.Text.Substring(0, 17);
                 //}
-                if (n >= 8)
+                if (n >= 7)
                 {
-                    n = n % 8;
+                    n = n % 7;
                 }
                 // 紀錄科目顏色
                 subjectColorDic.Add("" + row["uid"], colors[n]);
                 button.Image = GetColorBallImage(colors[n++]);
                 // Subject UID
                 button.Name = "" + row["subject_name"];
-                button.Tag = row; //"" + row["uid"];
+                button.Tag = row; //"" + row["uid"]; 
 
                 button.Margin = new System.Windows.Forms.Padding(3);
                 button.Click += new EventHandler(Swap);
@@ -433,7 +433,7 @@ WITH target_subject AS(
 	WHERE
 		school_year = {0}
 		AND semester = {1}
-		AND type = '{2}'
+		AND (type = '{2}' OR cross_type1 = '{2}' OR cross_type2 = '{2}')
 ),target_class AS(
 	SELECT DISTINCT
 		scs.ref_class_id
@@ -623,8 +623,19 @@ ORDER BY
                 ButtonX button = (ButtonX)sender;
                 #region 警告人數超過
                 // 剩餘名額與調整學生人數比較
-                int limit = _DicSubjectData["" + button.Tag].SubjectLimit;
-                int 剩餘名額 = _DicSubjectData["" + button.Tag].SubjectLimit - _DicSubjectData["" + button.Tag].StuCount;
+                string subjectID;
+                if ("" + button.Tag == "")
+                {
+                    subjectID = "";
+                }
+                else
+                {
+                    DataRow btnRow = (DataRow)button.Tag;
+                    subjectID = "" + btnRow["uid"];
+                }
+                
+                int limit = _DicSubjectData[subjectID].SubjectLimit;
+                int 剩餘名額 = _DicSubjectData[subjectID].SubjectLimit - _DicSubjectData[subjectID].StuCount;
                 int 調整人數 = dataGridViewX1.SelectedRows.Count;
                 if (limit != 0)
                 {
@@ -652,14 +663,14 @@ ORDER BY
                 foreach (DataGridViewRow dgvrow in dataGridViewX1.SelectedRows)
                 {
                     DataRow row = (DataRow)dgvrow.Tag;
-                    row["ref_subject_id"] = button.Tag;
+                    row["ref_subject_id"] = subjectID; //button.Tag;
 
-                    row["選課課程"] = allSubjectDic["" + button.Tag];
-                    if ("" + button.Tag == "")
+                    row["選課課程"] = allSubjectDic[subjectID];
+                    if (subjectID == "")
                     {
                         row["attend_type"] = "";
                     }
-                    if ("" + button.Tag != "")
+                    if (subjectID != "")
                     {
                         row["attend_type"] = "指定";
                     }
@@ -1004,7 +1015,14 @@ WHERE
                         if ("" + row["ref_subject_id"] != string.Empty)
                         {
                             ((DataGridViewColorBallTextCell)datarow.Cells[index]).Value = Tool.SubjectNameAndLevel("" + row["ref_subject_id"]);//"" + row["選課課程"];
-                            ((DataGridViewColorBallTextCell)datarow.Cells[index]).Color = subjectColorDic["" + row["ref_subject_id"]];
+                            if (subjectColorDic.ContainsKey("" + row["ref_subject_id"]))
+                            {
+                                ((DataGridViewColorBallTextCell)datarow.Cells[index]).Color = subjectColorDic["" + row["ref_subject_id"]];
+                            }
+                            else if (DAO.SubjectDAO.GetSubjectBySchoolYearSemester(schoolYearCbx.Text,semesterCbx.Text).ContainsKey("" + row["ref_subject_id"]))
+                            {
+                                ((DataGridViewColorBallTextCell)datarow.Cells[index]).Color = Color.Gray;  // 跨課程類別顏色
+                            }
                         }
                         datarow.Cells[index++].Tag = "" + row["ref_subject_id"];
                         for (int i = 1; i <= 5; i++)
@@ -1115,7 +1133,12 @@ WHERE
             foreach (DataRow row in _DataRowList)
             {
                 // 重新計算選修科目人數
-                _DicSubjectData["" + row["ref_subject_id"]].StuCount++;
+                // 新增判斷條件避免跨課程類別科目不在dic中出現錯誤
+                if (_DicSubjectData.ContainsKey("" + row["ref_subject_id"]))
+                {
+                    _DicSubjectData["" + row["ref_subject_id"]].StuCount++;
+                }
+                
             }
         }
 

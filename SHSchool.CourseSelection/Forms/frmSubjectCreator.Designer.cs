@@ -29,6 +29,23 @@
         private void InitializeComponent()
         {
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
+            this.tbxCrossType2 = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tbxCrossType1 = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.labelX15 = new DevComponents.DotNetBar.LabelX();
+            this.labelX14 = new DevComponents.DotNetBar.LabelX();
+            this.ckbxDisable = new DevComponents.DotNetBar.Controls.CheckBoxX();
+            this.cbxRejoinMode = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.comboItem3 = new DevComponents.Editors.ComboItem();
+            this.comboItem4 = new DevComponents.Editors.ComboItem();
+            this.cbxPreSubjectBlockMode = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.comboItem1 = new DevComponents.Editors.ComboItem();
+            this.comboItem2 = new DevComponents.Editors.ComboItem();
+            this.labelX13 = new DevComponents.DotNetBar.LabelX();
+            this.labelX12 = new DevComponents.DotNetBar.LabelX();
+            this.tbxPreSubjectLevel = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.labelX11 = new DevComponents.DotNetBar.LabelX();
+            this.tbxPreSubject = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.labelX10 = new DevComponents.DotNetBar.LabelX();
             this.Institute = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.labelX9 = new DevComponents.DotNetBar.LabelX();
             this.Level = new DevComponents.DotNetBar.Controls.TextBoxX();
@@ -49,23 +66,8 @@
             this.Cancel = new DevComponents.DotNetBar.ButtonX();
             this.Save = new DevComponents.DotNetBar.ButtonX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
-            this.labelX10 = new DevComponents.DotNetBar.LabelX();
-            this.tbxPreSubject = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.labelX11 = new DevComponents.DotNetBar.LabelX();
-            this.tbxPreSubjectLevel = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.labelX12 = new DevComponents.DotNetBar.LabelX();
-            this.labelX13 = new DevComponents.DotNetBar.LabelX();
-            this.cbxPreSubjectBlockMode = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.cbxRejoinMode = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.ckbxDisable = new DevComponents.DotNetBar.Controls.CheckBoxX();
-            this.labelX14 = new DevComponents.DotNetBar.LabelX();
-            this.labelX15 = new DevComponents.DotNetBar.LabelX();
-            this.tbxCrossType1 = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tbxCrossType2 = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.comboItem1 = new DevComponents.Editors.ComboItem();
-            this.comboItem2 = new DevComponents.Editors.ComboItem();
-            this.comboItem3 = new DevComponents.Editors.ComboItem();
-            this.comboItem4 = new DevComponents.Editors.ComboItem();
+            this.comboItem5 = new DevComponents.Editors.ComboItem();
+            this.comboItem6 = new DevComponents.Editors.ComboItem();
             this.panelEx1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -119,6 +121,202 @@
             this.panelEx1.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 2;
+            // 
+            // tbxCrossType2
+            // 
+            // 
+            // 
+            // 
+            this.tbxCrossType2.Border.Class = "TextBoxBorder";
+            this.tbxCrossType2.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tbxCrossType2.Location = new System.Drawing.Point(453, 145);
+            this.tbxCrossType2.Name = "tbxCrossType2";
+            this.tbxCrossType2.Size = new System.Drawing.Size(220, 25);
+            this.tbxCrossType2.TabIndex = 30;
+            // 
+            // tbxCrossType1
+            // 
+            // 
+            // 
+            // 
+            this.tbxCrossType1.Border.Class = "TextBoxBorder";
+            this.tbxCrossType1.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tbxCrossType1.Location = new System.Drawing.Point(125, 146);
+            this.tbxCrossType1.Name = "tbxCrossType1";
+            this.tbxCrossType1.Size = new System.Drawing.Size(220, 25);
+            this.tbxCrossType1.TabIndex = 29;
+            // 
+            // labelX15
+            // 
+            // 
+            // 
+            // 
+            this.labelX15.BackgroundStyle.Class = "";
+            this.labelX15.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX15.Location = new System.Drawing.Point(356, 146);
+            this.labelX15.Name = "labelX15";
+            this.labelX15.Size = new System.Drawing.Size(91, 23);
+            this.labelX15.TabIndex = 28;
+            this.labelX15.Text = "跨課程類別2";
+            this.labelX15.TextAlignment = System.Drawing.StringAlignment.Far;
+            // 
+            // labelX14
+            // 
+            // 
+            // 
+            // 
+            this.labelX14.BackgroundStyle.Class = "";
+            this.labelX14.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX14.Location = new System.Drawing.Point(25, 147);
+            this.labelX14.Name = "labelX14";
+            this.labelX14.Size = new System.Drawing.Size(94, 23);
+            this.labelX14.TabIndex = 27;
+            this.labelX14.Text = "跨課程類別1";
+            this.labelX14.TextAlignment = System.Drawing.StringAlignment.Far;
+            // 
+            // ckbxDisable
+            // 
+            // 
+            // 
+            // 
+            this.ckbxDisable.BackgroundStyle.Class = "";
+            this.ckbxDisable.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.ckbxDisable.Location = new System.Drawing.Point(671, 190);
+            this.ckbxDisable.Name = "ckbxDisable";
+            this.ckbxDisable.Size = new System.Drawing.Size(68, 23);
+            this.ckbxDisable.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.ckbxDisable.TabIndex = 26;
+            this.ckbxDisable.Text = "不開課";
+            // 
+            // cbxRejoinMode
+            // 
+            this.cbxRejoinMode.DisplayMember = "Text";
+            this.cbxRejoinMode.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbxRejoinMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxRejoinMode.FormattingEnabled = true;
+            this.cbxRejoinMode.ItemHeight = 19;
+            this.cbxRejoinMode.Items.AddRange(new object[] {
+            this.comboItem6,
+            this.comboItem3,
+            this.comboItem4});
+            this.cbxRejoinMode.Location = new System.Drawing.Point(453, 188);
+            this.cbxRejoinMode.Name = "cbxRejoinMode";
+            this.cbxRejoinMode.Size = new System.Drawing.Size(125, 25);
+            this.cbxRejoinMode.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.cbxRejoinMode.TabIndex = 25;
+            // 
+            // comboItem3
+            // 
+            this.comboItem3.Text = "是否取得學分";
+            // 
+            // comboItem4
+            // 
+            this.comboItem4.Text = "是否修過";
+            // 
+            // cbxPreSubjectBlockMode
+            // 
+            this.cbxPreSubjectBlockMode.DisplayMember = "Text";
+            this.cbxPreSubjectBlockMode.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbxPreSubjectBlockMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxPreSubjectBlockMode.FormattingEnabled = true;
+            this.cbxPreSubjectBlockMode.ItemHeight = 19;
+            this.cbxPreSubjectBlockMode.Items.AddRange(new object[] {
+            this.comboItem5,
+            this.comboItem1,
+            this.comboItem2});
+            this.cbxPreSubjectBlockMode.Location = new System.Drawing.Point(125, 188);
+            this.cbxPreSubjectBlockMode.Name = "cbxPreSubjectBlockMode";
+            this.cbxPreSubjectBlockMode.Size = new System.Drawing.Size(125, 25);
+            this.cbxPreSubjectBlockMode.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.cbxPreSubjectBlockMode.TabIndex = 24;
+            // 
+            // comboItem1
+            // 
+            this.comboItem1.Text = "是否取得學分";
+            // 
+            // comboItem2
+            // 
+            this.comboItem2.Text = "是否修過";
+            // 
+            // labelX13
+            // 
+            // 
+            // 
+            // 
+            this.labelX13.BackgroundStyle.Class = "";
+            this.labelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX13.Location = new System.Drawing.Point(331, 189);
+            this.labelX13.Name = "labelX13";
+            this.labelX13.Size = new System.Drawing.Size(116, 23);
+            this.labelX13.TabIndex = 23;
+            this.labelX13.Text = "重複修課採計方式";
+            this.labelX13.TextAlignment = System.Drawing.StringAlignment.Far;
+            // 
+            // labelX12
+            // 
+            // 
+            // 
+            // 
+            this.labelX12.BackgroundStyle.Class = "";
+            this.labelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX12.Location = new System.Drawing.Point(-4, 189);
+            this.labelX12.Name = "labelX12";
+            this.labelX12.Size = new System.Drawing.Size(123, 23);
+            this.labelX12.TabIndex = 21;
+            this.labelX12.Text = "前導課程採計方式";
+            this.labelX12.TextAlignment = System.Drawing.StringAlignment.Far;
+            // 
+            // tbxPreSubjectLevel
+            // 
+            // 
+            // 
+            // 
+            this.tbxPreSubjectLevel.Border.Class = "TextBoxBorder";
+            this.tbxPreSubjectLevel.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tbxPreSubjectLevel.Location = new System.Drawing.Point(453, 103);
+            this.tbxPreSubjectLevel.Name = "tbxPreSubjectLevel";
+            this.tbxPreSubjectLevel.Size = new System.Drawing.Size(50, 25);
+            this.tbxPreSubjectLevel.TabIndex = 20;
+            // 
+            // labelX11
+            // 
+            // 
+            // 
+            // 
+            this.labelX11.BackgroundStyle.Class = "";
+            this.labelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX11.Location = new System.Drawing.Point(356, 106);
+            this.labelX11.Name = "labelX11";
+            this.labelX11.Size = new System.Drawing.Size(91, 23);
+            this.labelX11.TabIndex = 19;
+            this.labelX11.Text = "前導課程級別";
+            this.labelX11.TextAlignment = System.Drawing.StringAlignment.Far;
+            // 
+            // tbxPreSubject
+            // 
+            // 
+            // 
+            // 
+            this.tbxPreSubject.Border.Class = "TextBoxBorder";
+            this.tbxPreSubject.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tbxPreSubject.Location = new System.Drawing.Point(125, 104);
+            this.tbxPreSubject.Name = "tbxPreSubject";
+            this.tbxPreSubject.Size = new System.Drawing.Size(220, 25);
+            this.tbxPreSubject.TabIndex = 18;
+            // 
+            // labelX10
+            // 
+            // 
+            // 
+            // 
+            this.labelX10.BackgroundStyle.Class = "";
+            this.labelX10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX10.Location = new System.Drawing.Point(32, 105);
+            this.labelX10.Name = "labelX10";
+            this.labelX10.Size = new System.Drawing.Size(87, 23);
+            this.labelX10.TabIndex = 17;
+            this.labelX10.Text = "前導課程科目";
+            this.labelX10.TextAlignment = System.Drawing.StringAlignment.Far;
             // 
             // Institute
             // 
@@ -394,200 +592,6 @@
             this.labelX1.Text = "科目名稱";
             this.labelX1.TextAlignment = System.Drawing.StringAlignment.Far;
             // 
-            // labelX10
-            // 
-            // 
-            // 
-            // 
-            this.labelX10.BackgroundStyle.Class = "";
-            this.labelX10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX10.Location = new System.Drawing.Point(32, 105);
-            this.labelX10.Name = "labelX10";
-            this.labelX10.Size = new System.Drawing.Size(87, 23);
-            this.labelX10.TabIndex = 17;
-            this.labelX10.Text = "前導課程科目";
-            this.labelX10.TextAlignment = System.Drawing.StringAlignment.Far;
-            // 
-            // tbxPreSubject
-            // 
-            // 
-            // 
-            // 
-            this.tbxPreSubject.Border.Class = "TextBoxBorder";
-            this.tbxPreSubject.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tbxPreSubject.Location = new System.Drawing.Point(125, 104);
-            this.tbxPreSubject.Name = "tbxPreSubject";
-            this.tbxPreSubject.Size = new System.Drawing.Size(220, 25);
-            this.tbxPreSubject.TabIndex = 18;
-            // 
-            // labelX11
-            // 
-            // 
-            // 
-            // 
-            this.labelX11.BackgroundStyle.Class = "";
-            this.labelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX11.Location = new System.Drawing.Point(356, 106);
-            this.labelX11.Name = "labelX11";
-            this.labelX11.Size = new System.Drawing.Size(91, 23);
-            this.labelX11.TabIndex = 19;
-            this.labelX11.Text = "前導課程級別";
-            this.labelX11.TextAlignment = System.Drawing.StringAlignment.Far;
-            // 
-            // tbxPreSubjectLevel
-            // 
-            // 
-            // 
-            // 
-            this.tbxPreSubjectLevel.Border.Class = "TextBoxBorder";
-            this.tbxPreSubjectLevel.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tbxPreSubjectLevel.Location = new System.Drawing.Point(453, 103);
-            this.tbxPreSubjectLevel.Name = "tbxPreSubjectLevel";
-            this.tbxPreSubjectLevel.Size = new System.Drawing.Size(50, 25);
-            this.tbxPreSubjectLevel.TabIndex = 20;
-            // 
-            // labelX12
-            // 
-            // 
-            // 
-            // 
-            this.labelX12.BackgroundStyle.Class = "";
-            this.labelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX12.Location = new System.Drawing.Point(-4, 189);
-            this.labelX12.Name = "labelX12";
-            this.labelX12.Size = new System.Drawing.Size(123, 23);
-            this.labelX12.TabIndex = 21;
-            this.labelX12.Text = "前導課程採計方式";
-            this.labelX12.TextAlignment = System.Drawing.StringAlignment.Far;
-            // 
-            // labelX13
-            // 
-            // 
-            // 
-            // 
-            this.labelX13.BackgroundStyle.Class = "";
-            this.labelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX13.Location = new System.Drawing.Point(331, 189);
-            this.labelX13.Name = "labelX13";
-            this.labelX13.Size = new System.Drawing.Size(116, 23);
-            this.labelX13.TabIndex = 23;
-            this.labelX13.Text = "重複修課採計方式";
-            this.labelX13.TextAlignment = System.Drawing.StringAlignment.Far;
-            // 
-            // cbxPreSubjectBlockMode
-            // 
-            this.cbxPreSubjectBlockMode.DisplayMember = "Text";
-            this.cbxPreSubjectBlockMode.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cbxPreSubjectBlockMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxPreSubjectBlockMode.FormattingEnabled = true;
-            this.cbxPreSubjectBlockMode.ItemHeight = 19;
-            this.cbxPreSubjectBlockMode.Items.AddRange(new object[] {
-            this.comboItem1,
-            this.comboItem2});
-            this.cbxPreSubjectBlockMode.Location = new System.Drawing.Point(125, 188);
-            this.cbxPreSubjectBlockMode.Name = "cbxPreSubjectBlockMode";
-            this.cbxPreSubjectBlockMode.Size = new System.Drawing.Size(125, 25);
-            this.cbxPreSubjectBlockMode.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.cbxPreSubjectBlockMode.TabIndex = 24;
-            // 
-            // cbxRejoinMode
-            // 
-            this.cbxRejoinMode.DisplayMember = "Text";
-            this.cbxRejoinMode.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cbxRejoinMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxRejoinMode.FormattingEnabled = true;
-            this.cbxRejoinMode.ItemHeight = 19;
-            this.cbxRejoinMode.Items.AddRange(new object[] {
-            this.comboItem3,
-            this.comboItem4});
-            this.cbxRejoinMode.Location = new System.Drawing.Point(453, 188);
-            this.cbxRejoinMode.Name = "cbxRejoinMode";
-            this.cbxRejoinMode.Size = new System.Drawing.Size(125, 25);
-            this.cbxRejoinMode.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.cbxRejoinMode.TabIndex = 25;
-            // 
-            // ckbxDisable
-            // 
-            // 
-            // 
-            // 
-            this.ckbxDisable.BackgroundStyle.Class = "";
-            this.ckbxDisable.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.ckbxDisable.Location = new System.Drawing.Point(671, 190);
-            this.ckbxDisable.Name = "ckbxDisable";
-            this.ckbxDisable.Size = new System.Drawing.Size(68, 23);
-            this.ckbxDisable.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.ckbxDisable.TabIndex = 26;
-            this.ckbxDisable.Text = "不開課";
-            // 
-            // labelX14
-            // 
-            // 
-            // 
-            // 
-            this.labelX14.BackgroundStyle.Class = "";
-            this.labelX14.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX14.Location = new System.Drawing.Point(25, 147);
-            this.labelX14.Name = "labelX14";
-            this.labelX14.Size = new System.Drawing.Size(94, 23);
-            this.labelX14.TabIndex = 27;
-            this.labelX14.Text = "跨課程類別1";
-            this.labelX14.TextAlignment = System.Drawing.StringAlignment.Far;
-            // 
-            // labelX15
-            // 
-            // 
-            // 
-            // 
-            this.labelX15.BackgroundStyle.Class = "";
-            this.labelX15.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX15.Location = new System.Drawing.Point(356, 146);
-            this.labelX15.Name = "labelX15";
-            this.labelX15.Size = new System.Drawing.Size(91, 23);
-            this.labelX15.TabIndex = 28;
-            this.labelX15.Text = "跨課程類別2";
-            this.labelX15.TextAlignment = System.Drawing.StringAlignment.Far;
-            // 
-            // tbxCrossType1
-            // 
-            // 
-            // 
-            // 
-            this.tbxCrossType1.Border.Class = "TextBoxBorder";
-            this.tbxCrossType1.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tbxCrossType1.Location = new System.Drawing.Point(125, 146);
-            this.tbxCrossType1.Name = "tbxCrossType1";
-            this.tbxCrossType1.Size = new System.Drawing.Size(220, 25);
-            this.tbxCrossType1.TabIndex = 29;
-            // 
-            // tbxCrossType2
-            // 
-            // 
-            // 
-            // 
-            this.tbxCrossType2.Border.Class = "TextBoxBorder";
-            this.tbxCrossType2.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tbxCrossType2.Location = new System.Drawing.Point(453, 145);
-            this.tbxCrossType2.Name = "tbxCrossType2";
-            this.tbxCrossType2.Size = new System.Drawing.Size(220, 25);
-            this.tbxCrossType2.TabIndex = 30;
-            // 
-            // comboItem1
-            // 
-            this.comboItem1.Text = "是否取得學分";
-            // 
-            // comboItem2
-            // 
-            this.comboItem2.Text = "是否修過";
-            // 
-            // comboItem3
-            // 
-            this.comboItem3.Text = "是否取得學分";
-            // 
-            // comboItem4
-            // 
-            this.comboItem4.Text = "是否修過";
-            // 
             // frmSubjectCreator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -641,5 +645,7 @@
         private DevComponents.Editors.ComboItem comboItem2;
         private DevComponents.Editors.ComboItem comboItem3;
         private DevComponents.Editors.ComboItem comboItem4;
+        private DevComponents.Editors.ComboItem comboItem6;
+        private DevComponents.Editors.ComboItem comboItem5;
     }
 }

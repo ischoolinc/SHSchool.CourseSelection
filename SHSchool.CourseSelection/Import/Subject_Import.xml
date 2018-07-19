@@ -36,6 +36,23 @@
     <Field Required="False" Name="教學目標" Description="教學目標" />
     <Field Required="False" Name="教學內容" Description="教學內容" />
     <Field Required="False" Name="備註" Description="備註" />
+
+    <Field Required="False" Name="前導課程科目" Description="前導課程科目名稱" EmptyAlsoValidate="False" >
+    </Field>
+    <Field Required="False" Name="前導課程級別" Description="前導課程級別" EmptyAlsoValidate="False" >
+      <Validate AutoCorrect="False" Description="「前導課程級別」只允許阿拉伯數字。" ErrorType="Error" Validator="Integer極限" When="" />
+    </Field>
+    <Field Required="False" Name="前導課程採計方式" Description="前導課程採計方式" EmptyAlsoValidate="False" >
+      <Validate AutoCorrect="False" Description="「前導課程採計方式」只允許「空白、是否取得學分、是否修過」。" ErrorType="Error" Validator="計算方式列舉" When="" />
+    </Field>
+    <Field Required="False" Name="不開課" Description="科目不開課" EmptyAlsoValidate="False" >
+      <Validate AutoCorrect="False" Description="「不開課」只允許「true、false」。" ErrorType="Error" Validator="布林列舉" When="" />
+    </Field>
+    <Field Required="False" Name="跨課程類別1" Description="跨課程類別1" EmptyAlsoValidate="False" >
+    </Field>
+    <Field Required="False" Name="跨課程類別2" Description="跨課程類別2" EmptyAlsoValidate="False" >
+    </Field>
+    
   </FieldList>
   <ValidatorList>
     <FieldValidator Name="不可重覆" Type="UNIQUEKEY" />
@@ -49,6 +66,16 @@
     <FieldValidator Name="學期列舉" Type="Enumeration">
       <Item Value="1" />
       <Item Value="2" />
+    </FieldValidator>
+    <FieldValidator Name="計算方式列舉" Type="Enumeration">
+      <Item Value="" />
+      <Item Value="是否取得學分" />
+      <Item Value="是否修過" />
+    </FieldValidator>
+    <FieldValidator Name="布林列舉" Type="Enumeration">
+      <Item Value="" />
+      <Item Value="true" />
+      <Item Value="false" />
     </FieldValidator>
     <FieldValidator Name="學分數允許範圍" Type="Integer">
       <MinValue>0</MinValue>
