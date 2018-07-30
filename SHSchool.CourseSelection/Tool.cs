@@ -88,7 +88,7 @@ namespace SHSchool.CourseSelection
         /// </summary>
         /// <param name="subjectID"></param>
         /// <returns></returns>
-        public static string SubjectNameAndLevel(string subjectID)
+        public string SubjectNameAndLevel(string subjectID)
         {
             if (subjectID == "")
             {

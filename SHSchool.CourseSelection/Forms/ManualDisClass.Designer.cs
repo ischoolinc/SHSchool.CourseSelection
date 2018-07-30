@@ -37,20 +37,19 @@
             this.gender = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.className = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.saetNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.attendNow = new SHSchool.CourseSelection.Forms.DataGridViewColorBallTextColumn();
             this.attendAfter = new SHSchool.CourseSelection.Forms.DataGridViewColorBallTextColumn();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.autoDisClassBtn = new DevComponents.DotNetBar.ButtonX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.labelX3 = new DevComponents.DotNetBar.LabelX();
-            this.schoolYearCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.semesterCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.subjectCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.cbxSchoolYear = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.cbxSemester = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.cbxSubject = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.saveBtn = new DevComponents.DotNetBar.ButtonX();
             this.closeBtn = new DevComponents.DotNetBar.ButtonX();
             this.labelX4 = new DevComponents.DotNetBar.LabelX();
-            this.courseTypeCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.cbxCourseType = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.groupPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
@@ -128,7 +127,6 @@
             this.gender,
             this.className,
             this.saetNo,
-            this.attendNow,
             this.attendAfter});
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
@@ -185,14 +183,6 @@
             this.saetNo.Name = "saetNo";
             this.saetNo.ReadOnly = true;
             this.saetNo.Width = 59;
-            // 
-            // attendNow
-            // 
-            this.attendNow.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.attendNow.HeaderText = "原修課";
-            this.attendNow.Name = "attendNow";
-            this.attendNow.ReadOnly = true;
-            this.attendNow.Visible = false;
             // 
             // attendAfter
             // 
@@ -270,48 +260,48 @@
             this.labelX3.TabIndex = 3;
             this.labelX3.Text = "科目";
             // 
-            // schoolYearCbx
+            // cbxSchoolYear
             // 
-            this.schoolYearCbx.DisplayMember = "Text";
-            this.schoolYearCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.schoolYearCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.schoolYearCbx.FormattingEnabled = true;
-            this.schoolYearCbx.ItemHeight = 19;
-            this.schoolYearCbx.Location = new System.Drawing.Point(71, 9);
-            this.schoolYearCbx.Name = "schoolYearCbx";
-            this.schoolYearCbx.Size = new System.Drawing.Size(60, 25);
-            this.schoolYearCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.schoolYearCbx.TabIndex = 4;
-            this.schoolYearCbx.TextChanged += new System.EventHandler(this.schoolYearCbx_TextChanged);
+            this.cbxSchoolYear.DisplayMember = "Text";
+            this.cbxSchoolYear.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbxSchoolYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxSchoolYear.FormattingEnabled = true;
+            this.cbxSchoolYear.ItemHeight = 19;
+            this.cbxSchoolYear.Location = new System.Drawing.Point(71, 9);
+            this.cbxSchoolYear.Name = "cbxSchoolYear";
+            this.cbxSchoolYear.Size = new System.Drawing.Size(60, 25);
+            this.cbxSchoolYear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.cbxSchoolYear.TabIndex = 4;
+            this.cbxSchoolYear.TextChanged += new System.EventHandler(this.schoolYearCbx_TextChanged);
             // 
-            // semesterCbx
+            // cbxSemester
             // 
-            this.semesterCbx.DisplayMember = "Text";
-            this.semesterCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.semesterCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.semesterCbx.FormattingEnabled = true;
-            this.semesterCbx.ItemHeight = 19;
-            this.semesterCbx.Location = new System.Drawing.Point(192, 9);
-            this.semesterCbx.Name = "semesterCbx";
-            this.semesterCbx.Size = new System.Drawing.Size(50, 25);
-            this.semesterCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.semesterCbx.TabIndex = 5;
-            this.semesterCbx.TextChanged += new System.EventHandler(this.semesterCbx_TextChanged);
+            this.cbxSemester.DisplayMember = "Text";
+            this.cbxSemester.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbxSemester.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxSemester.FormattingEnabled = true;
+            this.cbxSemester.ItemHeight = 19;
+            this.cbxSemester.Location = new System.Drawing.Point(192, 9);
+            this.cbxSemester.Name = "cbxSemester";
+            this.cbxSemester.Size = new System.Drawing.Size(50, 25);
+            this.cbxSemester.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.cbxSemester.TabIndex = 5;
+            this.cbxSemester.TextChanged += new System.EventHandler(this.semesterCbx_TextChanged);
             // 
-            // subjectCbx
+            // cbxSubject
             // 
-            this.subjectCbx.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.subjectCbx.DisplayMember = "Text";
-            this.subjectCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.subjectCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.subjectCbx.FormattingEnabled = true;
-            this.subjectCbx.ItemHeight = 19;
-            this.subjectCbx.Location = new System.Drawing.Point(606, 9);
-            this.subjectCbx.Name = "subjectCbx";
-            this.subjectCbx.Size = new System.Drawing.Size(156, 25);
-            this.subjectCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.subjectCbx.TabIndex = 6;
-            this.subjectCbx.TextChanged += new System.EventHandler(this.subjectCbx_TextChanged);
+            this.cbxSubject.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxSubject.DisplayMember = "Text";
+            this.cbxSubject.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbxSubject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxSubject.FormattingEnabled = true;
+            this.cbxSubject.ItemHeight = 19;
+            this.cbxSubject.Location = new System.Drawing.Point(606, 9);
+            this.cbxSubject.Name = "cbxSubject";
+            this.cbxSubject.Size = new System.Drawing.Size(156, 25);
+            this.cbxSubject.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.cbxSubject.TabIndex = 6;
+            this.cbxSubject.TextChanged += new System.EventHandler(this.subjectCbx_TextChanged);
             // 
             // saveBtn
             // 
@@ -356,20 +346,20 @@
             this.labelX4.TabIndex = 9;
             this.labelX4.Text = "課程類別";
             // 
-            // courseTypeCbx
+            // cbxCourseType
             // 
-            this.courseTypeCbx.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.courseTypeCbx.DisplayMember = "Text";
-            this.courseTypeCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.courseTypeCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.courseTypeCbx.FormattingEnabled = true;
-            this.courseTypeCbx.ItemHeight = 19;
-            this.courseTypeCbx.Location = new System.Drawing.Point(427, 9);
-            this.courseTypeCbx.Name = "courseTypeCbx";
-            this.courseTypeCbx.Size = new System.Drawing.Size(110, 25);
-            this.courseTypeCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.courseTypeCbx.TabIndex = 10;
-            this.courseTypeCbx.TextChanged += new System.EventHandler(this.courseTypeCbx_TextChanged);
+            this.cbxCourseType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxCourseType.DisplayMember = "Text";
+            this.cbxCourseType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbxCourseType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxCourseType.FormattingEnabled = true;
+            this.cbxCourseType.ItemHeight = 19;
+            this.cbxCourseType.Location = new System.Drawing.Point(427, 9);
+            this.cbxCourseType.Name = "cbxCourseType";
+            this.cbxCourseType.Size = new System.Drawing.Size(110, 25);
+            this.cbxCourseType.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.cbxCourseType.TabIndex = 10;
+            this.cbxCourseType.TextChanged += new System.EventHandler(this.courseTypeCbx_TextChanged);
             // 
             // ManualDisClass
             // 
@@ -377,13 +367,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(774, 561);
             this.Controls.Add(this.autoDisClassBtn);
-            this.Controls.Add(this.courseTypeCbx);
+            this.Controls.Add(this.cbxCourseType);
             this.Controls.Add(this.labelX4);
             this.Controls.Add(this.closeBtn);
             this.Controls.Add(this.saveBtn);
-            this.Controls.Add(this.subjectCbx);
-            this.Controls.Add(this.semesterCbx);
-            this.Controls.Add(this.schoolYearCbx);
+            this.Controls.Add(this.cbxSubject);
+            this.Controls.Add(this.cbxSemester);
+            this.Controls.Add(this.cbxSchoolYear);
             this.Controls.Add(this.labelX3);
             this.Controls.Add(this.labelX2);
             this.Controls.Add(this.labelX1);
@@ -410,22 +400,21 @@
         private DevComponents.DotNetBar.LabelX labelX1;
         private DevComponents.DotNetBar.LabelX labelX2;
         private DevComponents.DotNetBar.LabelX labelX3;
-        private DevComponents.DotNetBar.Controls.ComboBoxEx schoolYearCbx;
-        private DevComponents.DotNetBar.Controls.ComboBoxEx semesterCbx;
-        private DevComponents.DotNetBar.Controls.ComboBoxEx subjectCbx;
+        private DevComponents.DotNetBar.Controls.ComboBoxEx cbxSchoolYear;
+        private DevComponents.DotNetBar.Controls.ComboBoxEx cbxSemester;
+        private DevComponents.DotNetBar.Controls.ComboBoxEx cbxSubject;
         private DevComponents.DotNetBar.ButtonX saveBtn;
         private DevComponents.DotNetBar.ButtonX closeBtn;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private DevComponents.DotNetBar.ButtonX autoDisClassBtn;
         private DevComponents.DotNetBar.LabelX labelX4;
-        private DevComponents.DotNetBar.Controls.ComboBoxEx courseTypeCbx;
+        private DevComponents.DotNetBar.Controls.ComboBoxEx cbxCourseType;
+        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.DataGridViewTextBoxColumn stuNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn name;
         private System.Windows.Forms.DataGridViewTextBoxColumn gender;
         private System.Windows.Forms.DataGridViewTextBoxColumn className;
         private System.Windows.Forms.DataGridViewTextBoxColumn saetNo;
-        private DataGridViewColorBallTextColumn attendNow;
         private DataGridViewColorBallTextColumn attendAfter;
-        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

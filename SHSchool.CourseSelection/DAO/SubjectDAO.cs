@@ -17,10 +17,19 @@ namespace SHSchool.CourseSelection.DAO
 
         public SubjectDAO(string schoolYear,string semester)
         {
+            GetSubjectTypeList(schoolYear, semester);
+        }
+
+        /// <summary>
+        /// 取得學年度學期課程類別名稱清單
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetSubjectTypeList(string schoolYear,string semester)
+        {
             listTypeName = new List<string>();
 
             AccessHelper access = new AccessHelper();
-            List<UDT.Subject> listSubject = access.Select<UDT.Subject>(string.Format("school_year = {0} AND semester = {1}",schoolYear,semester));
+            List<UDT.Subject> listSubject = access.Select<UDT.Subject>(string.Format("school_year = {0} AND semester = {1}", schoolYear, semester));
             foreach (UDT.Subject subject in listSubject)
             {
                 if (!listTypeName.Contains(subject.Type))
@@ -28,6 +37,8 @@ namespace SHSchool.CourseSelection.DAO
                     listTypeName.Add(subject.Type);
                 }
             }
+
+            return listTypeName;
         }
 
         /// <summary>

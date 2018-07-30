@@ -144,6 +144,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAO\BlackListDAO.cs" />
     <Compile Include="DAO\SubjectDAO.cs" />
     <Compile Include="Event\DeliverActiveRecord.cs" />
     <Compile Include="Event\DeliverActiveRecordEvent.cs" />
@@ -182,6 +183,12 @@
     </Compile>
     <Compile Include="Forms\AdjustSubjectStudent.Designer.cs">
       <DependentUpon>AdjustSubjectStudent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\BlackListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BlackListForm.Designer.cs">
+      <DependentUpon>BlackListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\BuildCourse.cs">
       <SubType>Form</SubType>
@@ -255,6 +262,12 @@
     <Compile Include="Forms\Sequence_distribution_Management.Designer.cs">
       <DependentUpon>Sequence_distribution_Management.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SettingExamineReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SettingExamineReport.Designer.cs">
+      <DependentUpon>SettingExamineReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\TurnIntoCourseStudent.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -309,6 +322,9 @@
     <EmbeddedResource Include="Forms\AdjustSubjectStudent.resx">
       <DependentUpon>AdjustSubjectStudent.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BlackListForm.resx">
+      <DependentUpon>BlackListForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\BuildCourse.resx">
       <DependentUpon>BuildCourse.cs</DependentUpon>
     </EmbeddedResource>
@@ -345,12 +361,16 @@
     <EmbeddedResource Include="Forms\Sequence_distribution_Management.resx">
       <DependentUpon>Sequence_distribution_Management.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SettingExamineReport.resx">
+      <DependentUpon>SettingExamineReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\TurnIntoCourseStudent.resx">
       <DependentUpon>TurnIntoCourseStudent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Test\AutoSelectStuWish.resx">
       <DependentUpon>AutoSelectStuWish.cs</DependentUpon>
@@ -365,6 +385,7 @@
     <None Include="Resources\匯出選課結果樣板.xlsx" />
     <None Include="Resources\學生選修科目清單樣版 .xls" />
     <None Include="Resources\科目選修學生名單樣版.xls" />
+    <None Include="Resources\選課設定檢查報表樣板.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\sandglass_unlock_64.png" />

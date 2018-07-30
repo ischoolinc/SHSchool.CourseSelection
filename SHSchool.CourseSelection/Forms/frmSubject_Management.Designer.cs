@@ -62,7 +62,7 @@
             this.Exit.Name = "Exit";
             this.Exit.Size = new System.Drawing.Size(75, 23);
             this.Exit.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.Exit.TabIndex = 7;
+            this.Exit.TabIndex = 5;
             this.Exit.Text = "離  開";
             this.Exit.Click += new System.EventHandler(this.Exit_Click);
             // 
@@ -117,7 +117,7 @@
             this.Delete.Name = "Delete";
             this.Delete.Size = new System.Drawing.Size(75, 23);
             this.Delete.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.Delete.TabIndex = 8;
+            this.Delete.TabIndex = 4;
             this.Delete.Text = "刪  除";
             this.Delete.Click += new System.EventHandler(this.Delete_Click);
             // 
@@ -132,7 +132,7 @@
             this.cboSchoolYear.Name = "cboSchoolYear";
             this.cboSchoolYear.Size = new System.Drawing.Size(60, 25);
             this.cboSchoolYear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.cboSchoolYear.TabIndex = 33;
+            this.cboSchoolYear.TabIndex = 0;
             this.cboSchoolYear.SelectedIndexChanged += new System.EventHandler(this.cboSchoolYear_SelectedIndexChanged);
             // 
             // cboSemester
@@ -146,7 +146,7 @@
             this.cboSemester.Name = "cboSemester";
             this.cboSemester.Size = new System.Drawing.Size(50, 25);
             this.cboSemester.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.cboSemester.TabIndex = 32;
+            this.cboSemester.TabIndex = 1;
             this.cboSemester.SelectedIndexChanged += new System.EventHandler(this.cboSemester_SelectedIndexChanged);
             // 
             // Addd
@@ -159,7 +159,7 @@
             this.Addd.Name = "Addd";
             this.Addd.Size = new System.Drawing.Size(75, 23);
             this.Addd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.Addd.TabIndex = 34;
+            this.Addd.TabIndex = 2;
             this.Addd.Text = "新  增";
             this.Addd.Click += new System.EventHandler(this.Addd_Click);
             // 
@@ -173,7 +173,7 @@
             this.Update.Name = "Update";
             this.Update.Size = new System.Drawing.Size(75, 23);
             this.Update.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.Update.TabIndex = 35;
+            this.Update.TabIndex = 3;
             this.Update.Text = "修  改";
             this.Update.Click += new System.EventHandler(this.Update_Click);
             // 
@@ -222,7 +222,8 @@
             this.Institute.HeaderText = "教學單位";
             this.Institute.Name = "Institute";
             this.Institute.ReadOnly = true;
-            this.Institute.Width = 66;
+            this.Institute.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Institute.Width = 85;
             // 
             // SubjectName
             // 

@@ -15,33 +15,48 @@ namespace SHSchool.CourseSelection.Forms
 {
     public partial class TurnIntoCourseStudent : BaseForm
     {
+        private bool initFinish = false;
+
         public TurnIntoCourseStudent()
         {
             InitializeComponent();
+        }
 
-            #region Init ComboBox
+        private void TurnIntoCourseStudent_Load(object sender, EventArgs e)
+        {
+            AccessHelper access = new AccessHelper();
+            #region Init SchoolYearLb、SemesterLb
             {
-                AccessHelper access = new AccessHelper();
-                List<UDT.OpeningTime> openingTime = access.Select<UDT.OpeningTime>();
-                if (openingTime.Count == 0)
+                List<UDT.OpeningTime> timeList = access.Select<UDT.OpeningTime>();
+
+                if (timeList.Count == 0)
                 {
-                    openingTime.Add(new UDT.OpeningTime() { SchoolYear = int.Parse(K12.Data.School.DefaultSchoolYear), Semester = int.Parse(K12.Data.School.DefaultSemester) });
-                    openingTime.SaveAll();
+                    timeList.Add(new UDT.OpeningTime() { SchoolYear = int.Parse(K12.Data.School.DefaultSchoolYear), Semester = int.Parse(K12.Data.School.DefaultSemester) });
+                    timeList.SaveAll();
                 }
-                int sy = openingTime[0].SchoolYear;
-                int s = openingTime[0].Semester;
-                // SchoolYear 預設: 開放選課學年度
-                schoolYearCbx.Text = "" + sy;
-                for (int i = 0; i < 3; i++)
-                {
-                    schoolYearCbx.Items.Add(sy - i);
-                }
-                // Semester 預設: 開放選課學期
-                semesterCbx.Text = "" + s;
+
+                schoolYearCbx.Items.Add(timeList[0].SchoolYear + 1);
+                schoolYearCbx.Items.Add(timeList[0].SchoolYear);
+                schoolYearCbx.Items.Add(timeList[0].SchoolYear - 1);
+
+                schoolYearCbx.SelectedIndex = 1;
+
                 semesterCbx.Items.Add(1);
                 semesterCbx.Items.Add(2);
+                if ("" + timeList[0].Semester == "1")
+                {
+                    semesterCbx.SelectedIndex = 0;
+                }
+
+                if ("" + timeList[0].Semester == "2")
+                {
+                    semesterCbx.SelectedIndex = 1;
+                }
             }
             #endregion
+
+            initFinish = true;
+            ReloadCourseTypeCbx();
         }
 
         public void ReloadCourseTypeCbx()
@@ -51,13 +66,15 @@ namespace SHSchool.CourseSelection.Forms
                 courseTypeCbx.Items.Clear();
 
                 string selectSQL = string.Format(@"
-                    SELECT DISTINCT 
-                        type 
-                    FROM 
-                        $ischool.course_selection.subject 
-                    WHERE 
-                        school_year = {0} AND semester = {1}"
-                    , schoolYearCbx.Text, semesterCbx.Text);
+SELECT DISTINCT 
+    type 
+FROM 
+    $ischool.course_selection.subject 
+WHERE 
+    school_year = {0} 
+    AND semester = {1}
+    AND type IS NOT NULL
+                ", schoolYearCbx.Text, semesterCbx.Text);
                 QueryHelper qh = new QueryHelper();
                 DataTable courseTypes = qh.Select(selectSQL);
 
@@ -82,20 +99,21 @@ namespace SHSchool.CourseSelection.Forms
             #region SQL
             string selectSQL = string.Format(@"
 SELECT 
-    subject.uid,
-    subject.subject_name,
-    subject.level,
-    subject.credit,
-    subject_course.count as course_count,
-	ss_attend.count as student_count,
-    ss_attend.course_student_count
+    subject.uid
+    , subject.subject_name
+    , subject.level
+    , subject.credit
+    , subject.disabled
+    , subject_course.count as course_count
+	, ss_attend.count as student_count
+    , ss_attend.course_student_count
 FROM 
     $ischool.course_selection.subject  AS subject
     LEFT OUTER JOIN
 	(
 		SELECT 
-		    ref_subject_id,
-		    count(ref_subject_id) 
+		    subject_course.ref_subject_id,
+		    count(subject_course.ref_subject_id) 
 	    FROM 
 		    $ischool.course_selection.subject_course AS subject_course
             LEFT OUTER JOIN $ischool.course_selection.subject AS subject
@@ -113,35 +131,47 @@ FROM
             $ischool.course_selection.ss_attend
 	    GROUP BY ref_subject_id
     )ss_attend ON ss_attend.ref_subject_id = subject.uid
-WHERE subject.school_year = {1} AND subject.semester = {2} AND type = '{0}'"
-            , courseTypeCbx.Text, schoolYearCbx.Text, semesterCbx.Text);
+WHERE 
+    subject.school_year = {1} 
+    AND subject.semester = {2} 
+    AND type = '{0}'
+            ", courseTypeCbx.Text, schoolYearCbx.Text, semesterCbx.Text);
             #endregion
 
             QueryHelper qh = new QueryHelper();
             DataTable dataTable = qh.Select(selectSQL);
 
-            foreach (DataRow dr in dataTable.Rows)
+            foreach (DataRow row in dataTable.Rows)
             {
                 DataGridViewRow datarow = new DataGridViewRow();
                 datarow.CreateCells(dataGridViewX1);
                 int index = 0;
-                datarow.Cells[index].Tag = "" + dr["uid"]; // 紀錄:科目ID
-                datarow.Cells[index++].Value = "" + dr["subject_name"];
-                datarow.Cells[index++].Value = "" + dr["level"];
-                datarow.Cells[index++].Value = "" + dr["credit"];
+                datarow.Cells[index].Tag = "" + row["uid"]; // 紀錄:科目ID
+                datarow.Cells[index++].Value = "" + row["subject_name"];
+                datarow.Cells[index++].Value = "" + row["level"];
+                datarow.Cells[index++].Value = "" + row["credit"];
 
                 // 開班數
-                int courseCount = "" + dr["course_count"] == "" ? 0 : int.Parse("" + dr["course_count"]);
+                int courseCount = "" + row["course_count"] == "" ? 0 : int.Parse("" + row["course_count"]);
                 // 選課人數
-                int studentCount = "" + dr["student_count"] == "" ? 0 : int.Parse("" + dr["student_count"]);
+                int studentCount = "" + row["student_count"] == "" ? 0 : int.Parse("" + row["student_count"]);
                 // 科目已分班人數
-                int courseStudentCount = "" + dr["course_student_count"] == "" ? 0 : int.Parse("" + dr["course_student_count"]);
+                int courseStudentCount = "" + row["course_student_count"] == "" ? 0 : int.Parse("" + row["course_student_count"]);
+                bool disOpen = bool.Parse("" + row["disabled"]);
                 // 如果沒開班
                 if (courseCount == 0)
                 {
-                    datarow.Cells[index].Style.ForeColor = Color.Red;
-                    datarow.Cells[index++].Value = "科目未開班!";
-                    datarow.Tag = "error";
+                    if (disOpen) // 不開課
+                    {
+                        datarow.Cells[index++].Value = row["subject_name"] + "不開課";
+                        datarow.Tag = "correct";
+                    }
+                    else
+                    {
+                        datarow.Cells[index].Style.ForeColor = Color.Red;
+                        datarow.Cells[index++].Value = "科目未開班!";
+                        datarow.Tag = "error";
+                    }
                 }
                 // 有開班、有選課學生、但有未分班學生
                 if (courseCount > 0 && studentCount > 0 && (studentCount - courseStudentCount) > 0)
@@ -170,12 +200,19 @@ WHERE subject.school_year = {1} AND subject.semester = {2} AND type = '{0}'"
 
         private void schoolYearCbx_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ReloadCourseTypeCbx();
+            if (initFinish)
+            {
+                ReloadCourseTypeCbx();
+            }
+            
         }
 
         private void semesterCbx_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ReloadCourseTypeCbx();
+            if (initFinish)
+            {
+                ReloadCourseTypeCbx();
+            }
         }
 
         private void courseTypeCbx_TextChanged(object sender, EventArgs e)
@@ -263,6 +300,5 @@ WHERE
             MessageBox.Show("轉入成功!");
         }
 
-        
     }
 }

@@ -41,10 +41,10 @@ namespace SHSchool.CourseSelection.Import
             if (this.SelectedKeyFields.Contains("科目系統編號"))
                 keyField = "科目系統編號";
             else
-                keyField = "學年度+學期+科目名稱+級別";
+                keyField = "學年度+學期+課程類別+科目名稱+級別";
 
             //  若「科目系統編號」不為空白，則必須存在於資料庫中。
-            DataTable dataTableSubjects = queryHelper.Select("select uid, subject_name, level, school_year, semester from $ischool.course_selection.subject");
+            DataTable dataTableSubjects = queryHelper.Select("select uid, type, subject_name, level, school_year, semester from $ischool.course_selection.subject");
             IEnumerable<DataRow> subjects = dataTableSubjects.Rows.Cast<DataRow>();
 
             Rows.ForEach((x) =>
@@ -52,6 +52,7 @@ namespace SHSchool.CourseSelection.Import
                 string subject_uid = x.GetValue("科目系統編號").Trim();
                 string school_year = x.GetValue("學年度").Trim();
                 string semester = x.GetValue("學期").Trim();
+                string type = x.GetValue("課程類別").Trim();
                 string subject_name = x.GetValue("科目名稱").Trim();
                 string level = x.GetValue("級別").Trim();
                 string crossType1 = x.GetValue("跨課程類別1").Trim();
@@ -133,6 +134,7 @@ namespace SHSchool.CourseSelection.Import
                 string school_year = row.GetValue("學年度").Trim();
                 string semester = row.GetValue("學期").Trim();
                 string institute = row.GetValue("教學單位").Trim();
+                string type = row.GetValue("課程類別").Trim();
                 string subject_name = row.GetValue("科目名稱").Trim();
                 string level = row.GetValue("級別").Trim();
 
@@ -141,7 +143,7 @@ namespace SHSchool.CourseSelection.Import
                 //  若鍵值不為「科目系統編號」，則查出哪些課程是要新增的
                 if (keyField != "科目系統編號")
                 {
-                    filterSubjectRecords = ExistingSubjectRecords.Where(x => (x.SchoolYear.ToString() == school_year)).Where(x => (x.Semester.ToString() == semester)).Where(x => (x.SubjectName.ToString().Trim() == subject_name)).Where(x => ((x.Level.HasValue ? x.Level.Value.ToString() : "") == level));
+                    filterSubjectRecords = ExistingSubjectRecords.Where(x => (x.SchoolYear.ToString() == school_year)).Where(x => (x.Semester.ToString() == semester)).Where(x => (x.Type.ToString() == type)).Where(x => (x.SubjectName.ToString().Trim() == subject_name)).Where(x => ((x.Level.HasValue ? x.Level.Value.ToString() : "") == level));
                 }
                 else
                     filterSubjectRecords = ExistingSubjectRecords.Where(x => x.UID == subject_uid);
@@ -154,6 +156,7 @@ namespace SHSchool.CourseSelection.Import
                 {
                     subjectRecord.SchoolYear = int.Parse(school_year);
                     subjectRecord.Semester = int.Parse(semester);
+                    subjectRecord.Type = type;
                     subjectRecord.SubjectName = subject_name;
                     if (!string.IsNullOrEmpty(level))
                         subjectRecord.Level = int.Parse(level);
@@ -164,6 +167,8 @@ namespace SHSchool.CourseSelection.Import
                         subjectRecord.SchoolYear = int.Parse(school_year);
                     if (mOption.SelectedFields.Contains("學期") && !string.IsNullOrEmpty(semester))
                         subjectRecord.Semester = int.Parse(semester);
+                    if (mOption.SelectedFields.Contains("課程類別") && !string.IsNullOrEmpty(type))
+                        subjectRecord.Type = type;
                     if (mOption.SelectedFields.Contains("科目名稱") && !string.IsNullOrEmpty(subject_name))
                         subjectRecord.SubjectName = subject_name;
                     if (mOption.SelectedFields.Contains("級別"))
@@ -184,8 +189,8 @@ namespace SHSchool.CourseSelection.Import
                     else
                         subjectRecord.Credit = null;
                 }
-                if (mOption.SelectedFields.Contains("課程類別") && !string.IsNullOrWhiteSpace(row.GetValue("課程類別")))
-                    subjectRecord.Type = row.GetValue("課程類別").Trim();
+                //if (mOption.SelectedFields.Contains("課程類別") && !string.IsNullOrWhiteSpace(row.GetValue("課程類別")))
+                //    subjectRecord.Type = row.GetValue("課程類別").Trim();
 
                 if (mOption.SelectedFields.Contains("修課人數上限") && !string.IsNullOrWhiteSpace(row.GetValue("修課人數上限")))
                     subjectRecord.Limit = int.Parse(row.GetValue("修課人數上限").Trim());
@@ -208,7 +213,7 @@ namespace SHSchool.CourseSelection.Import
                 if (mOption.SelectedFields.Contains("重複修課採計方式") && !string.IsNullOrWhiteSpace(row.GetValue("重複修課採計方式")))
                     subjectRecord.RejoinBlockMode = row.GetValue("重複修課採計方式").Trim();
                 if (mOption.SelectedFields.Contains("不開課") && !string.IsNullOrWhiteSpace(row.GetValue("不開課")))
-                    subjectRecord.Disabled = bool.Parse(row.GetValue("不開課").Trim());
+                    subjectRecord.Disabled = row.GetValue("不開課").Trim() == "是" ? true : false;
                 if (mOption.SelectedFields.Contains("跨課程類別1") && !string.IsNullOrWhiteSpace(row.GetValue("跨課程類別1")))
                     subjectRecord.CrossType1 = row.GetValue("跨課程類別1").Trim();
                 if (mOption.SelectedFields.Contains("跨課程類別2") && !string.IsNullOrWhiteSpace(row.GetValue("跨課程類別2")))

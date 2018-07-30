@@ -136,8 +136,23 @@ namespace SHSchool.CourseSelection.Forms
                 {
                     mRecord.PreSubjectLevel = null;
                 }
-                mRecord.PreSubjectBlockMode = this.cbxPreSubjectBlockMode.SelectedItem.ToString().Trim();
-                mRecord.RejoinBlockMode = this.cbxRejoinMode.SelectedItem.ToString().Trim();
+                if (this.cbxPreSubjectBlockMode.SelectedItem == null)
+                {
+                    mRecord.PreSubjectBlockMode = null;
+                }
+                else
+                {
+                    mRecord.PreSubjectBlockMode = this.cbxPreSubjectBlockMode.SelectedItem.ToString().Trim();
+                }
+                if (this.cbxRejoinMode.SelectedItem == null)
+                {
+                    mRecord.RejoinBlockMode = null;
+                }
+                else
+                {
+                    mRecord.RejoinBlockMode = this.cbxRejoinMode.SelectedItem.ToString().Trim();
+                }
+                
                 mRecord.Disabled = this.ckbxDisable.Checked;
                 mRecord.CrossType1 = this.tbxCrossType1.Text.Trim();
                 mRecord.CrossType2 = this.tbxCrossType2.Text.Trim();
