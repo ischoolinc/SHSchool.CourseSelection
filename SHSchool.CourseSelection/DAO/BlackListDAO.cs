@@ -11,7 +11,7 @@ namespace SHSchool.CourseSelection.DAO
     class BlackListDAO
     {
         /// <summary>
-        /// 透過學年度學期取得黑名單
+        /// 透過學年度學期取得擋修名單
         /// </summary>
         /// <param name="schoolYear"></param>
         /// <param name="semester"></param>

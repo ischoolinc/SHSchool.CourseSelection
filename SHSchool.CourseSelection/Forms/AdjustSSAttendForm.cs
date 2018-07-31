@@ -31,7 +31,7 @@ namespace SHSchool.CourseSelection.Forms
         private Dictionary<string, SubjectCountLimit> _DicSubjectData = new Dictionary<string, SubjectCountLimit>();
 
         /// <summary>
-        /// 學生黑名單資料 key: 學生系統編號, key:科目系統編號
+        /// 學生擋修名單資料 key: 學生系統編號, key:科目系統編號
         /// </summary>
         private Dictionary<string, Dictionary<string, string>> _DicStudentBlackList = new Dictionary<string, Dictionary<string, string>>();
 
@@ -379,7 +379,7 @@ WHERE
         }
 
         /// <summary>
-        /// 取得黑名單資料
+        /// 取得擋修名單資料
         /// </summary>
         private void GetBlackListData(string schoolYear,string semester,string type)
         {
@@ -395,7 +395,7 @@ WITH target_subject AS(
 			WHEN cross_type1 = '{2}' THEN 'true'
 			WHEN cross_type2 = '{2}' THEN 'true'
 			ELSE null 
-			END as 跨課程類別
+			END as 跨課程時段
 	FROM
 		$ischool.course_selection.subject
 	WHERE
@@ -437,7 +437,7 @@ GROUP BY
         }
 
         /// <summary>
-        /// 驗證黑名單
+        /// 驗證擋修名單
         /// </summary>
         /// <param name="studentID"></param>
         /// <param name="subjectID"></param>
@@ -647,7 +647,7 @@ WITH target_subject AS(
 			WHEN cross_type1 = '{2}' THEN 'true'
 			WHEN cross_type2 = '{2}' THEN 'true'
 			ELSE null 
-			END as 跨課程類別
+			END as 跨課程時段
 	FROM
 		$ischool.course_selection.subject
 	WHERE
@@ -707,7 +707,7 @@ WITH target_subject AS(
         , lock
         , attend_type
 		, subject.subject_name
-		, target_subject.跨課程類別
+		, target_subject.跨課程時段
 	FROM
 		$ischool.course_selection.ss_attend AS attend
 		LEFT OUTER JOIN $ischool.course_selection.subject AS subject
@@ -760,7 +760,7 @@ SELECT
     , student_attend.attend_type
     , student_attend.ref_subject_id
 	, student_attend.subject_name AS 選課課程
-	, student_attend.跨課程類別 AS 跨課程類別科目
+	, student_attend.跨課程時段 AS 跨課程時段科目
 	, wish1.subject_name AS 志願1
 	, wish2.subject_name AS 志願2
 	, wish3.subject_name AS 志願3
@@ -858,9 +858,9 @@ ORDER BY
                 {
                     swapEnabled = false;
                 }
-                // 如果資料行為跨課程類別不能做修改
+                // 如果資料行為跨課程時段不能做修改
                 DataRow tagRow = (DataRow)row.Tag;
-                if ("" + tagRow["跨課程類別科目"] == "true")
+                if ("" + tagRow["跨課程時段科目"] == "true")
                 {
                     swapEnabled = false;
                 }
@@ -917,7 +917,7 @@ ORDER BY
                     {
                         row["attend_type"] = "指定";
                     }
-                    // 驗證黑名單
+                    // 驗證擋修名單
                     row["reason"] = CheckBlackList("" + row["id"], subjectID);
                 }
                 #endregion
@@ -976,7 +976,7 @@ ORDER BY
             string sql="";
             foreach (DataGridViewRow datarow in dataGridViewX1.Rows)
             {
-                if ("" + datarow.Cells[12].Value != "跨課程類別")
+                if ("" + datarow.Cells[12].Value != "跨課程時段")
                 {
                     DataRow row = (DataRow)datarow.Tag;
                     string data = string.Format(@"
@@ -1058,33 +1058,33 @@ WITH data_row AS(
         ,CASE 
             WHEN data_source.status = 'update'::text THEN 
 '學生「'|| student.name || '」
-課程類別「'|| data_source.type ||'」選修科目「' || data_source.subject_name || '」
+課程時段「'|| data_source.type ||'」選修科目「' || data_source.subject_name || '」
 變更選課鎖定狀態為「' || data_source.lock || '」'
 
             WHEN data_source.status = 'insert'::text AND data_source.attend_type = '指定'::text THEN 
 '學生「'|| student.name || '」
-課程類別「'|| data_source.type ||'」選修科目「指定」為「' || data_source.subject_name || '」'|| (CASE WHEN data_source.lock = true THEN '
+課程時段「'|| data_source.type ||'」選修科目「指定」為「' || data_source.subject_name || '」'|| (CASE WHEN data_source.lock = true THEN '
 鎖定狀態為「' || data_source.lock || '」' ELSE '' END)
 
             WHEN data_source.status = 'insert'::text AND data_source.attend_type = '志願分發'::text THEN 
 '學生「'|| student.name || '」
-課程類別「'|| data_source.type ||'」選修科目「志願分發(分發順位代碼' || data_source.seed || ')」為「' || data_source.subject_name || '」'|| (CASE WHEN data_source.lock = true THEN '
+課程時段「'|| data_source.type ||'」選修科目「志願分發(分發順位代碼' || data_source.seed || ')」為「' || data_source.subject_name || '」'|| (CASE WHEN data_source.lock = true THEN '
 鎖定狀態為「' || data_source.lock || '」' ELSE '' END)
 
             WHEN data_source.status = 'delete_insert'::text AND data_source.attend_type = '指定'::text THEN 
 '學生「'|| student.name || '」
-課程類別「'|| data_source.type ||'」
+課程時段「'|| data_source.type ||'」
 自移除原選修科目「' || data_source.orig_subject_name || '」改「指定」為「' || data_source.subject_name || '」'|| (CASE WHEN data_source.lock = true THEN '
 鎖定狀態為「' || data_source.lock || '」' ELSE '' END)
 
             WHEN data_source.status = 'delete_insert'::text AND data_source.attend_type = '志願分發'::text THEN 
 '學生「'|| student.name || '」
-課程類別「'|| data_source.type ||'」
+課程時段「'|| data_source.type ||'」
 自移除原選修科目「' || data_source.orig_subject_name || '」改「志願分發(分發順位代碼' || data_source.seed || ')」為「' || data_source.subject_name || '」'|| (CASE WHEN data_source.lock = true THEN '
 鎖定狀態為「' || data_source.lock || '」' ELSE '' END)
 
             WHEN data_source.status = 'delete'::text THEN 
-'刪除學生「'|| student.name || '」課程類別「'|| data_source.type ||'」 原選修科目結果「' || data_source.orig_subject_name || '」'
+'刪除學生「'|| student.name || '」課程時段「'|| data_source.type ||'」 原選修科目結果「' || data_source.orig_subject_name || '」'
         END AS description
     FROM
         data_source
@@ -1306,13 +1306,13 @@ WHERE
             if ("" + row["ref_subject_id"] != string.Empty)
             {
                 ((DataGridViewColorBallTextCell)datarow.Cells[index]).Value = tool.SubjectNameAndLevel("" + row["ref_subject_id"]);//"" + row["選課課程"];
-                if ("" + row["跨課程類別科目"] != "true")
+                if ("" + row["跨課程時段科目"] != "true")
                 {
                     ((DataGridViewColorBallTextCell)datarow.Cells[index]).Color = subjectColorDic["" + row["ref_subject_id"]];
                 }
                 else
                 {
-                    ((DataGridViewColorBallTextCell)datarow.Cells[index]).Color = Color.Gray;  // 跨課程類別顏色
+                    ((DataGridViewColorBallTextCell)datarow.Cells[index]).Color = Color.Gray;  // 跨課程時段顏色
                 }
             }
             else
@@ -1342,10 +1342,10 @@ WHERE
 
             #region 修課方式
 
-            if ("" + row["跨課程類別科目"] == "true")
+            if ("" + row["跨課程時段科目"] == "true")
             {
                 datarow.DefaultCellStyle.BackColor = Color.LightGray;
-                datarow.Cells[index++].Value = "跨課程類別";
+                datarow.Cells[index++].Value = "跨課程時段";
             }
             else
             {
@@ -1432,7 +1432,7 @@ WHERE
             foreach (DataRow row in _DataRowList)
             {
                 // 重新計算選修科目人數
-                // 新增判斷條件避免跨課程類別科目不在dic中出現錯誤
+                // 新增判斷條件避免跨課程時段科目不在dic中出現錯誤
                 if (_DicSubjectData.ContainsKey("" + row["ref_subject_id"]))
                 {
                     _DicSubjectData["" + row["ref_subject_id"]].StuCount++;
@@ -1564,7 +1564,7 @@ WHERE
         {
             foreach (DataRow row in _DataRowList)
             {
-                if ("" + row["lock"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏" && "" + row["跨課程類別科目"] != "true")
+                if ("" + row["lock"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏" && "" + row["跨課程時段科目"] != "true")
                 {
                     row["ref_subject_id"] = "";
                     row["選課課程"] = "";
@@ -1626,7 +1626,7 @@ WHERE
                 foreach (DataRow row in _DataRowList)
                 {
                     row["分發順位"] = "";
-                    if ("" + row["lock"] != "true" && "" + row["跨課程類別科目"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
+                    if ("" + row["lock"] != "true" && "" + row["跨課程時段科目"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
                     {
                         processRow.Add(row);
                     }
@@ -1642,7 +1642,7 @@ WHERE
                 // 更新DataRow
                 foreach (var row in _DataRowList)
                 {
-                    if ("" + row["lock"] != "true" && "" + row["跨課程類別科目"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
+                    if ("" + row["lock"] != "true" && "" + row["跨課程時段科目"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
                     {
                         int orderIndex = random.Next(list.Count);
                         int order = list[orderIndex];
@@ -1769,13 +1769,13 @@ WHERE
             Dictionary<int, DataRow> dicSortDataRow = new Dictionary<int, DataRow>();
             foreach (var row in _DataRowList)
             {
-                if ("" + row["分發順位"] == "" && "" + row["lock"] != "true" && "" + row["跨課程類別科目"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
+                if ("" + row["分發順位"] == "" && "" + row["lock"] != "true" && "" + row["跨課程時段科目"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
                 {
                     if (showErrorMsg)
                         MessageBox.Show("請先產生分發順位!");
                     break;
                 }
-                if ("" + row["lock"] != "true" && "" + row["跨課程類別科目"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
+                if ("" + row["lock"] != "true" && "" + row["跨課程時段科目"] != "true" && "" + row["attend_type"] != "指定" && "" + row["attend_type"] != "先搶先贏")
                 {
                     dicSortDataRow.Add(int.Parse("" + row["分發順位"]), row);
                 }
@@ -1799,7 +1799,7 @@ WHERE
                     row["分發志願"] = wishOrder;
                     row["attend_type"] = "志願分發";
 
-                    row["reason"] = CheckBlackList(wishSubjectID,"" + row["id"]); // 透過科目編號、學生邊號取得黑名單資料
+                    row["reason"] = CheckBlackList(wishSubjectID,"" + row["id"]); // 透過科目編號、學生邊號取得擋修名單資料
 
                     _DicSubjectData[wishSubjectID].StuCount++;
                 }
@@ -2021,13 +2021,13 @@ WHERE
         }
 
         /// <summary>
-        /// 清除黑名單志願
+        /// 清除擋修名單志願
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnClearBlackList_Click(object sender, EventArgs e)
         {
-            // 清除目標學生的黑名單資料(_DicStudentBlackList)
+            // 清除目標學生的擋修名單資料(_DicStudentBlackList)
             foreach (DataRow row in _DataRowList)
             {
                 string studentID = "" + row["id"];

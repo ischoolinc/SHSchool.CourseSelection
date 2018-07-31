@@ -135,7 +135,7 @@
             this.labelX2.Name = "labelX2";
             this.labelX2.Size = new System.Drawing.Size(58, 23);
             this.labelX2.TabIndex = 4;
-            this.labelX2.Text = "課程類別";
+            this.labelX2.Text = "課程時段";
             this.labelX2.DoubleClick += new System.EventHandler(this.labelX2_DoubleClick);
             // 
             // courseTypeCbx

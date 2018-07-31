@@ -171,8 +171,8 @@ ORDER BY
                 listSheetThreeTitle.Add("座號");
                 listSheetThreeTitle.Add("學號");
                 listSheetThreeTitle.Add("姓名");
-                listSheetThreeTitle.Add("黑名單科目");
-                listSheetThreeTitle.Add("黑名單原因");
+                listSheetThreeTitle.Add("擋修名單科目");
+                listSheetThreeTitle.Add("擋修名單原因");
 
                 #endregion
             }
@@ -571,28 +571,28 @@ WHERE
             foreach (DataRow row in dt3.Rows)
             {
 
-                wb.Worksheets["黑名單資料"].Cells.CopyRows(template.Worksheets["黑名單資料"].Cells, 1, rowIndex3, 1);
+                wb.Worksheets["擋修名單資料"].Cells.CopyRows(template.Worksheets["擋修名單資料"].Cells, 1, rowIndex3, 1);
                 for (int i = 0; i < listSheetThreeTitle.Count; i++)
                 {
                     switch (listSheetThreeTitle[i])
                     {
                         case "班級":
-                            wb.Worksheets["黑名單資料"].Cells[rowIndex3, 0].PutValue("" + row["class_name"]);
+                            wb.Worksheets["擋修名單資料"].Cells[rowIndex3, 0].PutValue("" + row["class_name"]);
                             break;
                         case "座號":
-                            wb.Worksheets["黑名單資料"].Cells[rowIndex3, 1].PutValue("" + row["seat_no"]);
+                            wb.Worksheets["擋修名單資料"].Cells[rowIndex3, 1].PutValue("" + row["seat_no"]);
                             break;
                         case "學號":
-                            wb.Worksheets["黑名單資料"].Cells[rowIndex3, 2].PutValue("" + row["student_number"]);
+                            wb.Worksheets["擋修名單資料"].Cells[rowIndex3, 2].PutValue("" + row["student_number"]);
                             break;
                         case "姓名":
-                            wb.Worksheets["黑名單資料"].Cells[rowIndex3, 3].PutValue("" + row["name"]);
+                            wb.Worksheets["擋修名單資料"].Cells[rowIndex3, 3].PutValue("" + row["name"]);
                             break;
-                        case "黑名單科目":
-                            wb.Worksheets["黑名單資料"].Cells[rowIndex3, 4].PutValue("" + row["subject_name"]);
+                        case "擋修名單科目":
+                            wb.Worksheets["擋修名單資料"].Cells[rowIndex3, 4].PutValue("" + row["subject_name"]);
                             break;
-                        case "黑名單原因":
-                            wb.Worksheets["黑名單資料"].Cells[rowIndex3, 5].PutValue("" + row["reason"]);
+                        case "擋修名單原因":
+                            wb.Worksheets["擋修名單資料"].Cells[rowIndex3, 5].PutValue("" + row["reason"]);
                             break;
                     }
                 }
@@ -610,7 +610,7 @@ WHERE
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Title = "選課設定檢查報表";
-            saveFileDialog.FileName = "選課設定檢查報表.xls";
+            saveFileDialog.FileName = "選課設定檢查報表.xlsx";
             saveFileDialog.Filter = "Excel (*.xlsx)|*.xlsx|所有檔案 (*.*)|*.*";
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)

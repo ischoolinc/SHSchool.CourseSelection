@@ -70,10 +70,10 @@ namespace SHSchool.CourseSelection.Forms
         {
             dataGridViewX1.Rows.Clear();
 
-            // 1.取得學年度學期黑名單資料
+            // 1.取得學年度學期擋修名單資料
             DataTable dt = DAO.BlackListDAO.GetBlackListBySchoolYearSemester(cbxSchoolYear.Text,cbxSemester.Text);
 
-            // 2.填入黑名單資料
+            // 2.填入擋修名單資料
             foreach (DataRow row in dt.Rows)
             {
                 DataGridViewRow dgvrow = new DataGridViewRow();
@@ -92,7 +92,7 @@ namespace SHSchool.CourseSelection.Forms
         {
             List<string> listTypeName = new List<string>();
 
-            // 取得勾選的課程類別
+            // 取得勾選的課程時段
             foreach (DataGridViewRow dgvrow in dataGridViewX1.Rows)
             {
                 if ("" + dgvrow.Cells[0].Value == "True")
@@ -103,11 +103,10 @@ namespace SHSchool.CourseSelection.Forms
 
             if (listTypeName.Count == 0)
             {
-                MsgBox.Show("請先勾要產生黑名單的課程類別!");
+                MsgBox.Show("請先勾選要產生擋修名單的課程時段!");
                 return;
             }
-
-            // 
+            
             string sql = string.Format(@"
 WITH target_subject AS(
     SELECT
@@ -244,7 +243,7 @@ SELECT * FROM calculation_rejoin_block_mode2
             try
             {
                 up.Execute(sql);
-                MsgBox.Show("黑名單產生完成!");
+                MsgBox.Show("擋修名單產生完成!");
                 ReloadDataGridView();
             }
             catch(Exception ex)

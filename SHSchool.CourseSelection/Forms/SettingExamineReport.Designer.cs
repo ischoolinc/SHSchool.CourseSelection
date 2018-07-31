@@ -106,7 +106,7 @@
             this.labelX3.Name = "labelX3";
             this.labelX3.Size = new System.Drawing.Size(60, 23);
             this.labelX3.TabIndex = 4;
-            this.labelX3.Text = "課程類別";
+            this.labelX3.Text = "課程時段";
             // 
             // cbxType
             // 

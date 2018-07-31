@@ -155,9 +155,10 @@ namespace SHSchool.CourseSelection.Properties {
         ///&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;format.xsl&quot; ?&gt;
         ///&lt;ValidateRule Name=&quot;科目資料&quot;&gt;
         ///  &lt;DuplicateDetection&gt;
-        ///    &lt;Detector Name=&quot;學年度+學期+科目名稱+級別&quot;&gt;
+        ///    &lt;Detector Name=&quot;學年度+學期+課程時段+科目名稱+級別&quot;&gt;
         ///      &lt;Field Name=&quot;學年度&quot; /&gt;
         ///      &lt;Field Name=&quot;學期&quot; /&gt;
+        ///      &lt;Field Name=&quot;課程類別&quot; /&gt;
         ///      &lt;Field Name=&quot;科目名稱&quot; /&gt;
         ///      &lt;Field Name=&quot;級別&quot; /&gt;
         ///    &lt;/Detector&gt;
@@ -166,8 +167,7 @@ namespace SHSchool.CourseSelection.Properties {
         ///    &lt;/Detector&gt;
         ///  &lt;/DuplicateDetection&gt;
         ///  &lt;FieldList&gt;
-        ///    &lt;!--科目系統編號, 學年度, 學期, 科目名稱, 級別, 學分, 課程類別, 修課人數上限, 教學目標, 教學內容, 備註--&gt;
-        ///    &lt;Fie [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
+        ///    &lt;!--科目系統編號, 學年度, 學期, 科目名稱, 級別, 學分, 課程類別, 修 [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
         /// </summary>
         internal static string Subject_Import {
             get {

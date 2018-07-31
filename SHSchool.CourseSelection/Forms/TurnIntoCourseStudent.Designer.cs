@@ -196,7 +196,7 @@
             this.labelX3.Name = "labelX3";
             this.labelX3.Size = new System.Drawing.Size(66, 23);
             this.labelX3.TabIndex = 6;
-            this.labelX3.Text = "課程類別:";
+            this.labelX3.Text = "課程時段";
             // 
             // turnInto_SC_Attend_Btn
             // 

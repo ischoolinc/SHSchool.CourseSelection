@@ -89,13 +89,13 @@ namespace SHSchool.CourseSelection
             }
             #endregion
 
-            #region 產生黑名單
+            #region 產生擋修名單
             {
                 var pcode = "Button_Subject_BlackList";
-                RoleAclSource.Instance["教學作業"]["功能按鈕"]["選課作業"].Add(new RibbonFeature(pcode, "產生黑名單"));
+                RoleAclSource.Instance["教學作業"]["功能按鈕"]["選課作業"].Add(new RibbonFeature(pcode, "產生擋修名單"));
 
-                MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課管理"]["產生黑名單"].Enable = UserAcl.Current[pcode].Executable;
-                MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課管理"]["產生黑名單"].Click += delegate
+                MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課管理"]["產生擋修名單"].Enable = UserAcl.Current[pcode].Executable;
+                MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課管理"]["產生擋修名單"].Click += delegate
                 {
                     (new Forms.BlackListForm()).ShowDialog();
                 };

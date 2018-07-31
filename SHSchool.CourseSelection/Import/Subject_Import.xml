@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="format.xsl" ?>
 <ValidateRule Name="科目資料">
   <DuplicateDetection>
-    <Detector Name="學年度+學期+課程類別+科目名稱+級別">
+    <Detector Name="學年度+學期+課程時段+科目名稱+級別">
       <Field Name="學年度" />
       <Field Name="學期" />
       <Field Name="課程類別" />
@@ -52,9 +52,9 @@
     <Field Required="False" Name="不開課" Description="科目不開課" EmptyAlsoValidate="False" >
       <Validate AutoCorrect="False" Description="「不開課」只允許「是、否」。" ErrorType="Error" Validator="布林列舉" When="" />
     </Field>
-    <Field Required="False" Name="跨課程類別1" Description="跨課程類別1" EmptyAlsoValidate="False" >
+    <Field Required="False" Name="跨課程時段1" Description="跨課程時段1" EmptyAlsoValidate="False" >
     </Field>
-    <Field Required="False" Name="跨課程類別2" Description="跨課程類別2" EmptyAlsoValidate="False" >
+    <Field Required="False" Name="跨課程時段2" Description="跨課程時段2" EmptyAlsoValidate="False" >
     </Field>
     
   </FieldList>

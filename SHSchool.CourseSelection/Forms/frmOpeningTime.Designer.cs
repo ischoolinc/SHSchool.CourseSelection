@@ -28,11 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
             this.Column1 = new DevComponents.DotNetBar.Controls.DataGridViewCheckBoxXColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.tbxMemo = new System.Windows.Forms.RichTextBox();
             this.labelX11 = new DevComponents.DotNetBar.LabelX();
@@ -49,7 +50,6 @@
             this.Exit = new DevComponents.DotNetBar.ButtonX();
             this.Save = new DevComponents.DotNetBar.ButtonX();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.SuspendLayout();
@@ -78,7 +78,7 @@
             this.panelEx1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.panelEx1.Location = new System.Drawing.Point(0, 0);
             this.panelEx1.Name = "panelEx1";
-            this.panelEx1.Size = new System.Drawing.Size(622, 498);
+            this.panelEx1.Size = new System.Drawing.Size(598, 498);
             this.panelEx1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx1.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -99,20 +99,20 @@
             this.dataGridViewX1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridViewX1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
             this.dataGridViewX1.Location = new System.Drawing.Point(92, 152);
             this.dataGridViewX1.Name = "dataGridViewX1";
             this.dataGridViewX1.RowHeadersVisible = false;
             this.dataGridViewX1.RowTemplate.Height = 24;
-            this.dataGridViewX1.Size = new System.Drawing.Size(510, 165);
+            this.dataGridViewX1.Size = new System.Drawing.Size(489, 165);
             this.dataGridViewX1.TabIndex = 46;
             // 
             // Column1
@@ -120,10 +120,18 @@
             this.Column1.Checked = true;
             this.Column1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
             this.Column1.CheckValue = null;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Column1.HeaderText = "開放選課";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Column1.HeaderText = "開放";
             this.Column1.Name = "Column1";
+            // 
+            // Column2
+            // 
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column2.HeaderText = "課程時段";
+            this.Column2.Name = "Column2";
+            this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // labelX1
             // 
@@ -136,14 +144,14 @@
             this.labelX1.Name = "labelX1";
             this.labelX1.Size = new System.Drawing.Size(113, 23);
             this.labelX1.TabIndex = 45;
-            this.labelX1.Text = "預選課程類別:";
+            this.labelX1.Text = "開放課程時段";
             // 
             // tbxMemo
             // 
             this.tbxMemo.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbxMemo.Location = new System.Drawing.Point(92, 352);
             this.tbxMemo.Name = "tbxMemo";
-            this.tbxMemo.Size = new System.Drawing.Size(510, 105);
+            this.tbxMemo.Size = new System.Drawing.Size(489, 105);
             this.tbxMemo.TabIndex = 43;
             this.tbxMemo.Text = "";
             // 
@@ -167,7 +175,7 @@
             this.cbxMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxMode.FormattingEnabled = true;
             this.cbxMode.ItemHeight = 19;
-            this.cbxMode.Location = new System.Drawing.Point(415, 21);
+            this.cbxMode.Location = new System.Drawing.Point(394, 21);
             this.cbxMode.Name = "cbxMode";
             this.cbxMode.Size = new System.Drawing.Size(121, 25);
             this.cbxMode.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -180,7 +188,7 @@
             // 
             this.labelX9.BackgroundStyle.Class = "";
             this.labelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX9.Location = new System.Drawing.Point(346, 22);
+            this.labelX9.Location = new System.Drawing.Point(325, 22);
             this.labelX9.Name = "labelX9";
             this.labelX9.Size = new System.Drawing.Size(63, 23);
             this.labelX9.TabIndex = 38;
@@ -207,7 +215,7 @@
             // 
             this.labelX5.BackgroundStyle.Class = "";
             this.labelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX5.Location = new System.Drawing.Point(346, 78);
+            this.labelX5.Location = new System.Drawing.Point(325, 78);
             this.labelX5.Name = "labelX5";
             this.labelX5.Size = new System.Drawing.Size(60, 21);
             this.labelX5.TabIndex = 32;
@@ -220,7 +228,7 @@
             // 
             this.EndTime.Border.Class = "TextBoxBorder";
             this.EndTime.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.EndTime.Location = new System.Drawing.Point(412, 76);
+            this.EndTime.Location = new System.Drawing.Point(391, 76);
             this.EndTime.Name = "EndTime";
             this.EndTime.Size = new System.Drawing.Size(190, 25);
             this.EndTime.TabIndex = 3;
@@ -300,7 +308,7 @@
             // 
             this.Exit.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.Exit.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Exit.Location = new System.Drawing.Point(548, 463);
+            this.Exit.Location = new System.Drawing.Point(527, 463);
             this.Exit.Name = "Exit";
             this.Exit.Size = new System.Drawing.Size(54, 23);
             this.Exit.TabIndex = 10;
@@ -311,7 +319,7 @@
             // 
             this.Save.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.Save.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Save.Location = new System.Drawing.Point(487, 463);
+            this.Save.Location = new System.Drawing.Point(466, 463);
             this.Save.Name = "Save";
             this.Save.Size = new System.Drawing.Size(54, 23);
             this.Save.TabIndex = 9;
@@ -326,19 +334,11 @@
             this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // Column2
-            // 
-            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column2.HeaderText = "課程類別名稱";
-            this.Column2.Name = "Column2";
-            this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
             // frmOpeningTime
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(622, 498);
+            this.ClientSize = new System.Drawing.Size(598, 498);
             this.Controls.Add(this.panelEx1);
             this.DoubleBuffered = true;
             this.Name = "frmOpeningTime";
@@ -368,9 +368,9 @@
         private DevComponents.DotNetBar.LabelX labelX9;
         private System.Windows.Forms.RichTextBox tbxMemo;
         private DevComponents.DotNetBar.Controls.DataGridViewX dataGridViewX1;
-        private DevComponents.DotNetBar.Controls.DataGridViewCheckBoxXColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private DevComponents.DotNetBar.LabelX labelX1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private DevComponents.DotNetBar.Controls.DataGridViewCheckBoxXColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
     }
 }

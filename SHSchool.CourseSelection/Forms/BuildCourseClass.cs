@@ -129,7 +129,7 @@ ORDER BY
 
         public void ReloadCourseTypeCbx()
         {
-            #region 課程類別
+            #region 課程時段
             if (schoolYearCbx.Text != "" && semesterCbx.Text != "")
             {
                 courseTypeCbx.Items.Clear();

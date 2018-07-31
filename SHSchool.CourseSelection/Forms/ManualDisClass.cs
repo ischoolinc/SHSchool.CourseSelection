@@ -113,7 +113,7 @@ namespace SHSchool.CourseSelection.Forms
         }
 
         /// <summary>
-        /// 課程類別更新
+        /// 課程時段更新
         /// </summary>
         private void ReloadCourseTypeCbx()
         {

@@ -157,7 +157,7 @@
             this.labelX15.Name = "labelX15";
             this.labelX15.Size = new System.Drawing.Size(91, 23);
             this.labelX15.TabIndex = 28;
-            this.labelX15.Text = "跨課程類別2";
+            this.labelX15.Text = "跨課程時段2";
             this.labelX15.TextAlignment = System.Drawing.StringAlignment.Far;
             // 
             // labelX14
@@ -171,7 +171,7 @@
             this.labelX14.Name = "labelX14";
             this.labelX14.Size = new System.Drawing.Size(94, 23);
             this.labelX14.TabIndex = 27;
-            this.labelX14.Text = "跨課程類別1";
+            this.labelX14.Text = "跨課程時段1";
             this.labelX14.TextAlignment = System.Drawing.StringAlignment.Far;
             // 
             // ckbxDisable
@@ -488,7 +488,7 @@
             this.labelX4.Name = "labelX4";
             this.labelX4.Size = new System.Drawing.Size(70, 22);
             this.labelX4.TabIndex = 6;
-            this.labelX4.Text = "課程類別";
+            this.labelX4.Text = "課程時段";
             this.labelX4.TextAlignment = System.Drawing.StringAlignment.Far;
             // 
             // Type

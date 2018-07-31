@@ -259,7 +259,7 @@
             // Type
             // 
             this.Type.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Type.HeaderText = "課程類別";
+            this.Type.HeaderText = "課程時段";
             this.Type.Name = "Type";
             this.Type.ReadOnly = true;
             this.Type.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -293,7 +293,7 @@
             // CrossType1
             // 
             this.CrossType1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.CrossType1.HeaderText = "跨課程類別1";
+            this.CrossType1.HeaderText = "跨課程時段1";
             this.CrossType1.Name = "CrossType1";
             this.CrossType1.ReadOnly = true;
             this.CrossType1.Width = 87;
@@ -301,7 +301,7 @@
             // CrossType2
             // 
             this.CrossType2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.CrossType2.HeaderText = "跨課程類別2";
+            this.CrossType2.HeaderText = "跨課程時段2";
             this.CrossType2.Name = "CrossType2";
             this.CrossType2.ReadOnly = true;
             this.CrossType2.Width = 87;

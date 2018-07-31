@@ -35,13 +35,13 @@
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.cbxSemester = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
-            this.Column1 = new DevComponents.DotNetBar.Controls.DataGridViewCheckBoxXColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnLeave = new DevComponents.DotNetBar.ButtonX();
             this.btnProduceBlacklist = new DevComponents.DotNetBar.ButtonX();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new DevComponents.DotNetBar.Controls.DataGridViewCheckBoxXColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -128,30 +128,6 @@
             this.dataGridViewX1.Size = new System.Drawing.Size(423, 318);
             this.dataGridViewX1.TabIndex = 6;
             // 
-            // Column1
-            // 
-            this.Column1.Checked = true;
-            this.Column1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.Column1.CheckValue = null;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Column1.HeaderText = "產生黑名單";
-            this.Column1.Name = "Column1";
-            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // Column3
-            // 
-            this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column3.HeaderText = "課程類別";
-            this.Column3.Name = "Column3";
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "黑名單學生人數";
-            this.Column2.Name = "Column2";
-            this.Column2.Width = 130;
-            // 
             // btnLeave
             // 
             this.btnLeave.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
@@ -175,7 +151,7 @@
             this.btnProduceBlacklist.Size = new System.Drawing.Size(89, 23);
             this.btnProduceBlacklist.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.btnProduceBlacklist.TabIndex = 8;
-            this.btnProduceBlacklist.Text = "計算黑名單";
+            this.btnProduceBlacklist.Text = "計算擋修名單";
             this.btnProduceBlacklist.Click += new System.EventHandler(this.btnProduceBlacklist_Click);
             // 
             // dataGridViewTextBoxColumn1
@@ -189,6 +165,31 @@
             this.dataGridViewTextBoxColumn2.HeaderText = "黑名單學生人數";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.Width = 130;
+            // 
+            // Column1
+            // 
+            this.Column1.Checked = true;
+            this.Column1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.Column1.CheckValue = null;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Column1.HeaderText = "計算";
+            this.Column1.Name = "Column1";
+            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Column1.Width = 80;
+            // 
+            // Column3
+            // 
+            this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column3.HeaderText = "課程時段";
+            this.Column3.Name = "Column3";
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "黑名單學生人數";
+            this.Column2.Name = "Column2";
+            this.Column2.Width = 130;
             // 
             // BlackListForm
             // 
@@ -204,7 +205,7 @@
             this.Controls.Add(this.labelX1);
             this.DoubleBuffered = true;
             this.Name = "BlackListForm";
-            this.Text = "選課黑名單";
+            this.Text = "選課擋修名單";
             this.Load += new System.EventHandler(this.BlackListForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).EndInit();
             this.ResumeLayout(false);

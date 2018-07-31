@@ -89,7 +89,7 @@ namespace SHSchool.CourseSelection.Forms
 
             #endregion
 
-            reloadDataGridView(); // 課程類別
+            reloadDataGridView(); // 課程時段
 
             tbxMemo.Text = listOpeningTime[0].Memo; // 備註
 
@@ -265,7 +265,7 @@ FROM
                 //    record.EndTime = endTime;
                 
 
-                #region 開放課程類別
+                #region 開放課程時段
 
                 List<string> listType = new List<string>();
 
