@@ -189,7 +189,7 @@
             this.labelX5.Name = "labelX5";
             this.labelX5.Size = new System.Drawing.Size(62, 23);
             this.labelX5.TabIndex = 11;
-            this.labelX5.Text = "課程類別:";
+            this.labelX5.Text = "課程時段:";
             // 
             // courseTypeCbx
             // 

@@ -118,7 +118,7 @@
             this.labelX1.Name = "labelX1";
             this.labelX1.Size = new System.Drawing.Size(63, 23);
             this.labelX1.TabIndex = 4;
-            this.labelX1.Text = "課程類別:";
+            this.labelX1.Text = "課程時段:";
             // 
             // courseTypeLb
             // 

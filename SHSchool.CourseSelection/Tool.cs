@@ -11,17 +11,6 @@ namespace SHSchool.CourseSelection
     {
         private static Dictionary<string, UDT.Subject> dicSubject;
 
-        //private static Tool _instance;
-
-        //public static Tool GetInstance(string schoolYear,string semester)
-        //{
-        //    if (_instance == null)
-        //    {
-        //        _instance = new Tool(schoolYear, semester);
-        //    }
-        //    return _instance;
-        //}
-
         public Tool(string schoolYear,string semester)
         {
             dicSubject = DAO.SubjectDAO.GetSubjectBySchoolYearSemester(schoolYear, semester);

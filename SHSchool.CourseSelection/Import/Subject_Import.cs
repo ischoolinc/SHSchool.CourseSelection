@@ -93,11 +93,11 @@ namespace SHSchool.CourseSelection.Import
                         Messages[x.Position].MessageItems.Add(new MessageItem(EMBA.Validator.ErrorType.Error, EMBA.Validator.ValidatorType.Row, "科目名稱不可空白。"));
                     if (!DAO.SubjectDAO.CheckSubjectTypeInSystem(crossType1))
                     {
-                        Messages[x.Position].MessageItems.Add(new MessageItem(EMBA.Validator.ErrorType.Error, EMBA.Validator.ValidatorType.Row, "跨課程類別1不存在系統。"));
+                        Messages[x.Position].MessageItems.Add(new MessageItem(EMBA.Validator.ErrorType.Error, EMBA.Validator.ValidatorType.Row, "跨課程時段1不存在系統。"));
                     }
                     if (!DAO.SubjectDAO.CheckSubjectTypeInSystem(crossType2))
                     {
-                        Messages[x.Position].MessageItems.Add(new MessageItem(EMBA.Validator.ErrorType.Error, EMBA.Validator.ValidatorType.Row, "跨課程類別2不存在系統。"));
+                        Messages[x.Position].MessageItems.Add(new MessageItem(EMBA.Validator.ErrorType.Error, EMBA.Validator.ValidatorType.Row, "跨課程時段2不存在系統。"));
                     }
                 }
             });
@@ -189,8 +189,8 @@ namespace SHSchool.CourseSelection.Import
                     else
                         subjectRecord.Credit = null;
                 }
-                //if (mOption.SelectedFields.Contains("課程類別") && !string.IsNullOrWhiteSpace(row.GetValue("課程類別")))
-                //    subjectRecord.Type = row.GetValue("課程類別").Trim();
+                //if (mOption.SelectedFields.Contains("課程時段") && !string.IsNullOrWhiteSpace(row.GetValue("課程時段")))
+                //    subjectRecord.Type = row.GetValue("課程時段").Trim();
                 if (mOption.SelectedFields.Contains("修課人數上限") && !string.IsNullOrWhiteSpace(row.GetValue("修課人數上限")))
                     subjectRecord.Limit = int.Parse(row.GetValue("修課人數上限").Trim());
 
@@ -214,7 +214,7 @@ namespace SHSchool.CourseSelection.Import
                 if (mOption.SelectedFields.Contains("不開課") && !string.IsNullOrWhiteSpace(row.GetValue("不開課")))
                     subjectRecord.Disabled = row.GetValue("不開課").Trim() == "是" ? true : false;
                 if (mOption.SelectedFields.Contains("跨課程時段1") && !string.IsNullOrWhiteSpace(row.GetValue("跨課程時段1")))
-                    subjectRecord.CrossType1 = row.GetValue("跨課程類別1").Trim();
+                    subjectRecord.CrossType1 = row.GetValue("跨課程時段1").Trim();
                 if (mOption.SelectedFields.Contains("跨課程時段2") && !string.IsNullOrWhiteSpace(row.GetValue("跨課程時段2")))
                     subjectRecord.CrossType2 = row.GetValue("跨課程時段2").Trim();
 

@@ -119,7 +119,7 @@ namespace SHSchool.CourseSelection.Export
                 grade_year = record.GradeYear;
                 grade_year -= (this.CurrentSchoolYear - this.DefaultSchoolYear);
                 dept_id = record.DeptID;
-                querySQL = string.Format(@"select sa.uid as 科目選課結果系統編號, subject.school_year as 學年度, subject.semester as 學期, subject.subject_name as 科目名稱, subject.level as 級別, subject.credit as 學分, subject.type as 課程類別, class_name as 班級, seat_no as 座號, student_number as 學號, student.name as 姓名
+                querySQL = string.Format(@"select sa.uid as 科目選課結果系統編號, subject.school_year as 學年度, subject.semester as 學期, subject.subject_name as 科目名稱, subject.level as 級別, subject.credit as 學分, subject.type as 課程時段, class_name as 班級, seat_no as 座號, student_number as 學號, student.name as 姓名
 from $ischool.course_selection.ss_attend as sa 
 join $ischool.course_selection.subject as subject on sa.ref_subject_id=subject.uid 
 join student on student.id=sa.ref_student_id 
@@ -131,11 +131,11 @@ order by subject.subject_name, subject.level, class_name, seat_no, student_numbe
             {
                 if (item == null || string.IsNullOrEmpty(item.Text))
                 {
-                    querySQL = string.Format(@"select '' as 科目選課結果系統編號, '' as 學年度, '' as 學期, '' as 科目名稱, '' as 級別, '' as 學分, '' as 課程類別, '' as 班級, '' as 座號, '' as 學號, '' as 姓名");
+                    querySQL = string.Format(@"select '' as 科目選課結果系統編號, '' as 學年度, '' as 學期, '' as 科目名稱, '' as 級別, '' as 學分, '' as 課程時段, '' as 班級, '' as 座號, '' as 學號, '' as 姓名");
                 }
                 else
                 {
-                    querySQL = string.Format(@"select sa.uid as 科目選課結果系統編號, subject.school_year as 學年度, subject.semester as 學期, subject.subject_name as 科目名稱, subject.level as 級別, subject.credit as 學分, subject.type as 課程類別, class_name as 班級, seat_no as 座號, student_number as 學號, student.name as 姓名
+                    querySQL = string.Format(@"select sa.uid as 科目選課結果系統編號, subject.school_year as 學年度, subject.semester as 學期, subject.subject_name as 科目名稱, subject.level as 級別, subject.credit as 學分, subject.type as 課程時段, class_name as 班級, seat_no as 座號, student_number as 學號, student.name as 姓名
 from $ischool.course_selection.ss_attend as sa 
 join $ischool.course_selection.subject as subject on sa.ref_subject_id=subject.uid 
 join student on student.id=sa.ref_student_id 

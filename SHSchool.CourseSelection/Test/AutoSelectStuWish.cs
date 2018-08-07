@@ -102,7 +102,7 @@ AND semester = {1}
 
             if (courseTypeCbx.Text == "")
             {
-                MessageBox.Show("請選擇課程類別!");
+                MessageBox.Show("請選擇課程時段!");
                 return;
             }
 

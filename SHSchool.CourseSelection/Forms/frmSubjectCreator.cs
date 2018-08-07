@@ -251,6 +251,28 @@ namespace SHSchool.CourseSelection.Forms
             else
                 errorProvider1.SetError(this.tbxPreSubjectLevel, "");
 
+            // 驗證若有前導課程科目，前導課程採計方式必填
+            if (!string.IsNullOrWhiteSpace(tbxPreSubject.Text))
+            {
+                if (cbxPreSubjectBlockMode.SelectedItem == null)
+                {
+                    errorProvider1.SetError(this.cbxPreSubjectBlockMode, "請選擇前導課程採計方式!");
+                    is_valid = false;
+                }
+                else
+                {
+                    if (string.IsNullOrWhiteSpace(cbxPreSubjectBlockMode.SelectedItem.ToString()))
+                    {
+                        errorProvider1.SetError(this.cbxPreSubjectBlockMode, "請選擇前導課程採計方式!");
+                        is_valid = false;
+                    }
+                    else
+                    {
+                        errorProvider1.SetError(this.cbxPreSubjectBlockMode, "");
+                    }
+                }
+            }
+
             return is_valid;
         }
     }

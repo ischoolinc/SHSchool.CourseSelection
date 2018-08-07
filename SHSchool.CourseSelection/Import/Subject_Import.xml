@@ -2,19 +2,18 @@
 <?xml-stylesheet type="text/xsl" href="format.xsl" ?>
 <ValidateRule Name="科目資料">
   <DuplicateDetection>
-    <Detector Name="學年度+學期+課程時段+科目名稱+級別">
+    <Detector Name="學年度+學期+課程時段+科目名稱">
       <Field Name="學年度" />
       <Field Name="學期" />
-      <Field Name="課程類別" />
+      <Field Name="課程時段" />
       <Field Name="科目名稱" />
-      <Field Name="級別" />
     </Detector>
     <Detector Name="科目系統編號">
       <Field Name="科目系統編號" />
     </Detector>
   </DuplicateDetection>
   <FieldList>
-    <!--科目系統編號, 學年度, 學期, 科目名稱, 級別, 學分, 課程類別, 修課人數上限, 教學目標, 教學內容, 備註-->
+    <!--科目系統編號, 學年度, 學期, 科目名稱, 級別, 學分, 課程時段, 修課人數上限, 教學目標, 教學內容, 備註-->
     <Field Required="False" Name="科目系統編號" Description="科目系統編號" />
     <Field Required="False" Name="學年度" Description="學年度" EmptyAlsoValidate="False" >
       <Validate AutoCorrect="False" Description="「學年度」只允許阿拉伯數字。" ErrorType="Error" Validator="Integer極限" When="" />
@@ -30,7 +29,7 @@
     <Field Required="False" Name="學分數" Description="學分數" EmptyAlsoValidate="False" >
       <Validate AutoCorrect="False" Description="「學分數」只允許阿拉伯數字。" ErrorType="Error" Validator="Integer極限" When="" />
     </Field>
-    <Field Required="False" Name="課程類別" Description="課程類別" />
+    <Field Required="False" Name="課程時段" Description="課程時段" />
     <Field Required="False" Name="修課人數上限" Description="修課人數上限" EmptyAlsoValidate="False" >
       <Validate AutoCorrect="False" Description="「修課人數上限」只允許阿拉伯數字。" ErrorType="Error" Validator="Integer極限" When="" />
     </Field>

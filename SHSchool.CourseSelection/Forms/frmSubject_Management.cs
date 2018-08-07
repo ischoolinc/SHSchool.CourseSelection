@@ -85,7 +85,7 @@ namespace SHSchool.CourseSelection.Forms
             foreach (UDT.Subject record in records)
             {
                 //object[] rowData = new object[] { "加入", record.Institute, record.SubjectName, record.Level, record.Credit, record.Type, record.Limit, record.Goal, record.Content, record.Memo };
-                object[] rowData = new object[] { "加入", record.Institute, record.SubjectName, record.Level, record.Credit, record.Type, record.Limit, record.PreSubject , Tool.RomanChar("" + record.PreSubjectLevel) , record.CrossType1 , record.CrossType2};
+                object[] rowData = new object[] { "加入", record.Institute, record.SubjectName, Tool.RomanChar("" + record.Level), record.Credit, record.Type, record.Limit, record.PreSubject , Tool.RomanChar("" + record.PreSubjectLevel) , record.CrossType1 , record.CrossType2};
                 int rowIndex = this.dgvData.Rows.Add(rowData);
                 DataGridViewRow row = this.dgvData.Rows[rowIndex];
                 //this.dgvData.AutoResizeRow(rowIndex, DataGridViewAutoSizeRowMode.AllCells);
