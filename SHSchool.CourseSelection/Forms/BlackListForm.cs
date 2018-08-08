@@ -115,52 +115,56 @@ WITH target_subject AS(
         $ischool.course_selection.subject
     WHERE
         type IN ( {0} )
+        AND school_year = {1}
+        AND semester = {2}
 ) , delete_target_subject_block AS(
-	DELETE 
-	FROM
-		$ischool.course_selection.subject_block
-	WHERE
-		ref_subject_id IN ( SELECT uid FROM target_subject )
+    DELETE 
+    FROM
+        $ischool.course_selection.subject_block
+    WHERE
+        ref_subject_id IN ( SELECT uid FROM target_subject )
 ) , target_student AS(
     SELECT
-    	scs.ref_subject_id
+        scs.ref_subject_id
         , student.*
     FROM
-    	target_subject
-    	LEFT OUTER JOIN $ischool.course_selection.subject_class_selection AS scs
-    		ON target_subject.uid = scs.ref_subject_id
+        target_subject
+        LEFT OUTER JOIN $ischool.course_selection.subject_class_selection AS scs
+            ON target_subject.uid = scs.ref_subject_id
         LEFT OUTER JOIN student
             ON student.ref_class_id = scs.ref_class_id
+    WHERE
+        student.status IN (1,2)
 ) , target_student_sems_subj_score AS(
     SELECT
-	sems_subj_score_ext.ref_student_id
-	, sems_subj_score_ext.grade_year
-	, sems_subj_score_ext.semester
-	, sems_subj_score_ext.school_year
-	--, unnest(xpath('/Subject/@開課分項類別', subj_score_ele))::text AS 分項類別
-	, unnest(xpath('/Subject/@科目', subj_score_ele))::text AS 科目
-	, unnest(xpath('/Subject/@科目級別', subj_score_ele))::text AS 科目級別
-	, unnest(xpath('/Subject/@開課學分數', subj_score_ele))::text AS 學分數
-	, unnest(xpath('/Subject/@是否取得學分', subj_score_ele))::text AS 取得學分
-	, unnest(xpath('/Subject/@修課必選修', subj_score_ele))::text AS 必選修
-	, unnest(xpath('/Subject/@修課校部訂', subj_score_ele))::text AS 校部訂
-	, unnest(xpath('/Subject/@原始成績', subj_score_ele))::text AS 原始成績
-	, unnest(xpath('/Subject/@補考成績', subj_score_ele))::text AS 補考成績
-	, unnest(xpath('/Subject/@重修成績', subj_score_ele))::text AS 重修成績
-	, unnest(xpath('/Subject/@學年調整成績', subj_score_ele))::text AS 學年調整成績
-	, unnest(xpath('/Subject/@擇優採計成績', subj_score_ele))::text AS 手動調整成績
-	--, unnest(xpath('/Subject/@不計學分', subj_score_ele))::text AS 不計學分
-	--, unnest(xpath('/Subject/@不需評分', subj_score_ele))::text AS 不需評分
-	, unnest(xpath('/Subject/@註記', subj_score_ele))::text AS 註記
-FROM (
-		SELECT 
-			sems_subj_score.*
-			, 	unnest(xpath('/SemesterSubjectScoreInfo/Subject', xmlparse(content score_info))) as subj_score_ele
-		FROM 
-			sems_subj_score 
-		WHERE ref_student_id IN ( SELECT id FROM target_student)
-	) as sems_subj_score_ext
-ORDER BY grade_year desc, semester desc, school_year desc
+        sems_subj_score_ext.ref_student_id
+        , sems_subj_score_ext.grade_year
+        , sems_subj_score_ext.semester
+        , sems_subj_score_ext.school_year
+        --, unnest(xpath('/Subject/@開課分項類別', subj_score_ele))::text AS 分項類別
+        , unnest(xpath('/Subject/@科目', subj_score_ele))::text AS 科目
+        , unnest(xpath('/Subject/@科目級別', subj_score_ele))::text AS 科目級別
+        , unnest(xpath('/Subject/@開課學分數', subj_score_ele))::text AS 學分數
+        , unnest(xpath('/Subject/@是否取得學分', subj_score_ele))::text AS 取得學分
+        , unnest(xpath('/Subject/@修課必選修', subj_score_ele))::text AS 必選修
+        , unnest(xpath('/Subject/@修課校部訂', subj_score_ele))::text AS 校部訂
+        , unnest(xpath('/Subject/@原始成績', subj_score_ele))::text AS 原始成績
+        , unnest(xpath('/Subject/@補考成績', subj_score_ele))::text AS 補考成績
+        , unnest(xpath('/Subject/@重修成績', subj_score_ele))::text AS 重修成績
+        , unnest(xpath('/Subject/@學年調整成績', subj_score_ele))::text AS 學年調整成績
+        , unnest(xpath('/Subject/@擇優採計成績', subj_score_ele))::text AS 手動調整成績
+        --, unnest(xpath('/Subject/@不計學分', subj_score_ele))::text AS 不計學分
+        --, unnest(xpath('/Subject/@不需評分', subj_score_ele))::text AS 不需評分
+        --, unnest(xpath('/Subject/@註記', subj_score_ele))::text AS 註記
+    FROM (
+            SELECT 
+                sems_subj_score.*
+                ,   unnest(xpath('/SemesterSubjectScoreInfo/Subject', xmlparse(content score_info))) as subj_score_ele
+            FROM 
+                sems_subj_score 
+            WHERE ref_student_id IN ( SELECT id FROM target_student)
+        ) as sems_subj_score_ext
+    ORDER BY grade_year desc, semester desc, school_year desc
 ) , calculation_pre_subject_block_mode1 AS(
     SELECT
         target_subject.uid
@@ -169,76 +173,76 @@ ORDER BY grade_year desc, semester desc, school_year desc
     FROM
         target_subject
         LEFT OUTER JOIN target_student
-        	ON target_subject.uid = target_student.ref_subject_id
-    	LEFT OUTER JOIN target_student_sems_subj_score
-    		ON target_student.id = target_student_sems_subj_score.ref_student_id
-    		AND target_student_sems_subj_score.科目 || target_student_sems_subj_score.科目級別 = target_subject.pre_subject || target_subject.pre_subject_level
-    		AND target_student_sems_subj_score.取得學分 = '是'
+            ON target_subject.uid = target_student.ref_subject_id
+        LEFT OUTER JOIN target_student_sems_subj_score
+            ON target_student.id = target_student_sems_subj_score.ref_student_id
+            AND target_student_sems_subj_score.科目 || target_student_sems_subj_score.科目級別 = target_subject.pre_subject || target_subject.pre_subject_level
+            AND target_student_sems_subj_score.取得學分 = '是'
     WHERE
-        pre_subject_block_mode = '已取得學分'
+        target_subject.pre_subject_block_mode = '已取得學分'
         AND target_student_sems_subj_score.ref_student_id IS NULL
         AND target_subject.pre_subject IS NOT NULL
 ) , calculation_pre_subject_block_mode2 AS(
-	SELECT
+    SELECT
         target_subject.uid
         , target_student.id
         , '未修過前導課程'::text AS reason
     FROM
         target_subject
         LEFT OUTER JOIN target_student
-        	ON target_subject.uid = target_student.ref_subject_id
-    	LEFT OUTER JOIN target_student_sems_subj_score
-    		ON target_student.id = target_student_sems_subj_score.ref_student_id
-    		AND target_student_sems_subj_score.科目 || target_student_sems_subj_score.科目級別 = target_subject.pre_subject || target_subject.pre_subject_level
+            ON target_subject.uid = target_student.ref_subject_id
+        LEFT OUTER JOIN target_student_sems_subj_score
+            ON target_student.id = target_student_sems_subj_score.ref_student_id
+            AND target_student_sems_subj_score.科目 || target_student_sems_subj_score.科目級別 = target_subject.pre_subject || target_subject.pre_subject_level
     WHERE
-        pre_subject_block_mode = '已修過'
+        target_subject.pre_subject_block_mode = '已修過'
         AND target_student_sems_subj_score.ref_student_id IS NULL
         AND target_subject.pre_subject IS NOT NULL
 ) , calculation_rejoin_block_mode1 AS (
-	SELECT
+    SELECT
         target_subject.uid
         , target_student.id
-        , '已取得科目學分'::text AS reason
+        , '已取得相同科目學分'::text AS reason
     FROM
         target_subject
         LEFT OUTER JOIN target_student
-        	ON target_subject.uid = target_student.ref_subject_id
-    	LEFT OUTER JOIN target_student_sems_subj_score
-    		ON target_student.id = target_student_sems_subj_score.ref_student_id
-    		AND target_student_sems_subj_score.科目 || target_student_sems_subj_score.科目級別 = target_subject.subject_name || target_subject.level
-    		AND target_student_sems_subj_score.取得學分 = '是'
+            ON target_subject.uid = target_student.ref_subject_id
+        LEFT OUTER JOIN target_student_sems_subj_score
+            ON target_student.id = target_student_sems_subj_score.ref_student_id
+            AND target_student_sems_subj_score.科目 || target_student_sems_subj_score.科目級別 = target_subject.subject_name || target_subject.level
+            AND target_student_sems_subj_score.取得學分 = '是'
     WHERE
-        pre_subject_block_mode = '已取得學分'
+        target_subject.rejoin_block_mode = '已取得學分'
         AND target_student_sems_subj_score.ref_student_id IS NOT NULL
 ) , calculation_rejoin_block_mode2 AS (
-	SELECT
+    SELECT
         target_subject.uid 
         , target_student.id 
-        , '已修過科目'::text AS reason
+        , '已修過相同科目'::text AS reason
     FROM
         target_subject
         LEFT OUTER JOIN target_student
-        	ON target_subject.uid = target_student.ref_subject_id
-    	LEFT OUTER JOIN target_student_sems_subj_score
-    		ON target_student.id = target_student_sems_subj_score.ref_student_id
-    		AND target_student_sems_subj_score.科目 || target_student_sems_subj_score.科目級別 = target_subject.subject_name || target_subject.level
+            ON target_subject.uid = target_student.ref_subject_id
+        LEFT OUTER JOIN target_student_sems_subj_score
+            ON target_student.id = target_student_sems_subj_score.ref_student_id
+            AND target_student_sems_subj_score.科目 || target_student_sems_subj_score.科目級別 = target_subject.subject_name || target_subject.level
     WHERE
-        pre_subject_block_mode = '已修過'
+        target_subject.rejoin_block_mode = '已修過'
         AND target_student_sems_subj_score.ref_student_id IS NOT NULL
 )
 INSERT INTO $ischool.course_selection.subject_block(
-	ref_subject_id
-	, ref_student_id
-	, reason
+    ref_subject_id
+    , ref_student_id
+    , reason
 )
 SELECT * FROM calculation_pre_subject_block_mode1
-	UNION ALL
+    UNION ALL
 SELECT * FROM calculation_pre_subject_block_mode2
-	UNION ALL
+    UNION ALL
 SELECT * FROM calculation_rejoin_block_mode1
-	UNION ALL
+    UNION ALL
 SELECT * FROM calculation_rejoin_block_mode2
-                ", string.Join(",",listTypeName));
+                ", string.Join(",",listTypeName),cbxSchoolYear.SelectedItem.ToString(),cbxSemester.SelectedItem.ToString());
             UpdateHelper up = new UpdateHelper();
             try
             {

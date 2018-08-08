@@ -636,7 +636,7 @@ WHERE
                 string semester = semesterCbx.Text;
                 string courseType = courseTypeCbx.Text;
                 pictureBox1.Visible = true;
-
+                //
                 #region SQL
                 string sql = string.Format(@"
 WITH target_subject AS(
@@ -731,7 +731,8 @@ WITH target_subject AS(
 		, $ischool.course_selection.subject.subject_name
 	FROM
 		$ischool.course_selection.ss_wish AS wish
-		LEFT OUTER JOIN $ischool.course_selection.subject ON $ischool.course_selection.subject.uid = wish.ref_subject_id
+		LEFT OUTER JOIN $ischool.course_selection.subject 
+            ON $ischool.course_selection.subject.uid = wish.ref_subject_id
         LEFT OUTER JOIN student 
             ON student.id = wish.ref_student_id
 	WHERE
@@ -740,6 +741,8 @@ WITH target_subject AS(
 				uid
 			FROM
 				target_subject
+            WHERE
+                跨課程時段 = 'false'
 		)
         AND student.status IN ( 1, 2 )
 ) , wish AS(

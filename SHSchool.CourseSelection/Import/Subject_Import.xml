@@ -2,11 +2,12 @@
 <?xml-stylesheet type="text/xsl" href="format.xsl" ?>
 <ValidateRule Name="科目資料">
   <DuplicateDetection>
-    <Detector Name="學年度+學期+課程時段+科目名稱">
+    <Detector Name="學年度+學期+課程時段+科目名稱+級別">
       <Field Name="學年度" />
       <Field Name="學期" />
       <Field Name="課程時段" />
       <Field Name="科目名稱" />
+      <Field Name="級別" />
     </Detector>
     <Detector Name="科目系統編號">
       <Field Name="科目系統編號" />

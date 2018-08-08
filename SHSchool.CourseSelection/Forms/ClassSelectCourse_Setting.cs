@@ -174,7 +174,6 @@ namespace SHSchool.CourseSelection.Forms
 
         public void BGW_DoWork(object sender,DoWorkEventArgs e)
         {
-
             try
             {
                 int progress = 10;
