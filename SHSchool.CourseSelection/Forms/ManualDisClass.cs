@@ -455,7 +455,7 @@ WHERE ss_attend.ref_subject_id = {0}
                     int totle = _CourseStudentIDdic[courseID].Count();
                     int b = 0, g = 0;
 
-                    foreach (SHStudentRecord sr in SHStudent.SelectByIDs(_CourseStudentIDdic[courseID].ToArray()))
+                    foreach (StudentRecord sr in Student.SelectByIDs(_CourseStudentIDdic[courseID].ToArray()))
                     {
 
                         if (sr.Gender == "男") b++;
