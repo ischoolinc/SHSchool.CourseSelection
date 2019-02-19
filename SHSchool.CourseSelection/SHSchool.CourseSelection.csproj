@@ -43,6 +43,11 @@
       <HintPath>Library\Aspose.Cells_201402.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Campus.DocumentValidator, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\Campus.DocumentValidator.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="DevComponents.DotNetBar2, Version=9.5.0.1, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\ischool source\ischool@debug\components\DevComponents.DotNetBar2.dll</HintPath>
@@ -139,6 +144,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAO\BlackListDAO.cs" />
+    <Compile Include="DAO\SubjectDAO.cs" />
     <Compile Include="Event\DeliverActiveRecord.cs" />
     <Compile Include="Event\DeliverActiveRecordEvent.cs" />
     <Compile Include="Export\SSAttend_NoneSelectStudent_Export.cs">
@@ -176,6 +183,12 @@
     </Compile>
     <Compile Include="Forms\AdjustSubjectStudent.Designer.cs">
       <DependentUpon>AdjustSubjectStudent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\BlackListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BlackListForm.Designer.cs">
+      <DependentUpon>BlackListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\BuildCourse.cs">
       <SubType>Form</SubType>
@@ -249,6 +262,12 @@
     <Compile Include="Forms\Sequence_distribution_Management.Designer.cs">
       <DependentUpon>Sequence_distribution_Management.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SettingExamineReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SettingExamineReport.Designer.cs">
+      <DependentUpon>SettingExamineReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\TurnIntoCourseStudent.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -271,6 +290,7 @@
     <Compile Include="Test\AutoSelectStuWish.Designer.cs">
       <DependentUpon>AutoSelectStuWish.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tool.cs" />
     <Compile Include="UDT\Identity.cs" />
     <Compile Include="UDT\OpeningTime.cs" />
     <Compile Include="UDT\SIRelation.cs" />
@@ -278,6 +298,7 @@
     <Compile Include="UDT\SSWish.cs" />
     <Compile Include="UDT\SSAttend.cs" />
     <Compile Include="UDT\Subject.cs" />
+    <Compile Include="UDT\SubjectBlock.cs" />
     <Compile Include="UDT\SubjectClassSelection.cs" />
     <Compile Include="UDT\SubjectCourse.cs" />
   </ItemGroup>
@@ -300,6 +321,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AdjustSubjectStudent.resx">
       <DependentUpon>AdjustSubjectStudent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BlackListForm.resx">
+      <DependentUpon>BlackListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\BuildCourse.resx">
       <DependentUpon>BuildCourse.cs</DependentUpon>
@@ -337,12 +361,16 @@
     <EmbeddedResource Include="Forms\Sequence_distribution_Management.resx">
       <DependentUpon>Sequence_distribution_Management.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SettingExamineReport.resx">
+      <DependentUpon>SettingExamineReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\TurnIntoCourseStudent.resx">
       <DependentUpon>TurnIntoCourseStudent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Test\AutoSelectStuWish.resx">
       <DependentUpon>AutoSelectStuWish.cs</DependentUpon>
@@ -357,6 +385,7 @@
     <None Include="Resources\匯出選課結果樣板.xlsx" />
     <None Include="Resources\學生選修科目清單樣版 .xls" />
     <None Include="Resources\科目選修學生名單樣版.xls" />
+    <None Include="Resources\選課設定檢查報表樣板.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\sandglass_unlock_64.png" />
@@ -368,13 +397,17 @@
     <None Include="Resources\Import.Image.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Import\Subject_Import.xml" />
+    <Content Include="Import\Subject_Import.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Library\Aspose.Cells.dll" />
     <Content Include="Library\Aspose.Cells.GridDesktop.dll" />
     <Content Include="Library\Aspose.Cells.GridDesktop.xml" />
     <Content Include="Library\Aspose.Cells.xml" />
     <Content Include="Library\Aspose.Cells_201402.dll" />
     <Content Include="Library\Aspose.Words.dll" />
+    <Content Include="Library\Campus.DocumentValidator.dll" />
+    <Content Include="Library\Campus.DocumentValidator.xml" />
     <Content Include="Library\Campus.Windows.dll" />
     <Content Include="Library\DevComponents.DotNetBar2.dll" />
     <Content Include="Library\DevComponents.DotNetBar2.xml" />

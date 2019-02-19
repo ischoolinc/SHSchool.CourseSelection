@@ -9,9 +9,6 @@ namespace SHSchool.CourseSelection.Export
 {
     public partial class Subject_Export : EMBA.Export.ExportProxyForm
     {
-        private AccessHelper Access;
-        private QueryHelper Helper;
-
         public Subject_Export()
         {
             InitializeComponent();
@@ -94,11 +91,21 @@ SELECT
     , subject_name as 科目名稱
     , level as 級別
     , credit as 學分數
-    , type as 課程類別
+    , type as 課程時段
     , ""limit"" as 修課人數上限
     , goal as 教學目標
     , content as 教學內容
     , memo as 備註 
+    , pre_subject as 前導課程科目
+    , pre_subject_level as 前導課程級別
+    , pre_subject_block_mode as 前導課程採計方式
+    , rejoin_block_mode as 重複修課採計方式
+    , CASE 
+        WHEN disabled = true THEN '是'
+        ELSE '否'
+        END as 不開課
+    , cross_type1 as 跨課程時段1
+    , cross_type2 as 跨課程時段2
 FROM
     $ischool.course_selection.subject 
 WHERE

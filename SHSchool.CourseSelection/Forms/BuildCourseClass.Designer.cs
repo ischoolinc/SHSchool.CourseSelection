@@ -130,7 +130,7 @@
             this.credit.HeaderText = "學分數";
             this.credit.Name = "credit";
             this.credit.ReadOnly = true;
-            this.credit.Width = 59;
+            this.credit.Width = 72;
             // 
             // studselect_limit
             // 
@@ -262,7 +262,7 @@
             this.labelX3.Name = "labelX3";
             this.labelX3.Size = new System.Drawing.Size(60, 23);
             this.labelX3.TabIndex = 8;
-            this.labelX3.Text = "課程類別";
+            this.labelX3.Text = "課程時段";
             // 
             // dataGridViewTextBoxColumn1
             // 

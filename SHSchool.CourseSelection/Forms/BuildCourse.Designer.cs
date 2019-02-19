@@ -229,7 +229,7 @@
             this.labelX3.Name = "labelX3";
             this.labelX3.Size = new System.Drawing.Size(61, 23);
             this.labelX3.TabIndex = 6;
-            this.labelX3.Text = "課程類別";
+            this.labelX3.Text = "課程時段";
             // 
             // courseTypeLb
             // 
@@ -257,7 +257,7 @@
             this.labelX4.Name = "labelX4";
             this.labelX4.Size = new System.Drawing.Size(360, 35);
             this.labelX4.TabIndex = 8;
-            this.labelX4.Text = "說明: 課程名稱命名規則為 課程類別+科目名稱+級別+班別\r\n也可透過修改班別來調整課程名稱。";
+            this.labelX4.Text = "說明: 課程名稱命名規則為 課程時段+科目名稱+級別+班別\r\n也可透過修改班別來調整課程名稱。";
             // 
             // BuildCourse
             // 

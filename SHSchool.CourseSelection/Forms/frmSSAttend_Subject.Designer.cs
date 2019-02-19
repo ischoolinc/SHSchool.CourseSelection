@@ -177,7 +177,7 @@
             // Type
             // 
             this.Type.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Type.HeaderText = "課程類別";
+            this.Type.HeaderText = "課程時段";
             this.Type.Name = "Type";
             this.Type.ReadOnly = true;
             this.Type.Width = 66;

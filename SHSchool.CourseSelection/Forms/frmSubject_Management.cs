@@ -14,8 +14,6 @@ namespace SHSchool.CourseSelection.Forms
     public partial class frmSubject_Management : BaseForm
     {
         private AccessHelper Access;
-        //private string school_year;
-        //private string semester;
         private bool forSendingSubject;
         private ErrorProvider errorProvider1;
         private List<UDT.Subject> oRecords;
@@ -26,14 +24,6 @@ namespace SHSchool.CourseSelection.Forms
         {
             InitializeComponent();
 
-            //this.school_year = school_year;
-            //this.semester = semester;
-
-            //if (!string.IsNullOrEmpty(this.school_year) && !string.IsNullOrEmpty(this.semester))
-            //    this.forSendingSubject = true;
-            //else
-            //    this.forSendingSubject = false;
-
             this.Load += new EventHandler(frmSubject_Management_Load);
         }
 
@@ -43,31 +33,6 @@ namespace SHSchool.CourseSelection.Forms
 
             this.Access = new AccessHelper();
 
-            //this.InitSchoolYear();
-            //this.InitSemester();
-
-            //if (this.forSendingSubject)
-            //{
-            //    this.cboSchoolYear.Enabled = false;
-            //    this.cboSemester.Enabled = false;
-
-            //    this.cboSchoolYear.Text = this.school_year;
-            //    this.cboSemester.Text = this.semester;
-
-            //    this.Addd.Visible = false;
-            //    this.Update.Visible = false;
-            //    this.Delete.Visible = false;
-            //}
-            //else
-            //{
-            //    this.cboSchoolYear.Enabled = true;
-            //    this.cboSemester.Enabled = true;
-
-            //    this.Addd.Visible = true;
-            //    this.Update.Visible = true;
-            //    this.Delete.Visible = true;
-            //}
-
             List<UDT.OpeningTime> opTimeList = Access.Select<UDT.OpeningTime>();
 
             if (opTimeList.Count == 0)
@@ -76,14 +41,18 @@ namespace SHSchool.CourseSelection.Forms
                 opTimeList.SaveAll();
             }
 
+            #region InitSchoolYear
             cboSchoolYear.Items.Add(opTimeList[0].SchoolYear + 1);
             cboSchoolYear.Items.Add(opTimeList[0].SchoolYear);
             cboSchoolYear.Items.Add(opTimeList[0].SchoolYear - 1);
             cboSchoolYear.SelectedIndex = 1;
+            #endregion
 
+            #region InitSemester
             cboSemester.Items.Add(1);
             cboSemester.Items.Add(2);
-            cboSemester.SelectedIndex = opTimeList[0].Semester - 1;
+            cboSemester.SelectedIndex = opTimeList[0].Semester - 1; 
+            #endregion
 
             this.InitSubject();
         }
@@ -106,15 +75,17 @@ namespace SHSchool.CourseSelection.Forms
                 return;
 
             List<UDT.Subject> records = Access.Select<UDT.Subject>(string.Format("school_year = {0} and semester = {1}", this.cboSchoolYear.Text, this.cboSemester.Text));
+            records.Sort(Tool.SubjectSortRule);
+            
             this.dgvData.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            this.dgvData.Columns[7].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            this.dgvData.Columns[8].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            this.dgvData.Columns[9].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            //this.dgvData.Columns[7].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            //this.dgvData.Columns[8].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            //this.dgvData.Columns[9].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             //this.dgvData.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
             foreach (UDT.Subject record in records)
             {
-                object[] rowData = new object[] { "加入", record.Institute, record.SubjectName, record.Level, record.Credit, record.Type, record.Limit, record.Goal, record.Content, record.Memo };
-
+                //object[] rowData = new object[] { "加入", record.Institute, record.SubjectName, record.Level, record.Credit, record.Type, record.Limit, record.Goal, record.Content, record.Memo };
+                object[] rowData = new object[] { "加入", record.Institute, record.SubjectName, Tool.RomanChar("" + record.Level), record.Credit, record.Type, record.Limit, record.PreSubject , Tool.RomanChar("" + record.PreSubjectLevel) , record.CrossType1 , record.CrossType2};
                 int rowIndex = this.dgvData.Rows.Add(rowData);
                 DataGridViewRow row = this.dgvData.Rows[rowIndex];
                 //this.dgvData.AutoResizeRow(rowIndex, DataGridViewAutoSizeRowMode.AllCells);
@@ -370,18 +341,22 @@ namespace SHSchool.CourseSelection.Forms
                 return;
             }
 
-            try
+            DialogResult result = MsgBox.Show(string.Format("是否確定刪除 {0} 此科目?", this.dgvData.SelectedRows[0].Cells[2].Value), "警告", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
             {
-                UDT.Subject record = this.dgvData.SelectedRows[0].Tag as UDT.Subject;
-                record.Deleted = true;
+                try
+                {
+                    UDT.Subject record = this.dgvData.SelectedRows[0].Tag as UDT.Subject;
+                    record.Deleted = true;
 
-                record.Save();
+                    record.Save();
 
-                this.InitSubject();
-            }
-            catch (Exception ex)
-            {
-                MsgBox.Show(ex.Message);
+                    this.InitSubject();
+                }
+                catch (Exception ex)
+                {
+                    MsgBox.Show(ex.Message);
+                }
             }
         }
 
@@ -390,6 +365,20 @@ namespace SHSchool.CourseSelection.Forms
             //this.dgvData.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             //this.dgvData.AutoResizeRows();
             this.dgvData.Rows.Cast<DataGridViewRow>().ToList().ForEach(x => this.dgvData.AutoResizeRow(x.Index));
+        }
+
+        private void dgvData_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex > -1)
+            {
+                frmSubjectCreator frm = new frmSubjectCreator("檢視科目資料");
+                UDT.Subject record = this.dgvData.SelectedRows[0].Tag as UDT.Subject;
+                List<UDT.Subject> records = new List<UDT.Subject>();
+                records.Add(record);
+
+                Event.DeliverActiveRecord.RaiseSendingEvent(this, new Event.DeliverActiveRecordEventArgs(records));
+                frm.ShowDialog();
+            }
         }
     }
 }

@@ -25,6 +25,7 @@ namespace SHSchool.CourseSelection
             MotherForm.RibbonBarItems["教務作業", "選課作業"]["匯入"].Size = RibbonBarButton.MenuButtonSize.Large;
             MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課管理"].Size = RibbonBarButton.MenuButtonSize.Large;
             MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課管理"].Image = Properties.Resources.sandglass_unlock_64;
+            
             //MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課結果及分發"].Size = RibbonBarButton.MenuButtonSize.Large;
             //MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課結果及分發"].Image = Properties.Resources.sandglass_unlock_64;
             //MotherForm.RibbonBarItems["教務作業", "選課作業"]["開課/分班"].Size = RibbonBarButton.MenuButtonSize.Large;
@@ -84,6 +85,32 @@ namespace SHSchool.CourseSelection
                 {
                     // 2018/01/26 羿均 新民選課--班級選課管理
                     (new Forms.ClassSelectCourse_Management()).ShowDialog();
+                };
+            }
+            #endregion
+
+            #region 產生擋修名單
+            {
+                var pcode = "Button_Subject_BlackList";
+                RoleAclSource.Instance["教學作業"]["功能按鈕"]["選課作業"].Add(new RibbonFeature(pcode, "產生擋修名單"));
+
+                MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課管理"]["產生擋修名單"].Enable = UserAcl.Current[pcode].Executable;
+                MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課管理"]["產生擋修名單"].Click += delegate
+                {
+                    (new Forms.BlackListForm()).ShowDialog();
+                };
+            }
+            #endregion
+
+            #region 選課設定檢查報表
+            {
+                var pcode = "E5264203-8CA3-45C0-BF98-ED2278FEF522";
+                RoleAclSource.Instance["教學作業"]["功能按鈕"]["選課作業"].Add(new RibbonFeature(pcode, "選課設定檢查報表"));
+
+                MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課管理"]["選課設定檢查報表"].Enable = UserAcl.Current[pcode].Executable;
+                MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課管理"]["選課設定檢查報表"].Click += delegate
+                {
+                    (new Forms.SettingExamineReport()).ShowDialog();
                 };
             }
             #endregion

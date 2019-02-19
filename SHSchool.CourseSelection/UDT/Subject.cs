@@ -85,5 +85,48 @@ namespace SHSchool.CourseSelection.UDT
         [FISCA.UDT.Field(Field = "ref_course_id", Indexed = false)]
         public int? RefCourseID { get; set; }
 
+        // 2018/07/18 新增欄位
+
+        /// <summary>
+        /// 前導課程科目
+        /// </summary>
+        [FISCA.UDT.Field(Field = "pre_subject", Indexed = false)]
+        public string PreSubject { get; set; }
+
+        /// <summary>
+        /// 前導課程級別
+        /// </summary>
+        [FISCA.UDT.Field(Field = "pre_subject_level", Indexed = false)]
+        public int? PreSubjectLevel { get; set; }
+
+        /// <summary>
+        /// 前導課程採計方式
+        /// </summary>
+        [FISCA.UDT.Field(Field = "pre_subject_block_mode", Indexed = false)]
+        public string PreSubjectBlockMode { get; set; }
+
+        /// <summary>
+        /// 重複修課採計方式
+        /// </summary>
+        [FISCA.UDT.Field(Field = "rejoin_block_mode", Indexed = false)]
+        public string RejoinBlockMode { get; set; }
+
+        /// <summary>
+        /// 不開課
+        /// </summary>
+        [FISCA.UDT.Field(Field = "disabled", Indexed = false)]
+        public bool Disabled { get; set; }
+
+        /// <summary>
+        /// 跨課程類別1
+        /// </summary>
+        [FISCA.UDT.Field(Field = "cross_type1", Indexed = false)]
+        public string CrossType1 { get; set; }
+
+        /// <summary>
+        /// 跨課程類別2
+        /// </summary>
+        [FISCA.UDT.Field(Field = "cross_type2", Indexed = false)]
+        public string CrossType2 { get; set; }
     }
 }

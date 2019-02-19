@@ -31,16 +31,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Exit = new DevComponents.DotNetBar.ButtonX();
             this.dgvData = new DevComponents.DotNetBar.Controls.DataGridViewX();
-            this.Add = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.Institute = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
-            this.SubjectName = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
-            this.Level = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
-            this.Credit = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
-            this.Type = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
-            this.Limit = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
-            this.Goal = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
-            this.Content = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
-            this.Memo = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
             this.Delete = new DevComponents.DotNetBar.ButtonX();
             this.cboSchoolYear = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.cboSemester = new DevComponents.DotNetBar.Controls.ComboBoxEx();
@@ -48,6 +38,17 @@
             this.Update = new DevComponents.DotNetBar.ButtonX();
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
+            this.Add = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.Institute = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
+            this.SubjectName = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
+            this.Level = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
+            this.Credit = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
+            this.Type = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
+            this.Limit = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
+            this.PreSubject = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
+            this.PreSubjectLevel = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
+            this.CrossType1 = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
+            this.CrossType2 = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,11 +58,11 @@
             this.Exit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Exit.BackColor = System.Drawing.Color.Transparent;
             this.Exit.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Exit.Location = new System.Drawing.Point(771, 527);
+            this.Exit.Location = new System.Drawing.Point(898, 527);
             this.Exit.Name = "Exit";
             this.Exit.Size = new System.Drawing.Size(75, 23);
             this.Exit.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.Exit.TabIndex = 7;
+            this.Exit.TabIndex = 5;
             this.Exit.Text = "離  開";
             this.Exit.Click += new System.EventHandler(this.Exit_Click);
             // 
@@ -81,9 +82,10 @@
             this.Credit,
             this.Type,
             this.Limit,
-            this.Goal,
-            this.Content,
-            this.Memo});
+            this.PreSubject,
+            this.PreSubjectLevel,
+            this.CrossType1,
+            this.CrossType2});
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
@@ -99,10 +101,109 @@
             this.dgvData.ReadOnly = true;
             this.dgvData.RowTemplate.Height = 24;
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvData.Size = new System.Drawing.Size(834, 477);
+            this.dgvData.Size = new System.Drawing.Size(961, 477);
             this.dgvData.TabIndex = 6;
             this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
+            this.dgvData.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellDoubleClick);
             this.dgvData.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvData_DataBindingComplete);
+            // 
+            // Delete
+            // 
+            this.Delete.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.Delete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Delete.BackColor = System.Drawing.Color.Transparent;
+            this.Delete.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.Delete.Location = new System.Drawing.Point(817, 527);
+            this.Delete.Name = "Delete";
+            this.Delete.Size = new System.Drawing.Size(75, 23);
+            this.Delete.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.Delete.TabIndex = 4;
+            this.Delete.Text = "刪  除";
+            this.Delete.Click += new System.EventHandler(this.Delete_Click);
+            // 
+            // cboSchoolYear
+            // 
+            this.cboSchoolYear.DisplayMember = "Text";
+            this.cboSchoolYear.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cboSchoolYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSchoolYear.FormattingEnabled = true;
+            this.cboSchoolYear.ItemHeight = 19;
+            this.cboSchoolYear.Location = new System.Drawing.Point(65, 13);
+            this.cboSchoolYear.Name = "cboSchoolYear";
+            this.cboSchoolYear.Size = new System.Drawing.Size(60, 25);
+            this.cboSchoolYear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.cboSchoolYear.TabIndex = 0;
+            this.cboSchoolYear.SelectedIndexChanged += new System.EventHandler(this.cboSchoolYear_SelectedIndexChanged);
+            // 
+            // cboSemester
+            // 
+            this.cboSemester.DisplayMember = "Text";
+            this.cboSemester.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cboSemester.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSemester.FormattingEnabled = true;
+            this.cboSemester.ItemHeight = 19;
+            this.cboSemester.Location = new System.Drawing.Point(192, 13);
+            this.cboSemester.Name = "cboSemester";
+            this.cboSemester.Size = new System.Drawing.Size(50, 25);
+            this.cboSemester.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.cboSemester.TabIndex = 1;
+            this.cboSemester.SelectedIndexChanged += new System.EventHandler(this.cboSemester_SelectedIndexChanged);
+            // 
+            // Addd
+            // 
+            this.Addd.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.Addd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Addd.BackColor = System.Drawing.Color.Transparent;
+            this.Addd.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.Addd.Location = new System.Drawing.Point(655, 527);
+            this.Addd.Name = "Addd";
+            this.Addd.Size = new System.Drawing.Size(75, 23);
+            this.Addd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.Addd.TabIndex = 2;
+            this.Addd.Text = "新  增";
+            this.Addd.Click += new System.EventHandler(this.Addd_Click);
+            // 
+            // Update
+            // 
+            this.Update.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.Update.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Update.BackColor = System.Drawing.Color.Transparent;
+            this.Update.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.Update.Location = new System.Drawing.Point(736, 527);
+            this.Update.Name = "Update";
+            this.Update.Size = new System.Drawing.Size(75, 23);
+            this.Update.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.Update.TabIndex = 3;
+            this.Update.Text = "修  改";
+            this.Update.Click += new System.EventHandler(this.Update_Click);
+            // 
+            // labelX2
+            // 
+            this.labelX2.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX2.BackgroundStyle.Class = "";
+            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX2.Location = new System.Drawing.Point(12, 14);
+            this.labelX2.Name = "labelX2";
+            this.labelX2.Size = new System.Drawing.Size(47, 23);
+            this.labelX2.TabIndex = 36;
+            this.labelX2.Text = "學年度";
+            // 
+            // labelX1
+            // 
+            this.labelX1.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX1.BackgroundStyle.Class = "";
+            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX1.Location = new System.Drawing.Point(152, 14);
+            this.labelX1.Name = "labelX1";
+            this.labelX1.Size = new System.Drawing.Size(34, 23);
+            this.labelX1.TabIndex = 37;
+            this.labelX1.Text = "學期";
             // 
             // Add
             // 
@@ -121,7 +222,8 @@
             this.Institute.HeaderText = "教學單位";
             this.Institute.Name = "Institute";
             this.Institute.ReadOnly = true;
-            this.Institute.Width = 66;
+            this.Institute.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Institute.Width = 85;
             // 
             // SubjectName
             // 
@@ -157,7 +259,7 @@
             // Type
             // 
             this.Type.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Type.HeaderText = "課程類別";
+            this.Type.HeaderText = "課程時段";
             this.Type.Name = "Type";
             this.Type.ReadOnly = true;
             this.Type.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -174,142 +276,41 @@
             this.Limit.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.Limit.Width = 111;
             // 
-            // Goal
+            // PreSubject
             // 
-            this.Goal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Goal.HeaderText = "教學目標";
-            this.Goal.Name = "Goal";
-            this.Goal.ReadOnly = true;
-            this.Goal.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Goal.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Goal.TextLineAlignment = System.Drawing.StringAlignment.Near;
-            this.Goal.Width = 85;
+            this.PreSubject.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.PreSubject.HeaderText = "前導課程科目";
+            this.PreSubject.Name = "PreSubject";
+            this.PreSubject.ReadOnly = true;
+            this.PreSubject.Width = 92;
             // 
-            // Content
+            // PreSubjectLevel
             // 
-            this.Content.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Content.HeaderText = "教學內容";
-            this.Content.Name = "Content";
-            this.Content.ReadOnly = true;
-            this.Content.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Content.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Content.TextLineAlignment = System.Drawing.StringAlignment.Near;
-            this.Content.Width = 85;
+            this.PreSubjectLevel.HeaderText = "前導課程級別";
+            this.PreSubjectLevel.Name = "PreSubjectLevel";
+            this.PreSubjectLevel.ReadOnly = true;
             // 
-            // Memo
+            // CrossType1
             // 
-            this.Memo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Memo.HeaderText = "備註";
-            this.Memo.Name = "Memo";
-            this.Memo.ReadOnly = true;
-            this.Memo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Memo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Memo.TextLineAlignment = System.Drawing.StringAlignment.Near;
-            this.Memo.Width = 59;
+            this.CrossType1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.CrossType1.HeaderText = "跨課程時段1";
+            this.CrossType1.Name = "CrossType1";
+            this.CrossType1.ReadOnly = true;
+            this.CrossType1.Width = 87;
             // 
-            // Delete
+            // CrossType2
             // 
-            this.Delete.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.Delete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Delete.BackColor = System.Drawing.Color.Transparent;
-            this.Delete.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Delete.Location = new System.Drawing.Point(690, 527);
-            this.Delete.Name = "Delete";
-            this.Delete.Size = new System.Drawing.Size(75, 23);
-            this.Delete.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.Delete.TabIndex = 8;
-            this.Delete.Text = "刪  除";
-            this.Delete.Click += new System.EventHandler(this.Delete_Click);
-            // 
-            // cboSchoolYear
-            // 
-            this.cboSchoolYear.DisplayMember = "Text";
-            this.cboSchoolYear.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cboSchoolYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboSchoolYear.FormattingEnabled = true;
-            this.cboSchoolYear.ItemHeight = 19;
-            this.cboSchoolYear.Location = new System.Drawing.Point(65, 13);
-            this.cboSchoolYear.Name = "cboSchoolYear";
-            this.cboSchoolYear.Size = new System.Drawing.Size(60, 25);
-            this.cboSchoolYear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.cboSchoolYear.TabIndex = 33;
-            this.cboSchoolYear.SelectedIndexChanged += new System.EventHandler(this.cboSchoolYear_SelectedIndexChanged);
-            // 
-            // cboSemester
-            // 
-            this.cboSemester.DisplayMember = "Text";
-            this.cboSemester.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cboSemester.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboSemester.FormattingEnabled = true;
-            this.cboSemester.ItemHeight = 19;
-            this.cboSemester.Location = new System.Drawing.Point(192, 13);
-            this.cboSemester.Name = "cboSemester";
-            this.cboSemester.Size = new System.Drawing.Size(50, 25);
-            this.cboSemester.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.cboSemester.TabIndex = 32;
-            this.cboSemester.SelectedIndexChanged += new System.EventHandler(this.cboSemester_SelectedIndexChanged);
-            // 
-            // Addd
-            // 
-            this.Addd.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.Addd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Addd.BackColor = System.Drawing.Color.Transparent;
-            this.Addd.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Addd.Location = new System.Drawing.Point(528, 527);
-            this.Addd.Name = "Addd";
-            this.Addd.Size = new System.Drawing.Size(75, 23);
-            this.Addd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.Addd.TabIndex = 34;
-            this.Addd.Text = "新  增";
-            this.Addd.Click += new System.EventHandler(this.Addd_Click);
-            // 
-            // Update
-            // 
-            this.Update.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.Update.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Update.BackColor = System.Drawing.Color.Transparent;
-            this.Update.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Update.Location = new System.Drawing.Point(609, 527);
-            this.Update.Name = "Update";
-            this.Update.Size = new System.Drawing.Size(75, 23);
-            this.Update.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.Update.TabIndex = 35;
-            this.Update.Text = "修  改";
-            this.Update.Click += new System.EventHandler(this.Update_Click);
-            // 
-            // labelX2
-            // 
-            this.labelX2.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX2.BackgroundStyle.Class = "";
-            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX2.Location = new System.Drawing.Point(12, 14);
-            this.labelX2.Name = "labelX2";
-            this.labelX2.Size = new System.Drawing.Size(47, 23);
-            this.labelX2.TabIndex = 36;
-            this.labelX2.Text = "學年度";
-            // 
-            // labelX1
-            // 
-            this.labelX1.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX1.BackgroundStyle.Class = "";
-            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX1.Location = new System.Drawing.Point(152, 14);
-            this.labelX1.Name = "labelX1";
-            this.labelX1.Size = new System.Drawing.Size(34, 23);
-            this.labelX1.TabIndex = 37;
-            this.labelX1.Text = "學期";
+            this.CrossType2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.CrossType2.HeaderText = "跨課程時段2";
+            this.CrossType2.Name = "CrossType2";
+            this.CrossType2.ReadOnly = true;
+            this.CrossType2.Width = 87;
             // 
             // frmSubject_Management
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(858, 562);
+            this.ClientSize = new System.Drawing.Size(985, 562);
             this.Controls.Add(this.labelX1);
             this.Controls.Add(this.labelX2);
             this.Controls.Add(this.Update);
@@ -346,8 +347,9 @@
         private DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn Credit;
         private DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn Type;
         private DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn Limit;
-        private DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn Goal;
-        private DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn Content;
-        private DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn Memo;
+        private DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn PreSubject;
+        private DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn PreSubjectLevel;
+        private DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn CrossType1;
+        private DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn CrossType2;
     }
 }

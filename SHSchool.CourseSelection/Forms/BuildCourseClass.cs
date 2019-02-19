@@ -45,44 +45,49 @@ namespace SHSchool.CourseSelection.Forms
         {
             #region SQL
             string SQL = string.Format(@"
-            SELECT 
-                subject.subject_name,
-                subject.level,
-                subject.limit,
-                subject.credit,
-                subject.type,
-                subject.uid,
-                subject.ref_course_id,
-                att_count.count AS student_count,
-				course_count.count AS _course_count
-            FROM
-                $ischool.course_selection.subject AS subject
-            LEFT OUTER JOIN
-            (
-                SELECT
-                    ref_subject_id,
-                    count(*)
-                FROM 
-		            $ischool.course_selection.ss_attend
-                GROUP BY ref_subject_id
-            ) att_count
-            ON att_count.ref_subject_id = subject.uid 
-			LEFT OUTER JOIN
-			course ON course.id = subject.ref_course_id
-			LEFT OUTER JOIN
-			(
-				SELECT
-					ref_subject_id,
-					count(*)
-				FROM
-					$ischool.course_selection.subject_course AS subject_course
-				GROUP BY subject_course.ref_subject_id
-			) course_count ON course_count.ref_subject_id = subject.uid
-            WHERE 
-	            subject.school_year = {0}
-	            AND subject.semester = {1}
-                AND type = '{2}'",
-                schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
+SELECT 
+    subject.subject_name,
+    subject.level,
+    subject.limit,
+    subject.credit,
+    subject.type,
+    subject.uid,
+    subject.ref_course_id,
+    att_count.count AS student_count,
+	course_count.count AS _course_count
+FROM
+    $ischool.course_selection.subject AS subject
+LEFT OUTER JOIN
+(
+    SELECT
+        ref_subject_id,
+        count(*)
+    FROM 
+		$ischool.course_selection.ss_attend
+    GROUP BY ref_subject_id
+) att_count
+ON att_count.ref_subject_id = subject.uid 
+LEFT OUTER JOIN
+course ON course.id = subject.ref_course_id
+LEFT OUTER JOIN
+(
+	SELECT
+		ref_subject_id,
+		count(*)
+	FROM
+		$ischool.course_selection.subject_course AS subject_course
+	GROUP BY subject_course.ref_subject_id
+) course_count ON course_count.ref_subject_id = subject.uid
+WHERE 
+	subject.school_year = {0}
+	AND subject.semester = {1}
+    AND type = '{2}'
+ORDER BY
+    subject.type
+    , subject.subject_name
+    , subject.level
+    , subject.credit
+                ",schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
             #endregion
 
             #region DataGridView
@@ -92,30 +97,30 @@ namespace SHSchool.CourseSelection.Forms
                 QueryHelper qh = new QueryHelper();
                 DataTable dataTable = qh.Select(SQL);
 
-                foreach (DataRow dr in dataTable.Rows)
+                foreach (DataRow row in dataTable.Rows)
                 {
                     DataGridViewRow datarow = new DataGridViewRow();
                     datarow.CreateCells(dataGridViewX1);
 
                     int index = 0;
-                    datarow.Cells[index++].Value = "" + dr["subject_name"];
-                    datarow.Cells[index++].Value = "" + dr["level"];
-                    datarow.Cells[index++].Value = "" + dr["credit"];
+                    datarow.Cells[index++].Value = string.Format("{0} {1}","" + row["subject_name"],Tool.RomanChar("" + row["level"]));//"" + dr["subject_name"];
+                    datarow.Cells[index++].Value = "" + row["level"];
+                    datarow.Cells[index++].Value = "" + row["credit"];
                     //datarow.Cells[index++].Value = "學業";
-                    datarow.Cells[index++].Value = "" + dr["student_count"]/* + "/" + dr["limit"]*/;
+                    datarow.Cells[index++].Value = "" + row["student_count"]/* + "/" + dr["limit"]*/;
                     // 如果未開班，開班數為0
-                    if ("" + dr["_course_count"] == "")
+                    if ("" + row["_course_count"] == "")
                     {
                         datarow.Cells[index++].Value = "" + 0;
                         datarow.Cells[index++].Value = "" + 0;
                     }
                     else
                     {
-                        datarow.Cells[index++].Value = "" + dr["_course_count"];
-                        datarow.Cells[index++].Value = "" + dr["_course_count"];
+                        datarow.Cells[index++].Value = "" + row["_course_count"];
+                        datarow.Cells[index++].Value = "" + row["_course_count"];
                     }
 
-                    dataGridViewX1.Rows[dataGridViewX1.Rows.Add(datarow)].Tag = "" + dr["uid"];
+                    dataGridViewX1.Rows[dataGridViewX1.Rows.Add(datarow)].Tag = "" + row["uid"];
                     //dataGridViewX1.Rows.Add(datarow);
                 }
             }
@@ -124,7 +129,7 @@ namespace SHSchool.CourseSelection.Forms
 
         public void ReloadCourseTypeCbx()
         {
-            #region 課程類別
+            #region 課程時段
             if (schoolYearCbx.Text != "" && semesterCbx.Text != "")
             {
                 courseTypeCbx.Items.Clear();

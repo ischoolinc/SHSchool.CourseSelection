@@ -9,15 +9,17 @@ using System.Windows.Forms;
 using FISCA.Presentation.Controls;
 using FISCA.UDT;
 using DevComponents.DotNetBar.Controls;
+using FISCA.Data;
+using System.Xml.Linq;
 
 namespace SHSchool.CourseSelection.Forms
 {
     //2016/8/16 穎驊改寫選課系統，為文華專案的其中一部份
-
     public partial class frmOpeningTime : BaseForm
     {
-        private AccessHelper Access;
-        private ErrorProvider errorProvider1;
+        private AccessHelper _access;
+        private ErrorProvider _errorProvider;
+        private bool _initFinish = false;
 
         public frmOpeningTime()
         {
@@ -28,242 +30,202 @@ namespace SHSchool.CourseSelection.Forms
 
         private void frmOpeningTime_Load(object sender, EventArgs e)
         {
-            this.Access = new AccessHelper();
+            this._access = new AccessHelper();
 
-            this.InitSchoolYear();
-            this.InitSemester();
-            this.initSelectMode();
-            this.InitOpeningTime();
-            
+            List<UDT.OpeningTime> listOpeningTime = this._access.Select<UDT.OpeningTime>();
 
-            errorProvider1 = new ErrorProvider();
-        }
-
-        private void InitOpeningTime()
-        {
-            try
+            #region 檢查有沒有選課時間設定資料
+            if (listOpeningTime.Count == 0)
             {
-                List<UDT.OpeningTime> records = Access.Select<UDT.OpeningTime>();
+                listOpeningTime.Add(new UDT.OpeningTime() { SchoolYear = int.Parse(K12.Data.School.DefaultSchoolYear), Semester = int.Parse(K12.Data.School.DefaultSemester) });
+                listOpeningTime.SaveAll();
+            } 
+            #endregion
 
-                if (records == null || records.Count == 0)
-                    return;
+            #region InitSchoolYear
+            //this.cboSchoolYear.Items.Clear();
+            int schoolYear = listOpeningTime[0].SchoolYear; 
+            cboSchoolYear.Items.Add(schoolYear);
+            cboSchoolYear.Items.Add(schoolYear + 1);
+            cboSchoolYear.Items.Add(schoolYear + 2);
 
-                this.StartTime1.Text = records[0].P1StartTime.ToString("yyyy/M/d HH:mm:ss");
-                
-                this.EndTime1.Text = records[0].P1EndTime.ToString("yyyy/M/d HH:mm:ss");
+            cboSchoolYear.SelectedIndex = 0;
+            #endregion
 
-                this.StartTime2.Text = records[0].P2StartTime.ToString("yyyy/M/d HH:mm:ss");
+            #region InitSemester
+            //this.cboSemester.Items.Clear();
+            cboSemester.Items.Add("1");
+            cboSemester.Items.Add("2");
+            cboSemester.SelectedIndex = listOpeningTime[0].Semester - 1; 
+            #endregion
 
-                this.EndTime2.Text = records[0].P2EndTime.ToString("yyyy/M/d HH:mm:ss");
+            #region InitSelectMode
+            cbxMode.Items.Clear();
 
+            //this.cbxMode.Items.Add("不開放");
+            cbxMode.Items.Add("志願序");
+            cbxMode.Items.Add("先搶先贏");
+            cbxMode.Items.Add("");
 
-             
-
-                for (int i = 0; i < this.cboSchoolYear.Items.Count; i++)
-                {
-                    if (this.cboSchoolYear.Items[i].ToString() == records[0].SchoolYear.ToString())
-                    {
-                        this.cboSchoolYear.Text = records[0].SchoolYear.ToString();
-                        break;
-                    }
-                }
-
-                for (int i = 0; i < this.cboSemester.Items.Count; i++)
-                {
-                    if (this.cboSemester.Items[i].ToString() == records[0].Semester.ToString())
-                    {
-                        this.cboSemester.Text = records[0].Semester.ToString();
-                        break;
-                    }
-                }
-
-
-                for (int i = 0; i < this.P1ModecomboBoxEx.Items.Count; i++)
-                {
-                    if (this.P1ModecomboBoxEx.Items[i].ToString() == records[0].P1Mode.ToString())
-                    {
-                        this.P1ModecomboBoxEx.Text = records[0].P1Mode.ToString();
-                        break;
-                    }
-                }
-
-                for (int i = 0; i < this.P2ModecomboBoxEx.Items.Count; i++)
-                {
-                    if (this.P2ModecomboBoxEx.Items[i].ToString() == records[0].P2Mode.ToString())
-                    {
-                        this.P2ModecomboBoxEx.Text = records[0].P2Mode.ToString();
-                        break;
-                    }
-                }
-
-                this.MemotextBoxX.Text = ""+records[0].Memo;
-
-            }
-            catch (Exception ex)
+            switch (listOpeningTime[0].Mode)
             {
-                MsgBox.Show(ex.Message);
+                case "志願序":
+                    cbxMode.SelectedIndex = 0;
+                    break;
+                case "先搶先贏":
+                    cbxMode.SelectedIndex = 1;
+                    break;
+                default:
+                    cbxMode.SelectedIndex = 2;
+                    break;
+            }
+
+            #endregion
+
+            #region InitOpeningTime
+
+            this.StartTime.Text = listOpeningTime[0].StartTime.ToString("yyyy/M/d HH:mm:ss");
+            this.EndTime.Text = listOpeningTime[0].EndTime.ToString("yyyy/M/d HH:mm:ss");
+
+            #endregion
+
+            reloadDataGridView(); // 課程時段
+
+            tbxMemo.Text = listOpeningTime[0].Memo; // 備註
+
+            _errorProvider = new ErrorProvider();
+            _initFinish = true;
+        }
+
+        private void reloadDataGridView()
+        {
+            string schoolYear = cboSchoolYear.Text;
+            string semester = cboSemester.Text;
+
+            #region SQL
+            string sql = string.Format(@"
+WITH target_type AS(
+    SELECT DISTINCT
+        type
+    FROM
+        $ischool.course_selection.subject AS subject
+    WHERE
+        subject.school_year = {0}
+        AND subject.semester = {1}
+        AND type IS NOT NULL
+) ,open_type AS(
+    SELECT
+	    unnest(xpath('/Type/text()', type_xml))::text as type
+    FROM(
+        SELECT
+             unnest(xpath('/root/Type', xmlparse(content open_type))) as type_xml
+        FROM
+            $ischool.course_selection.opening_time
+    ) AS  type_xml  
+)
+SELECT
+    target_type.*
+    , CASE 
+        WHEN target_type.type = open_type.type THEN 'true'
+        ELSE 'false'
+        END AS is_open_type
+FROM
+    target_type
+    LEFT OUTER JOIN open_type 
+        ON open_type.type = target_type.type
+                ", schoolYear, semester); 
+
+            #endregion
+
+            QueryHelper qh = new QueryHelper();
+            DataTable dt = qh.Select(sql);
+
+            dataGridViewX1.Rows.Clear();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                DataGridViewRow dgvrow = new DataGridViewRow();
+                dgvrow.CreateCells(dataGridViewX1);
+                int index = 0;
+
+                dgvrow.Cells[index++].Value = ("" + row["is_open_type"]) == "true" ? true : false;
+                dgvrow.Cells[index++].Value = "" + row["type"];
+
+                dataGridViewX1.Rows.Add(dgvrow);
             }
         }
-
-        private void InitSchoolYear()
-        {
-            this.cboSchoolYear.Items.Clear();
-
-            int school_year;
-
-            if (!int.TryParse(K12.Data.School.DefaultSchoolYear, out school_year))
-                school_year = DateTime.Today.Year - 1911;
-
-            this.cboSchoolYear.Items.Add("");
-            this.cboSchoolYear.Items.Add(school_year);
-            this.cboSchoolYear.Items.Add(school_year + 1);
-            this.cboSchoolYear.Items.Add(school_year + 2);
-        }
-
-        private void InitSemester()
-        {
-            this.cboSemester.Items.Clear();
-
-            this.cboSemester.Items.Add("");
-            this.cboSemester.Items.Add("1");
-            this.cboSemester.Items.Add("2");
-        }
-
-        private void initSelectMode() 
-        {
-            this.P1ModecomboBoxEx.Items.Clear();
-            this.P2ModecomboBoxEx.Items.Clear();
-
-            this.P1ModecomboBoxEx.Items.Add("不開放");
-            this.P1ModecomboBoxEx.Items.Add("志願序");
-            this.P1ModecomboBoxEx.Items.Add("先搶先贏");
-
-            this.P2ModecomboBoxEx.Items.Add("不開放");
-            this.P2ModecomboBoxEx.Items.Add("志願序");
-            this.P2ModecomboBoxEx.Items.Add("先搶先贏");
-        
-        }
-
 
         private bool Is_Validated()
         {
             bool result = true;
 
-
-            #region 階段一輸入驗證
-            if (string.IsNullOrEmpty(this.StartTime1.Text))
+            #region 日期區間驗證
+            if (string.IsNullOrEmpty(this.StartTime.Text))
             {
-                errorProvider1.SetError(this.StartTime1, "必填");
+                _errorProvider.SetError(this.StartTime, "必填");
                 result = false;
             }
             else
             {
                 DateTime date;
-                if (!DateTime.TryParse(this.StartTime1.Text.Trim(), out date))
+                if (!DateTime.TryParse(this.StartTime.Text.Trim(), out date))
                 {
-                    errorProvider1.SetError(this.StartTime1, "非日期格式");
+                    _errorProvider.SetError(this.StartTime, "非日期格式");
                     result = false;
                 }
                 else
-                    errorProvider1.SetError(this.StartTime1, "");
+                    _errorProvider.SetError(this.StartTime, "");
             }
 
-            if (string.IsNullOrEmpty(this.EndTime1.Text))
+            if (string.IsNullOrEmpty(this.EndTime.Text))
             {
-                errorProvider1.SetError(this.EndTime1, "必填");
+                _errorProvider.SetError(this.EndTime, "必填");
                 result = false;
             }
             else
             {
                 DateTime date;
-                if (!DateTime.TryParse(this.EndTime1.Text.Trim(), out date))
+                if (!DateTime.TryParse(this.EndTime.Text.Trim(), out date))
                 {
-                    errorProvider1.SetError(this.EndTime1, "非日期格式");
+                    _errorProvider.SetError(this.EndTime, "非日期格式");
                     result = false;
                 }
                 else
-                    errorProvider1.SetError(this.EndTime1, "");
-            } 
-            #endregion
-
-            #region 階段二輸入驗證
-            if (string.IsNullOrEmpty(this.StartTime2.Text))
-            {
-                errorProvider1.SetError(this.StartTime2, "必填");
-                result = false;
-            }
-            else
-            {
-                DateTime date;
-                if (!DateTime.TryParse(this.StartTime2.Text.Trim(), out date))
-                {
-                    errorProvider1.SetError(this.StartTime2, "非日期格式");
-                    result = false;
-                }
-                else
-                    errorProvider1.SetError(this.StartTime2, "");
-            }
-
-            if (string.IsNullOrEmpty(this.EndTime2.Text))
-            {
-                errorProvider1.SetError(this.EndTime2, "必填");
-                result = false;
-            }
-            else
-            {
-                DateTime date;
-                if (!DateTime.TryParse(this.EndTime2.Text.Trim(), out date))
-                {
-                    errorProvider1.SetError(this.EndTime2, "非日期格式");
-                    result = false;
-                }
-                else
-                    errorProvider1.SetError(this.EndTime2, "");
+                    _errorProvider.SetError(this.EndTime, "");
             } 
             #endregion
 
             #region 學年學期驗證
             if (string.IsNullOrEmpty(this.cboSchoolYear.Text))
             {
-                errorProvider1.SetError(this.cboSchoolYear, "必填");
+                _errorProvider.SetError(this.cboSchoolYear, "必填");
                 result = false;
             }
             else
             {
-                errorProvider1.SetError(this.cboSchoolYear, "");
+                _errorProvider.SetError(this.cboSchoolYear, "");
             }
 
             if (string.IsNullOrEmpty(this.cboSemester.Text))
             {
-                errorProvider1.SetError(this.cboSemester, "必填");
+                _errorProvider.SetError(this.cboSemester, "必填");
                 result = false;
             }
             else
             {
-                errorProvider1.SetError(this.cboSemester, "");
+                _errorProvider.SetError(this.cboSemester, "");
             } 
             #endregion
 
-
             #region 選課模式驗證
-            if (string.IsNullOrEmpty(this.P1ModecomboBoxEx.Text))
+            if (string.IsNullOrEmpty(this.cbxMode.Text))
             {
-                errorProvider1.SetError(this.P1ModecomboBoxEx, "必填");
+                _errorProvider.SetError(this.cbxMode, "必填");
                 result = false;
             }
             else
             {
-                errorProvider1.SetError(this.P1ModecomboBoxEx, "");
-            }
-
-            if (string.IsNullOrEmpty(this.P2ModecomboBoxEx.Text))
-            {
-                errorProvider1.SetError(this.P2ModecomboBoxEx, "必填");
-                result = false;
-            }
-            else
-            {
-                errorProvider1.SetError(this.P2ModecomboBoxEx, "");
+                _errorProvider.SetError(this.cbxMode, "");
             }
             #endregion
 
@@ -283,45 +245,43 @@ namespace SHSchool.CourseSelection.Forms
             try
             {
                 UDT.OpeningTime record;
-                List<UDT.OpeningTime> records = Access.Select<UDT.OpeningTime>();
+                List<UDT.OpeningTime> records = _access.Select<UDT.OpeningTime>();
 
                 if (records == null || records.Count == 0)
                     record = new UDT.OpeningTime();
                 else
                     record = records[0];
 
-                //設定階段一時段
-                DateTime P1startTime = DateTime.Parse(this.StartTime1.Text);
+                record.SchoolYear = int.Parse(this.cboSchoolYear.Text); // 學年度
+                record.Semester = int.Parse(this.cboSemester.Text); // 學期
+                record.Mode = cbxMode.SelectedItem.ToString(); // 選課模式
+                record.StartTime = DateTime.Parse(this.StartTime.Text); // 開始時間      
+                record.EndTime = DateTime.Parse(this.EndTime.Text); // 結束時間
 
-                record.P1StartTime = P1startTime;                
+                //DateTime endTime = DateTime.Parse(this.EndTime.Text);
+                //if ((endTime.Hour + endTime.Minute + endTime.Second) == 0)
+                //    record.EndTime = endTime.AddDays(1).AddSeconds(-1);
+                //else
+                //    record.EndTime = endTime;
+                
 
-                DateTime P1endTime = DateTime.Parse(this.EndTime1.Text);
-                if ((P1endTime.Hour + P1endTime.Minute + P1endTime.Second) == 0)
-                    record.P1EndTime = P1endTime.AddDays(1).AddSeconds(-1);
-                else
-                    record.P1EndTime = P1endTime;
+                #region 開放課程時段
 
+                List<string> listType = new List<string>();
 
-                //設定階段二時段
-                DateTime P2startTime = DateTime.Parse(this.StartTime2.Text);
+                foreach (DataGridViewRow dgvrow in dataGridViewX1.Rows)
+                {
+                    if (bool.Parse("" + dgvrow.Cells[0].Value))
+                    {
+                        listType.Add(string.Format("<Type>{0}</Type>", dgvrow.Cells[1].Value));
+                    }
+                }
 
-                record.P2StartTime = P2startTime;
+                record.OpenType = string.Format("<root>{0}</root>", string.Join("", listType));
 
-                DateTime P2endTime = DateTime.Parse(this.EndTime2.Text);
-                if ((P2endTime.Hour + P2endTime.Minute + P2endTime.Second) == 0)
-                    record.P2EndTime = P2endTime.AddDays(1).AddSeconds(-1);
-                else
-                    record.P2EndTime = P2endTime;
+                #endregion
 
-
-                record.SchoolYear = int.Parse(this.cboSchoolYear.Text);
-                record.Semester = int.Parse(this.cboSemester.Text);
-
-                record.P1Mode = P1ModecomboBoxEx.Text;
-
-                record.P2Mode = P2ModecomboBoxEx.Text;
-
-                record.Memo = MemotextBoxX.Text;
+                record.Memo = tbxMemo.Text; // 備註
 
                 record.Save();
 
@@ -333,39 +293,20 @@ namespace SHSchool.CourseSelection.Forms
             }
         }
 
-        private void StartTime_TextChanged(object sender, EventArgs e)
+        private void cboSchoolYear_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-        }
-
-        private void labelX1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void labelX2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void EndTime_TextChanged(object sender, EventArgs e)
-        {
-
+            if (this._initFinish)
+            {
+                this.reloadDataGridView();
+            }
         }
 
         private void cboSemester_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-        }
-
-        private void labelX3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBoxEx2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+            if (this._initFinish)
+            {
+                this.reloadDataGridView();
+            }
         }
     }
 }

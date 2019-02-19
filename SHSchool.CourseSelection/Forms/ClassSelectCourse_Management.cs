@@ -177,13 +177,16 @@ namespace SHSchool.CourseSelection.Forms
                 courseTypeCbx.Items.Clear();
 
                 string selectSQL = string.Format(@"
-                    SELECT DISTINCT 
-                        type 
-                    FROM 
-                        $ischool.course_selection.subject 
-                    WHERE 
-                        school_year = {0} AND semester = {1}"
-                    , schoolYearCbx.Text, semesterCbx.Text);
+SELECT DISTINCT 
+    type 
+FROM 
+    $ischool.course_selection.subject 
+WHERE 
+    school_year = {0} 
+    AND semester = {1}
+    AND type IS NOT NULL
+                ", schoolYearCbx.Text, semesterCbx.Text);
+
                 QueryHelper qh = new QueryHelper();
                 DataTable courseTypes = qh.Select(selectSQL);
 
