@@ -22,24 +22,32 @@ namespace SHSchool.CourseSelection.Forms
             #region Init ComboBox
             {
                 AccessHelper access = new AccessHelper();
-                List<UDT.OpeningTime> openingTime = access.Select<UDT.OpeningTime>();
-                if (openingTime.Count == 0)
+
+                List<UDT.OpeningTime> timeList = access.Select<UDT.OpeningTime>();
+
+                if (timeList.Count == 0)
                 {
-                    openingTime.Add(new UDT.OpeningTime() { SchoolYear = int.Parse(K12.Data.School.DefaultSchoolYear), Semester = int.Parse(K12.Data.School.DefaultSemester) });
-                    openingTime.SaveAll();
+                    timeList.Add(new UDT.OpeningTime() { SchoolYear = int.Parse(K12.Data.School.DefaultSchoolYear), Semester = int.Parse(K12.Data.School.DefaultSemester) });
+                    timeList.SaveAll();
                 }
-                int sy = openingTime[0].SchoolYear;
-                int s = openingTime[0].Semester;
-                // SchoolYear 預設: 開放選課學年度
-                schoolYearCbx.Text = "" + sy;
-                for (int i = 0; i < 3; i++)
-                {
-                    schoolYearCbx.Items.Add(sy - i);
-                }
-                // Semester 預設: 開放選課學期
-                semesterCbx.Text = "" + s;
+
+                schoolYearCbx.Items.Add(timeList[0].SchoolYear + 1);
+                schoolYearCbx.Items.Add(timeList[0].SchoolYear);
+                schoolYearCbx.Items.Add(timeList[0].SchoolYear - 1);
+
+                schoolYearCbx.SelectedIndex = 1;
+
                 semesterCbx.Items.Add(1);
                 semesterCbx.Items.Add(2);
+                if ("" + timeList[0].Semester == "1")
+                {
+                    semesterCbx.SelectedIndex = 0;
+                }
+
+                if ("" + timeList[0].Semester == "2")
+                {
+                    semesterCbx.SelectedIndex = 1;
+                }
             }
             #endregion
         }
@@ -95,7 +103,8 @@ FROM
                 ON subject.uid = subject_course.ref_subject_id
 	    WHERE subject.type = '{0}'
 	    GROUP BY subject_course.ref_subject_id
-	)subject_course ON subject_course.ref_subject_id = subject.uid
+	) AS subject_course 
+         ON subject_course.ref_subject_id = subject.uid
     LEFT OUTER JOIN
     (
 	    SELECT 
@@ -104,10 +113,21 @@ FROM
             count(ref_subject_course_id) as course_student_count
 	    FROM 
             $ischool.course_selection.ss_attend
+            LEFT OUTER JOIN student
+                ON student.id = $ischool.course_selection.ss_attend.ref_student_id
+        WHERE
+            student.status IN ( 1, 2 )
 	    GROUP BY ref_subject_id
-    )ss_attend ON ss_attend.ref_subject_id = subject.uid
-WHERE subject.school_year = {1} AND subject.semester = {2} AND type = '{0}'"
-            , courseTypeCbx.Text, schoolYearCbx.Text, semesterCbx.Text);
+    ) AS ss_attend 
+        ON ss_attend.ref_subject_id = subject.uid
+WHERE 
+    subject.school_year = {1} 
+    AND subject.semester = {2} 
+    AND type = '{0}'
+"
+            , courseTypeCbx.Text
+            , schoolYearCbx.Text
+            , semesterCbx.Text);
             #endregion
 
             QueryHelper qh = new QueryHelper();
@@ -129,33 +149,37 @@ WHERE subject.school_year = {1} AND subject.semester = {2} AND type = '{0}'"
                 int studentCount = "" + dr["student_count"] == "" ? 0 : int.Parse("" + dr["student_count"]);
                 // 科目已分班人數
                 int courseStudentCount = "" + dr["course_student_count"] == "" ? 0 : int.Parse("" + dr["course_student_count"]);
-                // 如果沒開班
-                if (courseCount == 0)
+                var msg = "";
+                // 科目有學生
+                if (studentCount > 0)
                 {
-                    datarow.Cells[index].Style.ForeColor = Color.Red;
-                    datarow.Cells[index++].Value = "科目未開班!";
-                    datarow.Tag = "error";
+                    // 如果沒開班
+                    if (courseCount == 0)
+                    {
+                        msg = "科目未開班!";
+                        datarow.Cells[index].Style.ForeColor = Color.Red;
+                        datarow.Tag = "error";
+                    }
+                    // 有開班、有選課學生、但有未分班學生
+                    if (courseCount > 0 && (studentCount - courseStudentCount) > 0)
+                    {
+                        msg = "已開班數:" + courseCount + "、尚有" + (studentCount - courseStudentCount) + "位學生未分班!";
+                        datarow.Cells[index].Style.ForeColor = Color.Red;
+                        datarow.Tag = "error";
+                    }
+                    // 有開班、有選課學生、學生有分班
+                    if (courseCount > 0 && studentCount > 0 && studentCount == courseStudentCount)
+                    {
+                        msg = "已開班數:" + courseCount + "、 選課人數:" + studentCount + "、 已分班人數:" + courseStudentCount;
+                        datarow.Tag = "correct";
+                    }
                 }
-                // 有開班、有選課學生、但有未分班學生
-                if (courseCount > 0 && studentCount > 0 && (studentCount - courseStudentCount) > 0)
-                {
-                    datarow.Cells[index].Style.ForeColor = Color.Red;
-                    datarow.Cells[index++].Value = "已開班數:" + courseCount + "、尚有" + (studentCount - courseStudentCount) + "位學生未分班!";
-                    datarow.Tag = "error";
-                }
-                // 有開班、沒有學生選課
-                if (courseCount > 0 && studentCount == 0)
-                {
-                    datarow.Cells[index].Style.ForeColor = Color.Red;
-                    datarow.Cells[index++].Value = "已開班數:" + courseCount + "、 沒有學生選課!";
-                    datarow.Tag = "error";
-                }
-                // 有開班、有選課學生、學生有分班
-                if (courseCount > 0 && studentCount > 0 && studentCount == courseStudentCount)
-                {
-                    datarow.Cells[index++].Value = "已開班數:" + courseCount + "、 選課人數:" + studentCount + "、 已分班人數:" + courseStudentCount;
+                else {
+                    msg = "沒有修課學生";
+                    datarow.DefaultCellStyle.ForeColor = Color.Gray;
                     datarow.Tag = "correct";
                 }
+                datarow.Cells[index++].Value = msg;
 
                 dataGridViewX1.Rows.Add(datarow);
             }
@@ -212,10 +236,14 @@ FROM
         ON subject_course.uid = ss_attend.ref_subject_course_id
     LEFT OUTER JOIN $ischool.course_selection.subject AS subject
         ON subject.uid = ss_attend.ref_subject_id
+    LEFT OUTER JOIN student
+        ON student.id = ss_attend.ref_student_id
 WHERE 
     subject.school_year = {0} 
     AND subject.semester = {1} 
-    AND subject.type = '{2}'"
+    AND subject.type = '{2}'
+    AND student.status IN ( 1, 2 )
+"
             , schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
             #endregion
 
@@ -226,9 +254,9 @@ WHERE
             List<SCAttendRecord> scrNewList = new List<SCAttendRecord>();
             // 避免重複新增修課紀錄: 透過StudentID、CourseID取得修課紀錄並刪除，並且刪除課程成績!
             Dictionary<string, string> studentCourseDic = new Dictionary<string, string>();
-            foreach (DataRow dr in dataTable.Rows)
+            foreach (DataRow row in dataTable.Rows)
             {
-                studentCourseDic.Add("" + dr["ref_student_id"], "" + dr["ref_course_id"]);
+                studentCourseDic.Add("" + row["ref_student_id"], "" + row["ref_course_id"]);
             }
             List<SCAttendRecord> scrOldList = SCAttend.SelectByStudentIDAndCourseID(studentCourseDic.Keys.ToList(), studentCourseDic.Values.ToList());
             List<SCETakeRecord> sctList = SCETake.SelectByStudentAndCourse(studentCourseDic.Keys.ToList(), studentCourseDic.Values.ToList());
@@ -242,15 +270,15 @@ WHERE
                 }
             }
 
-            SCAttend.Delete(scrOldList);
             SCETake.Delete(sctList);
+            SCAttend.Delete(scrOldList);
 
             // 新增:New修課紀錄
-            foreach (DataRow dr in dataTable.Rows)
+            foreach (DataRow row in dataTable.Rows)
             {
                 SCAttendRecord scAttend = new SCAttendRecord();
-                scAttend.RefCourseID = "" + dr["ref_course_id"];
-                scAttend.RefStudentID = "" + dr["ref_student_id"];
+                scAttend.RefCourseID = "" + row["ref_course_id"];
+                scAttend.RefStudentID = "" + row["ref_student_id"];
                 scrNewList.Add(scAttend);
             }
             SCAttend.Insert(scrNewList);

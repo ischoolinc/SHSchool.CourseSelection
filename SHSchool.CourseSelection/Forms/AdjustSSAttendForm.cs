@@ -454,8 +454,8 @@ WITH target_subject AS(
         AND student.status IN ( 1, 2 )
 ), student_attend AS(
 	SELECT
-		ref_student_id
-		, ref_subject_id
+		attend.ref_student_id
+		, attend.ref_subject_id
 		, ref_subject_course_id
         , lock
         , attend_type
@@ -466,7 +466,7 @@ WITH target_subject AS(
             ON subject.uid = attend.ref_subject_id
         LEFT OUTER JOIN student 
             ON student.id = attend.ref_student_id
-	WHERE ref_subject_id IN(
+	WHERE attend.ref_subject_id IN(
 			SELECT
 				uid
 			FROM
@@ -485,7 +485,7 @@ WITH target_subject AS(
         LEFT OUTER JOIN student 
             ON student.id = wish.ref_student_id
 	WHERE
-		ref_subject_id IN(
+		wish.ref_subject_id IN(
 			SELECT 
 				uid
 			FROM
@@ -744,7 +744,4532 @@ WITH data_row AS(
         , ss_attend.attend_type AS orig_attend_type
         , ROW_NUMBER() OVER( PARTITION BY data_row.ref_student_id ) AS index
     FROM
+        data_
+WITH data_row AS(
+    
+    SELECT
+        885::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        887::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        888::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        889::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        890::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1253::BIGINT AS ref_student_id
+        , 410238::BIGINT AS ref_subject_id
+        , '英文小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        892::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        894::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , true::BOOLEAN AS lock
+        , '指定'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        895::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        896::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '指定'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        897::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        899::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        900::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        901::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        903::BIGINT AS ref_student_id
+        , 410267::BIGINT AS ref_subject_id
+        , '環境與資源'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        995::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        904::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        906::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1225::BIGINT AS ref_student_id
+        , 410238::BIGINT AS ref_subject_id
+        , '英文小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        907::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        908::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        909::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1139::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        910::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        911::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        912::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        913::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        914::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        915::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        916::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        917::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        918::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        919::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        920::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        921::BIGINT AS ref_student_id
+        , 410238::BIGINT AS ref_subject_id
+        , '英文小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1281::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        922::BIGINT AS ref_student_id
+        , NULL::BIGINT AS ref_subject_id
+        , NULL::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , NULL::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        923::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        924::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1105::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        926::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1106::BIGINT AS ref_student_id
+        , 410238::BIGINT AS ref_subject_id
+        , '英文小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        4244::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        927::BIGINT AS ref_student_id
+        , NULL::BIGINT AS ref_subject_id
+        , NULL::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , NULL::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1246::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        929::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        930::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1203::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        931::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        932::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        933::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        934::BIGINT AS ref_student_id
+        , 410241::BIGINT AS ref_subject_id
+        , '儒孟學說'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        935::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        936::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        938::BIGINT AS ref_student_id
+        , 410238::BIGINT AS ref_subject_id
+        , '英文小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        939::BIGINT AS ref_student_id
+        , 410241::BIGINT AS ref_subject_id
+        , '儒孟學說'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        940::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        941::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        942::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        943::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        944::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        945::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        946::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        947::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        948::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        949::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        950::BIGINT AS ref_student_id
+        , 410241::BIGINT AS ref_subject_id
+        , '儒孟學說'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        951::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        952::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        953::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        954::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        955::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        957::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        958::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        959::BIGINT AS ref_student_id
+        , 410267::BIGINT AS ref_subject_id
+        , '環境與資源'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        960::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        961::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        962::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        963::BIGINT AS ref_student_id
+        , 410246::BIGINT AS ref_subject_id
+        , '歐洲經濟'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        964::BIGINT AS ref_student_id
+        , 410267::BIGINT AS ref_subject_id
+        , '環境與資源'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        965::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        966::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        968::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1109::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        977::BIGINT AS ref_student_id
+        , 410238::BIGINT AS ref_subject_id
+        , '英文小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        978::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1207::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1025::BIGINT AS ref_student_id
+        , NULL::BIGINT AS ref_subject_id
+        , NULL::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , NULL::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        937::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        986::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        898::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        990::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        902::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1219::BIGINT AS ref_student_id
+        , 410238::BIGINT AS ref_subject_id
+        , '英文小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1130::BIGINT AS ref_student_id
+        , 410246::BIGINT AS ref_subject_id
+        , '歐洲經濟'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1131::BIGINT AS ref_student_id
+        , 410241::BIGINT AS ref_subject_id
+        , '儒孟學說'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1042::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1090::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1175::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1176::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1136::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1178::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1000::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1180::BIGINT AS ref_student_id
+        , NULL::BIGINT AS ref_subject_id
+        , NULL::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , NULL::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1229::BIGINT AS ref_student_id
+        , 410238::BIGINT AS ref_subject_id
+        , '英文小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1097::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1002::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1142::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1052::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1183::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1145::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1186::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1234::BIGINT AS ref_student_id
+        , 410241::BIGINT AS ref_subject_id
+        , '儒孟學說'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1099::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1101::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1193::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1194::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1149::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1151::BIGINT AS ref_student_id
+        , 410238::BIGINT AS ref_subject_id
+        , '英文小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1010::BIGINT AS ref_student_id
+        , NULL::BIGINT AS ref_subject_id
+        , NULL::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , NULL::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1013::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1233::BIGINT AS ref_student_id
+        , 410241::BIGINT AS ref_subject_id
+        , '儒孟學說'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1189::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1141::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1243::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1077::BIGINT AS ref_student_id
+        , 410267::BIGINT AS ref_subject_id
+        , '環境與資源'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1057::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1054::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1111::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        970::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        886::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1112::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        974::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        893::BIGINT AS ref_student_id
+        , 410246::BIGINT AS ref_subject_id
+        , '歐洲經濟'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        983::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1165::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1120::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        988::BIGINT AS ref_student_id
+        , 410246::BIGINT AS ref_subject_id
+        , '歐洲經濟'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1215::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1083::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1217::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1128::BIGINT AS ref_student_id
+        , NULL::BIGINT AS ref_subject_id
+        , NULL::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , NULL::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        992::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1040::BIGINT AS ref_student_id
+        , 410241::BIGINT AS ref_subject_id
+        , '儒孟學說'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1091::BIGINT AS ref_student_id
+        , NULL::BIGINT AS ref_subject_id
+        , NULL::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , NULL::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1177::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1226::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1227::BIGINT AS ref_student_id
+        , 410241::BIGINT AS ref_subject_id
+        , '儒孟學說'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1045::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        999::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1179::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1098::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1232::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1143::BIGINT AS ref_student_id
+        , NULL::BIGINT AS ref_subject_id
+        , NULL::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , NULL::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1005::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1237::BIGINT AS ref_student_id
+        , 410267::BIGINT AS ref_subject_id
+        , '環境與資源'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1190::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1192::BIGINT AS ref_student_id
+        , 410239::BIGINT AS ref_subject_id
+        , '英文演說'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1238::BIGINT AS ref_student_id
+        , NULL::BIGINT AS ref_subject_id
+        , NULL::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , NULL::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1007::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1240::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1056::BIGINT AS ref_student_id
+        , NULL::BIGINT AS ref_subject_id
+        , NULL::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , NULL::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1008::BIGINT AS ref_student_id
+        , 410238::BIGINT AS ref_subject_id
+        , '英文小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1058::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1009::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1196::BIGINT AS ref_student_id
+        , 410246::BIGINT AS ref_subject_id
+        , '歐洲經濟'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1011::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1197::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1158::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1164::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1003::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1022::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1079::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1125::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        996::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1155::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1065::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1200::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1159::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        973::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1204::BIGINT AS ref_student_id
+        , 410241::BIGINT AS ref_subject_id
+        , '儒孟學說'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        891::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1031::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        985::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1082::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1216::BIGINT AS ref_student_id
+        , NULL::BIGINT AS ref_subject_id
+        , NULL::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , NULL::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1126::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1127::BIGINT AS ref_student_id
+        , 410246::BIGINT AS ref_subject_id
+        , '歐洲經濟'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        993::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        994::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1035::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1038::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1087::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1044::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1092::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1137::BIGINT AS ref_student_id
+        , 410241::BIGINT AS ref_subject_id
+        , '儒孟學說'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1138::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        997::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1094::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1046::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1047::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1001::BIGINT AS ref_student_id
+        , 410238::BIGINT AS ref_subject_id
+        , '英文小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1048::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1181::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1049::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1053::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1188::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1235::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1236::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1191::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1147::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1242::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        969::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1093::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1055::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        989::BIGINT AS ref_student_id
+        , 410246::BIGINT AS ref_subject_id
+        , '歐洲經濟'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1144::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1078::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1081::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1070::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1061::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1062::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        928::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1199::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1244::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1156::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1066::BIGINT AS ref_student_id
+        , 410241::BIGINT AS ref_subject_id
+        , '儒孟學說'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1114::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1068::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1069::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1201::BIGINT AS ref_student_id
+        , NULL::BIGINT AS ref_subject_id
+        , NULL::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , NULL::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1202::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        976::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1161::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1205::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1162::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1209::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1210::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1076::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1123::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1167::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1169::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1170::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1173::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1221::BIGINT AS ref_student_id
+        , 410246::BIGINT AS ref_subject_id
+        , '歐洲經濟'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1174::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1095::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1182::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1103::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1239::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1195::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        530::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        4301::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1154::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1015::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1018::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        972::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1110::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1020::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1021::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1254::BIGINT AS ref_student_id
+        , 410241::BIGINT AS ref_subject_id
+        , '儒孟學說'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        981::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1206::BIGINT AS ref_student_id
+        , 410246::BIGINT AS ref_subject_id
+        , '歐洲經濟'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1026::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1208::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1073::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1028::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1118::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1212::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1030::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1213::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1214::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1122::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        987::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1124::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1033::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1084::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1171::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1172::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1088::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1041::BIGINT AS ref_student_id
+        , 410246::BIGINT AS ref_subject_id
+        , '歐洲經濟'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1089::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1223::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1140::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1230::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1050::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1004::BIGINT AS ref_student_id
+        , 410246::BIGINT AS ref_subject_id
+        , '歐洲經濟'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1006::BIGINT AS ref_student_id
+        , 410246::BIGINT AS ref_subject_id
+        , '歐洲經濟'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1187::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1102::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1150::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1152::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1153::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1012::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1060::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1096::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1133::BIGINT AS ref_student_id
+        , 410238::BIGINT AS ref_subject_id
+        , '英文小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1032::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1198::BIGINT AS ref_student_id
+        , NULL::BIGINT AS ref_subject_id
+        , NULL::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , NULL::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1107::BIGINT AS ref_student_id
+        , NULL::BIGINT AS ref_subject_id
+        , NULL::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , NULL::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1063::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1017::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1064::BIGINT AS ref_student_id
+        , 410246::BIGINT AS ref_subject_id
+        , '歐洲經濟'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1157::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1019::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1113::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1067::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1115::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        975::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1071::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1116::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        979::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        980::BIGINT AS ref_student_id
+        , 410246::BIGINT AS ref_subject_id
+        , '歐洲經濟'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1024::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1117::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1027::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1072::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        982::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1075::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1029::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        984::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1119::BIGINT AS ref_student_id
+        , 410239::BIGINT AS ref_subject_id
+        , '英文演說'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1166::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1121::BIGINT AS ref_student_id
+        , 410246::BIGINT AS ref_subject_id
+        , '歐洲經濟'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        781::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1168::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1080::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        991::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1034::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1129::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1036::BIGINT AS ref_student_id
+        , 410241::BIGINT AS ref_subject_id
+        , '儒孟學說'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1037::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1039::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1043::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1132::BIGINT AS ref_student_id
+        , 410267::BIGINT AS ref_subject_id
+        , '環境與資源'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1134::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        793::BIGINT AS ref_student_id
+        , 410246::BIGINT AS ref_subject_id
+        , '歐洲經濟'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1231::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1051::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1184::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1146::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1185::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1100::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1148::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1104::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1059::BIGINT AS ref_student_id
+        , 410241::BIGINT AS ref_subject_id
+        , '儒孟學說'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1014::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        884::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1245::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1247::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1248::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1249::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1160::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1023::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1250::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1251::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1252::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1255::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1256::BIGINT AS ref_student_id
+        , NULL::BIGINT AS ref_subject_id
+        , NULL::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , NULL::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1257::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1163::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1258::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1259::BIGINT AS ref_student_id
+        , 410244::BIGINT AS ref_subject_id
+        , '線性代數'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1260::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1261::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1262::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1263::BIGINT AS ref_student_id
+        , NULL::BIGINT AS ref_subject_id
+        , NULL::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , NULL::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1264::BIGINT AS ref_student_id
+        , 410267::BIGINT AS ref_subject_id
+        , '環境與資源'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1266::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1267::BIGINT AS ref_student_id
+        , 410241::BIGINT AS ref_subject_id
+        , '儒孟學說'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1268::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1269::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1218::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1270::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1086::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1271::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1220::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1272::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1273::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1274::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        905::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1135::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1275::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1265::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1276::BIGINT AS ref_student_id
+        , 410240::BIGINT AS ref_subject_id
+        , '實用英文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        956::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1277::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1278::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1279::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1280::BIGINT AS ref_student_id
+        , 410248::BIGINT AS ref_subject_id
+        , '氣候變遷與生態改變'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1282::BIGINT AS ref_student_id
+        , 410266::BIGINT AS ref_subject_id
+        , '排列 組合 機率'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1283::BIGINT AS ref_student_id
+        , 410243::BIGINT AS ref_subject_id
+        , '小論文'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1284::BIGINT AS ref_student_id
+        , 410242::BIGINT AS ref_subject_id
+        , '古文欣賞'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1241::BIGINT AS ref_student_id
+        , 410249::BIGINT AS ref_subject_id
+        , '顯微鏡下的世界'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        967::BIGINT AS ref_student_id
+        , 410263::BIGINT AS ref_subject_id
+        , '從經濟看歷史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        925::BIGINT AS ref_student_id
+        , 410245::BIGINT AS ref_subject_id
+        , '生活中的微積分'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                 UNION ALL
+    SELECT
+        1285::BIGINT AS ref_student_id
+        , 410247::BIGINT AS ref_subject_id
+        , '宗教史'::TEXT AS subject_name
+        , false::BOOLEAN AS lock
+        , '志願分發'::TEXT AS attend_type
+        , 107::INTEGER AS school_year
+        , 1::INTEGER AS semester
+        , '加深加廣選修'::TEXT AS type
+        , 0::INTEGER AS seed
+                           
+) ,source AS (
+    SELECT
+        data_row.*
+        , ss_attend.uid AS ref_attend_id
+        , ss_attend.ref_subject_id AS orig_subject_id
+        , ss_attend.subject_name AS orig_subject_name
+        , ss_attend.lock AS orig_lock
+        , ss_attend.attend_type AS orig_attend_type
+        , ROW_NUMBER() OVER( PARTITION BY data_row.ref_student_id ) AS index
+    FROM
         data_row
+        LEFT OUTER JOIN(
+            SELECT
+                ss_attend.uid
+                , ss_attend.ref_subject_id
+                , ss_attend.ref_student_id
+                , ss_attend.lock
+                , ss_attend.attend_type
+                , subject.subject_name
+                , subject.school_year
+                , subject.semester
+                , subject.type
+            FROM
+                $ischool.course_selection.ss_attend AS ss_attend
+                LEFT OUTER JOIN $ischool.course_selection.subject AS subject
+                    ON subject.uid = ss_attend.ref_subject_id 
+        ) AS ss_attend
+            ON ss_attend.ref_student_id = data_row.ref_student_id
+            AND ss_attend.school_year = data_row.school_year
+            AND ss_attend.semester = data_row.semester
+            AND ss_attend.type = data_row.type
+) ,data_source AS(
+    SELECT
+        source.*
+        ,CASE 
+            WHEN source.orig_subject_id = source.ref_subject_id AND source.orig_lock <> source.lock AND source.index = 1 THEN 'update'  
+            WHEN source.orig_subject_id is null AND source.ref_subject_id is not null AND source.index = 1 THEN 'insert' 
+            WHEN source.orig_subject_id <> source.ref_subject_id AND source.ref_subject_id is not null AND source.index = 1 THEN 'delete_insert'
+            WHEN source.ref_attend_id is not null AND( source.orig_subject_id <> source.ref_subject_id OR source.ref_subject_id is null OR source.index > 1) THEN 'delete'
+            --WHEN source.orig_subject_id = source.ref_subject_id AND ss_attend.lock = source.lock THEN 'nochange' 
+            ELSE 'nochange'
+            END AS status
+    FROM
+        source
+) ,log_data AS(
+    SELECT
+        data_source.*
+        ,CASE 
+            WHEN data_source.status = 'update'::text THEN 
+'學生「'|| student.name || '」
+課程類別「'|| data_source.type ||'」選修科目「' || data_source.subject_name || '」
+變更選課鎖定狀態為「' || data_source.lock || '」'
+
+            WHEN data_source.status = 'insert'::text AND data_source.attend_type = '指定'::text THEN 
+'學生「'|| student.name || '」
+課程類別「'|| data_source.type ||'」選修科目「指定」為「' || data_source.subject_name || '」'|| (CASE WHEN data_source.lock = true THEN '
+鎖定狀態為「' || data_source.lock || '」' ELSE '' END)
+
+            WHEN data_source.status = 'insert'::text AND data_source.attend_type = '志願分發'::text THEN 
+'學生「'|| student.name || '」
+課程類別「'|| data_source.type ||'」選修科目「志願分發(分發順位代碼' || data_source.seed || ')」為「' || data_source.subject_name || '」'|| (CASE WHEN data_source.lock = true THEN '
+鎖定狀態為「' || data_source.lock || '」' ELSE '' END)
+
+            WHEN data_source.status = 'delete_insert'::text AND data_source.attend_type = '指定'::text THEN 
+'學生「'|| student.name || '」
+課程類別「'|| data_source.type ||'」
+自移除原選修科目「' || data_source.orig_subject_name || '」改「指定」為「' || data_source.subject_name || '」'|| (CASE WHEN data_source.lock = true THEN '
+鎖定狀態為「' || data_source.lock || '」' ELSE '' END)
+
+            WHEN data_source.status = 'delete_insert'::text AND data_source.attend_type = '志願分發'::text THEN 
+'學生「'|| student.name || '」
+課程類別「'|| data_source.type ||'」
+自移除原選修科目「' || data_source.orig_subject_name || '」改「志願分發(分發順位代碼' || data_source.seed || ')」為「' || data_source.subject_name || '」'|| (CASE WHEN data_source.lock = true THEN '
+鎖定狀態為「' || data_source.lock || '」' ELSE '' END)
+
+            WHEN data_source.status = 'delete'::text THEN 
+'刪除學生「'|| student.name || '」課程類別「'|| data_source.type ||'」 原選修科目結果「' || data_source.orig_subject_name || '」'
+        END AS description
+    FROM
+        data_source
+        LEFT OUTER JOIN student
+            ON student.id = data_source.ref_student_id
+) ,delete_data AS(
+    DELETE
+    FROM
+        $ischool.course_selection.ss_attend
+    WHERE
+        uid IN (
+            SELECT 
+                ref_attend_id 
+            FROM 
+                data_source 
+            WHERE 
+                status = 'delete' 
+                OR status = 'delete_insert' 
+        )
+    RETURNING $ischool.course_selection.ss_attend.*
+) ,insert_data AS(
+    INSERT INTO $ischool.course_selection.ss_attend(
+        ref_student_id
+        , ref_subject_id
+        , attend_type
+        , lock
+    )
+    SELECT 
+        ref_student_id
+        , ref_subject_id
+        , attend_type
+        , lock
+    FROM
+        data_source
+    WHERE
+        status = 'delete_insert' 
+        OR status = 'insert'
+    RETURNING *
+) ,update_data AS(
+    UPDATE $ischool.course_selection.ss_attend
+    SET
+        lock = data_source.lock
+        , last_update = now()
+    FROM
+        data_source
+    WHERE
+        $ischool.course_selection.ss_attend.uid = data_source.ref_attend_id
+        AND status = 'update'
+    RETURNING $ischool.course_selection.ss_attend.*
+) 
+-- 新增 LOG
+INSERT INTO log(
+    actor
+    , action_type
+    , action
+    , target_category
+    , target_id
+    , server_time
+    , client_info
+    , action_by
+    , description
+)
+SELECT
+    'admin'::TEXT AS actor
+    , 'Record' AS action_type
+    , '選課結果及分發' AS action
+    , 'student'::TEXT AS target_category
+    , ref_student_id AS target_id
+    , now() AS server_time
+    , '<ClientInfo><HostName>LELALA-OFFICE</HostName><NetworkAdapterList><NetworkAdapter><IPAddress>fe80::20da:d7f8:bfb3:da88%4</IPAddress><PhysicalAddress>E0-D5-5E-84-FD-66</PhysicalAddress></NetworkAdapter><NetworkAdapter><IPAddress>fe80::ed10:9e0d:28c1:459c%23</IPAddress><PhysicalAddress>E0-D5-5E-84-FD-67</PhysicalAddress></NetworkAdapter><NetworkAdapter><IPAddress>fe80::1d52:bb34:b59d:e855%21</IPAddress><PhysicalAddress>00-24-D6-FA-D5-EE</PhysicalAddress></NetworkAdapter><NetworkAdapter><IPAddress>fe80::c05c:5584:e136:b73%20</IPAddress><PhysicalAddress>02-24-D6-FA-D5-ED</PhysicalAddress></NetworkAdapter><NetworkAdapter><IPAddress>fe80::110a:f000:e415:ad52%6</IPAddress><PhysicalAddress>00-24-D6-FA-D5-ED</PhysicalAddress></NetworkAdapter><NetworkAdapter><IPAddress>fe80::5c93:f819:b272:28bf%7</IPAddress><PhysicalAddress>00-24-D6-FA-D5-F1</PhysicalAddress></NetworkAdapter><NetworkAdapter><IPAddress>::1</IPAddress><PhysicalAddress></PhysicalAddress></NetworkAdapter></NetworkAdapterList></ClientInfo>' AS client_info
+    , '選課結果及分發'AS action_by   
+    , description AS description 
+FROM
+    log_data
+WHERE
+    description is not null
+
+
+            row
         LEFT OUTER JOIN(
             SELECT
                 ss_attend.uid

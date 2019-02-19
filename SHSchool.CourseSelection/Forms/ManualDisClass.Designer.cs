@@ -30,6 +30,7 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
             this.stuNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -50,10 +51,9 @@
             this.closeBtn = new DevComponents.DotNetBar.ButtonX();
             this.labelX4 = new DevComponents.DotNetBar.LabelX();
             this.courseTypeCbx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupPanel1
@@ -103,6 +103,16 @@
             this.groupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.groupPanel1.TabIndex = 0;
             this.groupPanel1.Text = "學生分班";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.White;
+            this.pictureBox1.Image = global::SHSchool.CourseSelection.Properties.Resources.loading;
+            this.pictureBox1.Location = new System.Drawing.Point(354, 208);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(37, 37);
+            this.pictureBox1.TabIndex = 5;
+            this.pictureBox1.TabStop = false;
             // 
             // dataGridViewX1
             // 
@@ -271,7 +281,7 @@
             this.schoolYearCbx.Size = new System.Drawing.Size(60, 25);
             this.schoolYearCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.schoolYearCbx.TabIndex = 4;
-            this.schoolYearCbx.TextChanged += new System.EventHandler(this.schoolYearCbx_TextChanged);
+            this.schoolYearCbx.SelectedIndexChanged += new System.EventHandler(this.schoolYearCbx_TextChanged);
             // 
             // semesterCbx
             // 
@@ -285,7 +295,7 @@
             this.semesterCbx.Size = new System.Drawing.Size(50, 25);
             this.semesterCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.semesterCbx.TabIndex = 5;
-            this.semesterCbx.TextChanged += new System.EventHandler(this.semesterCbx_TextChanged);
+            this.semesterCbx.SelectedIndexChanged += new System.EventHandler(this.semesterCbx_TextChanged);
             // 
             // subjectCbx
             // 
@@ -300,7 +310,7 @@
             this.subjectCbx.Size = new System.Drawing.Size(156, 25);
             this.subjectCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.subjectCbx.TabIndex = 6;
-            this.subjectCbx.TextChanged += new System.EventHandler(this.subjectCbx_TextChanged);
+            this.subjectCbx.SelectedIndexChanged += new System.EventHandler(this.subjectCbx_TextChanged);
             // 
             // saveBtn
             // 
@@ -358,17 +368,7 @@
             this.courseTypeCbx.Size = new System.Drawing.Size(110, 25);
             this.courseTypeCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.courseTypeCbx.TabIndex = 10;
-            this.courseTypeCbx.TextChanged += new System.EventHandler(this.courseTypeCbx_TextChanged);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.White;
-            this.pictureBox1.Image = global::SHSchool.CourseSelection.Properties.Resources.loading;
-            this.pictureBox1.Location = new System.Drawing.Point(354, 208);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(37, 37);
-            this.pictureBox1.TabIndex = 5;
-            this.pictureBox1.TabStop = false;
+            this.courseTypeCbx.SelectedIndexChanged += new System.EventHandler(this.courseTypeCbx_TextChanged);
             // 
             // ManualDisClass
             // 
@@ -395,8 +395,8 @@
             this.Text = "選課分班";
             this.groupPanel1.ResumeLayout(false);
             this.groupPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).EndInit();
             this.ResumeLayout(false);
 
         }
