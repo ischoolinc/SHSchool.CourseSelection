@@ -120,7 +120,8 @@ FROM
                 ON subject.uid = subject_course.ref_subject_id
 	    WHERE subject.type = '{0}'
 	    GROUP BY subject_course.ref_subject_id
-	)subject_course ON subject_course.ref_subject_id = subject.uid
+	) AS subject_course 
+         ON subject_course.ref_subject_id = subject.uid
     LEFT OUTER JOIN
     (
 	    SELECT 
@@ -129,8 +130,13 @@ FROM
             count(ref_subject_course_id) as course_student_count
 	    FROM 
             $ischool.course_selection.ss_attend
+            LEFT OUTER JOIN student
+                ON student.id = $ischool.course_selection.ss_attend.ref_student_id
+        WHERE
+            student.status IN ( 1, 2 )
 	    GROUP BY ref_subject_id
-    )ss_attend ON ss_attend.ref_subject_id = subject.uid
+    ) AS ss_attend 
+        ON ss_attend.ref_subject_id = subject.uid
 WHERE 
     subject.school_year = {1} 
     AND subject.semester = {2} 
@@ -255,10 +261,14 @@ FROM
         ON subject_course.uid = ss_attend.ref_subject_course_id
     LEFT OUTER JOIN $ischool.course_selection.subject AS subject
         ON subject.uid = ss_attend.ref_subject_id
+    LEFT OUTER JOIN student
+        ON student.id = ss_attend.ref_student_id
 WHERE 
     subject.school_year = {0} 
     AND subject.semester = {1} 
-    AND subject.type = '{2}'"
+    AND subject.type = '{2}'
+    AND student.status IN ( 1, 2 )
+"
             , schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
             #endregion
 
@@ -269,9 +279,9 @@ WHERE
             List<SCAttendRecord> scrNewList = new List<SCAttendRecord>();
             // 避免重複新增修課紀錄: 透過StudentID、CourseID取得修課紀錄並刪除，並且刪除課程成績!
             Dictionary<string, string> studentCourseDic = new Dictionary<string, string>();
-            foreach (DataRow dr in dataTable.Rows)
+            foreach (DataRow row in dataTable.Rows)
             {
-                studentCourseDic.Add("" + dr["ref_student_id"], "" + dr["ref_course_id"]);
+                studentCourseDic.Add("" + row["ref_student_id"], "" + row["ref_course_id"]);
             }
             List<SCAttendRecord> scrOldList = SCAttend.SelectByStudentIDAndCourseID(studentCourseDic.Keys.ToList(), studentCourseDic.Values.ToList());
             List<SCETakeRecord> sctList = SCETake.SelectByStudentAndCourse(studentCourseDic.Keys.ToList(), studentCourseDic.Values.ToList());
@@ -285,15 +295,15 @@ WHERE
                 }
             }
 
-            SCAttend.Delete(scrOldList);
             SCETake.Delete(sctList);
+            SCAttend.Delete(scrOldList);
 
             // 新增:New修課紀錄
-            foreach (DataRow dr in dataTable.Rows)
+            foreach (DataRow row in dataTable.Rows)
             {
                 SCAttendRecord scAttend = new SCAttendRecord();
-                scAttend.RefCourseID = "" + dr["ref_course_id"];
-                scAttend.RefStudentID = "" + dr["ref_student_id"];
+                scAttend.RefCourseID = "" + row["ref_course_id"];
+                scAttend.RefStudentID = "" + row["ref_student_id"];
                 scrNewList.Add(scAttend);
             }
             SCAttend.Insert(scrNewList);

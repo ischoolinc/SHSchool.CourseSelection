@@ -422,13 +422,13 @@ namespace SHSchool.CourseSelection.Forms
 SELECT
 	'{0}'::TEXT AS data_type
 	, {1}::BIGINT AS ref_subject_id
-	, {2} ::BIGINT AS ref_subject_course_id
-	, {3} ::BIGINT AS ref_course_id
+	, {2}::BIGINT AS ref_subject_course_id
+	, {3}::BIGINT AS ref_course_id
 	, '{4}'::TEXT AS subject_name
 	, '{5}'::TEXT AS class_type
 	, {6}::INT AS subject_level
 	, '{7}'::TEXT AS course_name
-	, {8} ::REAL AS credit
+	, {8}::REAL AS credit
 	, {9} AS school_year
 	, {10} AS semester   
                     "
@@ -448,125 +448,6 @@ SELECT
                 dataList.Add(data);
 
                 #region
-                //if ("" + dr.Cells["dataType"].Value == "新增")
-                //{
-                //    //-- Course Table 新增課程資訊
-                //    //-- SubjectCourse UDT 同步 courseID
-                //    SHCourseRecord scr = new SHCourseRecord();
-                //    scr.Subject = "" + dr.Cells["subjectName"].Value;
-                //    scr.Level = int.Parse(_subjectDic["" + dr.Cells[2].Tag].Level);
-                //    scr.Name = "" + dr.Cells["courseName"].Value;
-                //    scr.Credit = int.Parse("" + dr.Cells["credit"].Value);
-                //    scr.SchoolYear = int.Parse(schoolYearLb.Text);
-                //    scr.Semester = int.Parse(semesterLb.Text);
-
-                //    string courseID = SHCourse.Insert(scr);
-
-                //    // -- SubjectCourse UDT 新增 科目課程資訊
-                //    UDT.SubjectCourse sb = new UDT.SubjectCourse();
-                //    sb.RefSubjectID = int.Parse("" + dr.Cells[2].Tag);
-                //    sb.RefCourseID = int.Parse("" + courseID);
-                //    sb.ClassType = "" + dr.Cells["classType"].Value;
-                //    sb.Save();
-
-                //}
-                //if ("" + dr.Cells["dataType"].Value == "修改")
-                //{
-                //    string level = "";
-                //    switch (int.Parse("" + dr.Cells["level"].Value))
-                //    {
-                //        case 1:
-                //            level = "I";
-                //            break;
-                //        case 2:
-                //            level = "II";
-                //            break;
-                //        case 3:
-                //            level = "III";
-                //            break;
-                //    }
-                //    dr.Cells["courseName"].Value = courseTypeLb.Text +" " +dr.Cells["subjectName"].Value + " " + level + " " +dr.Cells["classType"].Value; // 課程名稱
-                //    // SubjectCourse UDT 修改選修科目課程名稱、選修科目班別
-                //    UpdateHelper uph = new UpdateHelper();
-                //    string updateSql = string.Format(@"
-                //        UPDATE 
-                //            $ischool.course_selection.subject_course 
-                //        SET 
-                //            class_type = '{0}'
-                //        WHERE 
-                //            uid = {1}
-                //    " , dr.Cells["classType"].Value, int.Parse("" + dr.Tag));
-                //    uph.Execute(updateSql);
-                //    // 取得要修改的課程ID
-                //    string selUpDateCourseID = string.Format(@"
-                //        SELECT 
-                //            ref_course_id
-                //        From 
-                //            $ischool.course_selection.subject_course 
-                //        WHERE 
-                //            uid = {0}
-                //    ",int.Parse("" + dr.Tag));
-                //    QueryHelper qh = new QueryHelper();
-                //    DataTable dt = qh.Select(selUpDateCourseID);
-                //    // Course Table 修改課程資訊
-                //    //修改課程資訊
-                //    foreach (DataRow datarow in dt.Rows)
-                //    {
-                //        int course_id = int.Parse("" + datarow["ref_course_id"]);
-                //        string updateSql2 = string.Format(@"
-                //            UPDATE 
-                //                course
-                //            SET 
-                //                course_name = '{0}'
-                //            WHERE 
-                //                id = {1}
-                //        ", dr.Cells["courseName"].Value, course_id);
-                //        uph.Execute(updateSql2);
-                //    }
-                //}
-                //if ("" + dr.Cells["dataType"].Value == "刪除")
-                //{
-                //    UpdateHelper uph = new UpdateHelper();
-
-                //    // 取得要刪除的課程ID
-                //    QueryHelper qh = new QueryHelper();
-                //    string selDeleteCourseID = string.Format(@"
-                //        SELECT 
-                //            ref_course_id
-                //        From 
-                //            $ischool.course_selection.subject_course 
-                //        WHERE 
-                //            uid = {0}
-                //    ", int.Parse("" + dr.Tag));
-                //    DataTable dt = qh.Select(selDeleteCourseID);
-
-                //    // Course Table 刪除課程資訊
-                //    // 刪除課程資訊
-                //    foreach (DataRow datarow in dt.Rows)
-                //    {
-                //        int course_id = int.Parse("" + datarow["ref_course_id"]);
-                //        string deleteSql = string.Format(@"
-                //            DELETE FROM course
-                //            WHERE id = {0}
-                //        ",course_id);
-                //        uph.Execute(deleteSql);
-                //    }
-
-                //    // SubjectCourse UDT 刪除科目課程資訊
-                //    string deleteSql2 = string.Format(@"
-                //        DELETE FROM $ischool.course_selection.subject_course 
-                //        WHERE uid = {0}
-                //    ", int.Parse("" + dr.Tag));
-                //    uph.Execute(deleteSql2);
-
-                //    // SSAttend UDT 刪除SubjectCourseID
-                //    string updateSql = string.Format(@"
-                //        UPDATE $ischool.course_selection.ss_attend 
-                //        SET ref_subject_course_id = null 
-                //        WHERE ref_subject_course_id = {0}
-                //        ", "" + dr.Tag);
-                //    uph.Execute(updateSql);
-                //}
                 #endregion
             }
 
