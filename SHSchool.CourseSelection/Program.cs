@@ -136,8 +136,20 @@ namespace SHSchool.CourseSelection
                 MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課結果及分發"].Enable = UserAcl.Current[pcode].Executable;
                 MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課結果及分發"].Click += delegate
                 {
-                    // 選課2.5新版功能
                     (new Forms.AdjustSSAttendForm()).ShowDialog();
+                };
+            }
+            #endregion
+
+            #region 志願調整
+            {
+                string pcode = "A383A889-8F0D-4EDA-AA18-CE7DD5BE6BB6";
+                RoleAclSource.Instance["教務作業"]["功能按鈕"]["選課作業"].Add(new RibbonFeature(pcode, "選課志願調整"));
+
+                MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課志願調整"].Enable = UserAcl.Current[pcode].Executable;
+                MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課志願調整"].Click += delegate
+                {
+                    (new Forms.frmWishEditor()).ShowDialog();
                 };
             }
             #endregion
@@ -145,7 +157,6 @@ namespace SHSchool.CourseSelection
             #region 選修科目開課 
             {
                 var pcode = "BE73708F-4721-4BAE-860C-6FFDCE77B08C";
-                // 2017/12/20，羿均，[新民選課]選修科目開課
                 RoleAclSource.Instance["教務作業"]["功能按鈕"]["選課作業"].Add(new RibbonFeature(pcode, "選修科目開課"));
 
                 MotherForm.RibbonBarItems["教務作業", "選課作業"]["開課/分班"]["選修科目開課"].Enable = UserAcl.Current[pcode].Executable;
@@ -159,7 +170,6 @@ namespace SHSchool.CourseSelection
             #region 選修科目分班 
             {
                 var pcode = "A8BBDA37-5FB3-4353-B232-DA2B67F6DC59";
-                // 2017/12/25 [新民選課]
                 RoleAclSource.Instance["教務作業"]["功能按鈕"]["選課作業"].Add(new RibbonFeature(pcode, "選修科目分班"));
 
                 MotherForm.RibbonBarItems["教務作業", "選課作業"]["開課/分班"]["選修科目分班"].Enable = UserAcl.Current[pcode].Executable;
@@ -178,7 +188,6 @@ namespace SHSchool.CourseSelection
                 MotherForm.RibbonBarItems["教務作業", "選課作業"]["開課/分班"]["轉入修課學生"].Enable = UserAcl.Current[pcode].Executable;
                 MotherForm.RibbonBarItems["教務作業", "選課作業"]["開課/分班"]["轉入修課學生"].Click += delegate
                 {
-                    // 新民轉入修課學生 2018/01/26 羿均
                     (new Forms.TurnIntoCourseStudent()).ShowDialog();
                 };
             }

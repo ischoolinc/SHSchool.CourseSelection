@@ -250,6 +250,12 @@
     <Compile Include="Forms\frmSubject_Management.Designer.cs">
       <DependentUpon>frmSubject_Management.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmWishEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmWishEditor.Designer.cs">
+      <DependentUpon>frmWishEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ManualDisClass.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -355,6 +361,9 @@
     <EmbeddedResource Include="Forms\frmSubject_Management.resx">
       <DependentUpon>frmSubject_Management.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmWishEditor.resx">
+      <DependentUpon>frmWishEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ManualDisClass.resx">
       <DependentUpon>ManualDisClass.cs</DependentUpon>
     </EmbeddedResource>
@@ -448,6 +457,7 @@
     <Content Include="Library\SHSchool.Data.dll" />
     <Content Include="Library\SHSchool.Data.xml" />
     <Content Include="Resources\loading.gif" />
+    <None Include="Resources\Subject_Import.xml" />
     <None Include="Resources\paste_64.png" />
     <None Include="Resources\searchHistory.png" />
     <None Include="Resources\format.xsl" />

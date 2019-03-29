@@ -87,15 +87,8 @@ namespace SHSchool.CourseSelection.Forms
 
                 semesterCbx.Items.Add(1);
                 semesterCbx.Items.Add(2);
-                if ("" + timeList[0].Semester == "1")
-                {
-                    semesterCbx.SelectedIndex = 0;
-                }
 
-                if ("" + timeList[0].Semester == "2")
-                {
-                    semesterCbx.SelectedIndex = 1;
-                }
+                semesterCbx.SelectedIndex = timeList[0].Semester - 1;
             }
             #endregion
 
@@ -636,7 +629,7 @@ WHERE
                 string semester = semesterCbx.Text;
                 string courseType = courseTypeCbx.Text;
                 pictureBox1.Visible = true;
-                //
+
                 #region SQL
                 string sql = string.Format(@"
 WITH target_subject AS(
@@ -728,6 +721,7 @@ WITH target_subject AS(
 		wish.ref_student_id
 		, wish.ref_subject_id
 		, wish.sequence
+        , is_cancel
 		, $ischool.course_selection.subject.subject_name
 	FROM
 		$ischool.course_selection.ss_wish AS wish
@@ -750,6 +744,7 @@ WITH target_subject AS(
 		ref_student_id
 		, ROW_NUMBER() OVER(PARTITION BY ref_student_id ORDER BY sequence) AS sequence	
 		, ref_subject_id
+        , is_cancel
 		, subject_name
 	FROM
 		wish_row
@@ -780,6 +775,14 @@ SELECT
 	, wish6.ref_subject_id AS 志願6ref_subject_id
 	, wish7.ref_subject_id AS 志願7ref_subject_id
 	, wish8.ref_subject_id AS 志願8ref_subject_id
+    , wish1.is_cancel AS 志願1_is_cancel
+	, wish2.is_cancel AS 志願2_is_cancel
+	, wish3.is_cancel AS 志願3_is_cancel
+	, wish4.is_cancel AS 志願4_is_cancel
+	, wish5.is_cancel AS 志願5_is_cancel
+	, wish6.is_cancel AS 志願6_is_cancel
+	, wish7.is_cancel AS 志願7_is_cancel
+	, wish8.is_cancel AS 志願8_is_cancel
 FROM
 	target_student
 	LEFT OUTER JOIN student_attend
@@ -1164,8 +1167,6 @@ FROM
     log_data
 WHERE
     description is not null
-
-
             ", attendData, _actor, _client_info);
                 #endregion
             }
@@ -1276,10 +1277,6 @@ WHERE
 
                 //btn.Text = string.Format("({0}/{1})", ("" + _DicSubjectData[subjectID].StuCount).PadLeft(3), ("" + _DicSubjectData[subjectID].SubjectLimit).PadRight(3)) + subjectName;
                 btn.Text = string.Format("( {0}/{1} ){2}", "" + _DicSubjectData[subjectID].StuCount, "" + _DicSubjectData[subjectID].SubjectLimit, subjectName);
-                //if (btn.Text.Length > 17)
-                //{
-                //    btn.Text = btn.Text.Substring(0, 17);
-                //}
             }
             #endregion
         }
@@ -1327,18 +1324,27 @@ WHERE
             #endregion
 
             #region 志願
+            int cancelCount = 0;
             for (int i = 1; i <= 5; i++)
             {
-                if ("" + row["志願" + i + "ref_subject_id"] == "" + row["ref_subject_id"] && "" + row["ref_subject_id"] != "")
+                if ("" + row["志願" + i + "_is_cancel"] == "true")
                 {
-                    datarow.Cells[index].Style.ForeColor = Color.Red;
+                    cancelCount++;
                 }
                 else
                 {
-                    datarow.Cells[index].Style.ForeColor = dataGridViewX1.DefaultCellStyle.ForeColor;
+                    if ("" + row["志願" + i + "ref_subject_id"] == "" + row["ref_subject_id"] && "" + row["ref_subject_id"] != "")
+                    {
+                        datarow.Cells[index].Style.ForeColor = Color.Red;
+                    }
+                    else
+                    {
+                        datarow.Cells[index].Style.ForeColor = dataGridViewX1.DefaultCellStyle.ForeColor;
+                    }
+                    datarow.Cells[index++].Value = tool.SubjectNameAndLevel("" + row[string.Format("志願{0}ref_subject_id", i)]);//"" + row["志願" + i];    
                 }
-                datarow.Cells[index++].Value = tool.SubjectNameAndLevel("" + row[string.Format("志願{0}ref_subject_id", i)]);//"" + row["志願" + i];
-            } 
+            }
+            index += cancelCount;
             #endregion
 
             datarow.Cells[index++].Value = "" + row["分發志願"]; // 分發志願

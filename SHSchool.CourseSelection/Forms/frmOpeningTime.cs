@@ -14,7 +14,6 @@ using System.Xml.Linq;
 
 namespace SHSchool.CourseSelection.Forms
 {
-    //2016/8/16 穎驊改寫選課系統，為文華專案的其中一部份
     public partial class frmOpeningTime : BaseForm
     {
         private AccessHelper _access;

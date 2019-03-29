@@ -85,8 +85,6 @@ namespace SHSchool.CourseSelection.UDT
         [FISCA.UDT.Field(Field = "ref_course_id", Indexed = false)]
         public int? RefCourseID { get; set; }
 
-        // 2018/07/18 新增欄位
-
         /// <summary>
         /// 前導課程科目
         /// </summary>

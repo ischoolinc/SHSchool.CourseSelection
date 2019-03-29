@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type="text/xsl" href="format.xsl" ?>
+<ValidateRule Name="科目資料">
+  <DuplicateDetection>
+    <Detector Name="學年度+學期+課程時段+科目名稱+級別">
+      <Field Name="學年度" />
+      <Field Name="學期" />
+      <Field Name="課程時段" />
+      <Field Name="科目名稱" />
+      <Field Name="級別" />
+    </Detector>
+    <Detector Name="科目系統編號">
+      <Field Name="科目系統編號" />
+    </Detector>
+  </DuplicateDetection>
+  <FieldList>
+    <!--科目系統編號, 學年度, 學期, 科目名稱, 級別, 學分, 課程時段, 修課人數上限, 教學目標, 教學內容, 備註-->
+    <Field Required="False" Name="科目系統編號" Description="科目系統編號" />
+    <Field Required="False" Name="學年度" Description="學年度" EmptyAlsoValidate="False" >
+      <Validate AutoCorrect="False" Description="「學年度」只允許阿拉伯數字。" ErrorType="Error" Validator="Integer極限" When="" />
+    </Field>
+    <Field Required="False" Name="學期" Description="學期" EmptyAlsoValidate="False" >
+      <Validate AutoCorrect="False" Description="「學期」允許值「1、2」。" ErrorType="Error" Validator="學期列舉" When="" />
+    </Field>
+    <Field Required="False" Name="教學單位" Description="教學單位" />
+    <Field Required="False" Name="科目名稱" Description="科目名稱" />
+    <Field Required="False" Name="級別" Description="級別" EmptyAlsoValidate="False" >
+      <Validate AutoCorrect="False" Description="「級別」只允許阿拉伯數字。" ErrorType="Error" Validator="Integer極限" When="" />
+    </Field>
+    <Field Required="False" Name="學分數" Description="學分數" EmptyAlsoValidate="False" >
+      <Validate AutoCorrect="False" Description="「學分數」只允許阿拉伯數字。" ErrorType="Error" Validator="Integer極限" When="" />
+    </Field>
+    <Field Required="False" Name="課程時段" Description="課程時段" />
+    <Field Required="False" Name="跨課程時段1" Description="跨課程時段1" EmptyAlsoValidate="False" />
+    <Field Required="False" Name="跨課程時段2" Description="跨課程時段2" EmptyAlsoValidate="False" />
+    <Field Required="False" Name="修課人數上限" Description="修課人數上限" EmptyAlsoValidate="False" >
+      <Validate AutoCorrect="False" Description="「修課人數上限」只允許阿拉伯數字。" ErrorType="Error" Validator="Integer極限" When="" />
+    </Field>
+    <Field Required="False" Name="前導課程科目" Description="前導課程科目名稱" EmptyAlsoValidate="False" />
+    <Field Required="False" Name="前導課程級別" Description="前導課程級別" EmptyAlsoValidate="False" >
+      <Validate AutoCorrect="False" Description="「前導課程級別」只允許阿拉伯數字。" ErrorType="Error" Validator="Integer極限" When="" />
+    </Field>
+    <Field Required="False" Name="前導課程採計方式" Description="前導課程採計方式" EmptyAlsoValidate="False" >
+      <Validate AutoCorrect="False" Description="「前導課程採計方式」只允許「空白、已取得學分、已修過」。" ErrorType="Error" Validator="計算方式列舉" When="" />
+    </Field>
+    <Field Required="False" Name="重複修課採計方式" Description="重複修課採計方式" EmptyAlsoValidate="False" >
+      <Validate AutoCorrect="False" Description="「重複修課採計方式」只允許「空白、已取得學分、已修過」。" ErrorType="Error" Validator="計算方式列舉" When="" />
+    </Field>
+    <Field Required="False" Name="不開課" Description="科目不開課" EmptyAlsoValidate="False" >
+      <Validate AutoCorrect="False" Description="「不開課」只允許「是、否」。" ErrorType="Error" Validator="布林列舉" When="" />
+    </Field>
+    <Field Required="False" Name="教學目標" Description="教學目標" />
+    <Field Required="False" Name="教學內容" Description="教學內容" />
+    <Field Required="False" Name="備註" Description="備註" />
+  </FieldList>
+  <ValidatorList>
+    <FieldValidator Name="不可重覆" Type="UNIQUEKEY" />
+    <FieldValidator Name="不可空白" Type="STRINGLENGTH">
+      <MinLength>1</MinLength>
+    </FieldValidator>
+    <FieldValidator Name="Integer極限" Type="Integer">
+      <MinValue>1</MinValue>
+      <MaxValue>999</MaxValue>
+    </FieldValidator>
+    <FieldValidator Name="學期列舉" Type="Enumeration">
+      <Item Value="1" />
+      <Item Value="2" />
+    </FieldValidator>
+    <FieldValidator Name="計算方式列舉" Type="Enumeration">
+      <Item Value="" />
+      <Item Value="已取得學分" />
+      <Item Value="已修過" />
+    </FieldValidator>
+    <FieldValidator Name="布林列舉" Type="Enumeration">
+      <Item Value="" />
+      <Item Value="是" />
+      <Item Value="否" />
+    </FieldValidator>
+    <FieldValidator Name="學分數允許範圍" Type="Integer">
+      <MinValue>0</MinValue>
+      <MaxValue>10</MaxValue>
+    </FieldValidator>
+    <FieldValidator Name="必選修列舉" Type="Enumeration">
+      <Item Value="必修" />
+      <Item Value="選修" />
+    </FieldValidator>
+  </ValidatorList>
+  <ConditionList/>
+</ValidateRule>
