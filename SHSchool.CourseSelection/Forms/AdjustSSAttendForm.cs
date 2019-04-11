@@ -748,6 +748,8 @@ WITH target_subject AS(
 		, subject_name
 	FROM
 		wish_row
+    WHERE
+		is_cancel = false
 ) 
 SELECT
 	target_student.*
@@ -1324,27 +1326,18 @@ WHERE
             #endregion
 
             #region 志願
-            int cancelCount = 0;
             for (int i = 1; i <= 5; i++)
             {
-                if ("" + row["志願" + i + "_is_cancel"] == "true")
+                if ("" + row["志願" + i + "ref_subject_id"] == "" + row["ref_subject_id"] && "" + row["ref_subject_id"] != "")
                 {
-                    cancelCount++;
+                    datarow.Cells[index].Style.ForeColor = Color.Red;
                 }
                 else
                 {
-                    if ("" + row["志願" + i + "ref_subject_id"] == "" + row["ref_subject_id"] && "" + row["ref_subject_id"] != "")
-                    {
-                        datarow.Cells[index].Style.ForeColor = Color.Red;
-                    }
-                    else
-                    {
-                        datarow.Cells[index].Style.ForeColor = dataGridViewX1.DefaultCellStyle.ForeColor;
-                    }
-                    datarow.Cells[index++].Value = tool.SubjectNameAndLevel("" + row[string.Format("志願{0}ref_subject_id", i)]);//"" + row["志願" + i];    
+                    datarow.Cells[index].Style.ForeColor = dataGridViewX1.DefaultCellStyle.ForeColor;
                 }
+                datarow.Cells[index++].Value = tool.SubjectNameAndLevel("" + row[string.Format("志願{0}ref_subject_id", i)]);   
             }
-            index += cancelCount;
             #endregion
 
             datarow.Cells[index++].Value = "" + row["分發志願"]; // 分發志願
