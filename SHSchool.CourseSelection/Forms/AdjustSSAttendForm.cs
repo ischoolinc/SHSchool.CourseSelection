@@ -749,7 +749,7 @@ WITH target_subject AS(
 	FROM
 		wish_row
     WHERE
-		is_cancel = false
+		is_cancel IS NOT true
 ) 
 SELECT
 	target_student.*
