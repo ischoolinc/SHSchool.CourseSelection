@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
@@ -128,14 +128,14 @@
             this.className,
             this.saetNo,
             this.attendAfter});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridViewX1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewX1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridViewX1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
@@ -272,7 +272,7 @@
             this.cbxSchoolYear.Size = new System.Drawing.Size(60, 25);
             this.cbxSchoolYear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.cbxSchoolYear.TabIndex = 4;
-            this.cbxSchoolYear.TextChanged += new System.EventHandler(this.schoolYearCbx_TextChanged);
+            this.cbxSchoolYear.SelectedIndexChanged += new System.EventHandler(this.cbxSchoolYear_SelectedIndexChanged);
             // 
             // cbxSemester
             // 
@@ -286,7 +286,7 @@
             this.cbxSemester.Size = new System.Drawing.Size(50, 25);
             this.cbxSemester.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.cbxSemester.TabIndex = 5;
-            this.cbxSemester.TextChanged += new System.EventHandler(this.semesterCbx_TextChanged);
+            this.cbxSemester.SelectedIndexChanged += new System.EventHandler(this.cbxSemester_SelectedIndexChanged);
             // 
             // cbxSubject
             // 
@@ -301,7 +301,7 @@
             this.cbxSubject.Size = new System.Drawing.Size(156, 25);
             this.cbxSubject.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.cbxSubject.TabIndex = 6;
-            this.cbxSubject.TextChanged += new System.EventHandler(this.subjectCbx_TextChanged);
+            this.cbxSubject.SelectedIndexChanged += new System.EventHandler(this.cbxSubject_SelectedIndexChanged);
             // 
             // saveBtn
             // 
@@ -359,7 +359,7 @@
             this.cbxCourseType.Size = new System.Drawing.Size(110, 25);
             this.cbxCourseType.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.cbxCourseType.TabIndex = 10;
-            this.cbxCourseType.TextChanged += new System.EventHandler(this.courseTypeCbx_TextChanged);
+            this.cbxCourseType.SelectedIndexChanged += new System.EventHandler(this.cbxCourseType_SelectedIndexChanged);
             // 
             // ManualDisClass
             // 

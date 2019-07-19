@@ -4,15 +4,12 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using FISCA.Presentation.Controls;
-using SHSchool.Data;
 using FISCA.Data;
 using FISCA.UDT;
 using DevComponents.DotNetBar;
 using System.Drawing.Drawing2D;
-using DevComponents.DotNetBar.Rendering;
 using K12.Data;
 
 
@@ -46,6 +43,10 @@ namespace SHSchool.CourseSelection.Forms
         /// </summary>
         private bool _initFinsih = false;
 
+        private AccessHelper access = new AccessHelper();
+        private QueryHelper qh = new QueryHelper();
+        private UpdateHelper up = new UpdateHelper();
+
         public ManualDisClass()
         {
             InitializeComponent();
@@ -54,21 +55,22 @@ namespace SHSchool.CourseSelection.Forms
         private void ManualDisClass_Load(object sender, EventArgs e)
         {
             #region Init SchoolYear Semester
-            AccessHelper access = new AccessHelper();
-            List<UDT.OpeningTime> opTimeList = access.Select<UDT.OpeningTime>();
-            if (opTimeList.Count == 0)
             {
-                opTimeList.Add(new UDT.OpeningTime() { SchoolYear = int.Parse(K12.Data.School.DefaultSchoolYear), Semester = int.Parse(K12.Data.School.DefaultSemester) });
-                opTimeList.SaveAll();
-            }
-            cbxSchoolYear.Items.Add(opTimeList[0].SchoolYear + 1);
-            cbxSchoolYear.Items.Add(opTimeList[0].SchoolYear);
-            cbxSchoolYear.Items.Add(opTimeList[0].SchoolYear - 1);
-            cbxSchoolYear.SelectedIndex = 1;
+                List<UDT.OpeningTime> opTimeList = access.Select<UDT.OpeningTime>();
+                if (opTimeList.Count == 0)
+                {
+                    opTimeList.Add(new UDT.OpeningTime() { SchoolYear = int.Parse(School.DefaultSchoolYear), Semester = int.Parse(School.DefaultSemester) });
+                    opTimeList.SaveAll();
+                }
+                cbxSchoolYear.Items.Add(opTimeList[0].SchoolYear + 1);
+                cbxSchoolYear.Items.Add(opTimeList[0].SchoolYear);
+                cbxSchoolYear.Items.Add(opTimeList[0].SchoolYear - 1);
+                cbxSchoolYear.SelectedIndex = 1;
 
-            cbxSemester.Items.Add(1);
-            cbxSemester.Items.Add(2);
-            cbxSemester.SelectedIndex = opTimeList[0].Semester - 1;
+                cbxSemester.Items.Add(1);
+                cbxSemester.Items.Add(2);
+                cbxSemester.SelectedIndex = opTimeList[0].Semester - 1;
+            }
             #endregion
 
             ReloadCourseTypeCbx();
@@ -76,7 +78,7 @@ namespace SHSchool.CourseSelection.Forms
             _initFinsih = true;
         }
 
-        private void schoolYearCbx_TextChanged(object sender, EventArgs e)
+        private void cbxSchoolYear_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_initFinsih)
             {
@@ -84,7 +86,7 @@ namespace SHSchool.CourseSelection.Forms
             }
         }
 
-        private void semesterCbx_TextChanged(object sender, EventArgs e)
+        private void cbxSemester_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_initFinsih)
             {
@@ -92,12 +94,12 @@ namespace SHSchool.CourseSelection.Forms
             }
         }
 
-        private void courseTypeCbx_TextChanged(object sender, EventArgs e)
+        private void cbxCourseType_SelectedIndexChanged(object sender, EventArgs e)
         {
             ReloadSubjectCbx();
         }
 
-        private void subjectCbx_TextChanged(object sender, EventArgs e)
+        private void cbxSubject_SelectedIndexChanged(object sender, EventArgs e)
         {
             string subjectID = "";
             if (dicSubjectName.ContainsKey(cbxSubject.Text))
@@ -130,7 +132,6 @@ WHERE
     AND type IS NOT NULL
                 ",cbxSchoolYear.SelectedItem.ToString(),cbxSemester.SelectedItem.ToString());
 
-            QueryHelper qh = new QueryHelper();
             DataTable dt = qh.Select(sql);
 
             foreach (DataRow row in dt.Rows)
@@ -138,7 +139,9 @@ WHERE
                 cbxCourseType.Items.Add("" + row["type"]);   
             }
             if (cbxCourseType.Items.Count > 0)
+            {
                 cbxCourseType.SelectedIndex = 0;
+            }
         }
 
         /// <summary>
@@ -192,8 +195,7 @@ subject.type
             ", cbxSchoolYear.Text, cbxSemester.Text, cbxCourseType.Text);
             #endregion
 
-            QueryHelper queryHelper = new QueryHelper();
-            DataTable subjectRecord = queryHelper.Select(selectSQL);
+            DataTable subjectRecord = qh.Select(selectSQL);
 
             foreach (DataRow row in subjectRecord.Rows)
             {
@@ -319,9 +321,7 @@ WHERE
 
         private void ReloadDataGridView(string subjectID)
         {
-            dataGridViewX1.Rows.Clear();
-
-            this.pictureBox1.Visible = true; // 畫面loading圖示
+            pictureBox1.Visible = true; // 畫面loading圖示
 
             string schoolYear = cbxSchoolYear.Text;
             string semester = cbxSemester.Text;
@@ -331,7 +331,6 @@ WHERE
             BGW = new BackgroundWorker();
             BGW.DoWork += delegate
             {
-                QueryHelper qh = new QueryHelper();
                 #region SQL 
                 string selectSQL = string.Format(@"
 SELECT 
@@ -359,6 +358,8 @@ WHERE ss_attend.ref_subject_id = {0}
             };
             BGW.RunWorkerCompleted += delegate
             {
+                dataGridViewX1.Rows.Clear();
+
                 if (schoolYear == cbxSchoolYear.Text && semester == cbxSemester.Text && courseType == cbxCourseType.Text && subject == cbxSubject.Text)
                 {
                     foreach (DataRow student in studentData.Rows)
@@ -521,9 +522,7 @@ WHERE
 	AND $ischool.course_selection.ss_attend.ref_subject_id = data_row.ref_subject_id
             ", dataRow);
 
-            UpdateHelper up = new UpdateHelper();
             up.Execute(sql);
-
 
             MessageBox.Show("儲存成功");
             ReloadSubjectCbx();
@@ -685,6 +684,7 @@ WHERE
             } 
             #endregion
         }
+
     }
 
     class DataGridViewColorBallTextCell : DataGridViewTextBoxCell

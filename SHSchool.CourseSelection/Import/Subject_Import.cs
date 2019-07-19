@@ -59,7 +59,7 @@ namespace SHSchool.CourseSelection.Import
                 string preSubject = x.GetValue("前導課程科目").Trim();
                 string preSubjectBlockMode = x.GetValue("前導課程採計方式").Trim();
 
-                DAO.SubjectDAO subjectDAO = new DAO.SubjectDAO(schoolYear, semester);
+                //DAO.SubjectDAO subjectDAO = new DAO.SubjectDAO(schoolYear, semester);
 
                 //  若鍵值為「科目系統編號」，則必須存在於系統中，且「學年度+學期+課程時段+科目名稱+級別」不可重覆
                 if (_keyField == "科目系統編號")

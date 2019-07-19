@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using FISCA.Presentation.Controls;
 using FISCA.UDT;
@@ -45,6 +43,11 @@ namespace SHSchool.CourseSelection.Forms
         /// </summary>
         private Dictionary<string, Dictionary<string, int>> _DicStudentConflictSubject = new Dictionary<string, Dictionary<string, int>>();
 
+        /// <summary>
+        /// 學生已選科目
+        /// </summary>
+        private Dictionary<string, List<string>> _DicRepeatSubjectByStudentID = new Dictionary<string, List<string>>();
+
         private List<DataRow> _DataRowList = new List<DataRow>();
 
         /// <summary>
@@ -58,8 +61,8 @@ namespace SHSchool.CourseSelection.Forms
 
         private ContextMenu menu = new ContextMenu();
 
-        AccessHelper access = new AccessHelper();
-        QueryHelper qh = new QueryHelper();
+        private AccessHelper access = new AccessHelper();
+        private QueryHelper qh = new QueryHelper();
 
         public AdjustSSAttendForm()
         {
@@ -217,7 +220,6 @@ ORDER BY
 
             #endregion
 
-            QueryHelper qh = new QueryHelper();
             DataTable dt = qh.Select(sql);
 
             _DicSubjectData.Clear();
@@ -238,6 +240,8 @@ ORDER BY
             GetDisOpenSubject(schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
 
             GetConflictSubject(schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
+
+            GetRepeatSubject(schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
         }
 
         /// <summary>
@@ -246,11 +250,10 @@ ORDER BY
         /// <param name="schoolYear"></param>
         /// <param name="semester"></param>
         /// <param name="type"></param>
-        private void GetDisOpenSubject(string schoolYear,string semester,string type)
+        private void GetDisOpenSubject(string schoolYear,string semester, string type)
         {
             _DicDisOpenSubject.Clear();
 
-            AccessHelper access = new AccessHelper();
             List<UDT.Subject> listSubject = access.Select<UDT.Subject>(string.Format("school_year = {0} AND semester = {1} AND type = '{2}'",schoolYear,semester,type));
 
             foreach (UDT.Subject subject in listSubject)
@@ -268,7 +271,7 @@ ORDER BY
         /// <param name="schoolYear"></param>
         /// <param name="semester"></param>
         /// <param name="type"></param>
-        private void GetConflictSubject(string schoolYear, string semester,string type)
+        private void GetConflictSubject(string schoolYear, string semester, string type)
         {
             _DicStudentConflictSubject.Clear();
 
@@ -351,7 +354,6 @@ WHERE
             ", schoolYear, semester, type);
             #endregion
 
-            QueryHelper qh = new QueryHelper();
             DataTable dt = qh.Select(sql);
 
             foreach (DataRow row in dt.Rows)
@@ -374,7 +376,7 @@ WHERE
         /// <summary>
         /// 取得擋修名單資料
         /// </summary>
-        private void GetBlackListData(string schoolYear,string semester,string type)
+        private void GetBlackListData(string schoolYear, string semester, string type)
         {
             _DicStudentBlackList.Clear();
 
@@ -410,7 +412,6 @@ GROUP BY
                 ", schoolYear, semester, type);
             #endregion
 
-            QueryHelper qh = new QueryHelper();
             DataTable dt = qh.Select(sql);
 
             foreach (DataRow row in dt.Rows)
@@ -426,6 +427,62 @@ GROUP BY
                 {
                     _DicStudentBlackList[studentID].Add(subjectID, reason);
                 }
+            }
+        }
+
+        /// <summary>
+        /// 取得已選科目
+        /// </summary>
+        private void GetRepeatSubject(string schoolYear, string semester, string type)
+        {
+            _DicRepeatSubjectByStudentID.Clear();
+
+            string sql = string.Format(@"
+ WITH target_subject AS(
+ 	SELECT
+		*
+	FROM
+		$ischool.course_selection.subject
+	WHERE
+		school_year = {0}
+		AND semester = {1}
+		AND type = '{2}'
+ ),  target_attend AS(
+ 	SELECT
+		ss_attend.*
+		, subject.subject_name
+		, subject.level
+	FROM
+		$ischool.course_selection.ss_attend AS ss_attend
+		INNER JOIN $ischool.course_selection.subject AS subject
+			ON subject.uid = ss_attend.ref_subject_id
+			AND subject.school_year = {0}
+			AND subject.semester = {1}
+ ), repeat_subject AS(
+ 	SELECT
+		target_attend.ref_student_id
+		, target_subject.uid AS ref_subject_id
+	FROM
+		target_subject
+		INNER JOIN target_attend
+			ON target_attend.subject_name = target_subject.subject_name
+			AND target_attend.level = target_subject.level
+ )
+ SELECT * FROM repeat_subject
+            ",schoolYear,semester,type);
+
+            DataTable dt = qh.Select(sql);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                string studentID = "" + row["ref_student_id"];
+                string subjectID = "" + row["ref_subject_id"];
+
+                if (!_DicRepeatSubjectByStudentID.ContainsKey(studentID))
+                {
+                    _DicRepeatSubjectByStudentID.Add(studentID, new List<string>());
+                }
+                _DicRepeatSubjectByStudentID[studentID].Add(subjectID);
             }
         }
 
@@ -857,6 +914,10 @@ ORDER BY
         private void Swap(object sender, EventArgs e)
         {
             bool swapEnabled = true;
+            ButtonX button = (ButtonX)sender;
+            // 取得科目編號
+            string subjectID = ("" + button.Tag) == "" ? "" : "" + ((DataRow)button.Tag)["uid"];
+            string errMsg = "";
 
             #region 檢查資料行是否可以指定科目
             foreach (DataGridViewRow row in dataGridViewX1.SelectedRows)
@@ -865,22 +926,31 @@ ORDER BY
                 if ("" + row.Cells["Lock"].Value == "是")
                 {
                     swapEnabled = false;
+                    errMsg = "學生已鎖定，無法調整選課結果!";
                 }
                 // 如果資料行為跨課程時段不能做修改
                 DataRow tagRow = (DataRow)row.Tag;
                 if ("" + tagRow["跨課程時段科目"] == "true")
                 {
                     swapEnabled = false;
+                    errMsg = "無法調整跨課程時段選課結果，請回到原課程時段再進行調整!";
                 }
+                // 檢查是否已選修科目
+                string studentID = "" + tagRow["id"];
+                if (_DicRepeatSubjectByStudentID.ContainsKey(studentID))
+                {
+                    if (_DicRepeatSubjectByStudentID[studentID].Contains(subjectID))
+                    {
+                        swapEnabled = false;
+                        errMsg = "已在其它課程時段選修此科目。";
+                    }
+                }
+
             } 
             #endregion
 
             if (swapEnabled)
             {
-                ButtonX button = (ButtonX)sender;
-                // 取得科目編號
-                string subjectID = ("" + button.Tag) == "" ? "" : "" + ((DataRow)button.Tag)["uid"];
-
                 #region 警告人數超過
                 // 剩餘名額與調整學生人數比較
                 int limit = _DicSubjectData[subjectID].SubjectLimit;
@@ -934,7 +1004,7 @@ ORDER BY
             }
             else
             {
-                MessageBox.Show("學生已鎖定，無法調整選課結果!");
+                MessageBox.Show(errMsg);
             }
         }
 

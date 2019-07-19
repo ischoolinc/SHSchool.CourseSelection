@@ -144,8 +144,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAO\BlackListDAO.cs" />
-    <Compile Include="DAO\SubjectDAO.cs" />
     <Compile Include="Event\DeliverActiveRecord.cs" />
     <Compile Include="Event\DeliverActiveRecordEvent.cs" />
     <Compile Include="Export\SSAttend_NoneSelectStudent_Export.cs">

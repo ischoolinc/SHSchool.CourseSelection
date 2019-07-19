@@ -46,7 +46,6 @@ namespace SHSchool.CourseSelection.Forms
 
             initFinsh = true;
 
-            // Init DataGridvView
             ReloadDataGridView();
         }
 
@@ -71,7 +70,7 @@ namespace SHSchool.CourseSelection.Forms
             dataGridViewX1.Rows.Clear();
 
             // 1.取得學年度學期擋修名單資料
-            DataTable dt = DAO.BlackListDAO.GetBlackListBySchoolYearSemester(cbxSchoolYear.Text,cbxSemester.Text);
+            DataTable dt = GetBlackListBySchoolYearSemester(cbxSchoolYear.Text,cbxSemester.Text);
 
             // 2.填入擋修名單資料
             foreach (DataRow row in dt.Rows)
@@ -86,6 +85,41 @@ namespace SHSchool.CourseSelection.Forms
 
                 dataGridViewX1.Rows.Add(dgvrow);
             }
+        }
+
+        /// <summary>
+        /// 透過學年度學期取得擋修名單
+        /// </summary>
+        private DataTable GetBlackListBySchoolYearSemester(string schoolYear, string semester)
+        {
+            string sql = string.Format(@"
+WITH target_subject_type AS(
+    SELECT DISTINCT
+        type
+    FROM
+        $ischool.course_selection.subject
+    WHERE
+        school_year = {0}
+        AND semester = {1}
+        AND type IS NOT NULL
+) 
+SELECT
+    target_subject_type.type
+    , count(subject_block.*)
+FROM
+    target_subject_type
+    LEFT OUTER JOIN $ischool.course_selection.subject AS subject
+        ON subject.type = target_subject_type.type 
+    LEFT OUTER JOIN $ischool.course_selection.subject_block AS subject_block
+        ON subject.uid = subject_block.ref_subject_id
+ GROUP BY
+    target_subject_type.type
+                ", schoolYear, semester);
+
+            QueryHelper qh = new QueryHelper();
+            DataTable dt = qh.Select(sql);
+
+            return dt;
         }
 
         private void btnProduceBlacklist_Click(object sender, EventArgs e)

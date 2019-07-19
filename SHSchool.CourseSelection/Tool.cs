@@ -1,19 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DevComponents.DotNetBar.Controls;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
+using FISCA.UDT;
 
 namespace SHSchool.CourseSelection
 {
     class Tool
     {
-        private static Dictionary<string, UDT.Subject> dicSubject;
+        private static Dictionary<string, UDT.Subject> dicSubject = new Dictionary<string, UDT.Subject>();
 
         public Tool(string schoolYear,string semester)
         {
-            dicSubject = DAO.SubjectDAO.GetSubjectBySchoolYearSemester(schoolYear, semester);
+            // 取得學年度學期科目資料
+            {
+                AccessHelper access = new AccessHelper();
+                List<UDT.Subject> listSubject = access.Select<UDT.Subject>(string.Format("school_year = {0} AND semester = {1}", schoolYear, semester));
+
+                foreach (UDT.Subject subject in listSubject)
+                {
+                    if (!dicSubject.ContainsKey(subject.UID))
+                    {
+                        dicSubject.Add(subject.UID, subject);
+                    }
+                }
+            }
+            
         }
         
         /// <summary>
