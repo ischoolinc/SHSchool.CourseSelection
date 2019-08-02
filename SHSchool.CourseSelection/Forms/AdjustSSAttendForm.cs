@@ -21,8 +21,6 @@ namespace SHSchool.CourseSelection.Forms
 {
     public partial class AdjustSSAttendForm : BaseForm
     {
-        // 學年度學期所有科目
-        //private Dictionary<string, string> allSubjectDic = new Dictionary<string, string>();
         // 紀錄科目顏色
         private Dictionary<string, Color> subjectColorDic = new Dictionary<string, Color>();
         // 紀錄人數限制
@@ -41,7 +39,12 @@ namespace SHSchool.CourseSelection.Forms
         /// <summary>
         /// 學生志願衝堂科目
         /// </summary>
-        private Dictionary<string, Dictionary<string, int>> _DicStudentConflictSubject = new Dictionary<string, Dictionary<string, int>>();
+        private Dictionary<string, List<string>> _DicStudentConflictWish = new Dictionary<string, List<string>>();
+
+        /// <summary>
+        /// 學生課程時段衝堂科目
+        /// </summary>
+        private Dictionary<string, List<string>> _DicStudentConflictSubject = new Dictionary<string, List<string>>();
 
         /// <summary>
         /// 學生已選科目
@@ -239,9 +242,11 @@ ORDER BY
 
             GetDisOpenSubject(schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
 
-            GetConflictSubject(schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
+            GetConflictWish(schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
 
             GetRepeatSubject(schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
+
+            GetConflictSubject(schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
         }
 
         /// <summary>
@@ -266,15 +271,14 @@ ORDER BY
         }
 
         /// <summary>
-        /// 取得衝堂科目資料
+        /// 取得衝堂志願資料
         /// </summary>
         /// <param name="schoolYear"></param>
         /// <param name="semester"></param>
         /// <param name="type"></param>
-        private void GetConflictSubject(string schoolYear, string semester, string type)
+        private void GetConflictWish(string schoolYear, string semester, string type)
         {
-            _DicStudentConflictSubject.Clear();
-
+            _DicStudentConflictWish.Clear();
             #region SQL
             string sql = string.Format(@"
 WITH target_subject AS(
@@ -353,6 +357,100 @@ WHERE
 	conflict_data.課程衝堂 = '是'
             ", schoolYear, semester, type);
             #endregion
+        
+            DataTable dt = qh.Select(sql);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                string studentID = "" + row["id"];
+                string subjectID = "" + row["ref_subject_id"];
+
+                if (!_DicStudentConflictWish.ContainsKey(studentID))
+                {
+                    _DicStudentConflictWish.Add(studentID,new List<string>());
+                }
+
+                string key = tool.SubjectNameAndLevel(subjectID); // 科目名稱 + 級別
+
+                _DicStudentConflictWish[studentID].Add(key);
+            }
+        }
+
+        /// <summary>
+        /// 取得課程時段衝堂科目
+        /// </summary>
+        private void GetConflictSubject(string schoolYear, string semester, string type)
+        {
+            _DicStudentConflictSubject.Clear();
+
+            #region sql
+            string sql = string.Format(@"
+WITH basic_info AS( 
+	SELECT 
+		{0}::INT AS school_year
+		, {1}::INT AS semester 
+		, '{2}'::text AS type 
+), target_subject AS( 
+	SELECT 
+		subject.* 
+	FROM 
+		$ischool.course_selection.subject AS subject 
+		INNER JOIN basic_info 
+			ON basic_info.school_year = subject.school_year 
+			AND basic_info.semester = subject.semester 
+			AND basic_info.type = subject.type 
+), target_student AS(
+	SELECT DISTINCT
+		student.*
+	FROM
+		target_subject
+		LEFT OUTER JOIN $ischool.course_selection.subject_class_selection AS scs
+			ON scs.ref_subject_id = target_subject.uid
+		LEFT OUTER JOIN student
+			ON student.ref_class_id = scs.ref_class_id
+			AND student.status IN (1,2)
+), student_attend AS( 
+	SELECT 
+		ss_attend.ref_student_id
+		, subject.uid AS ref_subject_id
+		, subject.type 
+		, subject.cross_type1 
+		, subject.cross_type2 
+	FROM 
+		basic_info 
+		LEFT OUTER JOIN $ischool.course_selection.subject AS subject 
+			ON subject.school_year = basic_info.school_year 
+			AND subject.semester = basic_info.semester 
+		LEFT OUTER JOIN $ischool.course_selection.ss_attend AS ss_attend 
+			ON ss_attend.ref_subject_id = subject.uid 
+		INNER JOIN target_student
+			ON target_student.id = ss_attend.ref_student_id
+), conflict_data AS(
+	SELECT DISTINCT
+		target_student.id
+		, target_subject.uid AS ref_subject_id
+		, CASE WHEN target_subject.uid IS NOT NULL
+			THEN true
+			ELSE false
+			END AS conflict_subject
+	FROM
+		target_student
+		LEFT OUTER JOIN student_attend
+			ON student_attend.ref_student_id = target_student.id
+		LEFT OUTER JOIN target_subject
+			ON (target_subject.type = student_attend.type AND target_subject.type IS NOT NULL)
+			OR (target_subject.type = student_attend.cross_type1 AND target_subject.type IS NOT NULL)
+			OR (target_subject.type = student_attend.cross_type2 AND target_subject.type IS NOT NULL)
+			OR (target_subject.cross_type1 = student_attend.type AND target_subject.cross_type1 IS NOT NULL)
+			OR (target_subject.cross_type1 = student_attend.cross_type1 AND target_subject.cross_type1 IS NOT NULL)
+			OR (target_subject.cross_type1 = student_attend.cross_type2 AND target_subject.cross_type1 IS NOT NULL)
+			OR (target_subject.cross_type2 = student_attend.type AND target_subject.cross_type2 IS NOT NULL)
+			OR (target_subject.cross_type2 = student_attend.cross_type1 AND target_subject.cross_type2 IS NOT NULL)
+			OR (target_subject.cross_type2 = student_attend.cross_type2 AND target_subject.cross_type2 IS NOT NULL)
+)
+SELECT * FROM conflict_data
+                ", schoolYear,semester,type);
+            #endregion
 
             DataTable dt = qh.Select(sql);
 
@@ -360,16 +458,12 @@ WHERE
             {
                 string studentID = "" + row["id"];
                 string subjectID = "" + row["ref_subject_id"];
-                int sequence = 0;
 
                 if (!_DicStudentConflictSubject.ContainsKey(studentID))
                 {
-                    _DicStudentConflictSubject.Add(studentID,new Dictionary<string, int>());
+                    _DicStudentConflictSubject.Add(studentID, new List<string>());
                 }
-
-                string key = tool.SubjectNameAndLevel(subjectID); // 科目名稱 + 級別
-
-                _DicStudentConflictSubject[studentID].Add(key, sequence);
+                _DicStudentConflictSubject[studentID].Add(subjectID);
             }
         }
 
@@ -943,6 +1037,15 @@ ORDER BY
                     {
                         swapEnabled = false;
                         errMsg = "已在其它課程時段選修此科目。";
+                    }
+                }
+                // 檢查科目是否衝堂
+                if (_DicStudentConflictSubject.ContainsKey(studentID))
+                {
+                    if (_DicStudentConflictSubject[studentID].Contains(subjectID))
+                    {
+                        swapEnabled = false;
+                        errMsg = "課程時段衝堂，無法指定學生選修此科目!";
                     }
                 }
 
@@ -2056,7 +2159,7 @@ WHERE
             foreach (DataRow row in _DataRowList)
             {
                 string studentID = "" + row["id"];
-                if (_DicStudentConflictSubject.ContainsKey(studentID))
+                if (_DicStudentConflictWish.ContainsKey(studentID))
                 {
                     // wishOrder subjectID
                     Dictionary<int, string> dicWishSubject = new Dictionary<int, string>();
@@ -2077,7 +2180,7 @@ WHERE
                         string wishSubjectID = dicWishSubject[i];
                         string key = tool.SubjectNameAndLevel(wishSubjectID); // 科目名稱 + 級別
                         // KEY 科目名稱 + 級別
-                        if (!_DicStudentConflictSubject[studentID].ContainsKey(key))
+                        if (!_DicStudentConflictWish[studentID].Contains(key))
                         {
                             row["志願" + wishOrder + "ref_subject_id"] = wishSubjectID;
                             row["志願" + wishOrder] = tool.SubjectNameAndLevel(wishSubjectID);
