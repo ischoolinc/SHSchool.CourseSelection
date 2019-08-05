@@ -385,6 +385,7 @@ WHERE
 
             #region sql
             string sql = string.Format(@"
+
 WITH basic_info AS( 
 	SELECT 
 		{0}::INT AS school_year
@@ -427,28 +428,26 @@ WITH basic_info AS(
 			ON target_student.id = ss_attend.ref_student_id
 ), conflict_data AS(
 	SELECT DISTINCT
-		target_student.id
+		student_attend.ref_student_id
 		, target_subject.uid AS ref_subject_id
-		, CASE WHEN target_subject.uid IS NOT NULL
+		, CASE WHEN student_attend.ref_student_id IS NOT NULL
 			THEN true
 			ELSE false
 			END AS conflict_subject
 	FROM
-		target_student
+		target_subject
 		LEFT OUTER JOIN student_attend
-			ON student_attend.ref_student_id = target_student.id
-		LEFT OUTER JOIN target_subject
-			ON (target_subject.type = student_attend.type AND target_subject.type IS NOT NULL)
-			OR (target_subject.type = student_attend.cross_type1 AND target_subject.type IS NOT NULL)
-			OR (target_subject.type = student_attend.cross_type2 AND target_subject.type IS NOT NULL)
-			OR (target_subject.cross_type1 = student_attend.type AND target_subject.cross_type1 IS NOT NULL)
-			OR (target_subject.cross_type1 = student_attend.cross_type1 AND target_subject.cross_type1 IS NOT NULL)
-			OR (target_subject.cross_type1 = student_attend.cross_type2 AND target_subject.cross_type1 IS NOT NULL)
-			OR (target_subject.cross_type2 = student_attend.type AND target_subject.cross_type2 IS NOT NULL)
-			OR (target_subject.cross_type2 = student_attend.cross_type1 AND target_subject.cross_type2 IS NOT NULL)
-			OR (target_subject.cross_type2 = student_attend.cross_type2 AND target_subject.cross_type2 IS NOT NULL)
+			ON (student_attend.type = target_subject.cross_type1 AND student_attend.type IS NOT NULL)
+			OR (student_attend.type = target_subject.cross_type2 AND student_attend.type IS NOT NULL)
+			OR (student_attend.cross_type1 = target_subject.cross_type1 AND student_attend.cross_type1 IS NOT NULL)
+			OR (student_attend.cross_type1 = target_subject.cross_type2 AND student_attend.cross_type1 IS NOT NULL)
+			OR (student_attend.cross_type2 = target_subject.cross_type1 AND student_attend.cross_type2 IS NOT NULL)
+			OR (student_attend.cross_type2 = target_subject.cross_type2 AND student_attend.cross_type2 IS NOT NULL)
+    WHERE
+		student_attend.ref_subject_id IS NOT NULL
 )
 SELECT * FROM conflict_data
+                
                 ", schoolYear,semester,type);
             #endregion
 
@@ -456,7 +455,7 @@ SELECT * FROM conflict_data
 
             foreach (DataRow row in dt.Rows)
             {
-                string studentID = "" + row["id"];
+                string studentID = "" + row["ref_student_id"];
                 string subjectID = "" + row["ref_subject_id"];
 
                 if (!_DicStudentConflictSubject.ContainsKey(studentID))
@@ -1529,9 +1528,35 @@ WHERE
             #endregion
 
             #region 驗證訊息
+            {
+                List<string> msgList = new List<string>();
 
-            datarow.Cells[index++].Value = CheckBlackList("" + row["id"], "" + row["ref_subject_id"]);
+                // 擋修
+                string blockMsg = CheckBlackList("" + row["id"], "" + row["ref_subject_id"]);
+                if (!string.IsNullOrEmpty(blockMsg))
+                {
+                    msgList.Add(blockMsg);
+                }
+                // 衝堂
+                if (_DicStudentConflictSubject.ContainsKey("" + row["id"]))
+                {
+                    if (_DicStudentConflictSubject["" + row["id"]].Contains("" + row["ref_subject_id"]))
+                    {
+                        msgList.Add("課程時段衝堂");
+                    }
+                }
+                //重複加選
+                if (_DicRepeatSubjectByStudentID.ContainsKey("" + row["id"]))
+                {
+                    if (_DicRepeatSubjectByStudentID["" + row["id"]].Contains("" + row["ref_subject_id"]))
+                    {
+                        msgList.Add("已重複加選此科目");
+                    }
+                }
 
+                datarow.Cells[index++].Value = string.Join(" ,", msgList);
+                
+            }
             #endregion
 
             datarow.Tag = row;
