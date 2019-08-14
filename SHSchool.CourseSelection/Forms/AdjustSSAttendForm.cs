@@ -2265,6 +2265,14 @@ WHERE
                 ShowDataRow();
             }
         }
+        
+        /// <summary>
+        /// 開啟測試工具用
+        /// </summary>
+        private void lbSecret_Click(object sender, EventArgs e)
+        {
+            btnTrial.Visible = !btnTrial.Visible;
+        }
     }
 }
 

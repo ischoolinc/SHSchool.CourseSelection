@@ -95,6 +95,7 @@
             this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lbSecret = new DevComponents.DotNetBar.LabelX();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -650,6 +651,7 @@
             this.btnTrialFill});
             this.btnTrial.TabIndex = 23;
             this.btnTrial.Text = "測試工具";
+            this.btnTrial.Visible = false;
             // 
             // btnTrialClear
             // 
@@ -754,11 +756,26 @@
             this.dataGridViewTextBoxColumn13.HeaderText = "驗證訊息";
             this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
             // 
+            // lbSecret
+            // 
+            this.lbSecret.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.lbSecret.BackgroundStyle.Class = "";
+            this.lbSecret.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.lbSecret.Location = new System.Drawing.Point(736, 11);
+            this.lbSecret.Name = "lbSecret";
+            this.lbSecret.Size = new System.Drawing.Size(75, 23);
+            this.lbSecret.TabIndex = 24;
+            this.lbSecret.Click += new System.EventHandler(this.lbSecret_Click);
+            // 
             // AdjustSSAttendForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1259, 566);
+            this.Controls.Add(this.lbSecret);
             this.Controls.Add(this.btnTrial);
             this.Controls.Add(this.lblCurrentSeed);
             this.Controls.Add(this.exportBtn);
@@ -858,5 +875,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
+        private DevComponents.DotNetBar.LabelX lbSecret;
     }
 }
