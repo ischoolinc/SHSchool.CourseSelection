@@ -96,6 +96,7 @@
             this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lbSecret = new DevComponents.DotNetBar.LabelX();
+            this.btnDistributeUnSelect = new DevComponents.DotNetBar.ButtonX();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -587,7 +588,7 @@
             // 
             this.labelX4.BackgroundStyle.Class = "";
             this.labelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX4.Location = new System.Drawing.Point(174, 536);
+            this.labelX4.Location = new System.Drawing.Point(257, 536);
             this.labelX4.Name = "labelX4";
             this.labelX4.Size = new System.Drawing.Size(87, 21);
             this.labelX4.TabIndex = 19;
@@ -601,7 +602,7 @@
             this.seedCbx.FormatString = "N0";
             this.seedCbx.FormattingEnabled = true;
             this.seedCbx.ItemHeight = 19;
-            this.seedCbx.Location = new System.Drawing.Point(261, 534);
+            this.seedCbx.Location = new System.Drawing.Point(344, 534);
             this.seedCbx.Name = "seedCbx";
             this.seedCbx.Size = new System.Drawing.Size(143, 25);
             this.seedCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -630,7 +631,7 @@
             // 
             this.lblCurrentSeed.BackgroundStyle.Class = "";
             this.lblCurrentSeed.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.lblCurrentSeed.Location = new System.Drawing.Point(404, 536);
+            this.lblCurrentSeed.Location = new System.Drawing.Point(487, 536);
             this.lblCurrentSeed.Name = "lblCurrentSeed";
             this.lblCurrentSeed.Size = new System.Drawing.Size(333, 21);
             this.lblCurrentSeed.TabIndex = 22;
@@ -770,11 +771,26 @@
             this.lbSecret.TabIndex = 24;
             this.lbSecret.Click += new System.EventHandler(this.lbSecret_Click);
             // 
+            // btnDistributeUnSelect
+            // 
+            this.btnDistributeUnSelect.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnDistributeUnSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDistributeUnSelect.BackColor = System.Drawing.Color.Transparent;
+            this.btnDistributeUnSelect.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.btnDistributeUnSelect.Location = new System.Drawing.Point(176, 535);
+            this.btnDistributeUnSelect.Name = "btnDistributeUnSelect";
+            this.btnDistributeUnSelect.Size = new System.Drawing.Size(75, 23);
+            this.btnDistributeUnSelect.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.btnDistributeUnSelect.TabIndex = 25;
+            this.btnDistributeUnSelect.Text = "未選課分發";
+            this.btnDistributeUnSelect.Click += new System.EventHandler(this.btnDistributeUnSelect_Click);
+            // 
             // AdjustSSAttendForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1259, 566);
+            this.Controls.Add(this.btnDistributeUnSelect);
             this.Controls.Add(this.lbSecret);
             this.Controls.Add(this.btnTrial);
             this.Controls.Add(this.lblCurrentSeed);
@@ -876,5 +892,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
         private DevComponents.DotNetBar.LabelX lbSecret;
+        private DevComponents.DotNetBar.ButtonX btnDistributeUnSelect;
     }
 }

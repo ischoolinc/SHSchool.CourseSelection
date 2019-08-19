@@ -2273,6 +2273,217 @@ WHERE
         {
             btnTrial.Visible = !btnTrial.Visible;
         }
+
+        private void btnDistributeUnSelect_Click(object sender, EventArgs e)
+        {
+            dataGridViewX1.SuspendLayout();
+            try
+            {
+                // 取得未選課學生可選課程清單
+                #region SQL
+                string sql = string.Format(@"
+    WITH data_row AS( -- 條件
+        SELECT
+            school_year
+            , semester
+            , '{2}'::TEXT as type
+        FROM
+            $ischool.course_selection.opening_time
+    ), target_subject AS(
+        SELECT
+            *
+        FROM
+            $ischool.course_selection.subject
+        WHERE
+            school_year = {0}
+            AND semester = {1}
+            AND type = '{2}'
+    ), type_selectable_student AS( -- 課程時段學生
+        SELECT DISTINCT
+            student.id
+            , student.ref_class_id
+        FROM
+            target_subject
+            LEFT OUTER JOIN $ischool.course_selection.subject_class_selection AS scs
+                ON scs.ref_subject_id = target_subject.uid
+            LEFT OUTER JOIN student
+                ON student.ref_class_id = scs.ref_class_id
+    ), target_attend AS( -- 課程時段學生的修課紀錄,含跨課程時段。
+        SELECT
+            ss_attend.*
+        FROM
+            type_selectable_student
+            LEFT OUTER JOIN $ischool.course_selection.ss_attend AS ss_attend
+                ON ss_attend.ref_student_id = type_selectable_student.id
+            LEFT OUTER JOIN $ischool.course_selection.subject AS subject
+                ON subject.uid = ss_attend.ref_subject_id
+            INNER JOIN data_row
+                ON data_row.school_year = subject.school_year
+                AND data_row.semester = subject.semester
+                AND ( 
+                    (data_row.type = subject.type AND subject.type <> '')
+                    OR (data_row.type = subject.cross_type1 AND subject.cross_type1 <> '')
+                    OR (data_row.type = subject.cross_type2 AND subject.cross_type2 <> '')
+                )
+    ), target_student AS( -- 目標學生,此時段未修課選課學生
+        SELECT
+            *
+            , '{2}'::TEXT AS type
+        FROM
+            type_selectable_student
+        WHERE
+            id NOT IN(
+                SELECT ref_student_id FROM target_attend
+            )
+    ), target_student_block_subject AS( -- 取得目標學生擋修課程
+        SELECT
+            target_student.id AS ref_student_id
+            , block.ref_subject_id
+        FROM
+            target_student
+            LEFT OUTER JOIN $ischool.course_selection.subject_block AS block 
+                ON block.ref_student_id = target_student.id
+            LEFT OUTER JOIN $ischool.course_selection.subject AS subject
+                ON subject.uid = block.ref_subject_id
+        WHERE
+            subject.uid IN (
+                SELECT uid FROM target_subject
+            )
+    ), target_student_attend AS( -- 取得目前學年度學期目標學生已選課程
+        SELECT
+            ss_attend.ref_student_id
+            , ss_attend.ref_subject_id
+            , subject.subject_name
+            , subject.level
+            , subject.type
+            , subject.cross_type1
+            , subject.cross_type2
+        FROM
+            target_student
+            LEFT OUTER JOIN $ischool.course_selection.ss_attend AS ss_attend
+                ON ss_attend.ref_student_id = target_student.id
+            LEFT OUTER JOIN $ischool.course_selection.subject AS subject
+                ON subject.uid = ss_attend.ref_subject_id
+        WHERE
+            subject.school_year = {0}
+            AND subject.semester = {1}
+    ), target_student_repeat_subject AS( -- 取得目標學生重複選課課程
+        SELECT
+            target_student_attend.ref_student_id
+            , target_student_attend.ref_subject_id
+        FROM
+            target_subject
+            INNER JOIN target_student_attend
+                ON target_student_attend.subject_name = target_subject.subject_name
+                AND target_student_attend.level = target_subject.level
+    ), target_student_conflict_subject AS( -- 取得目標學生衝堂課程
+        SELECT
+            target_student_attend.ref_student_id
+            , target_subject.uid AS ref_subject_id
+        FROM
+            target_subject
+            INNER JOIN target_student_attend
+                ON (target_student_attend.type = target_subject.type AND target_subject.type <> '')
+                OR (target_student_attend.type = target_subject.cross_type1 AND target_subject.cross_type1 <> '')
+                OR (target_student_attend.type = target_subject.cross_type2 AND target_subject.cross_type2 <> '')
+                OR (target_student_attend.cross_type1 = target_subject.type AND target_subject.type <> '')
+                OR (target_student_attend.cross_type1 = target_subject.cross_type1 AND target_subject.cross_type1 <> '')
+                OR (target_student_attend.cross_type1 = target_subject.cross_type2 AND target_subject.cross_type2 <> '')
+                OR (target_student_attend.cross_type2 = target_subject.type AND target_subject.type <> '')
+                OR (target_student_attend.cross_type2 = target_subject.cross_type1 AND target_subject.cross_type1 <> '')
+                OR (target_student_attend.cross_type2 = target_subject.cross_type2 AND target_subject.cross_type2 <> '')
+    ), target_student_subject AS( -- 目標學生可分發課程
+        SELECT
+            target_student.id AS ref_student_id
+            , target_subject.uid AS ref_subject_id
+            , CASE WHEN target_subject.uid = block.ref_subject_id
+                THEN true
+                ELSE false
+                END AS is_block
+            , CASE WHEN target_subject.uid = repeat.ref_subject_id
+                THEN true
+                ELSE false
+                END AS is_repeat
+            , CASE WHEN target_subject.uid = conflict.ref_subject_id
+                THEN true
+                ELSE false
+                END AS is_conflict
+        FROM
+            target_student
+            LEFT OUTER JOIN target_subject
+                ON target_subject.type = target_student.type
+            INNER JOIN $ischool.course_selection.subject_class_selection AS scs
+                ON scs.ref_class_id = target_student.ref_class_id
+                AND scs.ref_subject_id = target_subject.uid
+            LEFT OUTER JOIN target_student_block_subject AS block
+                ON block.ref_student_id = target_student.id
+                AND block.ref_subject_id = target_subject.uid
+            LEFT OUTER JOIN target_student_repeat_subject AS repeat
+                ON repeat.ref_student_id = target_student.id
+                AND repeat.ref_subject_id = target_subject.uid
+            LEFT OUTER JOIN target_student_conflict_subject AS conflict
+                ON conflict.ref_student_id = target_student.id
+                AND conflict.ref_subject_id = target_subject.uid
+    )
+    SELECT
+        *
+    FROM
+        target_student_subject
+    WHERE
+        ref_student_id IS NOT NULL
+        AND is_block = false
+        AND is_repeat = false
+        AND is_conflict = false
+                ", schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
+                #endregion
+                DataTable dt = qh.Select(sql);
+
+                // 資料整理
+                Dictionary<string, List<string>> dicStuSelectableSubject = new Dictionary<string, List<string>>();
+                foreach (DataRow row in dt.Rows)
+                {
+                    string studentID = "" + row["ref_student_id"];
+                    string subjectID = "" + row["ref_subject_id"];
+                    if (!dicStuSelectableSubject.ContainsKey(studentID))
+                    {
+                        dicStuSelectableSubject.Add(studentID, new List<string>());
+                    }
+                    dicStuSelectableSubject[studentID].Add(subjectID);
+                }
+                // 3. 分發
+                foreach (DataRow row in _DataRowList)
+                {
+                    string studentID = "" + row["id"];
+                    string selectedSubjectID = "" + row["ref_subject_id"];
+
+                    if (string.IsNullOrEmpty(selectedSubjectID) && dicStuSelectableSubject.ContainsKey(studentID))
+                    {
+                        for (int i = 0; i < dicStuSelectableSubject[studentID].Count; i++)
+                        {
+                            if (string.IsNullOrEmpty("" + row["ref_subject_id"]))
+                            {
+                                string subjectID = dicStuSelectableSubject[studentID][i];
+                                if (_DicSubjectData[subjectID].StuCount < _DicSubjectData[subjectID].SubjectLimit)
+                                {
+                                    row["ref_subject_id"] = subjectID;
+                                    row["選課課程"] = tool.SubjectNameAndLevel(subjectID);
+                                    row["attend_type"] = "指定";
+                                    _DicSubjectData[subjectID].StuCount++;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                ShowDataRow();
+            }
+            catch (Exception err)
+            {
+                MsgBox.Show(err.Message);
+            }
+            dataGridViewX1.ResumeLayout();
+        }
+
     }
 }
 
