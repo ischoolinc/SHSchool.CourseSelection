@@ -163,7 +163,8 @@ WHERE
                 int studentCount = "" + row["student_count"] == "" ? 0 : int.Parse("" + row["student_count"]);
                 // 科目已分班人數
                 int courseStudentCount = "" + row["course_student_count"] == "" ? 0 : int.Parse("" + row["course_student_count"]);
-                bool disOpen = bool.Parse("" + row["disabled"]);
+                bool _disOpen = false;
+                bool disOpen = bool.TryParse("" + row["disabled"], out _disOpen);
                 // 如果沒開班
                 if (courseCount == 0)
                 {
