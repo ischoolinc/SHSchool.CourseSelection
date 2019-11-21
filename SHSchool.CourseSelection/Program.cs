@@ -1,15 +1,6 @@
-﻿using System.Windows.Forms;
-using FISCA;
-using FISCA.UDT;
-using FISCA.Presentation;
+﻿using FISCA;
 using FISCA.Permission;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+using FISCA.Presentation;
 
 namespace SHSchool.CourseSelection
 {

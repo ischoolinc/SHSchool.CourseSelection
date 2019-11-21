@@ -16,6 +16,8 @@ namespace SHSchool.CourseSelection.Forms
     public partial class TurnIntoCourseStudent : BaseForm
     {
         private bool initFinish = false;
+        private string actor = FISCA.Authentication.DSAServices.UserAccount.Replace("'", "''");
+        private string clientInfo = FISCA.LogAgent.ClientInfo.GetCurrentClientInfo().OutputResult().OuterXml.Replace("'", "''");
 
         private AccessHelper access = new AccessHelper();
         private QueryHelper qh = new QueryHelper();
@@ -192,44 +194,45 @@ FROM
                 int studentCount = "" + row["stu_count"] == "" ? 0 : int.Parse("" + row["stu_count"]);
                 // 科目已分班人數
                 int courseStudentCount = "" + row["course_stu_count"] == "" ? 0 : int.Parse("" + row["course_stu_count"]);
-                bool _disOpen = false;
-                bool disOpen = bool.TryParse("" + row["disabled"], out _disOpen);
+                bool disabled = "" + row["disabled"] == "true" ? true : false;
                 // 如果沒開班
                 if (courseCount == 0)
                 {
-                    if (disOpen) // 不開課
-                    {
-                        datarow.Cells[index++].Value = row["subject_name"] + "不開課";
-                        datarow.Tag = "correct";
-                    }
-                    else
-                    {
-                        datarow.Cells[index].Style.ForeColor = Color.Red;
-                        datarow.Cells[index++].Value = "科目未開班!";
-                        datarow.Tag = "error";
-                    }
-                }
-                // 有開班、有選課學生、但有未分班學生
-                if (courseCount > 0 && studentCount > 0 && (studentCount - courseStudentCount) > 0)
-                {
                     datarow.Cells[index].Style.ForeColor = Color.Red;
-                    datarow.Cells[index++].Value = string.Format("已開班數:{0}、尚有{1}位學生未分班!", courseCount, studentCount - courseStudentCount);
+                    datarow.Cells[index++].Value = "科目未開班!";
                     datarow.Tag = "error";
                 }
-                // 有開班、沒有學生選課
-                if (courseCount > 0 && studentCount == 0)
+                // 不開課
+                else if (disabled)
                 {
                     datarow.Cells[index].Style.ForeColor = Color.Red;
-                    datarow.Cells[index++].Value = string.Format("已開班數:{0}、 沒有學生選課!", courseCount);
-                    datarow.Tag = "error";
-                }
-                // 有開班、有選課學生、學生有分班
-                if (courseCount > 0 && studentCount > 0 && studentCount == courseStudentCount)
-                {
-                    datarow.Cells[index++].Value = string.Format("已開班數:{0}、 選課人數:{1}、 已分班人數:{2}", courseCount, studentCount, courseStudentCount);
+                    datarow.Cells[index++].Value = "不開課";
                     datarow.Tag = "correct";
                 }
-
+                else
+                {
+                    // 有開班、有選課學生、但有未分班學生
+                    if (studentCount > 0 && (studentCount - courseStudentCount) > 0)
+                    {
+                        datarow.Cells[index].Style.ForeColor = Color.Red;
+                        datarow.Cells[index++].Value = string.Format("已開班數:{0}、尚有{1}位學生未分班!", courseCount, studentCount - courseStudentCount);
+                        datarow.Tag = "error";
+                    }
+                    // 有開班、沒有學生選課
+                    if (studentCount == 0)
+                    {
+                        datarow.Cells[index].Style.ForeColor = Color.Red;
+                        datarow.Cells[index++].Value = string.Format("已開班數:{0}、 沒有學生選課!", courseCount);
+                        datarow.Tag = "error";
+                    }
+                    // 有開班、有選課學生、學生有分班
+                    if (studentCount > 0 && studentCount == courseStudentCount)
+                    {
+                        datarow.Cells[index++].Value = string.Format("已開班數:{0}、 選課人數:{1}、 已分班人數:{2}", courseCount, studentCount, courseStudentCount);
+                        datarow.Tag = "correct";
+                    }
+                }
+                
                 dataGridViewX1.Rows.Add(datarow);
             }
         }
@@ -241,82 +244,188 @@ FROM
         /// <param name="e"></param>
         private void turnInto_SC_Attend_Btn_Click(object sender, EventArgs e)
         {
-            #region 判斷可否轉入修課學生
-            foreach (DataGridViewRow dr in dataGridViewX1.Rows)
+            bool keepGoing = CheckData();
+
+            if (keepGoing)
             {
-                if ("" + dr.Tag == "error")
+                try
                 {
-                    MessageBox.Show("無法轉入修課學生!");
-                    return;
-                }
-            }
-            #endregion
-
-            #region SQL - 取得目標選課紀錄 進行後續轉入修課學生
-            string selectSQl = string.Format(@"
-SELECT 
-	ss_attend.ref_student_id,
-	ss_attend.ref_subject_id,
-	ss_attend.ref_subject_course_id, 
-	subject_course.ref_course_id,
-	subject.school_year,
-	subject.semester,
-    subject.type
-FROM 
-    $ischool.course_selection.ss_attend AS ss_attend
-    LEFT OUTER JOIN $ischool.course_selection.subject_course AS subject_course 
-        ON subject_course.uid = ss_attend.ref_subject_course_id
-    LEFT OUTER JOIN $ischool.course_selection.subject AS subject
-        ON subject.uid = ss_attend.ref_subject_id
-    LEFT OUTER JOIN student
-        ON student.id = ss_attend.ref_student_id
-WHERE 
-    subject.school_year = {0} 
-    AND subject.semester = {1}
-    AND subject.disabled = false
-    AND subject.type = '{2}'
-    AND student.status IN ( 1, 2 )
-"
-            , schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
-            #endregion
-            DataTable dataTable = qh.Select(selectSQl);
-
-            // 避免重複新增修課紀錄:
-            // 1. 透過StudentID、CourseID取得修課紀錄並刪除
-            // 2. 刪除課程成績!
-            {
-                Dictionary<string, string> studentCourseDic = new Dictionary<string, string>();
-                foreach (DataRow row in dataTable.Rows)
-                {
-                    studentCourseDic.Add("" + row["ref_student_id"], "" + row["ref_course_id"]);
-                }
-                List<SCAttendRecord> scrOldList = SCAttend.SelectByStudentIDAndCourseID(studentCourseDic.Keys.ToList(), studentCourseDic.Values.ToList());
-                List<SCETakeRecord> sctList = SCETake.SelectByStudentAndCourse(studentCourseDic.Keys.ToList(), studentCourseDic.Values.ToList());
-
-                if (scrOldList.Count > 0)
-                {
-                    DialogResult result = MessageBox.Show("已轉入修課學生，確定重複轉入修課學生將會清除學生原課程成績以及原修課紀錄 ", "警告", MessageBoxButtons.YesNo);
-                    if (result == DialogResult.No)
+                    DataTable dt = GetRepeatScAttend();
+                    if (dt.Rows.Count > 0)
                     {
-                        return;
+                        MsgBox.Show("轉入失敗: \n部分學生已有修課紀錄，請先到「課程」頁面刪除重複修課學生\n再進行「選課 - 轉入修課學生」動作。", "錯誤訊息");
+                    }
+                    else
+                    {
+                        TransferData();
                     }
                 }
-                SCETake.Delete(sctList);
-                SCAttend.Delete(scrOldList);
+                catch (Exception error)
+                {
+                    MsgBox.Show(error.Message);
+                }
+            }
+            else
+            {
+                MessageBox.Show("無法轉入修課學生!");
+            }
+        }
+
+        /// <summary>
+        /// 判斷可否轉入修課學生
+        /// </summary>
+        private bool CheckData()
+        {
+            bool isTransferable = true;
+            if (dataGridViewX1.Rows.Count > 0)
+            {
+                foreach (DataGridViewRow dr in dataGridViewX1.Rows)
+                {
+                    if ("" + dr.Tag == "error")
+                    {
+                        isTransferable = false;
+                    }
+                }
+            }
+            else
+            {
+                isTransferable = false;
             }
 
-            // 新增:New修課紀錄
+            return isTransferable;
+        }
+
+        /// <summary>
+        /// 取得重複修課紀錄
+        /// </summary>
+        /// <returns></returns>
+        private DataTable GetRepeatScAttend()
+        {
+            #region 檢查是否重複轉入修課紀錄SQL
+            string sql = string.Format(@"
+WITH target_ss_attend AS (
+	SELECT 
+		ss_attend.ref_student_id
+		, ss_attend.ref_subject_id
+		, ss_attend.ref_subject_course_id
+		, subject_course.ref_course_id
+		, subject.school_year
+		, subject.semester
+	    , subject.type
+	FROM 
+	    $ischool.course_selection.ss_attend AS ss_attend
+	    LEFT OUTER JOIN $ischool.course_selection.subject_course AS subject_course 
+	        ON subject_course.uid = ss_attend.ref_subject_course_id
+	    LEFT OUTER JOIN $ischool.course_selection.subject AS subject
+	        ON subject.uid = ss_attend.ref_subject_id
+	    LEFT OUTER JOIN student
+	        ON student.id = ss_attend.ref_student_id
+	WHERE 
+	    subject.school_year = {0}
+	    AND subject.semester = {1}
+	    AND subject.disabled = false
+	    AND subject.type = '{2}'
+	    AND student.status IN ( 1, 2 )
+	    AND subject_course.ref_course_id IS NOT NULL
+)
+SELECT
+	sc_attend.*
+FROM
+	sc_attend
+	INNER JOIN target_ss_attend
+		ON target_ss_attend.ref_student_id = sc_attend.ref_student_id
+		AND target_ss_attend.ref_course_id = sc_attend.ref_course_id
+                ", schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text);
+            #endregion
+
+            return qh.Select(sql);
+        }
+
+        /// <summary>
+        /// 轉入修課學生
+        /// </summary>
+        private void TransferData()
+        {
+            #region 轉入修課紀錄SQL
+            string sql = string.Format(@"
+
+WITH target_ss_attend AS (
+	SELECT 
+		ss_attend.ref_student_id
+		, ss_attend.ref_subject_id
+		, ss_attend.ref_subject_course_id
+		, subject_course.ref_course_id
+		, subject.school_year
+		, subject.semester
+	    , subject.type
+	FROM 
+	    $ischool.course_selection.ss_attend AS ss_attend
+	    LEFT OUTER JOIN $ischool.course_selection.subject_course AS subject_course 
+	        ON subject_course.uid = ss_attend.ref_subject_course_id
+	    LEFT OUTER JOIN $ischool.course_selection.subject AS subject
+	        ON subject.uid = ss_attend.ref_subject_id
+	    LEFT OUTER JOIN student
+	        ON student.id = ss_attend.ref_student_id
+	WHERE 
+	    subject.school_year = {0}
+	    AND subject.semester = {1}
+	    AND subject.disabled = false
+	    AND subject.type = '{2}'
+	    AND student.status IN ( 1, 2 )
+	    AND subject_course.ref_course_id IS NOT NULL
+), insert_sc_attend AS(
+	INSERT INTO sc_attend (
+		ref_student_id
+		, ref_course_id
+	)
+	SELECT
+		target_ss_attend.ref_student_id
+		, target_ss_attend.ref_course_id
+	FROM
+		target_ss_attend
+	RETURNING *
+), insert_log AS(
+    INSERT INTO log(
+        actor
+        , action_type
+        , action
+        , target_category
+        , target_id
+        , server_time
+        , client_info
+        , action_by
+        , description
+    ) VALUES (
+        '{3}'
+        , '選課作業'
+        , '轉入修課學生'
+        , '修課紀錄'
+        , NULL
+        , NOW()
+        , '{4}'
+        , '「選課作業」「轉入修課學生」功能'
+        , '課程類別:「{2}」，學生選課修課紀錄已轉入課程修課紀錄。'
+    )
+)
+SELECT * FROM insert_sc_attend
+                    ", schoolYearCbx.Text, semesterCbx.Text, courseTypeCbx.Text, actor, clientInfo);
+
+            #endregion
+            try
             {
-                List<SCAttendRecord> scrNewList = new List<SCAttendRecord>();
-                foreach (DataRow row in dataTable.Rows)
+                DataTable dt = qh.Select(sql);
+                if (dt.Rows.Count > 0)
                 {
-                    SCAttendRecord scAttend = new SCAttendRecord();
-                    scAttend.RefCourseID = "" + row["ref_course_id"];
-                    scAttend.RefStudentID = "" + row["ref_student_id"];
-                    scrNewList.Add(scAttend);
+                    MsgBox.Show("轉入成功。");
                 }
-                SCAttend.Insert(scrNewList);
-                MessageBox.Show("轉入成功!");
+                else
+                {
+                    MsgBox.Show("並未轉入任何資料!");
+                }
+            }
+            catch (Exception error)
+            {
+                MsgBox.Show(error.Message);
             }
         }
 
