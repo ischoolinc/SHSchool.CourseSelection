@@ -253,7 +253,18 @@ FROM
                     DataTable dt = GetRepeatScAttend();
                     if (dt.Rows.Count > 0)
                     {
-                        MsgBox.Show("轉入失敗: \n部分學生已有修課紀錄，請先到「課程」頁面刪除重複修課學生\n再進行「選課 - 轉入修課學生」動作。", "錯誤訊息");
+                        List<string> listScAttendID = new List<string>();
+                        List<string> listCourseID = new List<string>();
+                        List<string> listStudentID = new List<string>();
+
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            listScAttendID.Add("" + row["id"]);
+                            listCourseID.Add("" + row["ref_course_id"]);
+                            listStudentID.Add("" + row["ref_student_id"]);
+                        }
+                        (new frmError(listScAttendID, listCourseID, listStudentID)).ShowDialog();
+                        //MsgBox.Show("轉入失敗: \n部分學生已有修課紀錄，請先到「課程」頁面刪除重複修課學生\n再進行「選課 - 轉入修課學生」動作。", "錯誤訊息");
                     }
                     else
                     {
