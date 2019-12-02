@@ -48,7 +48,7 @@ namespace SHSchool.CourseSelection.Forms
 	                , course.course_name
                 FROM
 	                $ischool.course_selection.subject AS subject
-	                LEFT OUTER JOIN $ischool.course_selection.subject_course AS subject_course
+	                INNER JOIN $ischool.course_selection.subject_course AS subject_course
 		                ON subject.uid = subject_course.ref_subject_id
 	                LEFT OUTER JOIN course
 		                ON  course.id = subject_course.ref_course_id
@@ -196,6 +196,14 @@ namespace SHSchool.CourseSelection.Forms
             }
             #endregion
 
+            if (dt.Rows.Count > 0)
+            {
+                this.buildCourseBtn.Enabled = true;
+            }
+            else
+            {
+                this.buildCourseBtn.Enabled = false;
+            }
         }
 
         public void InitDataGridView(string _dataType, int i, int count, string subjectID)
