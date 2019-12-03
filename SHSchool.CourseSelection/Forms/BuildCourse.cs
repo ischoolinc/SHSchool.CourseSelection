@@ -48,7 +48,7 @@ namespace SHSchool.CourseSelection.Forms
 	                , course.course_name
                 FROM
 	                $ischool.course_selection.subject AS subject
-	                INNER JOIN $ischool.course_selection.subject_course AS subject_course
+	                LEFT OUTER JOIN $ischool.course_selection.subject_course AS subject_course
 		                ON subject.uid = subject_course.ref_subject_id
 	                LEFT OUTER JOIN course
 		                ON  course.id = subject_course.ref_course_id
@@ -196,7 +196,7 @@ namespace SHSchool.CourseSelection.Forms
             }
             #endregion
 
-            if (dt.Rows.Count > 0)
+            if (dataGridViewX1.Rows.Count > 0)
             {
                 this.buildCourseBtn.Enabled = true;
             }
@@ -248,6 +248,10 @@ namespace SHSchool.CourseSelection.Forms
                     break;
             }
             int tryParseInt = -1;
+            //if (!_subjectCourseDic.ContainsKey(subjectID))
+            //{
+            //    return;
+            //}
             if (int.TryParse(_subjectDic[subjectID].Level, out tryParseInt))
             {
                 switch (tryParseInt)

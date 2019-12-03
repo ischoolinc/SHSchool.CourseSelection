@@ -156,7 +156,7 @@
             this.dataType.HeaderText = "狀態";
             this.dataType.Name = "dataType";
             this.dataType.ReadOnly = true;
-            this.dataType.Width = 59;
+            this.dataType.Width = 73;
             // 
             // courseName
             // 
@@ -164,7 +164,7 @@
             this.courseName.HeaderText = "課程名稱";
             this.courseName.Name = "courseName";
             this.courseName.ReadOnly = true;
-            this.courseName.Width = 85;
+            this.courseName.Width = 107;
             // 
             // subjectName
             // 
@@ -172,7 +172,7 @@
             this.subjectName.HeaderText = "科目名稱";
             this.subjectName.Name = "subjectName";
             this.subjectName.ReadOnly = true;
-            this.subjectName.Width = 85;
+            this.subjectName.Width = 107;
             // 
             // level
             // 
@@ -182,7 +182,7 @@
             this.level.HeaderText = "級別";
             this.level.Name = "level";
             this.level.ReadOnly = true;
-            this.level.Width = 59;
+            this.level.Width = 73;
             // 
             // classType
             // 
@@ -191,7 +191,7 @@
             this.classType.DefaultCellStyle = dataGridViewCellStyle3;
             this.classType.HeaderText = "班別";
             this.classType.Name = "classType";
-            this.classType.Width = 59;
+            this.classType.Width = 73;
             // 
             // credit
             // 
@@ -201,7 +201,7 @@
             this.credit.HeaderText = "學分數";
             this.credit.Name = "credit";
             this.credit.ReadOnly = true;
-            this.credit.Width = 59;
+            this.credit.Width = 90;
             // 
             // semesterLb
             // 
@@ -247,6 +247,7 @@
             // 
             // labelX4
             // 
+            this.labelX4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelX4.BackColor = System.Drawing.Color.Transparent;
             // 
             // 
@@ -261,7 +262,7 @@
             // 
             // BuildCourse
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(659, 472);
             this.Controls.Add(this.labelX4);

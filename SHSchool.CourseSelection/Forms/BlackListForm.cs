@@ -145,6 +145,8 @@ FROM
 WITH target_subject AS(
     SELECT
         *
+        , CONCAT(subject_name, level) AS key1
+        , CONCAT(pre_subject, pre_subject_level) AS key2
     FROM
         $ischool.course_selection.subject
     WHERE
@@ -199,7 +201,13 @@ WITH target_subject AS(
             WHERE ref_student_id IN ( SELECT id FROM target_student)
         ) as sems_subj_score_ext
     ORDER BY grade_year desc, semester desc, school_year desc
-) , calculation_pre_subject_block_mode1 AS(
+) , target_student_score_rec AS(
+    SELECT
+        *
+        , CONCAT(科目, 科目級別) AS key
+    FROM
+        target_student_sems_subj_score
+), calculation_pre_subject_block_mode1 AS(
     SELECT
         target_subject.uid
         , target_student.id
@@ -208,13 +216,13 @@ WITH target_subject AS(
         target_subject
         LEFT OUTER JOIN target_student
             ON target_subject.uid = target_student.ref_subject_id
-        LEFT OUTER JOIN target_student_sems_subj_score
-            ON target_student.id = target_student_sems_subj_score.ref_student_id
-            AND target_student_sems_subj_score.科目 || target_student_sems_subj_score.科目級別 = target_subject.pre_subject || target_subject.pre_subject_level
-            AND target_student_sems_subj_score.取得學分 = '是'
+        LEFT OUTER JOIN target_student_score_rec
+            ON target_student_score_rec.ref_student_id = target_student.id
+            AND target_student_score_rec.key = target_subject.key2
+            AND target_student_score_rec.取得學分 = '是'
     WHERE
         target_subject.pre_subject_block_mode = '已取得學分'
-        AND target_student_sems_subj_score.ref_student_id IS NULL
+        AND target_student_score_rec.ref_student_id IS NULL
         AND target_subject.pre_subject IS NOT NULL
 ) , calculation_pre_subject_block_mode2 AS(
     SELECT
@@ -225,12 +233,12 @@ WITH target_subject AS(
         target_subject
         LEFT OUTER JOIN target_student
             ON target_subject.uid = target_student.ref_subject_id
-        LEFT OUTER JOIN target_student_sems_subj_score
-            ON target_student.id = target_student_sems_subj_score.ref_student_id
-            AND target_student_sems_subj_score.科目 || target_student_sems_subj_score.科目級別 = target_subject.pre_subject || target_subject.pre_subject_level
+        LEFT OUTER JOIN target_student_score_rec
+            ON target_student_score_rec.ref_student_id = target_student.id
+            AND target_student_score_rec.key = target_subject.key2
     WHERE
         target_subject.pre_subject_block_mode = '已修過'
-        AND target_student_sems_subj_score.ref_student_id IS NULL
+        AND target_student_score_rec.ref_student_id IS NULL
         AND target_subject.pre_subject IS NOT NULL
 ) , calculation_rejoin_block_mode1 AS (
     SELECT
@@ -241,13 +249,13 @@ WITH target_subject AS(
         target_subject
         LEFT OUTER JOIN target_student
             ON target_subject.uid = target_student.ref_subject_id
-        LEFT OUTER JOIN target_student_sems_subj_score
-            ON target_student.id = target_student_sems_subj_score.ref_student_id
-            AND target_student_sems_subj_score.科目 || target_student_sems_subj_score.科目級別 = target_subject.subject_name || target_subject.level
-            AND target_student_sems_subj_score.取得學分 = '是'
+        LEFT OUTER JOIN target_student_score_rec
+            ON target_student_score_rec.ref_student_id = target_student.id
+            AND target_student_score_rec.key = target_subject.key1
+            AND target_student_score_rec.取得學分 = '是'
     WHERE
         target_subject.rejoin_block_mode = '已取得學分'
-        AND target_student_sems_subj_score.ref_student_id IS NOT NULL
+        AND target_student_score_rec.ref_student_id IS NOT NULL
 ) , calculation_rejoin_block_mode2 AS (
     SELECT
         target_subject.uid 
@@ -257,12 +265,12 @@ WITH target_subject AS(
         target_subject
         LEFT OUTER JOIN target_student
             ON target_subject.uid = target_student.ref_subject_id
-        LEFT OUTER JOIN target_student_sems_subj_score
-            ON target_student.id = target_student_sems_subj_score.ref_student_id
-            AND target_student_sems_subj_score.科目 || target_student_sems_subj_score.科目級別 = target_subject.subject_name || target_subject.level
+        LEFT OUTER JOIN target_student_score_rec
+            ON target_student_score_rec.ref_student_id = target_student.id
+            AND target_student_score_rec.key = target_subject.key1
     WHERE
         target_subject.rejoin_block_mode = '已修過'
-        AND target_student_sems_subj_score.ref_student_id IS NOT NULL
+        AND target_student_score_rec.ref_student_id IS NOT NULL
 )
 INSERT INTO $ischool.course_selection.subject_block(
     ref_subject_id
