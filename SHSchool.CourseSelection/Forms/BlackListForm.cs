@@ -177,21 +177,10 @@ WITH target_subject AS(
         , sems_subj_score_ext.grade_year
         , sems_subj_score_ext.semester
         , sems_subj_score_ext.school_year
-        --, unnest(xpath('/Subject/@開課分項類別', subj_score_ele))::text AS 分項類別
         , unnest(xpath('/Subject/@科目', subj_score_ele))::text AS 科目
         , unnest(xpath('/Subject/@科目級別', subj_score_ele))::text AS 科目級別
         , unnest(xpath('/Subject/@開課學分數', subj_score_ele))::text AS 學分數
         , unnest(xpath('/Subject/@是否取得學分', subj_score_ele))::text AS 取得學分
-        , unnest(xpath('/Subject/@修課必選修', subj_score_ele))::text AS 必選修
-        , unnest(xpath('/Subject/@修課校部訂', subj_score_ele))::text AS 校部訂
-        , unnest(xpath('/Subject/@原始成績', subj_score_ele))::text AS 原始成績
-        , unnest(xpath('/Subject/@補考成績', subj_score_ele))::text AS 補考成績
-        , unnest(xpath('/Subject/@重修成績', subj_score_ele))::text AS 重修成績
-        , unnest(xpath('/Subject/@學年調整成績', subj_score_ele))::text AS 學年調整成績
-        , unnest(xpath('/Subject/@擇優採計成績', subj_score_ele))::text AS 手動調整成績
-        --, unnest(xpath('/Subject/@不計學分', subj_score_ele))::text AS 不計學分
-        --, unnest(xpath('/Subject/@不需評分', subj_score_ele))::text AS 不需評分
-        --, unnest(xpath('/Subject/@註記', subj_score_ele))::text AS 註記
     FROM (
             SELECT 
                 sems_subj_score.*
@@ -265,12 +254,20 @@ WITH target_subject AS(
         target_subject
         LEFT OUTER JOIN target_student
             ON target_subject.uid = target_student.ref_subject_id
-        LEFT OUTER JOIN target_student_score_rec
-            ON target_student_score_rec.ref_student_id = target_student.id
-            AND target_student_score_rec.key = target_subject.key1
+        LEFT OUTER JOIN (
+            SELECT
+                sc_attend.*
+                , CONCAT(course.subject, course.subj_level) AS key
+            FROM
+                sc_attend
+                LEFT OUTER JOIN course
+                    ON course.id = sc_attend.ref_course_id
+        ) AS sc_attend 
+            ON sc_attend.ref_student_id = target_student.id
+            AND sc_attend.key = target_subject.key1
     WHERE
         target_subject.rejoin_block_mode = '已修過'
-        AND target_student_score_rec.ref_student_id IS NOT NULL
+        AND sc_attend.ref_student_id IS NOT NULL
 )
 INSERT INTO $ischool.course_selection.subject_block(
     ref_subject_id
