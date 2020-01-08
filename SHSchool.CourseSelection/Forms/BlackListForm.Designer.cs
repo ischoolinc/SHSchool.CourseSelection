@@ -65,10 +65,10 @@
             this.cbxSchoolYear.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbxSchoolYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxSchoolYear.FormattingEnabled = true;
-            this.cbxSchoolYear.ItemHeight = 19;
+            this.cbxSchoolYear.ItemHeight = 23;
             this.cbxSchoolYear.Location = new System.Drawing.Point(63, 10);
             this.cbxSchoolYear.Name = "cbxSchoolYear";
-            this.cbxSchoolYear.Size = new System.Drawing.Size(70, 25);
+            this.cbxSchoolYear.Size = new System.Drawing.Size(70, 29);
             this.cbxSchoolYear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.cbxSchoolYear.TabIndex = 1;
             this.cbxSchoolYear.TextChanged += new System.EventHandler(this.cbxSchoolYear_TextChanged);
@@ -93,10 +93,10 @@
             this.cbxSemester.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbxSemester.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxSemester.FormattingEnabled = true;
-            this.cbxSemester.ItemHeight = 19;
+            this.cbxSemester.ItemHeight = 23;
             this.cbxSemester.Location = new System.Drawing.Point(222, 10);
             this.cbxSemester.Name = "cbxSemester";
-            this.cbxSemester.Size = new System.Drawing.Size(70, 25);
+            this.cbxSemester.Size = new System.Drawing.Size(70, 29);
             this.cbxSemester.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.cbxSemester.TabIndex = 3;
             this.cbxSemester.SelectedIndexChanged += new System.EventHandler(this.cbxSemester_SelectedIndexChanged);
@@ -192,13 +192,13 @@
             // 
             // Column2
             // 
-            this.Column2.HeaderText = "擋修學生人數";
+            this.Column2.HeaderText = "擋修學生人次";
             this.Column2.Name = "Column2";
             this.Column2.Width = 130;
             // 
             // BlackListForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(447, 400);
             this.Controls.Add(this.btnProduceBlacklist);

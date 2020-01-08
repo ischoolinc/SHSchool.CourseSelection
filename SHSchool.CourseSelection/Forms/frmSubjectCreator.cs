@@ -7,16 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FISCA.UDT;
+using FISCA.Data;
+using FISCA.Presentation.Controls;
 
 namespace SHSchool.CourseSelection.Forms
 {
     public partial class frmSubjectCreator : Form
     {
-        private AccessHelper Access;
         private UDT.Subject mRecord;
         private ErrorProvider errorProvider1;
         private string school_year;
         private string semester;
+        private QueryHelper qh = new QueryHelper();
+        private Dictionary<string, DataRow> dicSubjectByKey = new Dictionary<string, DataRow>();
 
         public frmSubjectCreator(string title, string school_year, string semester)
         {
@@ -56,7 +59,7 @@ namespace SHSchool.CourseSelection.Forms
             }
         }
 
-        public frmSubjectCreator(string title) : this(title, string.Empty, string.Empty)        {        }
+        public frmSubjectCreator(string title) : this(title, string.Empty, string.Empty) { }
 
         private void frmSubjectCreator_Load(object sender, EventArgs e)
         {
@@ -65,6 +68,34 @@ namespace SHSchool.CourseSelection.Forms
                 this.mRecord = new UDT.Subject();
                 this.mRecord.SchoolYear = int.Parse(this.school_year);
                 this.mRecord.Semester = int.Parse(this.semester);
+            }
+
+            // 取得學年度學期課程清單
+            GetSubjectList();
+        }
+
+        private void GetSubjectList()
+        {
+            string sql = string.Format(@"
+SELECT
+    *
+FROM
+    $ischool.course_selection.subject
+WHERE
+    school_year = {0}
+    AND semester = {1}
+            ", this.school_year, this.semester);
+
+            DataTable dt = qh.Select(sql);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                string key = $"{row["subject_name"]}_{row["level"]}";
+
+                if (!dicSubjectByKey.ContainsKey(key))
+                {
+                    dicSubjectByKey.Add(key, row);
+                }
             }
         }
 
@@ -162,7 +193,7 @@ namespace SHSchool.CourseSelection.Forms
             }
             catch (Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show(ex.Message);
+                MsgBox.Show(ex.Message);
                 this.DialogResult = DialogResult.Cancel;
             }
             this.Close();
@@ -271,6 +302,19 @@ namespace SHSchool.CourseSelection.Forms
                         errorProvider1.SetError(this.cbxPreSubjectBlockMode, "");
                     }
                 }
+            }
+
+
+            // 驗證學年度學期科目級別 不可重複
+            string key = $"{SubjectName.Text}_{Level.Text}";
+            if (dicSubjectByKey.ContainsKey(key))
+            {
+                errorProvider1.SetError(this.SubjectName, "科目名稱 + 級別 不可重複。");
+                is_valid = false;
+            }
+            else
+            {
+                errorProvider1.SetError(this.SubjectName, "");
             }
 
             return is_valid;

@@ -310,13 +310,13 @@ namespace SHSchool.CourseSelection.Forms
         {
             if (this.dgvData.SelectedRows.Count == 0)
             {
-                System.Windows.Forms.MessageBox.Show("請先選擇科目。");
+                MsgBox.Show("請先選擇科目。");
                 return;
             }
 
             try
             {
-                frmSubjectCreator frm = new frmSubjectCreator("修改科目");
+                frmSubjectCreator frm = new frmSubjectCreator("修改科目", cboSchoolYear.SelectedItem.ToString(), cboSemester.SelectedItem.ToString());
                 UDT.Subject record = this.dgvData.SelectedRows[0].Tag as UDT.Subject;
                 List<UDT.Subject> records = new List<UDT.Subject>();
                 records.Add(record);

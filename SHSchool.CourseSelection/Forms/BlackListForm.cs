@@ -17,6 +17,10 @@ namespace SHSchool.CourseSelection.Forms
     public partial class BlackListForm : BaseForm
     {
         private bool initFinsh = false;
+        private AccessHelper access = new AccessHelper();
+        private QueryHelper qh = new QueryHelper();
+        private UpdateHelper up = new UpdateHelper();
+
         public BlackListForm()
         {
             InitializeComponent();
@@ -24,8 +28,6 @@ namespace SHSchool.CourseSelection.Forms
 
         private void BlackListForm_Load(object sender, EventArgs e)
         {
-            AccessHelper access = new AccessHelper();
-
             #region Init SchoolYear Semester
             List<UDT.OpeningTime> listOpenTime = access.Select<UDT.OpeningTime>();
             if (listOpenTime.Count == 0)
@@ -116,9 +118,7 @@ FROM
     target_subject_type.type
                 ", schoolYear, semester);
 
-            QueryHelper qh = new QueryHelper();
             DataTable dt = qh.Select(sql);
-
             return dt;
         }
 
@@ -282,7 +282,7 @@ SELECT * FROM calculation_rejoin_block_mode1
     UNION ALL
 SELECT * FROM calculation_rejoin_block_mode2
                 ", string.Join(",",listTypeName),cbxSchoolYear.SelectedItem.ToString(),cbxSemester.SelectedItem.ToString());
-            UpdateHelper up = new UpdateHelper();
+
             try
             {
                 up.Execute(sql);

@@ -74,6 +74,7 @@ namespace SHSchool.CourseSelection.Forms
 
         private void ReloadCbxType()
         {
+            cbxType.Items.Clear();
             string sql = string.Format(@"
 SELECT DISTINCT
     type
@@ -95,6 +96,11 @@ WHERE
             if (cbxType.Items.Count > 0)
             {
                 cbxType.SelectedIndex = 0;
+                btnPrint.Enabled = true;
+            }
+            else
+            {
+                btnPrint.Enabled = false;
             }
         }
 
@@ -172,6 +178,7 @@ ORDER BY
                 listSheetThreeTitle.Add("學號");
                 listSheetThreeTitle.Add("姓名");
                 listSheetThreeTitle.Add("擋修名單科目");
+                listSheetThreeTitle.Add("擋修名單科目級別");
                 listSheetThreeTitle.Add("擋修名單原因");
 
                 #endregion
@@ -317,10 +324,7 @@ ORDER BY
                 }
                 #endregion
 
-                //wb.Worksheets[0].Name = "科目分析表";
-
                 // 填WorkSheet1科目表頭
-
                 int col = 0;
                 foreach (string subjectName in dicSheetOneTitle.Keys)
                 {
@@ -544,6 +548,7 @@ SELECT
     , student.student_number
     , student.name
     , subject.subject_name
+    , subject.level
     , block.reason
 FROM
     $ischool.course_selection.subject_block AS block
@@ -591,8 +596,11 @@ WHERE
                         case "擋修名單科目":
                             wb.Worksheets["擋修名單資料"].Cells[rowIndex3, 4].PutValue("" + row["subject_name"]);
                             break;
+                        case "擋修名單科目級別":
+                            wb.Worksheets["擋修名單資料"].Cells[rowIndex3, 5].PutValue("" + row["level"]);
+                            break;
                         case "擋修名單原因":
-                            wb.Worksheets["擋修名單資料"].Cells[rowIndex3, 5].PutValue("" + row["reason"]);
+                            wb.Worksheets["擋修名單資料"].Cells[rowIndex3, 6].PutValue("" + row["reason"]);
                             break;
                     }
                 }
@@ -682,7 +690,6 @@ WHERE
         public int Limit { get; set; }
         public int TotalStudent { get; set; }
     }
-
     class Total
     {
         /// <summary>
