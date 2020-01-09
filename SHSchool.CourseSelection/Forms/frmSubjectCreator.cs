@@ -70,10 +70,12 @@ namespace SHSchool.CourseSelection.Forms
                 this.mRecord.Semester = int.Parse(this.semester);
             }
 
-            // 取得學年度學期課程清單
             GetSubjectList();
         }
 
+        /// <summary>
+        /// 取得學年度學期課程清單 用來判斷科目級別是否重複
+        /// </summary>
         private void GetSubjectList()
         {
             string sql = string.Format(@"
@@ -309,8 +311,15 @@ WHERE
             string key = $"{SubjectName.Text}_{Level.Text}";
             if (dicSubjectByKey.ContainsKey(key))
             {
-                errorProvider1.SetError(this.SubjectName, "科目名稱 + 級別 不可重複。");
-                is_valid = false;
+                if (mRecord.UID == "" + dicSubjectByKey[key]["uid"])
+                {
+                    errorProvider1.SetError(this.SubjectName, "");
+                }
+                else
+                {
+                    errorProvider1.SetError(this.SubjectName, "科目名稱 + 級別 不可重複。");
+                    is_valid = false;
+                }
             }
             else
             {

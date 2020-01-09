@@ -150,16 +150,16 @@ WITH target_subject AS(
     FROM
         $ischool.course_selection.subject
     WHERE
-        type IN ( {0} )
+        type IN ({0})
         AND school_year = {1}
         AND semester = {2}
-) , delete_target_subject_block AS(
+), delete_target_subject_block AS(
     DELETE 
     FROM
         $ischool.course_selection.subject_block
     WHERE
         ref_subject_id IN ( SELECT uid FROM target_subject )
-) , target_student AS(
+), target_student AS(
     SELECT
         scs.ref_subject_id
         , student.*
@@ -171,7 +171,7 @@ WITH target_subject AS(
             ON student.ref_class_id = scs.ref_class_id
     WHERE
         student.status IN (1,2)
-) , target_student_sems_subj_score AS(
+), target_student_sems_subj_score AS(
     SELECT
         sems_subj_score_ext.ref_student_id
         , sems_subj_score_ext.grade_year
@@ -187,15 +187,25 @@ WITH target_subject AS(
                 ,   unnest(xpath('/SemesterSubjectScoreInfo/Subject', xmlparse(content score_info))) as subj_score_ele
             FROM 
                 sems_subj_score 
-            WHERE ref_student_id IN ( SELECT id FROM target_student)
+            WHERE ref_student_id IN (SELECT id FROM target_student)
         ) as sems_subj_score_ext
     ORDER BY grade_year desc, semester desc, school_year desc
-) , target_student_score_rec AS(
+), target_student_score_rec AS(
     SELECT
         *
         , CONCAT(科目, 科目級別) AS key
     FROM
         target_student_sems_subj_score
+), target_student_sc_attend AS(
+    SELECT
+        sc_attend.*
+        , CONCAT(course.subject, course.subj_level) AS key
+    FROM
+        sc_attend
+        LEFT OUTER JOIN course
+            ON course.id = sc_attend.ref_course_id
+    WHERE
+        sc_attend.ref_student_id IN(SELECT id FROM target_student)
 ), calculation_pre_subject_block_mode1 AS(
     SELECT
         target_subject.uid
@@ -203,7 +213,7 @@ WITH target_subject AS(
         , '未取得前導課程學分'::text AS reason
     FROM
         target_subject
-        LEFT OUTER JOIN target_student
+        INNER JOIN target_student
             ON target_subject.uid = target_student.ref_subject_id
         LEFT OUTER JOIN target_student_score_rec
             ON target_student_score_rec.ref_student_id = target_student.id
@@ -213,30 +223,30 @@ WITH target_subject AS(
         target_subject.pre_subject_block_mode = '已取得學分'
         AND target_student_score_rec.ref_student_id IS NULL
         AND target_subject.pre_subject IS NOT NULL
-) , calculation_pre_subject_block_mode2 AS(
+), calculation_pre_subject_block_mode2 AS(
     SELECT
         target_subject.uid
         , target_student.id
         , '未修過前導課程'::text AS reason
     FROM
         target_subject
-        LEFT OUTER JOIN target_student
+        INNER JOIN target_student
             ON target_subject.uid = target_student.ref_subject_id
-        LEFT OUTER JOIN target_student_score_rec
-            ON target_student_score_rec.ref_student_id = target_student.id
-            AND target_student_score_rec.key = target_subject.key2
+        LEFT OUTER JOIN target_student_sc_attend 
+            ON target_student_sc_attend.ref_student_id = target_student.id
+            AND target_student_sc_attend.key = target_subject.key2
     WHERE
         target_subject.pre_subject_block_mode = '已修過'
-        AND target_student_score_rec.ref_student_id IS NULL
+        AND target_student_sc_attend.id IS NULL
         AND target_subject.pre_subject IS NOT NULL
-) , calculation_rejoin_block_mode1 AS (
+), calculation_rejoin_block_mode1 AS (
     SELECT
         target_subject.uid
         , target_student.id
         , '已取得相同科目學分'::text AS reason
     FROM
         target_subject
-        LEFT OUTER JOIN target_student
+        INNER JOIN target_student
             ON target_subject.uid = target_student.ref_subject_id
         LEFT OUTER JOIN target_student_score_rec
             ON target_student_score_rec.ref_student_id = target_student.id
@@ -245,29 +255,21 @@ WITH target_subject AS(
     WHERE
         target_subject.rejoin_block_mode = '已取得學分'
         AND target_student_score_rec.ref_student_id IS NOT NULL
-) , calculation_rejoin_block_mode2 AS (
+), calculation_rejoin_block_mode2 AS (
     SELECT
         target_subject.uid 
         , target_student.id 
         , '已修過相同科目'::text AS reason
     FROM
         target_subject
-        LEFT OUTER JOIN target_student
+        INNER JOIN target_student
             ON target_subject.uid = target_student.ref_subject_id
-        LEFT OUTER JOIN (
-            SELECT
-                sc_attend.*
-                , CONCAT(course.subject, course.subj_level) AS key
-            FROM
-                sc_attend
-                LEFT OUTER JOIN course
-                    ON course.id = sc_attend.ref_course_id
-        ) AS sc_attend 
-            ON sc_attend.ref_student_id = target_student.id
-            AND sc_attend.key = target_subject.key1
+        LEFT OUTER JOIN target_student_sc_attend
+            ON target_student_sc_attend.ref_student_id = target_student.id
+            AND target_student_sc_attend.key = target_subject.key1
     WHERE
         target_subject.rejoin_block_mode = '已修過'
-        AND sc_attend.ref_student_id IS NOT NULL
+        AND target_student_sc_attend.ref_student_id IS NOT NULL
 )
 INSERT INTO $ischool.course_selection.subject_block(
     ref_subject_id
