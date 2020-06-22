@@ -551,6 +551,7 @@ GROUP BY
 			ON subject.uid = ss_attend.ref_subject_id
 			AND subject.school_year = {0}
 			AND subject.semester = {1}
+            AND subject.type <> '{2}'
  ), repeat_subject AS(
  	SELECT
 		target_attend.ref_student_id
@@ -562,7 +563,7 @@ GROUP BY
 			AND target_attend.level = target_subject.level
  )
  SELECT * FROM repeat_subject
-            ",schoolYear,semester,type);
+            ", schoolYear,semester,type);
 
             DataTable dt = qh.Select(sql);
 
@@ -985,7 +986,7 @@ ORDER BY
                 };
                 _BKWReloadDataGridView.RunWorkerCompleted += delegate
                 {
-                    if (schoolYear == schoolYearCbx.Text && semester == semesterCbx.Text && courseType == courseTypeCbx.Text)
+                    if (schoolYear == schoolYearCbx.Text && semester == semesterCbx.Text && courseType == courseTypeCbx.Text && dt.Rows != null)
                     {
                         foreach (DataRow row in dt.Rows)
                         {
@@ -1473,6 +1474,10 @@ WHERE
             if ("" + row["lock"] == "true")
             {
                 datarow.DefaultCellStyle.BackColor = Color.GreenYellow;
+            }
+            else
+            {
+                datarow.DefaultCellStyle.BackColor = Color.White;
             }
             datarow.Cells[index++].Value = "" + row["分發順位"]; // 分發順位
 
