@@ -178,19 +178,6 @@ namespace SHSchool.CourseSelection.Forms
             }
         }
 
-        private void dgvData_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == 0 && this.forSendingSubject)
-            {
-                UDT.Subject record = this.dgvData.Rows[e.RowIndex].Tag as UDT.Subject;
-
-                List<UDT.Subject> records = new List<UDT.Subject>();
-                records.Add(record);
-
-                Event.DeliverActiveRecord.RaiseSendingEvent(this, new Event.DeliverActiveRecordEventArgs(records));
-            }
-        }
-
         private void cboSchoolYear_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.InitSubject();
@@ -365,20 +352,6 @@ namespace SHSchool.CourseSelection.Forms
             //this.dgvData.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             //this.dgvData.AutoResizeRows();
             this.dgvData.Rows.Cast<DataGridViewRow>().ToList().ForEach(x => this.dgvData.AutoResizeRow(x.Index));
-        }
-
-        private void dgvData_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex > -1)
-            {
-                frmSubjectCreator frm = new frmSubjectCreator("檢視科目資料");
-                UDT.Subject record = this.dgvData.SelectedRows[0].Tag as UDT.Subject;
-                List<UDT.Subject> records = new List<UDT.Subject>();
-                records.Add(record);
-
-                Event.DeliverActiveRecord.RaiseSendingEvent(this, new Event.DeliverActiveRecordEventArgs(records));
-                frm.ShowDialog();
-            }
         }
     }
 }

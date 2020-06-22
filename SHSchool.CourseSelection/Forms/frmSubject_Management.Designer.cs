@@ -31,13 +31,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Exit = new DevComponents.DotNetBar.ButtonX();
             this.dgvData = new DevComponents.DotNetBar.Controls.DataGridViewX();
-            this.Delete = new DevComponents.DotNetBar.ButtonX();
-            this.cboSchoolYear = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.cboSemester = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.Addd = new DevComponents.DotNetBar.ButtonX();
-            this.Update = new DevComponents.DotNetBar.ButtonX();
-            this.labelX2 = new DevComponents.DotNetBar.LabelX();
-            this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.Add = new System.Windows.Forms.DataGridViewLinkColumn();
             this.Institute = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
             this.SubjectName = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
@@ -49,6 +42,13 @@
             this.PreSubjectLevel = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
             this.CrossType1 = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
             this.CrossType2 = new DevComponents.DotNetBar.Controls.DataGridViewLabelXColumn();
+            this.Delete = new DevComponents.DotNetBar.ButtonX();
+            this.cboSchoolYear = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.cboSemester = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.Addd = new DevComponents.DotNetBar.ButtonX();
+            this.Update = new DevComponents.DotNetBar.ButtonX();
+            this.labelX2 = new DevComponents.DotNetBar.LabelX();
+            this.labelX1 = new DevComponents.DotNetBar.LabelX();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.SuspendLayout();
             // 
@@ -103,107 +103,7 @@
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvData.Size = new System.Drawing.Size(961, 477);
             this.dgvData.TabIndex = 6;
-            this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
-            this.dgvData.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellDoubleClick);
             this.dgvData.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvData_DataBindingComplete);
-            // 
-            // Delete
-            // 
-            this.Delete.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.Delete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Delete.BackColor = System.Drawing.Color.Transparent;
-            this.Delete.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Delete.Location = new System.Drawing.Point(817, 527);
-            this.Delete.Name = "Delete";
-            this.Delete.Size = new System.Drawing.Size(75, 23);
-            this.Delete.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.Delete.TabIndex = 4;
-            this.Delete.Text = "刪  除";
-            this.Delete.Click += new System.EventHandler(this.Delete_Click);
-            // 
-            // cboSchoolYear
-            // 
-            this.cboSchoolYear.DisplayMember = "Text";
-            this.cboSchoolYear.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cboSchoolYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboSchoolYear.FormattingEnabled = true;
-            this.cboSchoolYear.ItemHeight = 19;
-            this.cboSchoolYear.Location = new System.Drawing.Point(65, 13);
-            this.cboSchoolYear.Name = "cboSchoolYear";
-            this.cboSchoolYear.Size = new System.Drawing.Size(60, 25);
-            this.cboSchoolYear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.cboSchoolYear.TabIndex = 0;
-            this.cboSchoolYear.SelectedIndexChanged += new System.EventHandler(this.cboSchoolYear_SelectedIndexChanged);
-            // 
-            // cboSemester
-            // 
-            this.cboSemester.DisplayMember = "Text";
-            this.cboSemester.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cboSemester.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboSemester.FormattingEnabled = true;
-            this.cboSemester.ItemHeight = 19;
-            this.cboSemester.Location = new System.Drawing.Point(192, 13);
-            this.cboSemester.Name = "cboSemester";
-            this.cboSemester.Size = new System.Drawing.Size(50, 25);
-            this.cboSemester.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.cboSemester.TabIndex = 1;
-            this.cboSemester.SelectedIndexChanged += new System.EventHandler(this.cboSemester_SelectedIndexChanged);
-            // 
-            // Addd
-            // 
-            this.Addd.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.Addd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Addd.BackColor = System.Drawing.Color.Transparent;
-            this.Addd.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Addd.Location = new System.Drawing.Point(655, 527);
-            this.Addd.Name = "Addd";
-            this.Addd.Size = new System.Drawing.Size(75, 23);
-            this.Addd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.Addd.TabIndex = 2;
-            this.Addd.Text = "新  增";
-            this.Addd.Click += new System.EventHandler(this.Addd_Click);
-            // 
-            // Update
-            // 
-            this.Update.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.Update.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Update.BackColor = System.Drawing.Color.Transparent;
-            this.Update.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Update.Location = new System.Drawing.Point(736, 527);
-            this.Update.Name = "Update";
-            this.Update.Size = new System.Drawing.Size(75, 23);
-            this.Update.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.Update.TabIndex = 3;
-            this.Update.Text = "修  改";
-            this.Update.Click += new System.EventHandler(this.Update_Click);
-            // 
-            // labelX2
-            // 
-            this.labelX2.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX2.BackgroundStyle.Class = "";
-            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX2.Location = new System.Drawing.Point(12, 14);
-            this.labelX2.Name = "labelX2";
-            this.labelX2.Size = new System.Drawing.Size(47, 23);
-            this.labelX2.TabIndex = 36;
-            this.labelX2.Text = "學年度";
-            // 
-            // labelX1
-            // 
-            this.labelX1.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX1.BackgroundStyle.Class = "";
-            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX1.Location = new System.Drawing.Point(152, 14);
-            this.labelX1.Name = "labelX1";
-            this.labelX1.Size = new System.Drawing.Size(34, 23);
-            this.labelX1.TabIndex = 37;
-            this.labelX1.Text = "學期";
             // 
             // Add
             // 
@@ -306,6 +206,104 @@
             this.CrossType2.ReadOnly = true;
             this.CrossType2.Width = 87;
             // 
+            // Delete
+            // 
+            this.Delete.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.Delete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Delete.BackColor = System.Drawing.Color.Transparent;
+            this.Delete.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.Delete.Location = new System.Drawing.Point(817, 527);
+            this.Delete.Name = "Delete";
+            this.Delete.Size = new System.Drawing.Size(75, 23);
+            this.Delete.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.Delete.TabIndex = 4;
+            this.Delete.Text = "刪  除";
+            this.Delete.Click += new System.EventHandler(this.Delete_Click);
+            // 
+            // cboSchoolYear
+            // 
+            this.cboSchoolYear.DisplayMember = "Text";
+            this.cboSchoolYear.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cboSchoolYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSchoolYear.FormattingEnabled = true;
+            this.cboSchoolYear.ItemHeight = 19;
+            this.cboSchoolYear.Location = new System.Drawing.Point(65, 13);
+            this.cboSchoolYear.Name = "cboSchoolYear";
+            this.cboSchoolYear.Size = new System.Drawing.Size(60, 25);
+            this.cboSchoolYear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.cboSchoolYear.TabIndex = 0;
+            this.cboSchoolYear.SelectedIndexChanged += new System.EventHandler(this.cboSchoolYear_SelectedIndexChanged);
+            // 
+            // cboSemester
+            // 
+            this.cboSemester.DisplayMember = "Text";
+            this.cboSemester.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cboSemester.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSemester.FormattingEnabled = true;
+            this.cboSemester.ItemHeight = 19;
+            this.cboSemester.Location = new System.Drawing.Point(192, 13);
+            this.cboSemester.Name = "cboSemester";
+            this.cboSemester.Size = new System.Drawing.Size(50, 25);
+            this.cboSemester.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.cboSemester.TabIndex = 1;
+            this.cboSemester.SelectedIndexChanged += new System.EventHandler(this.cboSemester_SelectedIndexChanged);
+            // 
+            // Addd
+            // 
+            this.Addd.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.Addd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Addd.BackColor = System.Drawing.Color.Transparent;
+            this.Addd.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.Addd.Location = new System.Drawing.Point(655, 527);
+            this.Addd.Name = "Addd";
+            this.Addd.Size = new System.Drawing.Size(75, 23);
+            this.Addd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.Addd.TabIndex = 2;
+            this.Addd.Text = "新  增";
+            this.Addd.Click += new System.EventHandler(this.Addd_Click);
+            // 
+            // Update
+            // 
+            this.Update.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.Update.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Update.BackColor = System.Drawing.Color.Transparent;
+            this.Update.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.Update.Location = new System.Drawing.Point(736, 527);
+            this.Update.Name = "Update";
+            this.Update.Size = new System.Drawing.Size(75, 23);
+            this.Update.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.Update.TabIndex = 3;
+            this.Update.Text = "修  改";
+            this.Update.Click += new System.EventHandler(this.Update_Click);
+            // 
+            // labelX2
+            // 
+            this.labelX2.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX2.BackgroundStyle.Class = "";
+            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX2.Location = new System.Drawing.Point(12, 14);
+            this.labelX2.Name = "labelX2";
+            this.labelX2.Size = new System.Drawing.Size(47, 23);
+            this.labelX2.TabIndex = 36;
+            this.labelX2.Text = "學年度";
+            // 
+            // labelX1
+            // 
+            this.labelX1.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX1.BackgroundStyle.Class = "";
+            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX1.Location = new System.Drawing.Point(152, 14);
+            this.labelX1.Name = "labelX1";
+            this.labelX1.Size = new System.Drawing.Size(34, 23);
+            this.labelX1.TabIndex = 37;
+            this.labelX1.Text = "學期";
+            // 
             // frmSubject_Management
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -323,7 +321,7 @@
             this.DoubleBuffered = true;
             this.MaximizeBox = true;
             this.Name = "frmSubject_Management";
-            this.Text = "科目管理";
+            this.Text = "選修科目管理";
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
             this.ResumeLayout(false);
 
