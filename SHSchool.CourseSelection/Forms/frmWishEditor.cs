@@ -12,6 +12,7 @@ using FISCA.Data;
 using FISCA.UDT;
 using FISCA.Authentication;
 using FISCA.LogAgent;
+using System.Threading.Tasks;
 
 namespace SHSchool.CourseSelection.Forms
 {
@@ -114,7 +115,8 @@ WHERE
         /// </summary>
         private void ReloadDataGridView(string schoolYear, string semester, string coursePeriod)
         {
-            this.SuspendLayout();
+            lb4.Visible = true;
+            //this.SuspendLayout();
             {
                 dataGridViewX1.Rows.Clear();
 
@@ -357,8 +359,21 @@ ORDER BY
             ", schoolYear, semester, coursePeriod);
                 #endregion
 
-                DataTable dt = this._qh.Select(sql);
+                DataTable dt = new DataTable();
 
+                try
+                {
+                    Task t = Task.Factory.StartNew(() => {
+                        dt = _qh.Select(sql);
+                    });
+
+                    t.Wait();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+                
                 foreach (DataRow row in dt.Rows)
                 {
                     DataGridViewRow dgvrow = new DataGridViewRow();
@@ -517,8 +532,8 @@ ORDER BY
                     dataGridViewX1.Rows.Add(dgvrow);
                 }
             }
-            this.ResumeLayout();
-
+            //this.ResumeLayout();
+            lb4.Visible = false;
         }
 
         private void cbxSchoolYear_SelectedIndexChanged(object sender, EventArgs e)

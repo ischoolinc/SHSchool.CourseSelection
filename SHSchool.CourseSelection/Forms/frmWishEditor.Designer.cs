@@ -72,6 +72,7 @@
             this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.progressBarX1 = new DevComponents.DotNetBar.Controls.ProgressBarX();
+            this.lb4 = new DevComponents.DotNetBar.LabelX();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -487,11 +488,28 @@
             this.progressBarX1.Text = "progressBarX1";
             this.progressBarX1.Visible = false;
             // 
+            // lb4
+            // 
+            this.lb4.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.lb4.BackgroundStyle.Class = "";
+            this.lb4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.lb4.ForeColor = System.Drawing.Color.Black;
+            this.lb4.Location = new System.Drawing.Point(407, 272);
+            this.lb4.Name = "lb4";
+            this.lb4.Size = new System.Drawing.Size(75, 23);
+            this.lb4.TabIndex = 16;
+            this.lb4.Text = "isLoading";
+            this.lb4.Visible = false;
+            // 
             // frmWishEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(889, 566);
+            this.Controls.Add(this.lb4);
             this.Controls.Add(this.progressBarX1);
             this.Controls.Add(this.btnRecover);
             this.Controls.Add(this.btnLeave);
@@ -558,5 +576,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private DevComponents.DotNetBar.Controls.DataGridViewX dataGridViewX1;
         private DevComponents.DotNetBar.Controls.ProgressBarX progressBarX1;
+        private DevComponents.DotNetBar.LabelX lb4;
     }
 }
