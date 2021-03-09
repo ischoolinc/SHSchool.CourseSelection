@@ -84,12 +84,12 @@ namespace SHSchool.CourseSelection.Forms
                     timeList.Add(new UDT.OpeningTime() { SchoolYear = int.Parse(K12.Data.School.DefaultSchoolYear), Semester = int.Parse(K12.Data.School.DefaultSemester) });
                     timeList.SaveAll();
                 }
-
+                schoolYearCbx.Items.Add(timeList[0].SchoolYear + 2);  //Cyn新增
                 schoolYearCbx.Items.Add(timeList[0].SchoolYear + 1);
                 schoolYearCbx.Items.Add(timeList[0].SchoolYear);
                 schoolYearCbx.Items.Add(timeList[0].SchoolYear - 1);
-
-                schoolYearCbx.SelectedIndex = 1;
+                schoolYearCbx.Items.Add(timeList[0].SchoolYear - 2); //Cyn新增
+                schoolYearCbx.SelectedIndex = 2;  //Cyn 由1改為2
 
                 semesterCbx.Items.Add(1);
                 semesterCbx.Items.Add(2);
@@ -113,7 +113,7 @@ namespace SHSchool.CourseSelection.Forms
             {
                 foreach (DataGridViewRow datarow in dataGridViewX1.SelectedRows)
                 {
-                    if ("" + datarow.Cells[5].Value != "") // 已選上課程學生才能鎖課
+                    if ("" + datarow.Cells[6].Value != "") // 已選上課程學生才能鎖課  //Cyn 因增加學號由5改成6
                     {
                         ((DataRow)datarow.Tag)["lock"] = "true";
                     }
@@ -830,6 +830,7 @@ WITH target_subject AS(
 		, class.display_order
 		, class.grade_year
 		, student.seat_no
+,student.student_number
 		, student.name
 	FROM 
 		student
@@ -1020,14 +1021,14 @@ ORDER BY
                 if ("" + row.Cells["Lock"].Value == "是")
                 {
                     swapEnabled = false;
-                    errMsg = "學生已鎖定，無法調整選課結果!";
+                    errMsg = "學生已鎖定，無法調整選課結果。";
                 }
                 // 如果資料行為跨課程時段不能做修改
                 DataRow tagRow = (DataRow)row.Tag;
                 if ("" + tagRow["跨課程時段科目"] == "true")
                 {
                     swapEnabled = false;
-                    errMsg = "無法調整跨課程時段選課結果，請回到原課程時段再進行調整!";
+                    errMsg = "無法調整跨課程時段選課結果，請回到原課程時段再進行調整。";
                 }
                 // 檢查是否已選修科目
                 string studentID = "" + tagRow["id"];
@@ -1036,7 +1037,7 @@ ORDER BY
                     if (_DicRepeatSubjectByStudentID[studentID].Contains(subjectID))
                     {
                         swapEnabled = false;
-                        errMsg = "已在其它課程時段選修此科目。";
+                        errMsg = "已在其他課程時段選修此科目。";
                     }
                 }
                 // 檢查科目是否衝堂
@@ -1045,7 +1046,7 @@ ORDER BY
                     if (_DicStudentConflictSubject[studentID].Contains(subjectID))
                     {
                         swapEnabled = false;
-                        errMsg = "課程時段衝堂，無法指定學生選修此科目!";
+                        errMsg = "課程時段衝堂，無法指定學生選修此科目。";
                     }
                 }
 
@@ -1157,7 +1158,7 @@ ORDER BY
             string sql="";
             foreach (DataGridViewRow datarow in dataGridViewX1.Rows)
             {
-                if ("" + datarow.Cells[12].Value != "跨課程時段")
+                if ("" + datarow.Cells[13].Value != "跨課程時段") //Cyn因增加學號 由12改成13
                 {
                     DataRow row = (DataRow)datarow.Tag;
                     string data = string.Format(@"
@@ -1380,7 +1381,7 @@ WHERE
                 seedCbx.Enabled = true;
                 btnSave.Enabled = true;
                 leaveBtn.Enabled = true;
-                MessageBox.Show("儲存成功!");
+                MessageBox.Show("儲存成功。");
 
                 ReloadDataGridView();
             };
@@ -1468,6 +1469,7 @@ WHERE
 
             datarow.Cells[index++].Value = "" + row["class_name"]; // 班級
             datarow.Cells[index++].Value = "" + row["seat_no"]; // 座號
+            datarow.Cells[index++].Value = "" + row["student_number"]; // 學號
             datarow.Cells[index].Tag = "" + row["id"]; // 紀錄學生ID
             datarow.Cells[index++].Value = "" + row["name"]; // 姓名
             datarow.Cells[index++].Value = ("" + row["lock"]) == "true" ? "是" : ""; // 鎖定
@@ -1693,7 +1695,7 @@ WHERE
                 {
                     book.Save(saveFile.FileName);
                     Process.Start(saveFile.FileName);
-                    MotherForm.SetStatusBarMessage("課堂點名明細,列印完成!!");
+                    MotherForm.SetStatusBarMessage("匯出選課結果及分發，列印完成。");
                 }
                 else
                 {
@@ -1703,8 +1705,8 @@ WHERE
             }
             catch
             {
-                FISCA.Presentation.Controls.MsgBox.Show("檔案儲存錯誤,請檢查檔案是否開啟中!!");
-                MotherForm.SetStatusBarMessage("檔案儲存錯誤,請檢查檔案是否開啟中!!");
+                FISCA.Presentation.Controls.MsgBox.Show("檔案儲存錯誤，請檢查檔案是否開啟中。");
+                MotherForm.SetStatusBarMessage("檔案儲存錯誤，請檢查檔案是否開啟中。");
             }
         }
 

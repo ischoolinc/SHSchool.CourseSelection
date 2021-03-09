@@ -27,15 +27,21 @@
     <Field Required="False" Name="級別" Description="級別" EmptyAlsoValidate="False" >
       <Validate AutoCorrect="False" Description="「級別」只允許阿拉伯數字。" ErrorType="Error" Validator="Integer極限" When="" />
     </Field>
-    <Field Required="False" Name="學分數" Description="學分數" EmptyAlsoValidate="False" >
+    <!--<Field Required="False" Name="學分數" Description="學分數" EmptyAlsoValidate="False" >
       <Validate AutoCorrect="False" Description="「學分數」只允許阿拉伯數字。" ErrorType="Error" Validator="Integer極限" When="" />
-    </Field>
+    </Field>-->
+	  <Field Required="False" Name="學分數" Description="學分數。">
+		  <Validate AutoCorrect="False" Description="「學分數」必須是正整數或0。" ErrorType="Error" Validator="Decimal極限" When="" />
+	  </Field>
     <Field Required="False" Name="課程時段" Description="課程時段" />
     <Field Required="False" Name="跨課程時段1" Description="跨課程時段1" EmptyAlsoValidate="False" />
     <Field Required="False" Name="跨課程時段2" Description="跨課程時段2" EmptyAlsoValidate="False" />
-    <Field Required="False" Name="修課人數上限" Description="修課人數上限" EmptyAlsoValidate="False" >
+    <!--<Field Required="False" Name="修課人數上限" Description="修課人數上限" EmptyAlsoValidate="False" >
       <Validate AutoCorrect="False" Description="「修課人數上限」只允許阿拉伯數字。" ErrorType="Error" Validator="Integer極限" When="" />
-    </Field>
+    </Field>-->
+	  <Field Required="False" Name="修課人數上限" Description="修課人數上限" >
+		  <Validate AutoCorrect="False" Description="「修課人數上限」必須是正整數或0。" ErrorType="Error" Validator="Decimal極限" When="" />
+	  </Field>
     <Field Required="False" Name="前導課程科目" Description="前導課程科目名稱" EmptyAlsoValidate="False" />
     <Field Required="False" Name="前導課程級別" Description="前導課程級別" EmptyAlsoValidate="False" >
       <Validate AutoCorrect="False" Description="「前導課程級別」只允許阿拉伯數字。" ErrorType="Error" Validator="Integer極限" When="" />
@@ -58,6 +64,10 @@
     <FieldValidator Name="不可空白" Type="STRINGLENGTH">
       <MinLength>1</MinLength>
     </FieldValidator>
+	  <FieldValidator Name="Decimal極限" Type="Decimal">
+		  <MinValue>0</MinValue>
+		  <MaxValue>999</MaxValue>
+	  </FieldValidator>
     <FieldValidator Name="Integer極限" Type="Integer">
       <MinValue>1</MinValue>
       <MaxValue>999</MaxValue>

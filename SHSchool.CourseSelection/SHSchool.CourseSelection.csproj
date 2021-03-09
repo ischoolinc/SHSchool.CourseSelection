@@ -413,9 +413,6 @@
     <None Include="Resources\Import.Image.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Import\Subject_Import.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Library\Aspose.Cells.dll" />
     <Content Include="Library\Aspose.Cells.GridDesktop.dll" />
     <Content Include="Library\Aspose.Cells.GridDesktop.xml" />

@@ -42,10 +42,13 @@ namespace SHSchool.CourseSelection.Forms
             }
 
             #region InitSchoolYear
+            cboSchoolYear.Items.Add(opTimeList[0].SchoolYear + 2); //Cyn新增
             cboSchoolYear.Items.Add(opTimeList[0].SchoolYear + 1);
             cboSchoolYear.Items.Add(opTimeList[0].SchoolYear);
             cboSchoolYear.Items.Add(opTimeList[0].SchoolYear - 1);
-            cboSchoolYear.SelectedIndex = 1;
+            cboSchoolYear.Items.Add(opTimeList[0].SchoolYear - 2); //Cyn新增
+
+            cboSchoolYear.SelectedIndex = 2; //Cyn 由1改2
             #endregion
 
             #region InitSemester

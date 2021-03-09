@@ -42,13 +42,16 @@ namespace SHSchool.CourseSelection.Forms
             #endregion
 
             #region InitSchoolYear
+            //設定後若需要修改，開啟功能後就是上次的設定值。
             //this.cboSchoolYear.Items.Clear();
-            int schoolYear = listOpeningTime[0].SchoolYear; 
+            int schoolYear = listOpeningTime[0].SchoolYear;
+            cboSchoolYear.Items.Add(schoolYear - 1);  //Cynthia
             cboSchoolYear.Items.Add(schoolYear);
             cboSchoolYear.Items.Add(schoolYear + 1);
             cboSchoolYear.Items.Add(schoolYear + 2);
 
-            cboSchoolYear.SelectedIndex = 0;
+            cboSchoolYear.SelectedIndex = 1; //Cynthia 由0改1
+
             #endregion
 
             #region InitSemester

@@ -92,7 +92,7 @@ WHERE
 
             foreach (DataRow row in dt.Rows)
             {
-                string key = $"{row["subject_name"]}_{row["level"]}";
+                string key = $"{row["subject_name"]}_{row["level"]}_{row["Type"]}";
 
                 if (!dicSubjectByKey.ContainsKey(key))
                 {
@@ -233,22 +233,40 @@ WHERE
             else
                 errorProvider1.SetError(this.Level, "");
 
+            //// 驗證學分數
+            //if (!string.IsNullOrWhiteSpace(this.Credit.Text))
+            //{
+            //    result = int.TryParse(this.Credit.Text.Trim(), out no);
+
+            //    if (!result)
+            //    {
+            //        errorProvider1.SetError(this.Credit, "請填阿拉伯數字");
+            //        is_valid = false;
+            //    }
+            //    else
+            //        errorProvider1.SetError(this.Credit, "");
+            //}
+            //else
+            //    errorProvider1.SetError(this.Credit, "");
+
             // 驗證學分數
-            if (!string.IsNullOrWhiteSpace(this.Credit.Text))
+            if (string.IsNullOrWhiteSpace(this.Credit.Text))
+            {
+                errorProvider1.SetError(this.Credit, "必填");
+                is_valid = false;
+            }
+            else
             {
                 result = int.TryParse(this.Credit.Text.Trim(), out no);
 
                 if (!result)
                 {
-                    errorProvider1.SetError(this.Credit, "請填阿拉伯數字");
+                    errorProvider1.SetError(this.Credit, "請輸入正整數或0。");
                     is_valid = false;
                 }
                 else
                     errorProvider1.SetError(this.Credit, "");
             }
-            else
-                errorProvider1.SetError(this.Credit, "");
-
             // 驗證人數上限
             if (string.IsNullOrWhiteSpace(this.Limit.Text))
             {
@@ -261,7 +279,7 @@ WHERE
 
                 if (!result)
                 {
-                    errorProvider1.SetError(this.Limit, "請填阿拉伯數字");
+                    errorProvider1.SetError(this.Limit, "請輸入正整數。");
                     is_valid = false;
                 }
                 else
@@ -289,14 +307,14 @@ WHERE
             {
                 if (cbxPreSubjectBlockMode.SelectedItem == null)
                 {
-                    errorProvider1.SetError(this.cbxPreSubjectBlockMode, "請選擇前導課程採計方式!");
+                    errorProvider1.SetError(this.cbxPreSubjectBlockMode, "請選擇前導課程採計方式。");
                     is_valid = false;
                 }
                 else
                 {
                     if (string.IsNullOrWhiteSpace(cbxPreSubjectBlockMode.SelectedItem.ToString()))
                     {
-                        errorProvider1.SetError(this.cbxPreSubjectBlockMode, "請選擇前導課程採計方式!");
+                        errorProvider1.SetError(this.cbxPreSubjectBlockMode, "請選擇前導課程採計方式。");
                         is_valid = false;
                     }
                     else
@@ -308,7 +326,7 @@ WHERE
 
 
             // 驗證學年度學期科目級別 不可重複
-            string key = $"{SubjectName.Text}_{Level.Text}";
+            string key = $"{SubjectName.Text}_{Level.Text}_{Type.Text}";
             if (dicSubjectByKey.ContainsKey(key))
             {
                 if (mRecord.UID == "" + dicSubjectByKey[key]["uid"])
@@ -317,7 +335,7 @@ WHERE
                 }
                 else
                 {
-                    errorProvider1.SetError(this.SubjectName, "科目名稱 + 級別 不可重複。");
+                    errorProvider1.SetError(this.SubjectName, "科目名稱 + 級別 + 課程時段 不可重複。");
                     is_valid = false;
                 }
             }

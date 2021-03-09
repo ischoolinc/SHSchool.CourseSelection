@@ -208,29 +208,48 @@ namespace SHSchool.CourseSelection.Import
                 if (_mOption.SelectedFields.Contains("修課人數上限") && !string.IsNullOrWhiteSpace(row.GetValue("修課人數上限")))
                     subjectRecord.Limit = int.Parse(row.GetValue("修課人數上限").Trim());
 
+                // 2020/02/04 Cyn修正: 跨課程時段1、跨課程時段2、前導課程科目、前導課程級別、 前導課程採計方式、重複修課採計方式、教學目標、 教學內容、備註 匯入空白沒有以空白覆蓋原值問題
                 if (_mOption.SelectedFields.Contains("教學目標") && !string.IsNullOrWhiteSpace(row.GetValue("教學目標")))
                     subjectRecord.Goal = row.GetValue("教學目標").Trim();
+                else
+                    subjectRecord.Goal = null;
 
                 if (_mOption.SelectedFields.Contains("教學內容") && !string.IsNullOrWhiteSpace(row.GetValue("教學內容")))
                     subjectRecord.Content = row.GetValue("教學內容").Trim();
+                else
+                    subjectRecord.Content = null;
 
                 if (_mOption.SelectedFields.Contains("備註") && !string.IsNullOrWhiteSpace(row.GetValue("備註")))
                     subjectRecord.Memo = row.GetValue("備註").Trim();
+                else
+                    subjectRecord.Memo = null;
                 // 2018/07/19 羿均 新增欄位
                 if (_mOption.SelectedFields.Contains("前導課程科目") && !string.IsNullOrWhiteSpace(row.GetValue("前導課程科目")))
                     subjectRecord.PreSubject = row.GetValue("前導課程科目").Trim();
+                else
+                    subjectRecord.PreSubject = null;
                 if (_mOption.SelectedFields.Contains("前導課程級別") && !string.IsNullOrWhiteSpace(row.GetValue("前導課程級別")))
                     subjectRecord.PreSubjectLevel = int.Parse(row.GetValue("前導課程級別").Trim());
-                if (_mOption.SelectedFields.Contains("前導課程採計方式") && !string.IsNullOrWhiteSpace(row.GetValue("前導課程採計方式")))
+                else
+                    subjectRecord.PreSubjectLevel = null;
+                if (_mOption.SelectedFields.Contains("前導課程採計方式")  && !string.IsNullOrWhiteSpace(row.GetValue("前導課程採計方式")))
                     subjectRecord.PreSubjectBlockMode = row.GetValue("前導課程採計方式").Trim();
+                else
+                    subjectRecord.PreSubjectBlockMode = null;
                 if (_mOption.SelectedFields.Contains("重複修課採計方式") && !string.IsNullOrWhiteSpace(row.GetValue("重複修課採計方式")))
                     subjectRecord.RejoinBlockMode = row.GetValue("重複修課採計方式").Trim();
+                else
+                    subjectRecord.RejoinBlockMode = null;
                 if (_mOption.SelectedFields.Contains("不開課") && !string.IsNullOrWhiteSpace(row.GetValue("不開課")))
                     subjectRecord.Disabled = row.GetValue("不開課").Trim() == "是" ? true : false;
                 if (_mOption.SelectedFields.Contains("跨課程時段1") && !string.IsNullOrWhiteSpace(row.GetValue("跨課程時段1")))
                     subjectRecord.CrossType1 = row.GetValue("跨課程時段1").Trim();
-                if (_mOption.SelectedFields.Contains("跨課程時段2") && !string.IsNullOrWhiteSpace(row.GetValue("跨課程時段2")))
+                else
+                    subjectRecord.CrossType1 = null;
+                if (_mOption.SelectedFields.Contains("跨課程時段2")  && !string.IsNullOrWhiteSpace(row.GetValue("跨課程時段2")))
                     subjectRecord.CrossType2 = row.GetValue("跨課程時段2").Trim();
+                else
+                    subjectRecord.CrossType2 = null;
 
                 if (subjectRecord.RecordStatus == RecordStatus.Insert)
                     insertSubjectRecords.Add(subjectRecord);
