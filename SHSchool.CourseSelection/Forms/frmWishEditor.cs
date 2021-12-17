@@ -261,36 +261,71 @@ SELECT
   , wish3.subject_name AS wish3
   , wish4.subject_name AS wish4
   , wish5.subject_name AS wish5
+  , wish6.subject_name AS wish6
+  , wish7.subject_name AS wish7
+  , wish8.subject_name AS wish8
+  , wish9.subject_name AS wish9
+  , wish10.subject_name AS wish10
   , wish1.ref_subject_id AS wish1ref_subject_id
   , wish2.ref_subject_id AS wish2ref_subject_id
   , wish3.ref_subject_id AS wish3ref_subject_id
   , wish4.ref_subject_id AS wish4ref_subject_id
   , wish5.ref_subject_id AS wish5ref_subject_id
+  , wish6.ref_subject_id AS wish6ref_subject_id
+  , wish7.ref_subject_id AS wish7ref_subject_id
+  , wish8.ref_subject_id AS wish8ref_subject_id
+  , wish9.ref_subject_id AS wish9ref_subject_id
+  , wish10.ref_subject_id AS wish10ref_subject_id
   , wish1.level AS wish1_level
   , wish2.level AS wish2_level
   , wish3.level AS wish3_level
   , wish4.level AS wish4_level
   , wish5.level AS wish5_level
+  , wish6.level AS wish6_level
+  , wish7.level AS wish7_level
+  , wish8.level AS wish8_level
+  , wish9.level AS wish9_level
+  , wish10.level AS wish10_level
   , wish1.disabled AS wish1_disabled
   , wish2.disabled AS wish2_disabled
   , wish3.disabled AS wish3_disabled
   , wish4.disabled AS wish4_disabled
   , wish5.disabled AS wish5_disabled
+  , wish6.disabled AS wish6_disabled
+  , wish7.disabled AS wish7_disabled
+  , wish8.disabled AS wish8_disabled
+  , wish9.disabled AS wish9_disabled
+  , wish10.disabled AS wish10_disabled
   , wish1.is_cancel AS wish1_is_cancel
   , wish2.is_cancel AS wish2_is_cancel
   , wish3.is_cancel AS wish3_is_cancel
   , wish4.is_cancel AS wish4_is_cancel
   , wish5.is_cancel AS wish5_is_cancel
+  , wish6.is_cancel AS wish6_is_cancel
+  , wish7.is_cancel AS wish7_is_cancel
+  , wish8.is_cancel AS wish8_is_cancel
+  , wish9.is_cancel AS wish9_is_cancel
+  , wish10.is_cancel AS wish10_is_cancel
   , wish1.cancel_reason AS wish1_cancel_reason
   , wish2.cancel_reason AS wish2_cancel_reason
   , wish3.cancel_reason AS wish3_cancel_reason
   , wish4.cancel_reason AS wish4_cancel_reason
   , wish5.cancel_reason AS wish5_cancel_reason
+  , wish6.cancel_reason AS wish6_cancel_reason
+  , wish7.cancel_reason AS wish7_cancel_reason
+  , wish8.cancel_reason AS wish8_cancel_reason
+  , wish9.cancel_reason AS wish9_cancel_reason
+  , wish10.cancel_reason AS wish10_cancel_reason
   , wish1.cancel_by AS wish1_cancel_by
   , wish2.cancel_by AS wish2_cancel_by
   , wish3.cancel_by AS wish3_cancel_by
   , wish4.cancel_by AS wish4_cancel_by
   , wish5.cancel_by AS wish5_cancel_by
+  , wish6.cancel_by AS wish6_cancel_by
+  , wish7.cancel_by AS wish7_cancel_by
+  , wish8.cancel_by AS wish8_cancel_by
+  , wish9.cancel_by AS wish9_cancel_by
+  , wish10.cancel_by AS wish10_cancel_by
   , CASE WHEN block1.ref_student_id IS NOT null
         THEN true
         ELSE false
@@ -316,6 +351,31 @@ SELECT
         ELSE false
     END AS wish5_is_block
   , block5.reason AS block5_reason
+ , CASE WHEN block6.ref_student_id IS NOT null
+        THEN true
+        ELSE false
+    END AS wish6_is_block
+  , block6.reason AS block6_reason
+ , CASE WHEN block7.ref_student_id IS NOT null
+        THEN true
+        ELSE false
+    END AS wish7_is_block
+  , block7.reason AS block7_reason
+ , CASE WHEN block8.ref_student_id IS NOT null
+        THEN true
+        ELSE false
+    END AS wish8_is_block
+  , block8.reason AS block8_reason
+ , CASE WHEN block9.ref_student_id IS NOT null
+        THEN true
+        ELSE false
+    END AS wish9_is_block
+  , block9.reason AS block9_reason
+ , CASE WHEN block10.ref_student_id IS NOT null
+        THEN true
+        ELSE false
+    END AS wish10_is_block
+  , block10.reason AS block10_reason
 FROM
   target_student
   LEFT OUTER JOIN student_attend
@@ -350,6 +410,36 @@ FROM
   LEFT OUTER JOIN target_subject_block AS block5
     ON block5.ref_student_id = target_student.id
     AND block5.ref_subject_id = wish5.ref_subject_id
+  LEFT OUTER JOIN wish as wish6
+    ON wish6.ref_student_id = target_student.id
+    AND wish6.sequence = 6
+  LEFT OUTER JOIN target_subject_block AS block6
+    ON block6.ref_student_id = target_student.id
+    AND block6.ref_subject_id = wish6.ref_subject_id
+  LEFT OUTER JOIN wish as wish7
+    ON wish7.ref_student_id = target_student.id
+    AND wish7.sequence = 7
+  LEFT OUTER JOIN target_subject_block AS block7
+    ON block7.ref_student_id = target_student.id
+    AND block7.ref_subject_id = wish7.ref_subject_id
+  LEFT OUTER JOIN wish as wish8
+    ON wish8.ref_student_id = target_student.id
+    AND wish8.sequence = 8
+  LEFT OUTER JOIN target_subject_block AS block8
+    ON block8.ref_student_id = target_student.id
+    AND block8.ref_subject_id = wish8.ref_subject_id
+  LEFT OUTER JOIN wish as wish9
+    ON wish9.ref_student_id = target_student.id
+    AND wish9.sequence = 9
+  LEFT OUTER JOIN target_subject_block AS block9
+    ON block9.ref_student_id = target_student.id
+    AND block9.ref_subject_id = wish9.ref_subject_id
+  LEFT OUTER JOIN wish as wish10
+    ON wish10.ref_student_id = target_student.id
+    AND wish10.sequence = 10
+  LEFT OUTER JOIN target_subject_block AS block10
+    ON block10.ref_student_id = target_student.id
+    AND block10.ref_subject_id = wish10.ref_subject_id
 ORDER BY 
   target_student.grade_year
   , target_student.display_order
@@ -385,6 +475,11 @@ ORDER BY
                     Wish wish3 = new Wish();
                     Wish wish4 = new Wish();
                     Wish wish5 = new Wish();
+                    Wish wish6 = new Wish();
+                    Wish wish7 = new Wish();
+                    Wish wish8 = new Wish();
+                    Wish wish9 = new Wish();
+                    Wish wish10 = new Wish();
 
                     #region Attend
                     {
@@ -462,6 +557,71 @@ ORDER BY
                     }
                     #endregion
 
+                    #region wish6
+                    {
+                        wish6.RefSubjectID = "" + row["wish6ref_subject_id"];
+                        wish6.Level = "" + row["wish6_level"];
+                        wish6.Disabled = ("" + row["wish6_disabled"]) == "true" ? true : false;
+                        wish6.IsCancel = ("" + row["wish6_is_cancel"]) == "true" ? true : false;
+                        wish6.CancelReason = "" + row["wish6_cancel_reason"];
+                        wish6.CancelBy = "" + row["wish6_cancel_by"];
+                        wish6.IsBlock = ("" + row["wish6_is_block"]) == "true" ? true : false;
+                        wish6.BlockReason = "" + row["block6_reason"];
+                    }
+                    #endregion
+
+                    #region wish7
+                    {
+                        wish7.RefSubjectID = "" + row["wish7ref_subject_id"];
+                        wish7.Level = "" + row["wish7_level"];
+                        wish7.Disabled = ("" + row["wish7_disabled"]) == "true" ? true : false;
+                        wish7.IsCancel = ("" + row["wish7_is_cancel"]) == "true" ? true : false;
+                        wish7.CancelReason = "" + row["wish7_cancel_reason"];
+                        wish7.CancelBy = "" + row["wish7_cancel_by"];
+                        wish7.IsBlock = ("" + row["wish7_is_block"]) == "true" ? true : false;
+                        wish7.BlockReason = "" + row["block7_reason"];
+                    }
+                    #endregion
+
+                    #region wish8
+                    {
+                        wish8.RefSubjectID = "" + row["wish8ref_subject_id"];
+                        wish8.Level = "" + row["wish8_level"];
+                        wish8.Disabled = ("" + row["wish8_disabled"]) == "true" ? true : false;
+                        wish8.IsCancel = ("" + row["wish8_is_cancel"]) == "true" ? true : false;
+                        wish8.CancelReason = "" + row["wish8_cancel_reason"];
+                        wish8.CancelBy = "" + row["wish8_cancel_by"];
+                        wish8.IsBlock = ("" + row["wish8_is_block"]) == "true" ? true : false;
+                        wish8.BlockReason = "" + row["block8_reason"];
+                    }
+                    #endregion
+
+                    #region wish9
+                    {
+                        wish9.RefSubjectID = "" + row["wish9ref_subject_id"];
+                        wish9.Level = "" + row["wish9_level"];
+                        wish9.Disabled = ("" + row["wish9_disabled"]) == "true" ? true : false;
+                        wish9.IsCancel = ("" + row["wish9_is_cancel"]) == "true" ? true : false;
+                        wish9.CancelReason = "" + row["wish9_cancel_reason"];
+                        wish9.CancelBy = "" + row["wish9_cancel_by"];
+                        wish9.IsBlock = ("" + row["wish9_is_block"]) == "true" ? true : false;
+                        wish9.BlockReason = "" + row["block9_reason"];
+                    }
+                    #endregion
+
+                    #region wish10
+                    {
+                        wish10.RefSubjectID = "" + row["wish10ref_subject_id"];
+                        wish10.Level = "" + row["wish10_level"];
+                        wish10.Disabled = ("" + row["wish10_disabled"]) == "true" ? true : false;
+                        wish10.IsCancel = ("" + row["wish10_is_cancel"]) == "true" ? true : false;
+                        wish10.CancelReason = "" + row["wish10_cancel_reason"];
+                        wish10.CancelBy = "" + row["wish10_cancel_by"];
+                        wish10.IsBlock = ("" + row["wish10_is_block"]) == "true" ? true : false;
+                        wish10.BlockReason = "" + row["block10_reason"];
+                    }
+                    #endregion
+
                     int i = 0;
 
                     dgvrow.Cells[i++].Value = "" + row["class_name"];
@@ -528,6 +688,66 @@ ORDER BY
                     }
                     #endregion
 
+                    #region wish6
+                    {
+                        dgvrow.Cells[i].Tag = wish6;
+                        if (wish6.IsCancel)
+                        {
+                            dgvrow.Cells[i].Style.Font = new Font(dataGridViewX1.Font, FontStyle.Strikeout);
+                            dgvrow.Cells[i].ToolTipText = wish6.CancelReason;
+                        }
+                        dgvrow.Cells[i++].Value = string.Format("{0} {1}", row["wish6"], Tool.RomanChar(wish6.Level));
+                    }
+                    #endregion
+
+                    #region wish7
+                    {
+                        dgvrow.Cells[i].Tag = wish7;
+                        if (wish7.IsCancel)
+                        {
+                            dgvrow.Cells[i].Style.Font = new Font(dataGridViewX1.Font, FontStyle.Strikeout);
+                            dgvrow.Cells[i].ToolTipText = wish7.CancelReason;
+                        }
+                        dgvrow.Cells[i++].Value = string.Format("{0} {1}", row["wish7"], Tool.RomanChar(wish7.Level));
+                    }
+                    #endregion
+
+                    #region wish8
+                    {
+                        dgvrow.Cells[i].Tag = wish8;
+                        if (wish8.IsCancel)
+                        {
+                            dgvrow.Cells[i].Style.Font = new Font(dataGridViewX1.Font, FontStyle.Strikeout);
+                            dgvrow.Cells[i].ToolTipText = wish8.CancelReason;
+                        }
+                        dgvrow.Cells[i++].Value = string.Format("{0} {1}", row["wish8"], Tool.RomanChar(wish8.Level));
+                    }
+                    #endregion
+
+                    #region wish9
+                    {
+                        dgvrow.Cells[i].Tag = wish9;
+                        if (wish9.IsCancel)
+                        {
+                            dgvrow.Cells[i].Style.Font = new Font(dataGridViewX1.Font, FontStyle.Strikeout);
+                            dgvrow.Cells[i].ToolTipText = wish9.CancelReason;
+                        }
+                        dgvrow.Cells[i++].Value = string.Format("{0} {1}", row["wish9"], Tool.RomanChar(wish9.Level));
+                    }
+                    #endregion
+
+                    #region wish10
+                    {
+                        dgvrow.Cells[i].Tag = wish10;
+                        if (wish10.IsCancel)
+                        {
+                            dgvrow.Cells[i].Style.Font = new Font(dataGridViewX1.Font, FontStyle.Strikeout);
+                            dgvrow.Cells[i].ToolTipText = wish10.CancelReason;
+                        }
+                        dgvrow.Cells[i++].Value = string.Format("{0} {1}", row["wish10"], Tool.RomanChar(wish10.Level));
+                    }
+                    #endregion
+
                     dgvrow.Tag = attend;
                     dataGridViewX1.Rows.Add(dgvrow);
                 }
@@ -566,7 +786,7 @@ ORDER BY
             {
                 foreach (DataGridViewRow dgvrow in dataGridViewX1.Rows)
                 {
-                    for (int i = 3; i <= 7; i++)
+                    for (int i = 3; i <= 12; i++)
                     {
                         Wish wish = dgvrow.Cells[i].Tag as Wish;
                         if (wish.Disabled)
@@ -585,7 +805,7 @@ ORDER BY
             {
                 foreach (DataGridViewRow dgvrow in dataGridViewX1.Rows)
                 {
-                    for (int i = 3; i <= 7; i++)
+                    for (int i = 3; i <= 12; i++)
                     {
                         Wish wish = dgvrow.Cells[i].Tag as Wish;
                         if (wish.Disabled && !wish.IsCancel)
@@ -607,7 +827,7 @@ ORDER BY
             {
                 foreach (DataGridViewRow dgvrow in dataGridViewX1.Rows)
                 {
-                    for (int i = 3; i <= 7; i++)
+                    for (int i = 3; i <= 12; i++)
                     {
                         Wish wish = dgvrow.Cells[i].Tag as Wish;
                         if (wish.IsBlock)
@@ -626,7 +846,7 @@ ORDER BY
             {
                 foreach (DataGridViewRow dgvrow in dataGridViewX1.Rows)
                 {
-                    for (int i = 3; i <= 7; i++)
+                    for (int i = 3; i <= 12; i++)
                     {
                         Wish wish = dgvrow.Cells[i].Tag as Wish;
                         if (wish.IsBlock && !wish.IsCancel)
@@ -649,7 +869,7 @@ ORDER BY
                 foreach (DataGridViewRow dgvrow in dataGridViewX1.Rows)
                 {
                     Attend attend = dgvrow.Tag as Attend;
-                    for (int i = 3; i <= 7; i++)
+                    for (int i = 3; i <= 12; i++)
                     {
                         Wish wish = dgvrow.Cells[i].Tag as Wish;
                         if (attend.RefSubjectID == wish.RefSubjectID)
@@ -669,7 +889,7 @@ ORDER BY
                 foreach (DataGridViewRow dgvrow in dataGridViewX1.Rows)
                 {
                     Attend attend = dgvrow.Tag as Attend;
-                    for (int i = 3; i <= 7; i++)
+                    for (int i = 3; i <= 12; i++)
                     {
                         Wish wish = dgvrow.Cells[i].Tag as Wish;
                         if (attend.RefSubjectID == wish.RefSubjectID && !wish.IsCancel)
@@ -691,7 +911,7 @@ ORDER BY
             {
                 foreach (DataGridViewRow dgvrow in dataGridViewX1.Rows)
                 {
-                    for (int i = 3; i <= 7; i++)
+                    for (int i = 3; i <= 12; i++)
                     {
                         dgvrow.Cells[i].Style = new DataGridViewCellStyle(dataGridViewX1.DefaultCellStyle);
                         Wish wish = dgvrow.Cells[i].Tag as Wish;
@@ -746,7 +966,7 @@ ORDER BY
                 {
                     Attend attend = dgvrow.Tag as Attend;
 
-                    for (int i = 3; i <= 7; i++)
+                    for (int i = 3; i <= 12; i++)
                     {
                         Wish wish = dgvrow.Cells[i].Tag as Wish;
                         // 如果有志願

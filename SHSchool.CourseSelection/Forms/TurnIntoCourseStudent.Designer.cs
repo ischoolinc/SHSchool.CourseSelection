@@ -286,6 +286,7 @@
             this.Controls.Add(this.schoolYearCbx);
             this.Controls.Add(this.dataGridViewX1);
             this.DoubleBuffered = true;
+            this.MaximizeBox = true;
             this.MinimumSize = new System.Drawing.Size(750, 472);
             this.Name = "TurnIntoCourseStudent";
             this.Text = "轉入修課學生";
