@@ -106,6 +106,9 @@ SELECT
     , goal as 教學目標
     , content as 教學內容
     , memo as 備註 
+    , entry_type AS 分項類別
+    , requiredby AS 校部訂
+    , required AS 必選修
 FROM
     $ischool.course_selection.subject 
 WHERE

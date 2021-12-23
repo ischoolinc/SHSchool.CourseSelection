@@ -56,6 +56,9 @@ namespace SHSchool.CourseSelection.Forms
                 this.cbxPreSubjectBlockMode.Enabled = false;
                 this.cbxRejoinMode.Enabled = false;
                 this.ckbxDisable.Enabled = false;
+                this.cboEntryType.Enabled = false;
+                this.cboRequiredBy.Enabled = false;
+                this.cboRequired.Enabled = false;
             }
         }
 
@@ -65,11 +68,12 @@ namespace SHSchool.CourseSelection.Forms
         {
             if (this.mRecord == null)
             {
+                //新增科目
                 this.mRecord = new UDT.Subject();
                 this.mRecord.SchoolYear = int.Parse(this.school_year);
                 this.mRecord.Semester = int.Parse(this.semester);
+                cboRequired.SelectedIndex = 1;
             }
-
             GetSubjectList();
         }
 
@@ -129,6 +133,10 @@ WHERE
             this.cbxPreSubjectBlockMode.Text = mRecord.PreSubjectBlockMode.Trim();
             this.cbxRejoinMode.Text = mRecord.RejoinBlockMode.Trim();
             this.ckbxDisable.Checked = mRecord.Disabled;
+            this.cboEntryType.Text = mRecord.EntryType.Trim();
+            this.cboRequiredBy.Text = mRecord.RequiredBy.Trim();
+            this.cboRequired.Text = mRecord.Required.Trim();
+
         }
 
         private void Cancel_Click(object sender, EventArgs e)
@@ -185,10 +193,25 @@ WHERE
                 {
                     mRecord.RejoinBlockMode = this.cbxRejoinMode.SelectedItem.ToString().Trim();
                 }
-                
+
                 mRecord.Disabled = this.ckbxDisable.Checked;
                 mRecord.CrossType1 = this.tbxCrossType1.Text.Trim();
                 mRecord.CrossType2 = this.tbxCrossType2.Text.Trim();
+
+                if (this.cboEntryType.SelectedItem == null)
+                    mRecord.EntryType = null;
+                else
+                    mRecord.EntryType = this.cboEntryType.SelectedItem.ToString().Trim();
+
+                if (this.cboRequired.SelectedItem == null)
+                    mRecord.Required = null;
+                else
+                    mRecord.Required = this.cboRequired.SelectedItem.ToString().Trim();
+
+                if (this.cboRequiredBy.SelectedItem == null)
+                    mRecord.RequiredBy = null;
+                else
+                    mRecord.RequiredBy = this.cboRequiredBy.SelectedItem.ToString().Trim();
 
                 mRecord.Save();
                 this.DialogResult = DialogResult.OK;
@@ -261,7 +284,7 @@ WHERE
 
                 if (!result)
                 {
-                    errorProvider1.SetError(this.Credit, "請輸入正整數或0。");
+                    errorProvider1.SetError(this.Credit, "請輸入數值。");
                     is_valid = false;
                 }
                 else
@@ -293,7 +316,7 @@ WHERE
 
                 if (!result)
                 {
-                    errorProvider1.SetError(this.tbxPreSubjectLevel, "請填阿拉伯數字");
+                    errorProvider1.SetError(this.tbxPreSubjectLevel, "請填正整數或空白。");
                     is_valid = false;
                 }
                 else

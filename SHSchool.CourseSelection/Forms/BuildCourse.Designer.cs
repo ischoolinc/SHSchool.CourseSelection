@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             this.buildCourseBtn = new DevComponents.DotNetBar.ButtonX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
@@ -42,6 +42,9 @@
             this.courseName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.subjectName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.level = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.entryType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RequiredBy = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Required = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.classType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.credit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.semesterLb = new DevComponents.DotNetBar.LabelX();
@@ -57,7 +60,7 @@
             this.buildCourseBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buildCourseBtn.BackColor = System.Drawing.Color.Transparent;
             this.buildCourseBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buildCourseBtn.Location = new System.Drawing.Point(572, 435);
+            this.buildCourseBtn.Location = new System.Drawing.Point(692, 461);
             this.buildCourseBtn.Name = "buildCourseBtn";
             this.buildCourseBtn.Size = new System.Drawing.Size(75, 24);
             this.buildCourseBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -124,16 +127,19 @@
             this.courseName,
             this.subjectName,
             this.level,
+            this.entryType,
+            this.RequiredBy,
+            this.Required,
             this.classType,
             this.credit});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle15;
             this.dataGridViewX1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridViewX1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
             this.dataGridViewX1.ImeMode = System.Windows.Forms.ImeMode.Alpha;
@@ -141,9 +147,10 @@
             this.dataGridViewX1.MinimumSize = new System.Drawing.Size(565, 320);
             this.dataGridViewX1.Name = "dataGridViewX1";
             this.dataGridViewX1.RowHeadersVisible = false;
+            this.dataGridViewX1.RowHeadersWidth = 51;
             this.dataGridViewX1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridViewX1.RowTemplate.Height = 24;
-            this.dataGridViewX1.Size = new System.Drawing.Size(635, 387);
+            this.dataGridViewX1.Size = new System.Drawing.Size(755, 407);
             this.dataGridViewX1.TabIndex = 0;
             this.dataGridViewX1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewX1_CellEndEdit);
             this.dataGridViewX1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewX1_CellValueChanged);
@@ -151,9 +158,10 @@
             // dataType
             // 
             this.dataType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataType.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataType.DefaultCellStyle = dataGridViewCellStyle11;
             this.dataType.HeaderText = "狀態";
+            this.dataType.MinimumWidth = 6;
             this.dataType.Name = "dataType";
             this.dataType.ReadOnly = true;
             this.dataType.Width = 73;
@@ -162,6 +170,7 @@
             // 
             this.courseName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.courseName.HeaderText = "課程名稱";
+            this.courseName.MinimumWidth = 6;
             this.courseName.Name = "courseName";
             this.courseName.ReadOnly = true;
             this.courseName.Width = 107;
@@ -170,6 +179,7 @@
             // 
             this.subjectName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.subjectName.HeaderText = "科目名稱";
+            this.subjectName.MinimumWidth = 6;
             this.subjectName.Name = "subjectName";
             this.subjectName.ReadOnly = true;
             this.subjectName.Width = 107;
@@ -177,28 +187,58 @@
             // level
             // 
             this.level.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.level.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.level.DefaultCellStyle = dataGridViewCellStyle12;
             this.level.HeaderText = "級別";
+            this.level.MinimumWidth = 6;
             this.level.Name = "level";
             this.level.ReadOnly = true;
             this.level.Width = 73;
             // 
+            // entryType
+            // 
+            this.entryType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.entryType.HeaderText = "分項類別";
+            this.entryType.MinimumWidth = 6;
+            this.entryType.Name = "entryType";
+            this.entryType.ReadOnly = true;
+            this.entryType.Width = 107;
+            // 
+            // RequiredBy
+            // 
+            this.RequiredBy.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.RequiredBy.HeaderText = "校部訂";
+            this.RequiredBy.MinimumWidth = 6;
+            this.RequiredBy.Name = "RequiredBy";
+            this.RequiredBy.ReadOnly = true;
+            this.RequiredBy.Width = 90;
+            // 
+            // Required
+            // 
+            this.Required.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Required.HeaderText = "必選修";
+            this.Required.MinimumWidth = 6;
+            this.Required.Name = "Required";
+            this.Required.ReadOnly = true;
+            this.Required.Width = 90;
+            // 
             // classType
             // 
             this.classType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.classType.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.classType.DefaultCellStyle = dataGridViewCellStyle13;
             this.classType.HeaderText = "班別";
+            this.classType.MinimumWidth = 6;
             this.classType.Name = "classType";
             this.classType.Width = 73;
             // 
             // credit
             // 
             this.credit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.credit.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.credit.DefaultCellStyle = dataGridViewCellStyle14;
             this.credit.HeaderText = "學分數";
+            this.credit.MinimumWidth = 6;
             this.credit.Name = "credit";
             this.credit.ReadOnly = true;
             this.credit.Width = 90;
@@ -254,17 +294,17 @@
             // 
             this.labelX4.BackgroundStyle.Class = "";
             this.labelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX4.Location = new System.Drawing.Point(12, 437);
+            this.labelX4.Location = new System.Drawing.Point(12, 455);
             this.labelX4.Name = "labelX4";
-            this.labelX4.Size = new System.Drawing.Size(360, 35);
+            this.labelX4.Size = new System.Drawing.Size(674, 35);
             this.labelX4.TabIndex = 8;
-            this.labelX4.Text = "說明: 課程名稱命名規則為 課程時段+科目名稱+級別+班別\r\n也可透過修改班別來調整課程名稱。";
+            this.labelX4.Text = "說明: 課程名稱命名規則為 課程時段+科目名稱+級別+班別，可透過修改班別來調整課程名稱。\r\n若課程名稱是空白，請確認課程頁籤是否已將該課程刪除。";
             // 
             // BuildCourse
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(659, 472);
+            this.ClientSize = new System.Drawing.Size(779, 492);
             this.Controls.Add(this.labelX4);
             this.Controls.Add(this.courseTypeLb);
             this.Controls.Add(this.labelX3);
@@ -294,12 +334,15 @@
         private DevComponents.DotNetBar.LabelX semesterLb;
         private DevComponents.DotNetBar.LabelX labelX3;
         private DevComponents.DotNetBar.LabelX courseTypeLb;
+        private DevComponents.DotNetBar.LabelX labelX4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataType;
         private System.Windows.Forms.DataGridViewTextBoxColumn courseName;
         private System.Windows.Forms.DataGridViewTextBoxColumn subjectName;
         private System.Windows.Forms.DataGridViewTextBoxColumn level;
+        private System.Windows.Forms.DataGridViewTextBoxColumn entryType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RequiredBy;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Required;
         private System.Windows.Forms.DataGridViewTextBoxColumn classType;
         private System.Windows.Forms.DataGridViewTextBoxColumn credit;
-        private DevComponents.DotNetBar.LabelX labelX4;
     }
 }

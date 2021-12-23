@@ -33,7 +33,6 @@
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
             this.Column1 = new DevComponents.DotNetBar.Controls.DataGridViewCheckBoxXColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.tbxMemo = new System.Windows.Forms.RichTextBox();
             this.labelX11 = new DevComponents.DotNetBar.LabelX();
@@ -50,6 +49,7 @@
             this.Exit = new DevComponents.DotNetBar.ButtonX();
             this.Save = new DevComponents.DotNetBar.ButtonX();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.SuspendLayout();
@@ -58,6 +58,7 @@
             // 
             this.panelEx1.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.panelEx1.Controls.Add(this.EndTime);
             this.panelEx1.Controls.Add(this.dataGridViewX1);
             this.panelEx1.Controls.Add(this.labelX1);
             this.panelEx1.Controls.Add(this.tbxMemo);
@@ -66,7 +67,6 @@
             this.panelEx1.Controls.Add(this.labelX9);
             this.panelEx1.Controls.Add(this.StartTime);
             this.panelEx1.Controls.Add(this.labelX5);
-            this.panelEx1.Controls.Add(this.EndTime);
             this.panelEx1.Controls.Add(this.labelX6);
             this.panelEx1.Controls.Add(this.cboSchoolYear);
             this.panelEx1.Controls.Add(this.cboSemester);
@@ -78,7 +78,7 @@
             this.panelEx1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.panelEx1.Location = new System.Drawing.Point(0, 0);
             this.panelEx1.Name = "panelEx1";
-            this.panelEx1.Size = new System.Drawing.Size(598, 498);
+            this.panelEx1.Size = new System.Drawing.Size(718, 550);
             this.panelEx1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx1.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -94,6 +94,8 @@
             this.dataGridViewX1.AllowUserToDeleteRows = false;
             this.dataGridViewX1.AllowUserToResizeColumns = false;
             this.dataGridViewX1.AllowUserToResizeRows = false;
+            this.dataGridViewX1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewX1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewX1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewX1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -111,8 +113,9 @@
             this.dataGridViewX1.Location = new System.Drawing.Point(92, 152);
             this.dataGridViewX1.Name = "dataGridViewX1";
             this.dataGridViewX1.RowHeadersVisible = false;
+            this.dataGridViewX1.RowHeadersWidth = 51;
             this.dataGridViewX1.RowTemplate.Height = 24;
-            this.dataGridViewX1.Size = new System.Drawing.Size(489, 165);
+            this.dataGridViewX1.Size = new System.Drawing.Size(609, 165);
             this.dataGridViewX1.TabIndex = 46;
             // 
             // Column1
@@ -123,15 +126,9 @@
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.Column1.DefaultCellStyle = dataGridViewCellStyle3;
             this.Column1.HeaderText = "開放";
+            this.Column1.MinimumWidth = 6;
             this.Column1.Name = "Column1";
-            // 
-            // Column2
-            // 
-            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column2.HeaderText = "課程時段";
-            this.Column2.Name = "Column2";
-            this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column1.Width = 125;
             // 
             // labelX1
             // 
@@ -140,7 +137,7 @@
             // 
             this.labelX1.BackgroundStyle.Class = "";
             this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX1.Location = new System.Drawing.Point(12, 123);
+            this.labelX1.Location = new System.Drawing.Point(24, 123);
             this.labelX1.Name = "labelX1";
             this.labelX1.Size = new System.Drawing.Size(113, 23);
             this.labelX1.TabIndex = 45;
@@ -148,15 +145,19 @@
             // 
             // tbxMemo
             // 
+            this.tbxMemo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbxMemo.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbxMemo.Location = new System.Drawing.Point(92, 352);
             this.tbxMemo.Name = "tbxMemo";
-            this.tbxMemo.Size = new System.Drawing.Size(489, 105);
+            this.tbxMemo.Size = new System.Drawing.Size(609, 157);
             this.tbxMemo.TabIndex = 43;
             this.tbxMemo.Text = "";
             // 
             // labelX11
             // 
+            this.labelX11.AutoSize = true;
             // 
             // 
             // 
@@ -164,73 +165,80 @@
             this.labelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX11.Location = new System.Drawing.Point(24, 323);
             this.labelX11.Name = "labelX11";
-            this.labelX11.Size = new System.Drawing.Size(113, 23);
+            this.labelX11.Size = new System.Drawing.Size(125, 26);
             this.labelX11.TabIndex = 42;
-            this.labelX11.Text = "選課公告內容:";
+            this.labelX11.Text = "選課公告內容：";
             // 
             // cbxMode
             // 
+            this.cbxMode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbxMode.DisplayMember = "Text";
             this.cbxMode.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbxMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxMode.FormattingEnabled = true;
-            this.cbxMode.ItemHeight = 19;
-            this.cbxMode.Location = new System.Drawing.Point(394, 21);
+            this.cbxMode.ItemHeight = 23;
+            this.cbxMode.Location = new System.Drawing.Point(513, 19);
             this.cbxMode.Name = "cbxMode";
-            this.cbxMode.Size = new System.Drawing.Size(121, 25);
+            this.cbxMode.Size = new System.Drawing.Size(188, 29);
             this.cbxMode.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.cbxMode.TabIndex = 4;
             // 
             // labelX9
             // 
+            this.labelX9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelX9.AutoSize = true;
             // 
             // 
             // 
             this.labelX9.BackgroundStyle.Class = "";
             this.labelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX9.Location = new System.Drawing.Point(325, 22);
+            this.labelX9.Location = new System.Drawing.Point(432, 20);
             this.labelX9.Name = "labelX9";
-            this.labelX9.Size = new System.Drawing.Size(63, 23);
+            this.labelX9.Size = new System.Drawing.Size(75, 26);
             this.labelX9.TabIndex = 38;
             this.labelX9.Text = "選課模式";
             // 
             // StartTime
             // 
+            this.StartTime.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 
             this.StartTime.Border.Class = "TextBoxBorder";
             this.StartTime.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.StartTime.Location = new System.Drawing.Point(92, 76);
+            this.StartTime.Location = new System.Drawing.Point(97, 76);
             this.StartTime.Name = "StartTime";
-            this.StartTime.Size = new System.Drawing.Size(190, 25);
+            this.StartTime.Size = new System.Drawing.Size(245, 35);
             this.StartTime.TabIndex = 2;
             this.StartTime.WatermarkText = "範例：2012/12/31 00:00:00";
             // 
             // labelX5
             // 
+            this.labelX5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelX5.AutoSize = true;
             // 
             // 
             // 
             this.labelX5.BackgroundStyle.Class = "";
             this.labelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX5.Location = new System.Drawing.Point(325, 78);
+            this.labelX5.Location = new System.Drawing.Point(382, 80);
             this.labelX5.Name = "labelX5";
-            this.labelX5.Size = new System.Drawing.Size(60, 21);
+            this.labelX5.Size = new System.Drawing.Size(75, 26);
             this.labelX5.TabIndex = 32;
             this.labelX5.Text = "結束時間";
             // 
             // EndTime
             // 
+            this.EndTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 
             this.EndTime.Border.Class = "TextBoxBorder";
             this.EndTime.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.EndTime.Location = new System.Drawing.Point(391, 76);
+            this.EndTime.Location = new System.Drawing.Point(456, 76);
             this.EndTime.Name = "EndTime";
-            this.EndTime.Size = new System.Drawing.Size(190, 25);
+            this.EndTime.Size = new System.Drawing.Size(245, 35);
             this.EndTime.TabIndex = 3;
             this.EndTime.WatermarkText = "範例：2012/12/31 00:00:00";
             // 
@@ -242,9 +250,9 @@
             // 
             this.labelX6.BackgroundStyle.Class = "";
             this.labelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX6.Location = new System.Drawing.Point(24, 78);
+            this.labelX6.Location = new System.Drawing.Point(24, 80);
             this.labelX6.Name = "labelX6";
-            this.labelX6.Size = new System.Drawing.Size(60, 21);
+            this.labelX6.Size = new System.Drawing.Size(75, 26);
             this.labelX6.TabIndex = 33;
             this.labelX6.Text = "開始時間";
             // 
@@ -254,10 +262,10 @@
             this.cboSchoolYear.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cboSchoolYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSchoolYear.FormattingEnabled = true;
-            this.cboSchoolYear.ItemHeight = 19;
-            this.cboSchoolYear.Location = new System.Drawing.Point(90, 20);
+            this.cboSchoolYear.ItemHeight = 23;
+            this.cboSchoolYear.Location = new System.Drawing.Point(100, 19);
             this.cboSchoolYear.Name = "cboSchoolYear";
-            this.cboSchoolYear.Size = new System.Drawing.Size(60, 25);
+            this.cboSchoolYear.Size = new System.Drawing.Size(79, 29);
             this.cboSchoolYear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.cboSchoolYear.TabIndex = 0;
             this.cboSchoolYear.SelectedIndexChanged += new System.EventHandler(this.cboSchoolYear_SelectedIndexChanged);
@@ -268,10 +276,10 @@
             this.cboSemester.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cboSemester.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSemester.FormattingEnabled = true;
-            this.cboSemester.ItemHeight = 19;
-            this.cboSemester.Location = new System.Drawing.Point(222, 20);
+            this.cboSemester.ItemHeight = 23;
+            this.cboSemester.Location = new System.Drawing.Point(254, 19);
             this.cboSemester.Name = "cboSemester";
-            this.cboSemester.Size = new System.Drawing.Size(60, 25);
+            this.cboSemester.Size = new System.Drawing.Size(71, 29);
             this.cboSemester.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.cboSemester.TabIndex = 1;
             this.cboSemester.SelectedIndexChanged += new System.EventHandler(this.cboSemester_SelectedIndexChanged);
@@ -284,9 +292,9 @@
             // 
             this.labelX3.BackgroundStyle.Class = "";
             this.labelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX3.Location = new System.Drawing.Point(182, 22);
+            this.labelX3.Location = new System.Drawing.Point(207, 20);
             this.labelX3.Name = "labelX3";
-            this.labelX3.Size = new System.Drawing.Size(34, 21);
+            this.labelX3.Size = new System.Drawing.Size(41, 26);
             this.labelX3.TabIndex = 5;
             this.labelX3.Text = "學期";
             // 
@@ -298,17 +306,18 @@
             // 
             this.labelX4.BackgroundStyle.Class = "";
             this.labelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX4.Location = new System.Drawing.Point(37, 22);
+            this.labelX4.Location = new System.Drawing.Point(41, 20);
             this.labelX4.Name = "labelX4";
-            this.labelX4.Size = new System.Drawing.Size(47, 21);
+            this.labelX4.Size = new System.Drawing.Size(58, 26);
             this.labelX4.TabIndex = 4;
             this.labelX4.Text = "學年度";
             // 
             // Exit
             // 
             this.Exit.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.Exit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Exit.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Exit.Location = new System.Drawing.Point(527, 463);
+            this.Exit.Location = new System.Drawing.Point(647, 515);
             this.Exit.Name = "Exit";
             this.Exit.Size = new System.Drawing.Size(54, 23);
             this.Exit.TabIndex = 10;
@@ -318,8 +327,9 @@
             // Save
             // 
             this.Save.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Save.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Save.Location = new System.Drawing.Point(466, 463);
+            this.Save.Location = new System.Drawing.Point(586, 515);
             this.Save.Name = "Save";
             this.Save.Size = new System.Drawing.Size(54, 23);
             this.Save.TabIndex = 9;
@@ -330,15 +340,25 @@
             // 
             this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dataGridViewTextBoxColumn1.HeaderText = "課程時段名稱";
+            this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // Column2
+            // 
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column2.HeaderText = "課程時段";
+            this.Column2.MinimumWidth = 6;
+            this.Column2.Name = "Column2";
+            this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // frmOpeningTime
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(598, 498);
+            this.ClientSize = new System.Drawing.Size(718, 550);
             this.Controls.Add(this.panelEx1);
             this.DoubleBuffered = true;
             this.Name = "frmOpeningTime";

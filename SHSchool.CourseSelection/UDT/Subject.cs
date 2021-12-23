@@ -126,5 +126,23 @@ namespace SHSchool.CourseSelection.UDT
         /// </summary>
         [FISCA.UDT.Field(Field = "cross_type2", Indexed = false)]
         public string CrossType2 { get; set; }
+
+        /// <summary>
+        /// 分項類別
+        /// </summary>
+        [FISCA.UDT.Field(Field = "entry_type", Indexed = false)]
+        public string EntryType { get; set; }
+
+        /// <summary>
+        /// 校部訂: 校訂、部定
+        /// </summary>
+        [FISCA.UDT.Field(Field = "requiredby", Indexed = false)]
+        public string RequiredBy { get; set; }
+
+        /// <summary>
+        /// 必選修
+        /// </summary>
+        [FISCA.UDT.Field(Field = "required", Indexed = false)]
+        public string Required { get; set; }
     }
 }

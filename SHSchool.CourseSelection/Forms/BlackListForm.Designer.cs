@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.cbxSchoolYear = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.cbxSemester = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
+            this.Column1 = new DevComponents.DotNetBar.Controls.DataGridViewCheckBoxXColumn();
             this.btnLeave = new DevComponents.DotNetBar.ButtonX();
             this.btnProduceBlacklist = new DevComponents.DotNetBar.ButtonX();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new DevComponents.DotNetBar.Controls.DataGridViewCheckBoxXColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
@@ -47,6 +47,7 @@
             // 
             // labelX1
             // 
+            this.labelX1.AutoSize = true;
             this.labelX1.BackColor = System.Drawing.Color.Transparent;
             // 
             // 
@@ -55,7 +56,7 @@
             this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX1.Location = new System.Drawing.Point(12, 11);
             this.labelX1.Name = "labelX1";
-            this.labelX1.Size = new System.Drawing.Size(45, 23);
+            this.labelX1.Size = new System.Drawing.Size(58, 26);
             this.labelX1.TabIndex = 0;
             this.labelX1.Text = "學年度";
             // 
@@ -66,7 +67,7 @@
             this.cbxSchoolYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxSchoolYear.FormattingEnabled = true;
             this.cbxSchoolYear.ItemHeight = 23;
-            this.cbxSchoolYear.Location = new System.Drawing.Point(63, 10);
+            this.cbxSchoolYear.Location = new System.Drawing.Point(65, 10);
             this.cbxSchoolYear.Name = "cbxSchoolYear";
             this.cbxSchoolYear.Size = new System.Drawing.Size(70, 29);
             this.cbxSchoolYear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -75,15 +76,16 @@
             // 
             // labelX2
             // 
+            this.labelX2.AutoSize = true;
             this.labelX2.BackColor = System.Drawing.Color.Transparent;
             // 
             // 
             // 
             this.labelX2.BackgroundStyle.Class = "";
             this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX2.Location = new System.Drawing.Point(171, 11);
+            this.labelX2.Location = new System.Drawing.Point(163, 11);
             this.labelX2.Name = "labelX2";
-            this.labelX2.Size = new System.Drawing.Size(45, 23);
+            this.labelX2.Size = new System.Drawing.Size(41, 26);
             this.labelX2.TabIndex = 2;
             this.labelX2.Text = "學期";
             // 
@@ -94,7 +96,7 @@
             this.cbxSemester.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxSemester.FormattingEnabled = true;
             this.cbxSemester.ItemHeight = 23;
-            this.cbxSemester.Location = new System.Drawing.Point(222, 10);
+            this.cbxSemester.Location = new System.Drawing.Point(210, 10);
             this.cbxSemester.Name = "cbxSemester";
             this.cbxSemester.Size = new System.Drawing.Size(70, 29);
             this.cbxSemester.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -116,20 +118,35 @@
             this.Column1,
             this.Column3,
             this.Column2});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridViewX1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
             this.dataGridViewX1.Location = new System.Drawing.Point(12, 41);
             this.dataGridViewX1.Name = "dataGridViewX1";
+            this.dataGridViewX1.RowHeadersWidth = 51;
             this.dataGridViewX1.RowTemplate.Height = 24;
-            this.dataGridViewX1.Size = new System.Drawing.Size(423, 318);
+            this.dataGridViewX1.Size = new System.Drawing.Size(551, 376);
             this.dataGridViewX1.TabIndex = 6;
+            // 
+            // Column1
+            // 
+            this.Column1.Checked = true;
+            this.Column1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.Column1.CheckValue = null;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Column1.HeaderText = "計算";
+            this.Column1.MinimumWidth = 6;
+            this.Column1.Name = "Column1";
+            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Column1.Width = 80;
             // 
             // btnLeave
             // 
@@ -137,7 +154,7 @@
             this.btnLeave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLeave.BackColor = System.Drawing.Color.Transparent;
             this.btnLeave.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnLeave.Location = new System.Drawing.Point(360, 365);
+            this.btnLeave.Location = new System.Drawing.Point(488, 423);
             this.btnLeave.Name = "btnLeave";
             this.btnLeave.Size = new System.Drawing.Size(75, 23);
             this.btnLeave.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -151,7 +168,7 @@
             this.btnProduceBlacklist.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnProduceBlacklist.BackColor = System.Drawing.Color.Transparent;
             this.btnProduceBlacklist.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnProduceBlacklist.Location = new System.Drawing.Point(265, 365);
+            this.btnProduceBlacklist.Location = new System.Drawing.Point(393, 423);
             this.btnProduceBlacklist.Name = "btnProduceBlacklist";
             this.btnProduceBlacklist.Size = new System.Drawing.Size(89, 23);
             this.btnProduceBlacklist.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -163,36 +180,27 @@
             // 
             this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dataGridViewTextBoxColumn1.HeaderText = "課程時段";
+            this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             // 
             // dataGridViewTextBoxColumn2
             // 
             this.dataGridViewTextBoxColumn2.HeaderText = "黑名單學生人數";
+            this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.Width = 130;
-            // 
-            // Column1
-            // 
-            this.Column1.Checked = true;
-            this.Column1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.Column1.CheckValue = null;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Column1.HeaderText = "計算";
-            this.Column1.Name = "Column1";
-            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Column1.Width = 80;
             // 
             // Column3
             // 
             this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Column3.HeaderText = "課程時段";
+            this.Column3.MinimumWidth = 6;
             this.Column3.Name = "Column3";
             // 
             // Column2
             // 
             this.Column2.HeaderText = "擋修學生人次";
+            this.Column2.MinimumWidth = 6;
             this.Column2.Name = "Column2";
             this.Column2.Width = 130;
             // 
@@ -200,7 +208,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(447, 400);
+            this.ClientSize = new System.Drawing.Size(575, 458);
             this.Controls.Add(this.btnProduceBlacklist);
             this.Controls.Add(this.btnLeave);
             this.Controls.Add(this.dataGridViewX1);
@@ -214,6 +222,7 @@
             this.Load += new System.EventHandler(this.BlackListForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

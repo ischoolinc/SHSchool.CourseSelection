@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
@@ -69,7 +69,7 @@
             this.groupPanel1.Location = new System.Drawing.Point(12, 41);
             this.groupPanel1.Name = "groupPanel1";
             this.groupPanel1.Padding = new System.Windows.Forms.Padding(2, 5, 2, 5);
-            this.groupPanel1.Size = new System.Drawing.Size(750, 479);
+            this.groupPanel1.Size = new System.Drawing.Size(758, 479);
             // 
             // 
             // 
@@ -128,14 +128,14 @@
             this.className,
             this.saetNo,
             this.attendAfter});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewX1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewX1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridViewX1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
@@ -143,15 +143,17 @@
             this.dataGridViewX1.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
             this.dataGridViewX1.Name = "dataGridViewX1";
             this.dataGridViewX1.ReadOnly = true;
+            this.dataGridViewX1.RowHeadersWidth = 51;
             this.dataGridViewX1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridViewX1.RowTemplate.Height = 24;
             this.dataGridViewX1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewX1.Size = new System.Drawing.Size(740, 412);
+            this.dataGridViewX1.Size = new System.Drawing.Size(748, 407);
             this.dataGridViewX1.TabIndex = 0;
             // 
             // stuNumber
             // 
             this.stuNumber.HeaderText = "學號";
+            this.stuNumber.MinimumWidth = 6;
             this.stuNumber.Name = "stuNumber";
             this.stuNumber.ReadOnly = true;
             this.stuNumber.Width = 59;
@@ -159,6 +161,7 @@
             // name
             // 
             this.name.HeaderText = "姓名";
+            this.name.MinimumWidth = 6;
             this.name.Name = "name";
             this.name.ReadOnly = true;
             this.name.Width = 59;
@@ -166,6 +169,7 @@
             // gender
             // 
             this.gender.HeaderText = "性別";
+            this.gender.MinimumWidth = 6;
             this.gender.Name = "gender";
             this.gender.ReadOnly = true;
             this.gender.Width = 59;
@@ -173,6 +177,7 @@
             // className
             // 
             this.className.HeaderText = "班級";
+            this.className.MinimumWidth = 6;
             this.className.Name = "className";
             this.className.ReadOnly = true;
             this.className.Width = 59;
@@ -180,6 +185,7 @@
             // saetNo
             // 
             this.saetNo.HeaderText = "座號";
+            this.saetNo.MinimumWidth = 6;
             this.saetNo.Name = "saetNo";
             this.saetNo.ReadOnly = true;
             this.saetNo.Width = 59;
@@ -188,6 +194,7 @@
             // 
             this.attendAfter.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.attendAfter.HeaderText = "分班";
+            this.attendAfter.MinimumWidth = 6;
             this.attendAfter.Name = "attendAfter";
             this.attendAfter.ReadOnly = true;
             // 
@@ -199,7 +206,7 @@
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.MinimumSize = new System.Drawing.Size(0, 30);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(740, 30);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(748, 30);
             this.flowLayoutPanel1.TabIndex = 4;
             // 
             // autoDisClassBtn
@@ -254,7 +261,7 @@
             // 
             this.labelX3.BackgroundStyle.Class = "";
             this.labelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX3.Location = new System.Drawing.Point(566, 10);
+            this.labelX3.Location = new System.Drawing.Point(574, 10);
             this.labelX3.Name = "labelX3";
             this.labelX3.Size = new System.Drawing.Size(35, 23);
             this.labelX3.TabIndex = 3;
@@ -266,10 +273,10 @@
             this.cbxSchoolYear.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbxSchoolYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxSchoolYear.FormattingEnabled = true;
-            this.cbxSchoolYear.ItemHeight = 19;
+            this.cbxSchoolYear.ItemHeight = 23;
             this.cbxSchoolYear.Location = new System.Drawing.Point(71, 9);
             this.cbxSchoolYear.Name = "cbxSchoolYear";
-            this.cbxSchoolYear.Size = new System.Drawing.Size(60, 25);
+            this.cbxSchoolYear.Size = new System.Drawing.Size(60, 29);
             this.cbxSchoolYear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.cbxSchoolYear.TabIndex = 4;
             this.cbxSchoolYear.SelectedIndexChanged += new System.EventHandler(this.cbxSchoolYear_SelectedIndexChanged);
@@ -280,10 +287,10 @@
             this.cbxSemester.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbxSemester.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxSemester.FormattingEnabled = true;
-            this.cbxSemester.ItemHeight = 19;
+            this.cbxSemester.ItemHeight = 23;
             this.cbxSemester.Location = new System.Drawing.Point(192, 9);
             this.cbxSemester.Name = "cbxSemester";
-            this.cbxSemester.Size = new System.Drawing.Size(50, 25);
+            this.cbxSemester.Size = new System.Drawing.Size(50, 29);
             this.cbxSemester.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.cbxSemester.TabIndex = 5;
             this.cbxSemester.SelectedIndexChanged += new System.EventHandler(this.cbxSemester_SelectedIndexChanged);
@@ -294,11 +301,12 @@
             this.cbxSubject.DisplayMember = "Text";
             this.cbxSubject.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbxSubject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxSubject.DropDownWidth = 300;
             this.cbxSubject.FormattingEnabled = true;
-            this.cbxSubject.ItemHeight = 19;
-            this.cbxSubject.Location = new System.Drawing.Point(606, 9);
+            this.cbxSubject.ItemHeight = 23;
+            this.cbxSubject.Location = new System.Drawing.Point(614, 9);
             this.cbxSubject.Name = "cbxSubject";
-            this.cbxSubject.Size = new System.Drawing.Size(156, 25);
+            this.cbxSubject.Size = new System.Drawing.Size(156, 29);
             this.cbxSubject.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.cbxSubject.TabIndex = 6;
             this.cbxSubject.SelectedIndexChanged += new System.EventHandler(this.cbxSubject_SelectedIndexChanged);
@@ -309,7 +317,7 @@
             this.saveBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.saveBtn.BackColor = System.Drawing.Color.Transparent;
             this.saveBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.saveBtn.Location = new System.Drawing.Point(606, 526);
+            this.saveBtn.Location = new System.Drawing.Point(614, 526);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(75, 23);
             this.saveBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -323,7 +331,7 @@
             this.closeBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.closeBtn.BackColor = System.Drawing.Color.Transparent;
             this.closeBtn.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.closeBtn.Location = new System.Drawing.Point(687, 526);
+            this.closeBtn.Location = new System.Drawing.Point(695, 526);
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(75, 23);
             this.closeBtn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -333,14 +341,13 @@
             // 
             // labelX4
             // 
-            this.labelX4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelX4.BackColor = System.Drawing.Color.Transparent;
             // 
             // 
             // 
             this.labelX4.BackgroundStyle.Class = "";
             this.labelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX4.Location = new System.Drawing.Point(360, 10);
+            this.labelX4.Location = new System.Drawing.Point(314, 10);
             this.labelX4.Name = "labelX4";
             this.labelX4.Size = new System.Drawing.Size(61, 23);
             this.labelX4.TabIndex = 9;
@@ -348,24 +355,26 @@
             // 
             // cbxCourseType
             // 
-            this.cbxCourseType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxCourseType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbxCourseType.DisplayMember = "Text";
             this.cbxCourseType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbxCourseType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxCourseType.DropDownWidth = 480;
             this.cbxCourseType.FormattingEnabled = true;
-            this.cbxCourseType.ItemHeight = 19;
-            this.cbxCourseType.Location = new System.Drawing.Point(427, 9);
+            this.cbxCourseType.ItemHeight = 23;
+            this.cbxCourseType.Location = new System.Drawing.Point(381, 9);
             this.cbxCourseType.Name = "cbxCourseType";
-            this.cbxCourseType.Size = new System.Drawing.Size(110, 25);
+            this.cbxCourseType.Size = new System.Drawing.Size(164, 29);
             this.cbxCourseType.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.cbxCourseType.TabIndex = 10;
             this.cbxCourseType.SelectedIndexChanged += new System.EventHandler(this.cbxCourseType_SelectedIndexChanged);
             // 
             // ManualDisClass
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(774, 561);
+            this.ClientSize = new System.Drawing.Size(782, 561);
             this.Controls.Add(this.autoDisClassBtn);
             this.Controls.Add(this.cbxCourseType);
             this.Controls.Add(this.labelX4);
