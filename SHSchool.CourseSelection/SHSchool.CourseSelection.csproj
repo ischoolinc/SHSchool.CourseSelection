@@ -461,6 +461,10 @@
     <Content Include="Library\SHSchool.Data.dll" />
     <Content Include="Library\SHSchool.Data.xml" />
     <Content Include="Resources\loading.gif" />
+    <None Include="Resources\選課志願分發.png" />
+    <None Include="Resources\開課分班.png" />
+    <None Include="Resources\選課管理.png" />
+    <None Include="Resources\選課志願調整.png" />
     <Content Include="修改版本_增加志願數&amp;調整顯示訊息.txt" />
     <None Include="Resources\Subject_Import.xml" />
     <None Include="Resources\paste_64.png" />

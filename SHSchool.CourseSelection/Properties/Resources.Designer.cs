@@ -82,8 +82,7 @@ namespace SHSchool.CourseSelection.Properties {
         ///&lt;xsl:variable name=&quot;uppercase&quot; select=&quot;&apos;ABCDEFGHIJKLMNOPQRSTUVWXYZ&apos;&quot; /&gt;
         ///&lt;html&gt;
         ///	&lt;head&gt;
-        ///	&lt;style&gt;
-        ///	tabl [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
+        ///	&lt;s [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
         /// </summary>
         internal static string format {
             get {
@@ -155,20 +154,21 @@ namespace SHSchool.CourseSelection.Properties {
         ///   查詢類似 &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;format.xsl&quot; ?&gt;
         ///&lt;ValidateRule Name=&quot;科目資料&quot;&gt;
-        ///  &lt;DuplicateDetection&gt;
-        ///    &lt;Detector Name=&quot;學年度+學期+課程時段+科目名稱+級別&quot;&gt;
-        ///      &lt;Field Name=&quot;學年度&quot; /&gt;
-        ///      &lt;Field Name=&quot;學期&quot; /&gt;
-        ///      &lt;Field Name=&quot;課程時段&quot; /&gt;
-        ///      &lt;Field Name=&quot;科目名稱&quot; /&gt;
-        ///      &lt;Field Name=&quot;級別&quot; /&gt;
-        ///    &lt;/Detector&gt;
-        ///    &lt;Detector Name=&quot;科目系統編號&quot;&gt;
-        ///      &lt;Field Name=&quot;科目系統編號&quot; /&gt;
-        ///    &lt;/Detector&gt;
-        ///  &lt;/DuplicateDetection&gt;
-        ///  &lt;FieldList&gt;
-        ///    &lt;!--科目系統編號, 學年度, 學期, 科目名稱, 級別, 學分, 課程時段, 修 [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
+        ///	&lt;DuplicateDetection&gt;
+        ///		&lt;Detector Name=&quot;學年度+學期+課程時段+科目名稱+級別&quot;&gt;
+        ///			&lt;Field Name=&quot;學年度&quot; /&gt;
+        ///			&lt;Field Name=&quot;學期&quot; /&gt;
+        ///			&lt;Field Name=&quot;課程時段&quot; /&gt;
+        ///			&lt;Field Name=&quot;科目名稱&quot; /&gt;
+        ///			&lt;Field Name=&quot;級別&quot; /&gt;
+        ///		&lt;/Detector&gt;
+        ///		&lt;Detector Name=&quot;科目系統編號&quot;&gt;
+        ///			&lt;Field Name=&quot;科目系統編號&quot; /&gt;
+        ///		&lt;/Detector&gt;
+        ///	&lt;/DuplicateDetection&gt;
+        ///	&lt;FieldList&gt;
+        ///		&lt;!--科目系統編號, 學年度, 學期, 科目名稱, 級別, 學分, 課程時段, 修課人數上限, 教學目標, 教學內容, 備註--&gt;
+        ///		&lt;Fi [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
         /// </summary>
         internal static string Subject_Import {
             get {
@@ -207,12 +207,52 @@ namespace SHSchool.CourseSelection.Properties {
         }
         
         /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 選課志願分發 {
+            get {
+                object obj = ResourceManager.GetObject("選課志願分發", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 選課志願調整 {
+            get {
+                object obj = ResourceManager.GetObject("選課志願調整", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 選課管理 {
+            get {
+                object obj = ResourceManager.GetObject("選課管理", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   查詢類型 System.Byte[] 的當地語系化資源。
         /// </summary>
         internal static byte[] 選課設定檢查報表樣板 {
             get {
                 object obj = ResourceManager.GetObject("選課設定檢查報表樣板", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 開課分班 {
+            get {
+                object obj = ResourceManager.GetObject("開課分班", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

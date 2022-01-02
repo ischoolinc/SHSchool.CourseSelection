@@ -14,9 +14,16 @@ namespace SHSchool.CourseSelection
             MotherForm.RibbonBarItems["教務作業", "選課作業"]["匯出"].Size = RibbonBarButton.MenuButtonSize.Large;
             MotherForm.RibbonBarItems["教務作業", "選課作業"]["匯入"].Image = Properties.Resources.Import_Image;
             MotherForm.RibbonBarItems["教務作業", "選課作業"]["匯入"].Size = RibbonBarButton.MenuButtonSize.Large;
-            MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課管理"].Size = RibbonBarButton.MenuButtonSize.Large;
-            MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課管理"].Image = Properties.Resources.sandglass_unlock_64;
-            
+            MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課管理"].Size = RibbonBarButton.MenuButtonSize.Medium;
+            MotherForm.RibbonBarItems["教務作業", "選課作業"]["開課/分班"].Size = RibbonBarButton.MenuButtonSize.Medium;
+
+            //2022/1/3 - Dylan更新
+            MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課管理"].Image = Properties.Resources.選課管理;
+            MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課結果及分發"].Image = Properties.Resources.選課志願分發;
+            MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課志願調整"].Image = Properties.Resources.選課志願調整;
+            MotherForm.RibbonBarItems["教務作業", "選課作業"]["開課/分班"].Image = Properties.Resources.開課分班;
+
+
             //MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課結果及分發"].Size = RibbonBarButton.MenuButtonSize.Large;
             //MotherForm.RibbonBarItems["教務作業", "選課作業"]["選課結果及分發"].Image = Properties.Resources.sandglass_unlock_64;
             //MotherForm.RibbonBarItems["教務作業", "選課作業"]["開課/分班"].Size = RibbonBarButton.MenuButtonSize.Large;
