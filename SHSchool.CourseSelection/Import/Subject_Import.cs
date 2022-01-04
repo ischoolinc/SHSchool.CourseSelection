@@ -269,7 +269,7 @@ namespace SHSchool.CourseSelection.Import
                 // 2021-12 Cyn 新增
                 //https://3.basecamp.com/4399967/buckets/15765350/todos/4448231024
                 if (_mOption.SelectedFields.Contains("分項類別") && !string.IsNullOrWhiteSpace(row.GetValue("分項類別")))
-                    subjectRecord.EntryType = row.GetValue("跨分項類別課程時段2").Trim();
+                    subjectRecord.EntryType = row.GetValue("分項類別").Trim();
                 else
                     subjectRecord.EntryType = null;
 
