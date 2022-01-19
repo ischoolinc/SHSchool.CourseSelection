@@ -59,7 +59,7 @@
 		<Field Required="False" Name="教學內容" Description="教學內容" />
 		<Field Required="False" Name="備註" Description="備註" />
 		<Field Required="False" Name="分項類別" Description="分項類別" EmptyAlsoValidate="False" >
-			<Validate AutoCorrect="False" Description="「分項類別」只允許「空白、學業、體育、專業科目、實習科目」。" ErrorType="Error" Validator="分項類別列舉" When="" />
+			<Validate AutoCorrect="False" Description="「分項類別」只允許「空白、學業、專業科目、實習科目」。" ErrorType="Error" Validator="分項類別列舉" When="" />
 		</Field>
 		<Field Required="False" Name="校部訂" Description="校部訂" EmptyAlsoValidate="False" >
 			<Validate AutoCorrect="False" Description="「校部訂」只允許「空白、校訂、部定」。" ErrorType="Error" Validator="校部訂列舉" When="" />
@@ -108,7 +108,6 @@
 		</FieldValidator>
 		<FieldValidator Name="分項類別列舉" Type="Enumeration">
 			<Item Value="學業" />
-			<Item Value="體育" />
 			<Item Value="專業科目" />
 			<Item Value="實習科目" />
 		</FieldValidator>

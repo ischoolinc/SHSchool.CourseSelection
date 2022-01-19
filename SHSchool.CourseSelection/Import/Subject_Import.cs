@@ -112,8 +112,8 @@ namespace SHSchool.CourseSelection.Import
                     }
 
                     if (!string.IsNullOrEmpty(entry_type))
-                        if (entry_type != "學業" && entry_type != "體育" && entry_type != "專業科目" && entry_type != "實習科目")
-                            Messages[x.Position].MessageItems.Add(new MessageItem(EMBA.Validator.ErrorType.Error, EMBA.Validator.ValidatorType.Row, "分項類別只允許「空白、學業、體育、專業科目、實習科目」。"));
+                        if (entry_type != "學業" && entry_type != "專業科目" && entry_type != "實習科目")
+                            Messages[x.Position].MessageItems.Add(new MessageItem(EMBA.Validator.ErrorType.Error, EMBA.Validator.ValidatorType.Row, "分項類別只允許「空白、學業、專業科目、實習科目」。"));
 
                     if (!string.IsNullOrEmpty(requiredBy))
                         if (requiredBy != "校訂" && requiredBy != "部定")

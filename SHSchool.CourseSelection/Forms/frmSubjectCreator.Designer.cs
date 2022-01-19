@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
+            this.labelX5 = new DevComponents.DotNetBar.LabelX();
+            this.labelX3 = new DevComponents.DotNetBar.LabelX();
             this.groupPanel2 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.cboRequired = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.comboItem13 = new DevComponents.Editors.ComboItem();
@@ -44,13 +46,11 @@
             this.comboItem8 = new DevComponents.Editors.ComboItem();
             this.comboItem9 = new DevComponents.Editors.ComboItem();
             this.comboItem16 = new DevComponents.Editors.ComboItem();
-            this.comboItem17 = new DevComponents.Editors.ComboItem();
             this.labelX16 = new DevComponents.DotNetBar.LabelX();
             this.tbxCrossType2 = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.tbxCrossType1 = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.labelX15 = new DevComponents.DotNetBar.LabelX();
             this.labelX14 = new DevComponents.DotNetBar.LabelX();
-            this.ckbxDisable = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.cbxRejoinMode = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.comboItem6 = new DevComponents.Editors.ComboItem();
             this.comboItem3 = new DevComponents.Editors.ComboItem();
@@ -74,17 +74,16 @@
             this.labelX7 = new DevComponents.DotNetBar.LabelX();
             this.Goal = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.labelX6 = new DevComponents.DotNetBar.LabelX();
-            this.labelX5 = new DevComponents.DotNetBar.LabelX();
             this.Limit = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.labelX4 = new DevComponents.DotNetBar.LabelX();
             this.Type = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.labelX3 = new DevComponents.DotNetBar.LabelX();
             this.Credit = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.SubjectName = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.Cancel = new DevComponents.DotNetBar.ButtonX();
             this.Save = new DevComponents.DotNetBar.ButtonX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
+            this.ckbxDisable = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.panelEx1.SuspendLayout();
             this.groupPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -141,6 +140,38 @@
             this.panelEx1.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 2;
+            // 
+            // labelX5
+            // 
+            this.labelX5.AutoSize = true;
+            // 
+            // 
+            // 
+            this.labelX5.BackgroundStyle.Class = "";
+            this.labelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX5.Location = new System.Drawing.Point(733, 132);
+            this.labelX5.Margin = new System.Windows.Forms.Padding(4);
+            this.labelX5.Name = "labelX5";
+            this.labelX5.Size = new System.Drawing.Size(108, 26);
+            this.labelX5.TabIndex = 8;
+            this.labelX5.Text = "修課人數上限";
+            this.labelX5.TextAlignment = System.Drawing.StringAlignment.Far;
+            // 
+            // labelX3
+            // 
+            this.labelX3.AutoSize = true;
+            // 
+            // 
+            // 
+            this.labelX3.BackgroundStyle.Class = "";
+            this.labelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX3.Location = new System.Drawing.Point(749, 80);
+            this.labelX3.Margin = new System.Windows.Forms.Padding(4);
+            this.labelX3.Name = "labelX3";
+            this.labelX3.Size = new System.Drawing.Size(92, 26);
+            this.labelX3.TabIndex = 4;
+            this.labelX3.Text = "學　分　數";
+            this.labelX3.TextAlignment = System.Drawing.StringAlignment.Far;
             // 
             // groupPanel2
             // 
@@ -278,8 +309,7 @@
             this.comboItem7,
             this.comboItem8,
             this.comboItem9,
-            this.comboItem16,
-            this.comboItem17});
+            this.comboItem16});
             this.cboEntryType.Location = new System.Drawing.Point(138, 9);
             this.cboEntryType.Margin = new System.Windows.Forms.Padding(4);
             this.cboEntryType.Name = "cboEntryType";
@@ -298,10 +328,6 @@
             // comboItem16
             // 
             this.comboItem16.Text = "專業科目";
-            // 
-            // comboItem17
-            // 
-            this.comboItem17.Text = "體育";
             // 
             // labelX16
             // 
@@ -373,24 +399,6 @@
             this.labelX14.TabIndex = 27;
             this.labelX14.Text = "跨課程時段1";
             this.labelX14.TextAlignment = System.Drawing.StringAlignment.Far;
-            // 
-            // ckbxDisable
-            // 
-            this.ckbxDisable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            // 
-            // 
-            // 
-            this.ckbxDisable.BackgroundStyle.Class = "";
-            this.ckbxDisable.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.ckbxDisable.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.ckbxDisable.Location = new System.Drawing.Point(700, 695);
-            this.ckbxDisable.Margin = new System.Windows.Forms.Padding(4);
-            this.ckbxDisable.Name = "ckbxDisable";
-            this.ckbxDisable.Size = new System.Drawing.Size(91, 29);
-            this.ckbxDisable.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.ckbxDisable.TabIndex = 12;
-            this.ckbxDisable.Text = "不開課";
-            this.ckbxDisable.TextColor = System.Drawing.Color.Red;
             // 
             // cbxRejoinMode
             // 
@@ -671,22 +679,6 @@
             this.labelX6.Text = "教學目標";
             this.labelX6.TextAlignment = System.Drawing.StringAlignment.Far;
             // 
-            // labelX5
-            // 
-            this.labelX5.AutoSize = true;
-            // 
-            // 
-            // 
-            this.labelX5.BackgroundStyle.Class = "";
-            this.labelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX5.Location = new System.Drawing.Point(733, 132);
-            this.labelX5.Margin = new System.Windows.Forms.Padding(4);
-            this.labelX5.Name = "labelX5";
-            this.labelX5.Size = new System.Drawing.Size(108, 26);
-            this.labelX5.TabIndex = 8;
-            this.labelX5.Text = "修課人數上限";
-            this.labelX5.TextAlignment = System.Drawing.StringAlignment.Far;
-            // 
             // Limit
             // 
             // 
@@ -727,22 +719,6 @@
             this.Type.Name = "Type";
             this.Type.Size = new System.Drawing.Size(293, 35);
             this.Type.TabIndex = 2;
-            // 
-            // labelX3
-            // 
-            this.labelX3.AutoSize = true;
-            // 
-            // 
-            // 
-            this.labelX3.BackgroundStyle.Class = "";
-            this.labelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX3.Location = new System.Drawing.Point(749, 80);
-            this.labelX3.Margin = new System.Windows.Forms.Padding(4);
-            this.labelX3.Name = "labelX3";
-            this.labelX3.Size = new System.Drawing.Size(92, 26);
-            this.labelX3.TabIndex = 4;
-            this.labelX3.Text = "學　分　數";
-            this.labelX3.TextAlignment = System.Drawing.StringAlignment.Far;
             // 
             // Credit
             // 
@@ -826,6 +802,24 @@
             this.labelX1.Text = "科目名稱";
             this.labelX1.TextAlignment = System.Drawing.StringAlignment.Far;
             // 
+            // ckbxDisable
+            // 
+            this.ckbxDisable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            // 
+            // 
+            // 
+            this.ckbxDisable.BackgroundStyle.Class = "";
+            this.ckbxDisable.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.ckbxDisable.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.ckbxDisable.Location = new System.Drawing.Point(700, 695);
+            this.ckbxDisable.Margin = new System.Windows.Forms.Padding(4);
+            this.ckbxDisable.Name = "ckbxDisable";
+            this.ckbxDisable.Size = new System.Drawing.Size(91, 29);
+            this.ckbxDisable.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.ckbxDisable.TabIndex = 12;
+            this.ckbxDisable.Text = "不開課";
+            this.ckbxDisable.TextColor = System.Drawing.Color.Red;
+            // 
             // frmSubjectCreator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -899,7 +893,6 @@
         private DevComponents.Editors.ComboItem comboItem8;
         private DevComponents.Editors.ComboItem comboItem9;
         private DevComponents.Editors.ComboItem comboItem16;
-        private DevComponents.Editors.ComboItem comboItem17;
         private DevComponents.DotNetBar.LabelX labelX16;
     }
 }
