@@ -1213,7 +1213,7 @@ ORDER BY
             string sql = "";
             foreach (DataGridViewRow datarow in dataGridViewX1.Rows)
             {
-                if ("" + datarow.Cells[13].Value != "跨課程時段") //Cyn因增加學號 由12改成13
+                if ("" + datarow.Cells[attendType.DisplayIndex].Value != "跨課程時段") 
                 {
                     DataRow row = (DataRow)datarow.Tag;
                     string data = string.Format(@"
