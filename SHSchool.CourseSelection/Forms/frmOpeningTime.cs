@@ -117,10 +117,10 @@ WITH target_type AS(
         AND type IS NOT NULL
 ) ,open_type AS(
     SELECT
-	    unnest(xpath('/Type/text()', type_xml))::text as type
+	    REPLACE(unnest(xpath('/Type/text()', type_xml))::text,'&amp;amp;','&') as type
     FROM(
         SELECT
-             unnest(xpath('/root/Type', xmlparse(content open_type))) as type_xml
+             unnest(xpath('/root/Type', xmlparse(content REPLACE(open_type,'&','&amp;amp;')))) as type_xml
         FROM
             $ischool.course_selection.opening_time
     ) AS  type_xml  
