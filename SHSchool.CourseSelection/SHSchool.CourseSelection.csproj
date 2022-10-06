@@ -278,6 +278,12 @@
     <Compile Include="Forms\SettingExamineReport.Designer.cs">
       <DependentUpon>SettingExamineReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\TextForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TextForm.Designer.cs">
+      <DependentUpon>TextForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\TurnIntoCourseStudent.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -379,6 +385,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SettingExamineReport.resx">
       <DependentUpon>SettingExamineReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TextForm.resx">
+      <DependentUpon>TextForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TurnIntoCourseStudent.resx">
       <DependentUpon>TurnIntoCourseStudent.cs</DependentUpon>

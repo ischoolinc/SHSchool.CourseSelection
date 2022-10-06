@@ -232,7 +232,7 @@ FROM
                         datarow.Tag = "correct";
                     }
                 }
-                
+
                 dataGridViewX1.Rows.Add(datarow);
             }
         }
@@ -436,7 +436,12 @@ SELECT * FROM insert_sc_attend
             }
             catch (Exception error)
             {
-                MsgBox.Show(error.Message);
+                //MsgBox.Show("轉入失敗：\n\r" +
+                //    "請確認是否曾在「課程」頁籤中將選課刪除?\n\r" +
+                //    "若是，請至「選課作業→開課/分班→選修科目開課」，將開課班數改為0（即刪除過往開課紀錄），並重新進行開課、分班、轉入學生等動作。");
+
+                MsgBox.Show("轉入失敗：\n\r" +
+    "課程已不存在，請至開課/分班>選修科目開課設定。");
             }
         }
 

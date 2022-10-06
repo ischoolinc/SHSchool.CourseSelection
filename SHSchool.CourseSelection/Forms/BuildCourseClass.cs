@@ -202,5 +202,11 @@ ORDER BY
                 dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex].ErrorText = string.Empty;
             }
         }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            TextForm textForm = new TextForm();
+            textForm.Show();
+        }
     }
 }

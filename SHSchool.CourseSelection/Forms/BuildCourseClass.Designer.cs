@@ -62,6 +62,7 @@
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -100,7 +101,7 @@
             this.dataGridViewX1.RowHeadersVisible = false;
             this.dataGridViewX1.RowHeadersWidth = 51;
             this.dataGridViewX1.RowTemplate.Height = 24;
-            this.dataGridViewX1.Size = new System.Drawing.Size(757, 343);
+            this.dataGridViewX1.Size = new System.Drawing.Size(757, 364);
             this.dataGridViewX1.TabIndex = 3;
             this.dataGridViewX1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewX1_CellEndEdit);
             // 
@@ -124,7 +125,7 @@
             this.level.MinimumWidth = 6;
             this.level.Name = "level";
             this.level.ReadOnly = true;
-            this.level.Width = 73;
+            this.level.Width = 59;
             // 
             // credit
             // 
@@ -136,7 +137,7 @@
             this.credit.MinimumWidth = 6;
             this.credit.Name = "credit";
             this.credit.ReadOnly = true;
-            this.credit.Width = 90;
+            this.credit.Width = 72;
             // 
             // studselect_limit
             // 
@@ -148,7 +149,7 @@
             this.studselect_limit.MinimumWidth = 6;
             this.studselect_limit.Name = "studselect_limit";
             this.studselect_limit.ReadOnly = true;
-            this.studselect_limit.Width = 107;
+            this.studselect_limit.Width = 85;
             // 
             // courseCount
             // 
@@ -160,7 +161,7 @@
             this.courseCount.MinimumWidth = 6;
             this.courseCount.Name = "courseCount";
             this.courseCount.ReadOnly = true;
-            this.courseCount.Width = 107;
+            this.courseCount.Width = 85;
             // 
             // buildCourseCount
             // 
@@ -171,7 +172,7 @@
             this.buildCourseCount.MinimumWidth = 6;
             this.buildCourseCount.Name = "buildCourseCount";
             this.buildCourseCount.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.buildCourseCount.Width = 107;
+            this.buildCourseCount.Width = 85;
             // 
             // buildCourseBtn
             // 
@@ -193,10 +194,10 @@
             this.schoolYearCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.schoolYearCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.schoolYearCbx.FormattingEnabled = true;
-            this.schoolYearCbx.ItemHeight = 23;
+            this.schoolYearCbx.ItemHeight = 19;
             this.schoolYearCbx.Location = new System.Drawing.Point(64, 11);
             this.schoolYearCbx.Name = "schoolYearCbx";
-            this.schoolYearCbx.Size = new System.Drawing.Size(60, 29);
+            this.schoolYearCbx.Size = new System.Drawing.Size(60, 25);
             this.schoolYearCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.schoolYearCbx.TabIndex = 0;
             this.schoolYearCbx.TextChanged += new System.EventHandler(this.schoolYearCbx_TextChanged);
@@ -207,10 +208,10 @@
             this.semesterCbx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.semesterCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.semesterCbx.FormattingEnabled = true;
-            this.semesterCbx.ItemHeight = 23;
+            this.semesterCbx.ItemHeight = 19;
             this.semesterCbx.Location = new System.Drawing.Point(173, 11);
             this.semesterCbx.Name = "semesterCbx";
-            this.semesterCbx.Size = new System.Drawing.Size(50, 29);
+            this.semesterCbx.Size = new System.Drawing.Size(50, 25);
             this.semesterCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.semesterCbx.TabIndex = 1;
             this.semesterCbx.TextChanged += new System.EventHandler(this.semesterCbx_TextChanged);
@@ -252,10 +253,10 @@
             this.courseTypeCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.courseTypeCbx.DropDownWidth = 500;
             this.courseTypeCbx.FormattingEnabled = true;
-            this.courseTypeCbx.ItemHeight = 23;
+            this.courseTypeCbx.ItemHeight = 19;
             this.courseTypeCbx.Location = new System.Drawing.Point(373, 11);
             this.courseTypeCbx.Name = "courseTypeCbx";
-            this.courseTypeCbx.Size = new System.Drawing.Size(396, 29);
+            this.courseTypeCbx.Size = new System.Drawing.Size(396, 25);
             this.courseTypeCbx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.courseTypeCbx.TabIndex = 2;
             this.courseTypeCbx.TextChanged += new System.EventHandler(this.courseTypeCbx_TextChanged);
@@ -289,6 +290,7 @@
             this.labelX4.TabIndex = 9;
             this.labelX4.Text = "說明: 可透過設定開課班數調整科目所建立的班級數。\r\n課程開設完畢後，如需增加/刪除課程，請重新設定「開課班數」。\r\n(例：原本已開班數為2，欲再增加一個課程，請" +
     "輸入3，欲刪除原本課程，請輸入0。)";
+            this.labelX4.Visible = false;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -310,7 +312,6 @@
             this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Width = 125;
             // 
             // dataGridViewTextBoxColumn3
             // 
@@ -322,7 +323,6 @@
             this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            this.dataGridViewTextBoxColumn3.Width = 125;
             // 
             // dataGridViewTextBoxColumn4
             // 
@@ -334,7 +334,6 @@
             this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             this.dataGridViewTextBoxColumn4.ReadOnly = true;
-            this.dataGridViewTextBoxColumn4.Width = 125;
             // 
             // dataGridViewTextBoxColumn5
             // 
@@ -346,7 +345,6 @@
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             this.dataGridViewTextBoxColumn5.ReadOnly = true;
             this.dataGridViewTextBoxColumn5.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn5.Width = 125;
             // 
             // dataGridViewTextBoxColumn6
             // 
@@ -359,13 +357,25 @@
             this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             this.dataGridViewTextBoxColumn6.ReadOnly = true;
             this.dataGridViewTextBoxColumn6.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn6.Width = 125;
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.linkLabel1.Location = new System.Drawing.Point(12, 418);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(34, 17);
+            this.linkLabel1.TabIndex = 10;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "說明";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // BuildCourseClass
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(781, 444);
+            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.dataGridViewX1);
             this.Controls.Add(this.buildCourseBtn);
             this.Controls.Add(this.labelX4);
@@ -382,6 +392,7 @@
             this.Text = "選修科目開課";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -407,5 +418,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn studselect_limit;
         private System.Windows.Forms.DataGridViewTextBoxColumn courseCount;
         private System.Windows.Forms.DataGridViewTextBoxColumn buildCourseCount;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
