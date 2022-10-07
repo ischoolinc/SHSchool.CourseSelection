@@ -206,7 +206,7 @@ ORDER BY
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             TextForm textForm = new TextForm();
-            textForm.Show();
+            textForm.ShowDialog();
         }
     }
 }
