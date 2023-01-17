@@ -145,8 +145,8 @@ FROM
 WITH target_subject AS(
     SELECT
         *
-        , CONCAT(subject_name, level) AS key1
-        , CONCAT(pre_subject, pre_subject_level) AS key2
+        , CONCAT(subject_name, '_', level) AS key1
+        , CONCAT(pre_subject, '_', pre_subject_level) AS key2
     FROM
         $ischool.course_selection.subject
     WHERE
@@ -193,13 +193,13 @@ WITH target_subject AS(
 ), target_student_score_rec AS(
     SELECT
         *
-        , CONCAT(科目, 科目級別) AS key
+        , CONCAT(科目,'_', 科目級別) AS key
     FROM
         target_student_sems_subj_score
 ), target_student_sc_attend AS(
     SELECT
         sc_attend.*
-        , CONCAT(course.subject, course.subj_level) AS key
+       , CONCAT(course.subject, '_',  course.subj_level) AS key
     FROM
         sc_attend
         LEFT OUTER JOIN course

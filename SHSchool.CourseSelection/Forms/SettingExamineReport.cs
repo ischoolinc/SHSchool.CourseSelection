@@ -563,6 +563,11 @@ WHERE
     AND subject.semester = {1}
     AND subject.type = '{2}'
     AND student.id IS NOT NULL
+ORDER BY
+	class.grade_year
+	, class.display_order
+    , class.class_name
+	, student.seat_no
                 ", cbxSchoolYear.Text, cbxSemester.Text, cbxType.Text);
 
                 dt3 = qh.Select(sql);
