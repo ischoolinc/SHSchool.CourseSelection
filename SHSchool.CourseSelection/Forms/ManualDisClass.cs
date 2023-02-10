@@ -22,7 +22,7 @@ namespace SHSchool.CourseSelection.Forms
         /// Key:(以分班/選修科目總人數)科目名稱  Value: 科目編號
         /// </summary>
         private Dictionary<string, string> dicSubjectName = new Dictionary<string, string>();
-        
+
         /// <summary>
         /// Key: SubjectCourseID Value: 班別
         /// </summary>
@@ -32,7 +32,7 @@ namespace SHSchool.CourseSelection.Forms
         /// SubjectCourseID 所對應到的顏色
         /// </summary>
         private SortedList<string, Color> _CourseColor = new SortedList<string, Color>();
-        
+
         /// <summary>
         /// 紀錄選修課程分配到的學生 
         /// </summary>
@@ -130,13 +130,13 @@ WHERE
     school_year = {0}
     AND semester = {1}
     AND type IS NOT NULL
-                ",cbxSchoolYear.SelectedItem.ToString(),cbxSemester.SelectedItem.ToString());
+                ", cbxSchoolYear.SelectedItem.ToString(), cbxSemester.SelectedItem.ToString());
 
             DataTable dt = qh.Select(sql);
 
             foreach (DataRow row in dt.Rows)
             {
-                cbxCourseType.Items.Add("" + row["type"]);   
+                cbxCourseType.Items.Add("" + row["type"]);
             }
             if (cbxCourseType.Items.Count > 0)
             {
@@ -231,10 +231,20 @@ WHERE
     AND subject_course.ref_subject_id = {2}
                     ", cbxSchoolYear.Text, cbxSemester.Text, subjectID);
             QueryHelper qh = new QueryHelper();
-            DataTable dt = qh.Select(sql); 
+            DataTable dt = qh.Select(sql);
             #endregion
 
-            Color[] colors = new Color[] { Color.Red, Color.Yellow, Color.Blue, Color.PowderBlue, Color.Orange, Color.Green, Color.Purple };
+            //Color[] colors = new Color[] { Color.Red, Color.Yellow, Color.Blue, Color.PowderBlue, Color.Orange, Color.Green, Color.Purple };
+            
+            List<Color> colorList = new List<Color>();
+            int c = 25;
+            for (int a = 0; a <= dt.Rows.Count; a++)
+            {
+                c += 10;
+                colorList.Add(Color.FromArgb((c * 16 > 255 ? c * 16 % 255 : c * 16), (c * 3 > 255 ? c * 3 % 255 : c * 3), (c * 7 > 255 ? c * 7 % 255 : c * 7)));
+            }
+
+            Color[] colors = colorList.ToArray();
 
             #region FlowLayoutPanel 課班Button
             int i = 0;
@@ -313,7 +323,7 @@ WHERE
                     _CourseStudentIDdic.Add("" + dgvrow.Cells[5].Tag, new List<string>());
                 }
                 _CourseStudentIDdic["" + dgvrow.Cells[5].Tag].Add("" + dgvrow.Tag);
-            } 
+            }
             #endregion
 
             UpdateCourseBtn();
@@ -379,7 +389,7 @@ WHERE ss_attend.ref_subject_id = {0}
                             {
                                 student["gender"] = "女";
                             }
-                        } 
+                        }
                         #endregion
 
                         int index = 0;
@@ -414,7 +424,7 @@ WHERE ss_attend.ref_subject_id = {0}
                                 _CourseStudentIDdic.Add(subjectCourseID, new List<string>());
                             }
                             _CourseStudentIDdic[subjectCourseID].Add(studentID);
-                        } 
+                        }
                         #endregion
 
                         datarow.Tag = studentID;  // 學生編號
@@ -681,7 +691,7 @@ WHERE
             foreach (Control c in flowLayoutPanel1.Controls)
             {
                 c.Text = classDic["" + c.Tag].ClassType + "(" + (CountDic["" + c.Tag].boy > 0 ? " " + CountDic["" + c.Tag].boy + "男" : "") + (CountDic["" + c.Tag].girl > 0 ? " " + CountDic["" + c.Tag].girl + "女" : "") + (CountDic["" + c.Tag].understand > 0 ? " " + CountDic["" + c.Tag].understand + "未知性別" : "") + " 共" + CountDic["" + c.Tag].total + "人" + " )";
-            } 
+            }
             #endregion
         }
 
