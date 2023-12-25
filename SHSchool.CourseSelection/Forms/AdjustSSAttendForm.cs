@@ -1213,7 +1213,7 @@ ORDER BY
             string sql = "";
             foreach (DataGridViewRow datarow in dataGridViewX1.Rows)
             {
-                if ("" + datarow.Cells[attendType.DisplayIndex].Value != "跨課程時段") 
+                if ("" + datarow.Cells[attendType.DisplayIndex].Value != "跨課程時段")
                 {
                     DataRow row = (DataRow)datarow.Tag;
                     string data = string.Format(@"
@@ -1229,9 +1229,9 @@ SELECT
     , {8}::INTEGER AS seed
             ", row["id"]
                     , "" + row["ref_subject_id"] == "" ? "NULL" : "" + row["ref_subject_id"]
-                    , "" + row["選課課程"] == "" ? "NULL" : "'" + row["選課課程"] + "'"
+                    , "" + row["選課課程"] == "" ? "NULL" : "'" + ("" + row["選課課程"]).Replace("'", "''") + "'"
                     , "" + row["lock"] == "true" ? "true" : "false"
-                    , "" + row["attend_type"] == "" ? "NULL" : "'" + row["attend_type"] + "'"
+                    , "" + row["attend_type"] == "" ? "NULL" : "'" + ("" + row["attend_type"]).Replace("'", "''") + "'"
                     , schoolYearCbx.Text
                     , semesterCbx.Text
                     , courseTypeCbx.Text
